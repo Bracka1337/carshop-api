@@ -24,3 +24,7 @@ Route::get('/auth', function () {
 Route::get('/login', function () {
     return view('login');
 });
+
+Route::get('/about', function () {
+    return view('aboutus');
+});
