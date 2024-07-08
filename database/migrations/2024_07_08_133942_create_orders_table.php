@@ -9,12 +9,12 @@ class CreateOrdersTable extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id('order_id');
+            $table->id();
             $table->string('status');
             $table->integer('quantity');
             $table->dateTime('date');
-            // $table->foreignId('user_id')->constrained('users');
-            // $table->foreignId('payment_id')->constrained('payments');
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('payment_id')->constrained('payments');
             $table->timestamps();
         });
     }
