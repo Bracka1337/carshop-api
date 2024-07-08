@@ -13,6 +13,7 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
     <body class="antialiased">
-     <h1 class="text-indigo-500"> asda </h1>
+        @include('components.NavBar')
+     
     </body>
 </html>
