@@ -14,6 +14,7 @@ php artisan migrate
 php artisan key:generate
 php artisan passport:client --personal
 php artisan passport:keys
+php artisan db:seed
 ```
 
 ### Run development
@@ -22,7 +23,7 @@ php artisan passport:keys
 php artisan serve
 ```
 
-## Front part
+## Tailwind part
 
 ### install tailwind
 
