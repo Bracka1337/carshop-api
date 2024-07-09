@@ -53,18 +53,14 @@ class AuthController extends Controller
         ])){
             $user = Auth::user();
             $token = $user->createToken('myToken')->accessToken;
-
-            return response()->json([
-                'status'=> true,
-                'message'=> 'Login Successful',
-                'token'=> $token,
-            ]);
-        } else {
-            return response()->json([
-                'status'=> false,
-                'message'=> 'Invalid credentials'
-            ]);
+            
+            $cookie = cookie('access_token', $token, 60, null, null, true, true);
+            return redirect()->intended('aboutus')->cookie($cookie);
         }
+
+        return back()->withErrors([
+            'email' => 'Invalid Credentials.',
+        ])->withInput($request->only('email'));
     }
 
     public function logout() {
