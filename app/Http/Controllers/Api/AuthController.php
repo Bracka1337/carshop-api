@@ -55,22 +55,15 @@ class AuthController extends Controller
             $token = $user->createToken('myToken')->accessToken;
             
             $cookie = cookie('access_token', $token, 60, null, null, true, true);
-            return redirect()->intended('aboutus')->cookie($cookie);
+            return redirect()->intended('profile')->cookie($cookie);
         }
-
+        dd();
         return back()->withErrors([
             'email' => 'Invalid Credentials.',
         ])->withInput($request->only('email'));
     }
 
     public function logout() {
-        $user = Auth::user();
-
-        auth()->user()->token()->revoke();
-
-        return response()->json([
-            'status'=> true,
-            'message'=> 'Logged Out'
-        ]);  
+        return redirect()->route('main')->withoutCookie('access_token');
     }   
 }
