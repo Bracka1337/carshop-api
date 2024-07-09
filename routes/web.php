@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 
@@ -27,4 +28,12 @@ Route::post('/login', [AuthController::class,'login'])->name('login.store');
 
 Route::get('/aboutus', function () {
     return view('aboutus');
+});
+
+
+Route::group([
+    'middleware'=> 'auth:api'
+], function () {
+    Route::get('logout', [AuthController::class, 'logout']);
+    Route::get('/profile', [ProfileController::class,'show'])->name('profile.show');
 });
