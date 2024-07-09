@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\ProductSearchRequest;
 
 class ProductController extends Controller
 {
@@ -37,6 +38,15 @@ class ProductController extends Controller
     public function show(string $id)
     {
         //
+    }
+
+    public function search(ProductSearchRequest $request)
+    {
+        $validated = $request->validated();
+        // return response()->json($validated);
+        $response = "searched";
+//return json response
+        return response()->json($response);
     }
 
     /**

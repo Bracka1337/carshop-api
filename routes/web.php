@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Api\ProductController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,6 +20,15 @@ Route::get('/', function () {
 Route::get('/register', function () {
     return view('register');
 });
+
+//route to get csrf token
+Route::get('/csrf-token', function () {
+    return csrf_token();
+});
+
+Route::get('/products', [ProductController::class, 'index']);
+Route::post('/products/search', [ProductController::class, 'search'])->name('products.search');
+
 
 Route::get('/login', function () {
     return view('login');
