@@ -4,7 +4,7 @@
       <div class="grid w-full sm:grid-cols-2 xl:grid-cols-4 gap-6">
   
         {{-- element --}}
-        <div class="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-sm">
+        <div class="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-sm" id="product">
           <div class="h-auto overflow-hidden">
             <div class="h-44 overflow-hidden relative">
               <img src="https://picsum.photos/400/400" alt="">
@@ -24,7 +24,7 @@
         
         {{-- product details --}}
       </div>
-      <div class="dark:bg-gray-800 py-8 mt-10 shadow-lg rounded-xl ">
+      <div class="dark:bg-gray-800 py-8 mt-10 shadow-lg rounded-xl " id="productDetail">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="flex flex-col md:flex-row -mx-4">
               <div class="md:flex-1 px-4">
