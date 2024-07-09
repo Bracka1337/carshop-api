@@ -34,6 +34,6 @@ class Product extends Model
 
     public function productQuantities()
     {
-        return $this->hasMany(ProductQuantity::class);
+        return $this->hasMany(Product_Quantity::class);
     }
 }

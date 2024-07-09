@@ -14,5 +14,6 @@
         </div>
     </div>
 @endforeach
-  
+{{ }}
 </x-app-layout>
+
