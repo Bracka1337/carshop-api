@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductSearchRequest;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
@@ -43,10 +44,36 @@ class ProductController extends Controller
     public function search(ProductSearchRequest $request)
     {
         $validated = $request->validated();
-        // return response()->json($validated);
-        $response = "searched";
-//return json response
-        return response()->json($response);
+
+        $query = Product::query();
+
+        if (isset($validated['title']) && !empty($validated['title'])) {
+            $query->where('title', 'like', "%{$validated['title']}%");
+        }
+ 
+        if (isset($validated['category']) && !empty($validated['category'])) {
+            $query->where('category_id', $validated['category']);
+        }
+
+         if (isset($validated['brand']) && !empty($validated['brand'])) {
+             $query->where('brand_id', $validated['brand']);
+         }
+
+        if (isset($validated['price_from']) && !empty($validated['price_from'])) {
+            $query->where('price', '>=', $validated['price_from']);
+        }
+
+        if (isset($validated['price_to']) && !empty($validated['price_to'])) {
+            $query->where('price', '<=', $validated['price_to']);
+        }
+
+        if (isset($validated['size']) && !empty($validated['size'])) {
+            $query->where('size', $validated['size']);
+        }
+
+        $products = $query->get();
+
+        return response()->json(['products' => $products]);
     }
 
     /**

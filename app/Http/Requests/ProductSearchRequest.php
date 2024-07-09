@@ -11,7 +11,7 @@ class ProductSearchRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true; 
+        return true;
     }
 
     // /**
@@ -22,13 +22,16 @@ class ProductSearchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category' => 'required|string',
-            'brand' => 'required|string',
-            'price_from' => 'required|numeric',
-            'price_to' => 'required|numeric|gte:price_from', 
-            'size' => 'required|string',
+            'category' => 'nullable|int',
+            'title' => 'nullable|string',
+            'description' => 'nullable|string',
+            'size' => 'nullable|string',
+            'price_from' => 'nullable|numeric',
+            'price_to' => 'nullable|numeric|gte:price_from',
+            'brand'=> 'nullable|int',
         ];
     }
+
 
     /**
      * Get the validation error messages.
