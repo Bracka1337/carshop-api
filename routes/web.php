@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\ProductController;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,9 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('main');
+// });
+
+
+Route::get('/', [ProductController::class, 'index']);
 
 Route::get('/register', function () {
     return view('register');
