@@ -39,7 +39,7 @@
         </form>
         <div class="mt-4 text-center">
             <p class="text-sm text-gray-600">Don't have an account?
-                <a class="text-green-500 text-decoration-line: underline" href="/auth" >
+                <a class="text-green-500 text-decoration-line: underline" href="/register" >
                 Register
             </a>
         </p>
