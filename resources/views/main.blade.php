@@ -13,6 +13,7 @@
             </div>
         </div>
     </div>
-@endforeach --}}
+@endforeach
+{{ }} --}}
 </x-app-layout>
 

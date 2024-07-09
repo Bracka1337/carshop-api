@@ -14,11 +14,11 @@
 
 
     </head>
-    <body class="antialiased bg-gray-100 flex items-center justify-center h-screen">
+    <body class="antialiased bg-gray-100 flex items-center justify-center flex-col min-h-screen">
     
-    <div class="register-container bg-white p-8 rounded-lg shadow-md w-96">
+    <div class="register-container bg-white p-8  shadow-md  mt-10 mb-10 w-96">
         
-        <h1 class="text-2xl font-bold text-center text-green-500 mb-4"><a href="/">Register</a></h1>
+        <h1 class="text-2xl font-bold text-center text-indigo-600 mb-4"><a href="/">Register</a></h1>
         <form action="{{ route('register.store') }}" method="post">
             @csrf
             <div class="mb-4">
@@ -55,20 +55,20 @@
             </div>
 
             @if ($errors->any())
-                <div class="mb-6" alert alert-danger>
+                <div class="mb-6 p-4 border border-red-500 bg-red-100 text-red-700 rounded" alert alert-danger>
                     @foreach ($errors->all() as $error)
                         <p>{{ $error }}</p>
                     @endforeach
                 </div>
             @endif
 
-            <button type="submit" class="w-full bg-green-50 text-green-800 font-bold py-2 px-4 rounded hover:bg-green-100 focus:outline-none focus:bg-green-100">
+            <button type="submit" class="w-full bg-indigo-100 text-indigo-600 font-bold py-2 px-4 rounded hover:bg-indigo-200 focus:outline-none focus:bg-indigo-100">
                 Register
             </button>
         </form>
         <div class="mt-4 text-center">
             <p class="text-sm text-gray-600">Already have an account?
-                <a class="text-green-500 text-decoration-line: underline" href="/login">
+                <a class="text-indigo-600 hover:underline" href="/login">
                 Login
             </a>
         </p>

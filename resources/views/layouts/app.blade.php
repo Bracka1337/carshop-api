@@ -22,16 +22,12 @@
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100">
         <!-- Page Heading -->
-        <header >
-            {{-- <link rel="icon" type="image/x-icon" href="/images/favicon.ico"> --}}
-        </header>
+      
 
         <!-- Page Content -->
         <main>
-            {{ $slot }}
-            <div></div>
             @include('components.NavBar')
-            {{-- @include('components.aboutus') --}}
+            {{ $slot }}
         </main>
 
         <!-- Footer -->
