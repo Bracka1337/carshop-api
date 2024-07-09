@@ -11,10 +11,15 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     //
+
+    public function showRegister() {
+        return view('register');
+    }
+
     public function register(Request $request) {
         $request->validate([
             'username' => 'required',
-            'password'=> 'required',
+            'password'=> 'required|confirmed',
             'email'=> 'required|email',
             'phone_nr' => 'required',
             'name' => 'required',
@@ -29,10 +34,11 @@ class AuthController extends Controller
             'name'=> $request->name
         ]);
 
-        return response()->json([
-            'status' => true,
-            'message'=> 'User Created Successfully'
-        ]);
+        return redirect()->route('login')->with('success','Registered Sucessfully!');
+    }
+
+    public function showLogin() {
+        return view('login');
     }
 
     public function login(Request $request) {

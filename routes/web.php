@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,13 +18,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/register', function () {
-    return view('register');
-});
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::post('/register', [AuthController::class,'register'])->name('register.store');
 
-Route::get('/login', function () {
-    return view('login');
-});
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+
 
 Route::get('/aboutus', function () {
     return view('aboutus');
