@@ -30,9 +30,9 @@ Route::get('/products', [ProductController::class, 'index']);
 Route::post('/products/search', [ProductController::class, 'search'])->name('products.search');
 
 
-Route::get('/login', function () {
-    return view('login');
-});
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class,'login'])->name('login.store');
+
 
 Route::get('/aboutus', function () {
     return view('aboutus');
