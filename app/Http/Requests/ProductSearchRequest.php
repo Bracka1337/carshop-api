@@ -24,11 +24,11 @@ class ProductSearchRequest extends FormRequest
         return [
             'category' => 'nullable|int',
             'title' => 'nullable|string',
-            'description' => 'nullable|string',
             'size' => 'nullable|string',
             'price_from' => 'nullable|numeric',
             'price_to' => 'nullable|numeric|gte:price_from',
             'brand'=> 'nullable|int',
+            'material'=> 'nullable|string',
         ];
     }
 
