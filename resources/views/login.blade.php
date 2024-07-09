@@ -16,7 +16,7 @@
     </head>
     <body class="antialiased bg-gray-100 flex items-center justify-center  flex-col min-h-screen">
     
-    <div class="login-container bg-white p-8 rounded-lg shadow-md max-width: 640px mt-10">
+    <div class="login-container bg-white p-8  shadow-md max-width: 640px mt-10 mb-10">
         <h1 class="text-2xl font-bold text-center text-indigo-600 mb-4"><a href="/">Login</a></h1>
         <form action="/login" method="post">
             

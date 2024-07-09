@@ -14,9 +14,9 @@
 
 
     </head>
-    <body class="antialiased bg-gray-100 flex items-center justify-center  flex-col ">
+    <body class="antialiased bg-gray-100 flex items-center justify-center  flex-col min-h-screen">
     
-    <div class="register-container bg-white p-8 rounded-lg shadow-md  mt-10">
+    <div class="register-container bg-white p-8  shadow-md  mt-10 mb-10">
         
         <h1 class="text-2xl font-bold text-center text-indigo-600 mb-4"><a href="/">Register</a></h1>
         <form action="/register" method="post">
