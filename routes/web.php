@@ -16,8 +16,8 @@ use App\Http\Controllers\Api\AuthController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('main');
+})->name('main');
 
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class,'register'])->name('register.store');
@@ -25,15 +25,10 @@ Route::post('/register', [AuthController::class,'register'])->name('register.sto
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class,'login'])->name('login.store');
 
+Route::get('/logout', [AuthController::class, 'logout']);
 
 Route::get('/aboutus', function () {
     return view('aboutus');
 });
 
-
-Route::group([
-    'middleware'=> 'auth:api'
-], function () {
-    Route::get('logout', [AuthController::class, 'logout']);
-    Route::get('/profile', [ProfileController::class,'show'])->name('profile.show');
-});
+Route::get('/profile', [ProfileController::class,'show'])->name('profile.show');

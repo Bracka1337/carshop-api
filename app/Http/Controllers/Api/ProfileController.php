@@ -11,6 +11,6 @@ class ProfileController extends Controller
         $user = auth()->user();
         $user->load('orders');
 
-        return view('', compact('user'));
+        return view('testprofile', compact('user'));
     }
 }
