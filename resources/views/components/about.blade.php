@@ -30,7 +30,7 @@
 
         <li>
             <div class="flex items-center gap-x-6">
-              <img class="h-16 w-16 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+              <img class="h-16 w-16 rounded-full" src="https://cdn.theorg.com/43a67718-344f-4a19-84da-124537aed930_medium.jpg" alt="">
               <div>
                 <h3 class="text-base font-semibold leading-7 tracking-tight text-gray-900">Vitālijs Mikutis</h3>
                 <p class="text-sm font-semibold leading-6 text-indigo-600">Co-Founder / CEO</p>
