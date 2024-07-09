@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -15,4 +15,8 @@
     <body class="antialiased">
      <h1 class="text-indigo-500"> asda </h1>
     </body>
-</html>
+</html> --}}
+<x-app-layout>
+
+    @include('components.about')
+</x-app-layout>

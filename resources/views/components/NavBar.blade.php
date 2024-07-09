@@ -58,13 +58,13 @@
             <div class="border-b border-gray-200">
               <div class="-mb-px flex space-x-8 px-4" aria-orientation="horizontal" role="tablist">
                 <!-- Selected: "border-indigo-600 text-indigo-600", Not Selected: "border-transparent text-gray-900" -->
-                <button id="tabs-1-tab-1" class="flex-1 whitespace-nowrap border-b-2 border-transparent px-1 py-4 text-base font-medium text-gray-900" aria-controls="tabs-1-panel-1" role="tab" type="button">Women</button>
+                <button id="tabs-1-tab-1" class="flex-1 whitespace-nowrap border-b-2 border-transparent px-1 py-4 text-base font-medium text-gray-900" aria-controls="tabs-1-panel-1" role="tab" type="button">Home</button>
                 <!-- Selected: "border-indigo-600 text-indigo-600", Not Selected: "border-transparent text-gray-900" -->
-                <button id="tabs-1-tab-2" class="flex-1 whitespace-nowrap border-b-2 border-transparent px-1 py-4 text-base font-medium text-gray-900" aria-controls="tabs-1-panel-2" role="tab" type="button">Men</button>
+                <button id="tabs-1-tab-2" class="flex-1 whitespace-nowrap border-b-2 border-transparent px-1 py-4 text-base font-medium text-gray-900" aria-controls="tabs-1-panel-2" role="tab" type="button">Product</button>
               </div>
             </div>
   
-            <!-- 'Women' tab panel, show/hide based on tab state. -->
+            <!-- 'Home' tab panel, show/hide based on tab state. -->
             <div id="tabs-1-panel-1" class="space-y-10 px-4 pb-8 pt-10" aria-labelledby="tabs-1-tab-1" role="tabpanel" tabindex="0">
               <div class="grid grid-cols-2 gap-x-4">
                 <div class="group relative text-sm">
@@ -89,8 +89,8 @@
                 </div>
               </div>
               <div>
-                <p id="women-clothing-heading-mobile" class="font-medium text-gray-900">Clothing</p>
-                <ul role="list" aria-labelledby="women-clothing-heading-mobile" class="mt-6 flex flex-col space-y-6">
+                <p id="home-heading-mobile" class="font-medium text-gray-900">Clothing</p>
+                <ul role="list" aria-labelledby="home-heading-mobile" class="mt-6 flex flex-col space-y-6">
                   <li class="flow-root">
                     <a href="#" class="-m-2 block p-2 text-gray-500">Tops</a>
                   </li>
@@ -121,8 +121,8 @@
                 </ul>
               </div>
               <div>
-                <p id="women-accessories-heading-mobile" class="font-medium text-gray-900">Accessories</p>
-                <ul role="list" aria-labelledby="women-accessories-heading-mobile" class="mt-6 flex flex-col space-y-6">
+                <p id="home-heading-mobile" class="font-medium text-gray-900">Accessories</p>
+                <ul role="list" aria-labelledby="home-heading-mobile" class="mt-6 flex flex-col space-y-6">
                   <li class="flow-root">
                     <a href="#" class="-m-2 block p-2 text-gray-500">Watches</a>
                   </li>
@@ -144,8 +144,8 @@
                 </ul>
               </div>
               <div>
-                <p id="women-brands-heading-mobile" class="font-medium text-gray-900">Brands</p>
-                <ul role="list" aria-labelledby="women-brands-heading-mobile" class="mt-6 flex flex-col space-y-6">
+                <p id="home-heading-mobile" class="font-medium text-gray-900">Brands</p>
+                <ul role="list" aria-labelledby="home-heading-mobile" class="mt-6 flex flex-col space-y-6">
                   <li class="flow-root">
                     <a href="#" class="-m-2 block p-2 text-gray-500">Full Nelson</a>
                   </li>
@@ -164,7 +164,7 @@
                 </ul>
               </div>
             </div>
-            <!-- 'Men' tab panel, show/hide based on tab state. -->
+            <!-- 'Product' tab panel, show/hide based on tab state. -->
             <div id="tabs-1-panel-2" class="space-y-10 px-4 pb-8 pt-10" aria-labelledby="tabs-1-tab-2" role="tabpanel" tabindex="0">
               <div class="grid grid-cols-2 gap-x-4">
                 <div class="group relative text-sm">
@@ -189,8 +189,8 @@
                 </div>
               </div>
               <div>
-                <p id="men-clothing-heading-mobile" class="font-medium text-gray-900">Clothing</p>
-                <ul role="list" aria-labelledby="men-clothing-heading-mobile" class="mt-6 flex flex-col space-y-6">
+                <p id="Product-heading-mobile" class="font-medium text-gray-900">Clothing</p>
+                <ul role="list" aria-labelledby="product-clothing-heading-mobile" class="mt-6 flex flex-col space-y-6">
                   <li class="flow-root">
                     <a href="#" class="-m-2 block p-2 text-gray-500">Tops</a>
                   </li>
@@ -215,8 +215,8 @@
                 </ul>
               </div>
               <div>
-                <p id="men-accessories-heading-mobile" class="font-medium text-gray-900">Accessories</p>
-                <ul role="list" aria-labelledby="men-accessories-heading-mobile" class="mt-6 flex flex-col space-y-6">
+                <p id="product-heading-mobile" class="font-medium text-gray-900">Accessories</p>
+                <ul role="list" aria-labelledby="product-accessories-heading-mobile" class="mt-6 flex flex-col space-y-6">
                   <li class="flow-root">
                     <a href="#" class="-m-2 block p-2 text-gray-500">Watches</a>
                   </li>
@@ -238,8 +238,8 @@
                 </ul>
               </div>
               <div>
-                <p id="men-brands-heading-mobile" class="font-medium text-gray-900">Brands</p>
-                <ul role="list" aria-labelledby="men-brands-heading-mobile" class="mt-6 flex flex-col space-y-6">
+                <p id="product-heading-mobile" class="font-medium text-gray-900">Brands</p>
+                <ul role="list" aria-labelledby="product-heading-mobile" class="mt-6 flex flex-col space-y-6">
                   <li class="flow-root">
                     <a href="#" class="-m-2 block p-2 text-gray-500">Re-Arranged</a>
                   </li>
@@ -259,7 +259,7 @@
   
           <div class="space-y-6 border-t border-gray-200 px-4 py-6">
             <div class="flow-root">
-              <a href="#" class="-m-2 block p-2 font-medium text-gray-900">Company</a>
+              <a href="#" class="-m-2 block p-2 font-medium text-gray-900">About us</a>
             </div>
             <div class="flow-root">
               <a href="#" class="-m-2 block p-2 font-medium text-gray-900">Stores</a>
@@ -270,7 +270,9 @@
             <div class="flow-root">
               <a href="#" class="-m-2 block p-2 font-medium text-gray-900">Sign in</a>
             </div>
-        
+            <div class="flow-root">
+              <a href="#" class="-m-2 block p-2 font-medium text-gray-900">Create account</a>
+            </div>
           </div>
   
           <div class="border-t border-gray-200 px-4 py-6">
@@ -313,11 +315,11 @@
                 <div class="flex">
                   <div class="relative flex">
                     <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
-                    <button type="button" class="relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800" aria-expanded="false">Products</button>
+                    <button type="button" class="relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800" aria-expanded="false">Home</button>
                   </div>
   
                   <!--
-                    'Women' flyout menu, show/hide based on flyout menu state.
+                    'Home' flyout menu, show/hide based on flyout menu state.
   
                     Entering: "transition ease-out duration-200"
                       From: "opacity-0"
@@ -440,7 +442,7 @@
                 <div class="flex">
                   <div class="relative flex">
                     <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
-                    <button type="button" class="relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800" aria-expanded="false">Men</button>
+                    <button type="button" class="relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800" aria-expanded="false">Product</button>
                   </div>
   
                   <!--
@@ -482,74 +484,7 @@
                               <p aria-hidden="true" class="mt-1">Shop now</p>
                             </div>
                           </div>
-                          <div class="row-start-1 grid grid-cols-3 gap-x-8 gap-y-10 text-sm">
-                            <div>
-                              <p id="Clothing-heading" class="font-medium text-gray-900">Clothing</p>
-                              <ul role="list" aria-labelledby="Clothing-heading" class="mt-6 space-y-6 sm:mt-4 sm:space-y-4">
-                                <li class="flex">
-                                  <a href="#" class="hover:text-gray-800">Tops</a>
-                                </li>
-                                <li class="flex">
-                                  <a href="#" class="hover:text-gray-800">Pants</a>
-                                </li>
-                                <li class="flex">
-                                  <a href="#" class="hover:text-gray-800">Sweaters</a>
-                                </li>
-                                <li class="flex">
-                                  <a href="#" class="hover:text-gray-800">T-Shirts</a>
-                                </li>
-                                <li class="flex">
-                                  <a href="#" class="hover:text-gray-800">Jackets</a>
-                                </li>
-                                <li class="flex">
-                                  <a href="#" class="hover:text-gray-800">Activewear</a>
-                                </li>
-                                <li class="flex">
-                                  <a href="#" class="hover:text-gray-800">Browse All</a>
-                                </li>
-                              </ul>
-                            </div>
-                            <div>
-                              <p id="Accessories-heading" class="font-medium text-gray-900">Accessories</p>
-                              <ul role="list" aria-labelledby="Accessories-heading" class="mt-6 space-y-6 sm:mt-4 sm:space-y-4">
-                                <li class="flex">
-                                  <a href="#" class="hover:text-gray-800">Watches</a>
-                                </li>
-                                <li class="flex">
-                                  <a href="#" class="hover:text-gray-800">Wallets</a>
-                                </li>
-                                <li class="flex">
-                                  <a href="#" class="hover:text-gray-800">Bags</a>
-                                </li>
-                                <li class="flex">
-                                  <a href="#" class="hover:text-gray-800">Sunglasses</a>
-                                </li>
-                                <li class="flex">
-                                  <a href="#" class="hover:text-gray-800">Hats</a>
-                                </li>
-                                <li class="flex">
-                                  <a href="#" class="hover:text-gray-800">Belts</a>
-                                </li>
-                              </ul>
-                            </div>
-                            <div>
-                              <p id="Brands-heading" class="font-medium text-gray-900">Brands</p>
-                              <ul role="list" aria-labelledby="Brands-heading" class="mt-6 space-y-6 sm:mt-4 sm:space-y-4">
-                                <li class="flex">
-                                  <a href="#" class="hover:text-gray-800">Re-Arranged</a>
-                                </li>
-                                <li class="flex">
-                                  <a href="#" class="hover:text-gray-800">Counterfeit</a>
-                                </li>
-                                <li class="flex">
-                                  <a href="#" class="hover:text-gray-800">Full Nelson</a>
-                                </li>
-                                <li class="flex">
-                                  <a href="#" class="hover:text-gray-800">My Way</a>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
+                          
                         </div>
                       </div>
                     </div>

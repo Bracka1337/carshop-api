@@ -32,6 +32,8 @@
         <main>
             {{ $slot }}
             <div></div>
+            @include('components.NavBar')
+            {{-- @include('components.aboutus') --}}
         </main>
 
         <!-- Footer -->

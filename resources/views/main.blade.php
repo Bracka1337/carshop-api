@@ -1,6 +1,6 @@
 <x-app-layout>
 
-@foreach($products as $product)
+{{-- @foreach($products as $product)
     <div class="container mx-auto">
         <div class="flex flex-wrap">
             <div class="w-1/2">
@@ -13,7 +13,6 @@
             </div>
         </div>
     </div>
-@endforeach
-{{ }}
+@endforeach --}}
 </x-app-layout>
 
