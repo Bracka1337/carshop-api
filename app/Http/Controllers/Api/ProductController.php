@@ -25,10 +25,9 @@ class ProductController extends Controller
     }
 
     public function randomProducts(){
-        $products = Product::inRandomOrder()->limit(3)->get(); 
-        //
-        
-        return view("", compact("products"));
+        $products = Product::inRandomOrder()->limit(3)->get();
+dd($products);
+        return view("testViews.testview", compact($products));
     }
 
     /**

@@ -19,6 +19,9 @@ Route::get('/', function () {
 });
 
 
+Route::get('/products',
+ [ProductController::class, 'randomProducts']
+);
 
 
 
