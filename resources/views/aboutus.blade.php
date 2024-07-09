@@ -14,6 +14,6 @@
     </head>
     <body class="antialiased flex flex-col min-h-screen">
         @include('components.about')
-        @include('components.footer')
+        
     </body>
 </html>
