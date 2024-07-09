@@ -54,6 +54,14 @@
                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
             </div>
 
+            @if ($errors->any())
+                <div class="mb-6" alert alert-danger>
+                    @foreach ($errors->all() as $error)
+                        <p>{{ $error }}</p>
+                    @endforeach
+                </div>
+            @endif
+
             <button type="submit" class="w-full bg-green-50 text-green-800 font-bold py-2 px-4 rounded hover:bg-green-100 focus:outline-none focus:bg-green-100">
                 Register
             </button>
