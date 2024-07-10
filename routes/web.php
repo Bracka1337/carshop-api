@@ -46,3 +46,4 @@ Route::get('/aboutus', function () {
 });
 
 Route::get('/profile', [ProfileController::class,'show'])->name('profile.show');
+
