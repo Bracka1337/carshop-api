@@ -27,6 +27,7 @@
         <!-- Page Content -->
         <main>
             @include('components.NavBar')
+            @include('components.banner')
             {{ $slot }}
         </main>
 
