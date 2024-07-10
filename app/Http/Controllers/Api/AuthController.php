@@ -63,7 +63,16 @@ class AuthController extends Controller
         ])->withInput($request->only('email'));
     }
 
-    public function logout() {
+    public function logout(Request $request) {
+        $user = Auth::user();
+        if ($user) {
+            $user->tokens()->delete(); // Revoke all tokens
+        }
+        
+        Auth::logout(); // Log out the user
+
+        $request->session()->invalidate(); // Invalidate the session
+        $request->session()->regenerateToken(); // Regenerate the CSRF token
         return redirect()->route('main')->withoutCookie('access_token');
     }   
 }
