@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // homepage modal window
+// homepage modal window
 
     const products = document.querySelectorAll("#product");
     const modals = document.querySelectorAll("#modal");
     const productsDetail = document.querySelectorAll("#productDetail");
 
-    // product open
+    // open modal
     products.forEach((product) => {
         product.addEventListener('click', ((event) => {
             event.preventDefault();
@@ -48,8 +48,8 @@ document.addEventListener('DOMContentLoaded', function() {
         shoppingCart.classList.add('hidden');
         modal.classList.add('hidden');
     });
-    
-  
+
+
     //shopping cart open button 
 
     const openButton = document.getElementById('open-button');
@@ -60,10 +60,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     
-    
+
     modal.addEventListener('click', (event) => {
         event.preventDefault()
-        
+
         if (!shoppingCart.contains(event.target)) {
             shoppingCart.classList.add('hidden');
             modal.classList.add('hidden');
