@@ -10,8 +10,12 @@ class CategorySeeder extends Seeder
     public function run()
     {
         DB::table('categories')->insert([
-            ['title' => 'Electronics'],
-            ['title' => 'Furniture']
+            ['title' => 'Alloy Wheels'],
+            ['title' => 'Steel Wheels'],
+            ['title' => 'Performance Rims'],
+            ['title' => 'Off-Road Rims'],
+            ['title' => 'Custom Rims'],
+            ['title' => 'Spare Wheels'],
         ]);
     }
 }

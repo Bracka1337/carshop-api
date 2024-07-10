@@ -27,25 +27,47 @@ class ProductController extends Controller
         //
     }
 
+    public function getMainPageParams()
+    {
+        $searchParameters = $this->getSearchParameters();
+        $initialProducts = $this->getInitialProducts();
+
+        //return main vie with these parameters
+        return view('main', [
+            'search' => $searchParameters,
+            'initialProducts' => $initialProducts
+        ]);
+    }
+
     public function getSearchParameters()
     {
-        $categories = Category::all(['id', 'title']);
-        $brands = Brand::all(['id', 'title']);
+        $categories = Category::select('id', 'title')->distinct('title')->get();
+        $brands = Brand::select(['id', 'title'])->distinct("title")->get();
         $sizes = Product::select('size')->distinct()->get();
         $minPrice = Product::min('price');
         $maxPrice = Product::max('price');
 
-        return view('main', [
+        $searchParametrs =  [
             'categories' => $categories,
             'brands' => $brands,
             'sizes' => $sizes,
-            'price_range' => [
+            'priceRange' => [
                 'min' => $minPrice,
-                'max' => $maxPrice,
-            ],
-        ]);
+                'max' => $maxPrice
+            ]
+        ];
+        return $searchParametrs;
     }
 
+    public function getInitialProducts()
+    {
+        $products = Product::inRandomOrder()->limit(8)->get();
+        //load with categories and brands
+        $products->load('category', 'brand');
+
+        dd($products);
+        return $products;
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -71,14 +93,14 @@ class ProductController extends Controller
         if (isset($validated['title']) && !empty($validated['title'])) {
             $query->where('title', 'like', "%{$validated['title']}%");
         }
- 
+
         if (isset($validated['category']) && !empty($validated['category'])) {
             $query->where('category_id', $validated['category']);
         }
 
-         if (isset($validated['brand']) && !empty($validated['brand'])) {
-             $query->where('brand_id', $validated['brand']);
-         }
+        if (isset($validated['brand']) && !empty($validated['brand'])) {
+            $query->where('brand_id', $validated['brand']);
+        }
 
         if (isset($validated['price_from']) && !empty($validated['price_from'])) {
             $query->where('price', '>=', $validated['price_from']);

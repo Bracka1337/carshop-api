@@ -1,14 +1,9 @@
 <x-app-layout>
-
     @include('components.search', [
-        'categories' => $categories,
-        'brands' => $brands,
-        'sizes' => $sizes,
-        'price_range' => $price_range,
+        'categories' => $search['categories'],
+        'brands' => $search['brands'],
+        'sizes' => $search['sizes'],
+        'price_range' => $search['priceRange']
     ])
-    @include('components.grid')
-
-
-
+    @include('components.grid', ['products' => $initialProducts])
 </x-app-layout>
-
