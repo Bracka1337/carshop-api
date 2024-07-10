@@ -11,6 +11,7 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
+
 <body class="antialiased bg-gray-100 flex flex-col min-h-screen ">
     <div class="container mx-auto p-8">
         <h1 class="text-2xl font-bold text-left text-indigo-600 mb-4">Hello, {{ $user->name }}</h1>
@@ -31,7 +32,7 @@
                     </div>
                     <div class="">
                         <p class="text-lg font-medium text-gray-900">Order #{{ $order->id }}</p>
-                        <p class="text-sm text-gray-600">Placed on J{{ $order->date->format('F j, Y') }}</p>
+                        <p class="text-sm text-gray-600">Placed on {{ \Carbon\Carbon::parse($order->date)->format('F j, Y') }}</p>
                         <p class="text-sm text-gray-600">Status: {{ $order->status }}</p>
                         <p class="text-sm text-gray-600">Total: ${{ number_format($order->total, 2) }}</p>
                         
@@ -42,6 +43,6 @@
             </ul>
         </div>
     </div>
-    @include('components.footer')
+    
 </body>
 </html>

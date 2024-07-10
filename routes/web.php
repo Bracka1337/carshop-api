@@ -21,7 +21,7 @@ use App\Http\Controllers\Api\AuthController;
 //     return view('main');
 // });
 
-Route::get('/', [ProductController::class, 'getSearchParameters'])->name('products.searchparameters')->name('main');
+Route::get('/', [ProductController::class, 'getSearchParameters'])->name('main');
 
 
 //route to get csrf token
