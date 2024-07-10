@@ -32,6 +32,7 @@ class ProductController extends Controller
         $searchParameters = $this->getSearchParameters();
         $initialProducts = $this->getInitialProducts();
 
+        
         //return main vie with these parameters
         return view('main', [
             'search' => $searchParameters,
