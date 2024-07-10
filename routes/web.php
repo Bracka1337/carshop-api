@@ -36,19 +36,17 @@ Route::get('/products', [ProductController::class, 'index']);
 Route::post('/products/search', [SearchController::class, 'search'])->name('products.search');
 Route::get('/products/search', [SearchController::class, 'search'])->name('products.search');
 
-Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-Route::get('/register', [AuthController::class,'register'])->name('register.store');
-
-
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [AuthController::class,'login'])->name('login.store');
-
-
 Route::get('/aboutus', function () {
     return view('aboutus');
 });
 
+Route::group(['middleware' => ['guest']], function () {
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    Route::get('/register', [AuthController::class,'register'])->name('register.store');
 
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class,'login'])->name('login.store');
+});
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/profile', [ProfileController::class,'show'])->name('profile.show');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
