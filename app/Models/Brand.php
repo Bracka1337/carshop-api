@@ -9,7 +9,7 @@ class Brand extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'brand_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'title',
@@ -19,7 +19,7 @@ class Brand extends Model
 
     public function products()
     {
-        return $this->hasMany(Product::class, 'brand_id');
+        return $this->hasMany(Product::class,  'id');
     }
 }
 

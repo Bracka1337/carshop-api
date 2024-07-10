@@ -21,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Blade::component('layouts.app', 'app-layout');
+        
         //needs to be included in the blade file
     }
 }
