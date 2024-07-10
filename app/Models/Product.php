@@ -22,18 +22,18 @@ class Product extends Model
         'category_id',
     ];
 
-    public function brand()
+    public function manufacturer()
     {
-        return $this->belongsTo(Brand::class, 'id');
+        return $this->belongsTo(Brand::class, 'brand_id');
     }
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'id');
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
     public function productQuantities()
     {
-        return $this->hasMany(Product_Quantity::class);
+        return $this->hasMany(Product_quantity::class, 'product_id');
     }
 }
