@@ -31,7 +31,7 @@ Route::post('/search', [SearchController::class, 'search'])->name('products.sear
 Route::get('/search', [SearchController::class, 'search'])->name('products.search');
 
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-Route::get('/register', [AuthController::class,'register'])->name('register.store');
+Route::post('/register', [AuthController::class,'register'])->name('register.store');
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class,'login'])->name('login.store');
