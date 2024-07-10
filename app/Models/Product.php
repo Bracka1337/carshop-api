@@ -24,12 +24,12 @@ class Product extends Model
 
     public function manufacturer()
     {
-        return $this->belongsTo(Brand::class, 'manufacturer_id');
+        return $this->belongsTo(Brand::class, 'brand_id');
     }
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
     public function productQuantities()

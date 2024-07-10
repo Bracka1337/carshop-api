@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\AuthController;
 
 /*
@@ -14,17 +16,33 @@ use App\Http\Controllers\Api\AuthController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+// Route::get('/', function () {
+//     return view('main');
+// });
+
+Route::get('/', [ProductController::class, 'getSearchParameters'])->name('products.searchparameters')->name('main');
+
+
+//route to get csrf token
+Route::get('/csrf-token', function () {
+    return csrf_token();
 });
+
+Route::get('/products', [ProductController::class, 'index']);
+Route::post('/products/search', [ProductController::class, 'search'])->name('products.search');
 
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class,'register'])->name('register.store');
 
+
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class,'login'])->name('login.store');
 
+Route::get('/logout', [AuthController::class, 'logout']);
 
 Route::get('/aboutus', function () {
     return view('aboutus');
 });
+
+Route::get('/profile', [ProfileController::class,'show'])->name('profile.show');
