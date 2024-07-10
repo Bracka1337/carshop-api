@@ -41,10 +41,13 @@ Route::get('/register', [AuthController::class,'register'])->name('register.stor
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class,'login'])->name('login.store');
 
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/aboutus', function () {
     return view('aboutus');
 });
 
-Route::get('/profile', [ProfileController::class,'show'])->name('profile.show');
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/profile', [ProfileController::class,'show'])->name('profile.show');
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+});
