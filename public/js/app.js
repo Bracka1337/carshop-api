@@ -1,10 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
     // homepage modal window
-    
+
     const products = document.querySelectorAll("#product");
     const modals = document.querySelectorAll("#modal");
     const productsDetail = document.querySelectorAll("#productDetail");
 
+    // product open
     products.forEach((product) => {
         product.addEventListener('click', ((event) => {
             event.preventDefault();
@@ -20,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }));
     });
 
+    // close modal
     modals.forEach((modal) => {
         modal.addEventListener('click', ((event) => {
             event.preventDefault();
@@ -33,5 +35,45 @@ document.addEventListener('DOMContentLoaded', function() {
                 productDetail.classList.add('hidden');
             }
         }));
+    });
+
+//shopping cart
+    //shopping cart close button 
+   
+    const closeButton = document.getElementById('close-button');
+    const shoppingCart = document.getElementById('shopping-cart');
+    const modal = document.getElementById('modal');
+    closeButton.addEventListener('click', (event) => {
+    event.preventDefault();
+        shoppingCart.classList.add('hidden');
+        modal.classList.add('hidden');
+    });
+    
+  
+    //shopping cart open button 
+
+    const openButton = document.getElementById('open-button');
+    openButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        modal.classList.remove('hidden');
+        shoppingCart.classList.remove('hidden');
+    });
+
+    
+    
+    modal.addEventListener('click', (event) => {
+        event.preventDefault()
+        
+        if (!shoppingCart.contains(event.target)) {
+            shoppingCart.classList.add('hidden');
+            modal.classList.add('hidden');
+        }
+    })
+
+    const continueShopping = document.getElementById('continue-shopping');
+    continueShopping .addEventListener('click', (event) => {
+        event.preventDefault();
+        shoppingCart.classList.add('hidden');
+        modal.classList.add('hidden');
     });
 });
