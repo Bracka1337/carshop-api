@@ -14,8 +14,4 @@ class Payment extends Model
         'date',
     ];
 
-    public function orders()
-    {
-        return $this->belongsTo(Order::class, 'payment_id', 'id');
-    }
 }
