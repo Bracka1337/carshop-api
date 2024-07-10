@@ -65,7 +65,6 @@ class ProductController extends Controller
         //load with categories and brands
         $products->load('category', 'brand');
 
-        dd($products);
         return $products;
     }
     /**
@@ -89,6 +88,7 @@ class ProductController extends Controller
         $validated = $request->validated();
 
         $query = Product::query();
+
 
         if (isset($validated['title']) && !empty($validated['title'])) {
             $query->where('title', 'like', "%{$validated['title']}%");
@@ -116,7 +116,10 @@ class ProductController extends Controller
 
         $products = $query->get();
 
-        return response()->json(['products' => $products]);
+        return view('main', [
+            'search' => $this->getSearchParameters(),
+            'initialProducts' => $products
+        ]);
     }
 
     /**
