@@ -18,7 +18,7 @@ class Product_quantityFactory extends Factory
     {
         return [
             'quantity' => fake()->numberBetween(1,10),
-            'product_id' => fake()->numberBetween(1,20),
+            'product_id' => fake()->numberBetween(1,200),
         ];
     }
 }

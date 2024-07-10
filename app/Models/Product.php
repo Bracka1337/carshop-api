@@ -24,6 +24,18 @@ class Product extends Model
 
     public function productQuantities()
     {
-        return $this->hasMany(Product_quantity::class, 'product_id');
+        return $this->hasMany(Product_quantity::class, 'id');
     }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class, 'brand_id', 'id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+
+    
 }
