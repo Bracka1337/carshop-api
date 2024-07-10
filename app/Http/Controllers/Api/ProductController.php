@@ -117,6 +117,8 @@ class ProductController extends Controller
 
         $products = $query->get();
 
+        // return response()->json($products);
+
         return view('main', [
             'search' => $this->getSearchParameters(),
             'initialProducts' => $products
