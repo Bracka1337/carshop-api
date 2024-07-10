@@ -9,7 +9,7 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'order_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'status',
@@ -19,18 +19,8 @@ class Order extends Model
         'payment_id',
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function payment()
-    {
-        return $this->belongsTo(Payment::class);
-    }
-
     public function productQuantities()
     {
-        return $this->hasMany(ProductQuantity::class);
+        return $this->hasMany(Product_quantity::class, 'order_id', 'id');
     }
 }
