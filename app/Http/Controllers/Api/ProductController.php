@@ -31,9 +31,6 @@ class ProductController extends Controller
     public function addProductsToCart(Request $request, $id)
     {
         
-        
-        dd($id);
-
         $product = Product::findOrFail($id);
         $cart = session()->get('cart', []);
         $quantity = $request->input('quantity', 1);
