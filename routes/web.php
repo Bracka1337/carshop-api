@@ -18,13 +18,7 @@ use App\Http\Controllers\Api\SearchController;
 |
 */
 
-
-// Route::get('/', function () {
-//     return view('main');
-// });
-
 Route::get('/', [MainController::class, 'getMainPageParams'])->name('main');
-
 
 //route to get csrf token
 Route::get('/csrf-token', function () {
@@ -39,15 +33,12 @@ Route::get('/search', [SearchController::class, 'search'])->name('products.searc
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::get('/register', [AuthController::class,'register'])->name('register.store');
 
-
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class,'login'])->name('login.store');
-
 
 Route::get('/aboutus', function () {
     return view('aboutus');
 });
-
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/profile', [ProfileController::class,'show'])->name('profile.show');
