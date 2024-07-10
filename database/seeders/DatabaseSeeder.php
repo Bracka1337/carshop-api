@@ -14,11 +14,11 @@ class DatabaseSeeder extends Seeder
     {
         \App\Models\Brand::factory()->count(5)->create();
         \App\Models\Category::factory()->count(5)->create();
-        \App\Models\Product::factory()->count(20)->create();
+        \App\Models\Product::factory()->count(200)->create();
         \App\Models\User::factory()
             ->has(\App\Models\Order::factory()
                 ->has(\App\Models\Product_quantity::factory()->count(3))
-            ->count(rand(1, 10)))
+            ->count(rand(1, 20)))
         ->count(10)->create();
     }
 }
