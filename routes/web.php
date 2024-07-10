@@ -33,8 +33,8 @@ Route::get('/csrf-token', function () {
 
 Route::get('/products', [ProductController::class, 'index']);
 
-Route::post('/products/search', [SearchController::class, 'search'])->name('products.search');
-Route::get('/products/search', [SearchController::class, 'search'])->name('products.search');
+Route::post('/search', [SearchController::class, 'search'])->name('products.search');
+Route::get('/search', [SearchController::class, 'search'])->name('products.search');
 
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::get('/register', [AuthController::class,'register'])->name('register.store');
