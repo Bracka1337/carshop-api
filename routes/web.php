@@ -21,7 +21,7 @@ use App\Http\Controllers\Api\AuthController;
 //     return view('main');
 // });
 
-Route::get('/', [ProductController::class, 'getSearchParameters'])->name('products.searchparameters')->name('main');
+Route::get('/', [ProductController::class, 'getSearchParameters'])->name('main');
 
 
 //route to get csrf token
@@ -39,7 +39,7 @@ Route::post('/register', [AuthController::class,'register'])->name('register.sto
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class,'login'])->name('login.store');
 
-Route::get('/logout', [AuthController::class, 'logout']);
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/aboutus', function () {
     return view('aboutus');
