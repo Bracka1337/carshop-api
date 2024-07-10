@@ -1,4 +1,4 @@
-
+{{-- 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,4 +25,4 @@
 
 <script src="{{ mix('js/app.js') }}"></script>
 </body>
-</html>
+</html> --}}

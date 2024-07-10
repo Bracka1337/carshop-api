@@ -37,19 +37,21 @@ Route::post('/products/search', [SearchController::class, 'search'])->name('prod
 Route::get('/products/search', [SearchController::class, 'search'])->name('products.search');
 
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-Route::get('/register', [AuthController::class,'register'])->name('register.store');
+Route::get('/register', [AuthController::class, 'register'])->name('register.store');
+
+Route::get('/products/{id}', [ProductController::class, 'addProductsToCart'])->name('products.addToCart');
 
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [AuthController::class,'login'])->name('login.store');
+Route::post('/login', [AuthController::class, 'login'])->name('login.store');
 
 
 Route::get('/aboutus', function () {
     return view('aboutus');
-});
+})->name('aboutus');
 
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/profile', [ProfileController::class,'show'])->name('profile.show');
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });

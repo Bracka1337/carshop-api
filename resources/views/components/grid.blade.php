@@ -5,8 +5,8 @@
         <h2 class="mb-4 font-bold text-xl text-gray-600">Product list:</h2>
         <div class="grid w-full sm:grid-cols-2 xl:grid-cols-4 gap-6">
             @foreach ($products as $product)
-                {{-- element --}}
-                <div class="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-sm" id="product">
+                <div class="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-sm m-2"
+                    id="product">
                     <div class="h-auto overflow-hidden">
                         <div class="h-44 overflow-hidden relative">
                             <img src="{{ $product->image_url }}" alt="{{ $product->title }}">
@@ -19,9 +19,20 @@
                                 {{ $product->description }}
                             </p>
                         </div>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="text-lg font-bold">${{ $product->price }}</span>
+
+                            <a href="/products/{{ $product->id }}"
+                                class="text-xs bg-gray-900 text-white px-2 py-1 rounded-full hover:bg-gray-800">Add To
+                                Cart</a>
+                        </div>
+
+
                     </div>
                 </div>
             @endforeach
+
+
         </div>
 
         @php
@@ -34,11 +45,13 @@
                 <div class="flex flex-col md:flex-row -mx-4">
                     <div class="md:flex-1 px-4">
                         <div class="rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
-                            <img class="w-full h-full object-cover" src="{{ $randomProduct->image_url }}" alt="{{ $randomProduct->title }}">
+                            <img class="w-full h-full object-cover" src="{{ $randomProduct->image_url }}"
+                                alt="{{ $randomProduct->title }}">
                         </div>
                     </div>
                     <div class="md:flex-1 px-4 pt-10">
-                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">{{ $randomProduct->title }}</h2>
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">{{ $randomProduct->title }}
+                        </h2>
                         <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">
                             {{ $randomProduct->brand }}
                         </p>
@@ -64,10 +77,14 @@
                         </div>
                         <div class="flex -mx-2 mb-4 pt-5">
                             <div class="w-1/2 px-2">
-                                <button class="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">Add to Cart</button>
+                                <button
+                                    class="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">Add
+                                    to Cart</button>
                             </div>
                             <div class="w-1/2 px-2">
-                                <button class="w-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-gray-300 dark:hover:bg-gray-600">Add to Wishlist</button>
+                                <button
+                                    class="w-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-gray-300 dark:hover:bg-gray-600">Add
+                                    to Wishlist</button>
                             </div>
                         </div>
                     </div>
