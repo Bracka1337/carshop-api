@@ -4,13 +4,13 @@
             class="bg-white p-6 rounded-lg shadow-lg grid grid-cols-4 gap-2 w-full max-w-5xl">
             <div class="p-4">
                 <label for="category" class="block mt-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-                <select id="category" name="category_id"
+                {{-- <select id="category" name="category_id"
                     class="block mt-2 w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 hover:shadow-md">
                     <option value="">Choose a category</option>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>{{ $category->title }}</option>
                     @endforeach
-                </select>
+                </select> --}}
             </div>
             <div class="p-4">
                 <label for="brand" class="block mt-2 text-sm font-medium text-gray-900 dark:text-white">Brand</label>
