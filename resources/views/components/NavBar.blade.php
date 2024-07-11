@@ -5,7 +5,7 @@
             <div class="relative flex w-full max-w-[250px] flex-col items-center overflow-y-auto bg-white pb-12">
                 <div class="flex flex-col gap-5">
                     <div class="ml-4 flex lg:ml-0">
-                        <a href="#">
+                        <a href="/">
                             <span class="sr-only">Your Company</span>
                             <img class="h-10 w-auto" src="{{ asset('images/logo2.svg') }}" alt="">
                         </a>
@@ -26,7 +26,7 @@
                 <div class="flex h-16 items-center">
                     <!-- Logo -->
                     <div class="ml-4 flex lg:ml-0">
-                        <a href="#">
+                        <a href="/">
                             <span class="sr-only">East Squad</span>
                             <img class="h-10 w-auto" src="{{ asset('images/logo2.svg') }}" alt="EastSquad logo">
                         </a>
