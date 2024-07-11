@@ -10,6 +10,7 @@ class AdminController extends Controller
     public function isAdmin() {}
 
     public function showAdmin() {
-        return view("admin");
+        
+        return view("admin.admin");
     }
 }
