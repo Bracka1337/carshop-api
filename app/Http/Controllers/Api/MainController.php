@@ -11,7 +11,7 @@ class MainController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $initialProducts = $this->filterProducts($request)->paginate(12)->withQueryString();
+        $initialProducts = $this->filterProducts($request)->with("images")->paginate(12)->withQueryString();
 
         $searchParameters = $this->getSearchParameters();
 
@@ -171,7 +171,7 @@ class MainController extends Controller
 
     public function removeFromCart($id)
     {
-        
+
         $cart = session()->get('cart', []);
 
         if (isset($cart[$id])) {
@@ -191,4 +191,3 @@ class MainController extends Controller
         return redirect()->back()->with('error', 'Product not found in cart!');
     }
 }
-
