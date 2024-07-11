@@ -30,7 +30,6 @@ class MainController extends Controller
             $query->where('title', 'like', "%{$request->title}%");
         }
 
-
         if ($request->has('brand') && !empty($request->brand)) {
             $query->where('brand_id', $request->brand);
         }
