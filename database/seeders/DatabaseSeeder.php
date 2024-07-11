@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,6 +13,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
+        \App\Models\User::create([
+            'username' => 'admin',
+            'email'=> 'admin@eastsquad.com',
+            'password'=> Hash::make('admin'),
+            'phone_nr' => 1337,
+            'role' => 'Admin',
+        ]);
+
+        \App\Models\User::create([
+            'username' => 'Default user',
+            'email'=> 'default@eastsquad.com',
+            'password'=> Hash::make('default'),
+            'phone_nr' => 12345678,
+            'role' => 'User',
+        ]);
+
         \App\Models\Brand::factory()->count(61)->create();
         \App\Models\Product::factory()->has(\App\Models\Image::factory()->count(2))
         ->count(200)->create();
