@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -12,15 +14,15 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return User::all();
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+
     }
 
     /**
@@ -28,7 +30,21 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+
+
+        $validated = $request->validate([
+            'username' => 'required',
+            'password'=> 'required|confirmed',
+            'email'=> 'required|email',
+            'phone_nr' => 'required',
+        ]);
+
+        User::create($validated);
+
+        return response()->json([
+            'Message' => "User Registerd",
+        ],201);
     }
 
     /**
@@ -36,7 +52,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return User::find($id);
     }
 
     /**
@@ -52,7 +68,17 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        dd($id);
+        $validated = $request->validate([
+            'username' => 'required|unique',
+            'password'=> 'required|confirmed',
+            'email'=> 'required|email|unique',
+            'phone_nr' => 'required|unique',
+        ]);
+
+        User::find($id)->update($validated);
+
+        return response()->json(['message'=> 'Updated']);
     }
 
     /**
@@ -60,6 +86,6 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        
     }
 }

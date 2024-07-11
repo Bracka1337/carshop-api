@@ -34,9 +34,8 @@ class DatabaseSeeder extends Seeder
         \App\Models\Product::factory()->has(\App\Models\Image::factory()->count(2))
         ->count(200)->create();
         \App\Models\User::factory()
-            ->has(\App\Models\Order::factory()
-                ->has(\App\Models\Product_quantity::factory()->count(3))
-            ->count(rand(1, 20)))
+            ->has(\App\Models\Order::factory()->count(rand(1, 20))
+                ->has(\App\Models\Product_quantity::factory()->count(3)))
         ->count(10)->create();
     }
 }

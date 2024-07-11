@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\MainController;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,9 +23,9 @@ use App\Http\Controllers\Admin\AdminController;
 Route::get('/', MainController::class)->name('main');
 
 //route to get csrf token
-// Route::get('/csrf-token', function () {
-//     return csrf_token();
-// });
+Route::get('/csrf-token', function () {
+    return csrf_token();
+});
 
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'addProductsToCart'])->name('products.addToCart');
@@ -53,6 +54,8 @@ Route::group(['middleware' => ['auth']], function () {
     });
 });
 
-Route::group(['middleware' => ['can:access-admin']], function () {
+Route::group(['middleware' => ['can:admin-access']], function () {
     Route::get('/admin', [AdminController::class, 'showAdmin'])->name('admin');
 });
+
+Route::resource('/admin/db/users', UserController::class);

@@ -23,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Blade::component('layouts.app', 'app-layout');
+        Blade::component('admin.layouts.admin','admin-layout');
         //needs to be included in the blade file
 
         Gate::define('admin-access', function (User $user) {
