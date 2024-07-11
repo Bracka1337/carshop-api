@@ -17,7 +17,13 @@
     <body class="antialiased bg-gray-100 flex items-center justify-center  flex-col min-h-screen mt-10">
     
     <div class="login-container bg-white p-8 shadow-md w-96">
-        <h1 class="text-2xl font-bold text-center text-indigo-600 mb-4"><a href="/">Login</a></h1>
+        <div class="mb-4 flex justify-center ">
+            <a href="/">
+                <span class="sr-only">East Squad</span>
+                <img class="h-10 w-auto" src="{{ asset('images/logo2.svg') }}" alt="EastSquad logo">
+            </a>
+        </div>
+        <h1 class="text-2xl font-bold  text-indigo-600 mb-4 ">Login</h1>
         <form action="{{ route('login.store') }}" method="post">
             @csrf
             
