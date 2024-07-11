@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const detailId = detail.getAttribute('product-data-id');
                 return productId === detailId;
             });
-            const modal = productDetail.parentElement.parentElement;
+            const modal = productDetail.parentElement;
             modal.classList.remove('hidden');
             productDetail.classList.remove('hidden');
         }));
