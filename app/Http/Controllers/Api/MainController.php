@@ -75,7 +75,7 @@ class MainController extends Controller
 
     public function getInitialProducts(Request $request)
     {
-        $products = Product::inRandomOrder()->paginate(12)->appends($request->query());
+        $products = Product::inRandomOrder()->paginate(20)->appends($request->query());
         $products->load('category', 'brand');
 
         return $products;
