@@ -47,15 +47,15 @@
         {{-- product details --}}
         @foreach ($products as $product)
             <div id="modal" class="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 z-50 hidden">
-                <div class="py-8 mt-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white shadow-lg rounded-xl hidden max-h-screen"
+                <div class="mt-10 max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 bg-white shadow-lg rounded-xl hidden h-5/6"
                         id="productDetail"
                         product-data-id="{{ $product->id }}">
                     <div class="flex justify-end">
                         <span id="closeModal"
                             class="cursor-pointer text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-300 text-3xl">&times;</span>
                     </div>
-                    <div class="flex flex-col md:flex-row -mx-4">
-                        <div class="md:flex-1 px-4">
+                    <div class="flex md:flex-row -mx-4 border-solid border-2 ">
+                        <div class="md:flex-1 px-4 h-full ">
                             <div class="rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
                                 <img class="w-full h-full object-cover" src="{{ $product->image_url }}"
                                     alt="{{ $product->title }}">
