@@ -14,8 +14,7 @@ class Payment extends Model
         'date',
     ];
 
-    public function orders()
-    {
-        return $this->hasMany(Order::class, 'payment_id', 'id');
+    public function order() {
+        return $this->hasOne(Order::class);
     }
 }

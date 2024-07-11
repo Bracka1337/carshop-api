@@ -10,15 +10,17 @@ use App\Models\Brand;
 
 class MainController extends Controller
 {
-    public function getMainPageParams()
+    public function getMainPageParams(Request $request)
     {
-        $searchParameters = $this->getSearchParameters();
-        $initialProducts = $this->getInitialProducts();
+        if ($request->all() == []) {
+            $searchParameters = $this->getSearchParameters();
+            $initialProducts = $this->getInitialProducts();
 
-         return view('main', [
-            'search' => $searchParameters,
-            'initialProducts' => $initialProducts
-        ]);
+            return view('main', [
+                'search' => $searchParameters,
+                'initialProducts' => $initialProducts
+            ]);
+        }
     }
 
     public function getSearchParameters()
