@@ -17,9 +17,9 @@
     <body class="antialiased bg-gray-100 flex items-center justify-center flex-col min-h-screen">
     
     <div class="register-container bg-white p-8  shadow-md  mt-10 mb-10 w-96">
-        <div class="mb-10 text- ">
+        <div class="mb-4 flex justify-center ">
             <a href="/">
-                <span class="sr-only">East Squad</span>
+                <span class="sr-only ">East Squad</span>
                 <img class="h-10 w-auto" src="{{ asset('images/logo2.svg') }}" alt="EastSquad logo">
             </a>
         </div>

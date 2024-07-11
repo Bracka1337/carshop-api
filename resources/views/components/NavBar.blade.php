@@ -46,7 +46,7 @@
 
                     <!-- Logo -->
                     <div class="ml-4 flex lg:ml-0">
-                        <a href="#">
+                        <a href="/">
                             <span class="sr-only">East Squad</span>
                             <img class="h-10 w-auto" src="{{ asset('images/logo2.svg') }}" alt="EastSquad logo">
                         </a>
@@ -64,7 +64,7 @@
 
                             </div>
 
-                            <a href="#"
+                            <a href="/aboutus"
                                 class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">About
                                 us</a>
                             <a href="#"
