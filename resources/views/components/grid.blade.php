@@ -2,6 +2,12 @@
 
 <div class="relative flex min-h-96 flex-col justify-center overflow-hidden bg-gray- py-6 sm:py-12">
     <div class="mx-auto max-w-screen-xl px-4 w-full">
+        @if ($products->isEmpty())
+            <div class="flex items
+            -center justify-center">
+            <p class="text-2xl font-bold text-gray-600">No products found</p>
+            </div>
+        @else
         <h2 class="mb-4 font-bold text-xl text-gray-600">Product list:</h2>
         <div class="grid w-full sm:grid-cols-2 xl:grid-cols-4 gap-6">
             @foreach ($products as $product)
@@ -26,7 +32,10 @@
                 </div> <a href="{{ route('products.addToCart', $product->id) }}" class="z-100">Add to
                             cart</a>
             @endforeach
+                <div class="flex"></div>
+            {{$products->onEachSide(2)->links()}}
         </div>
+        @endif
 
 
 
