@@ -18,12 +18,12 @@ use App\Http\Controllers\Api\SearchController;
 |
 */
 
-Route::get('/', [MainController::class, 'getMainPageParams'])->name('main');
+Route::get('/', MainController::class)->name('main');
 
 //route to get csrf token
-Route::get('/csrf-token', function () {
-    return csrf_token();
-});
+// Route::get('/csrf-token', function () {
+//     return csrf_token();
+// });
 
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'addProductsToCart'])->name('products.addToCart');

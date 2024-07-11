@@ -14,18 +14,19 @@ class Product extends Model
         'description',
         'preview_img_uri',
         'material',
-        'size',
+        'diameter',
+        'width',
+        'et',
+        'cb',
+        'bolt',
+        'bolt_diameter',
+        'type',
         'price',
         'brand_id',
-        'category_id',
     ];
 
     public function brand() {
         return $this->belongsTo(Brand::class);
-    }
-
-    public function category() {
-        return $this->belongsTo(Category::class);
     }
 
     public function images() {

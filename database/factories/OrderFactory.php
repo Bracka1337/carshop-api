@@ -18,7 +18,6 @@ class OrderFactory extends Factory
     {
         return [
             'status' => fake()->randomElement(['Processing','Delivered', 'Delivering', 'Failed']),
-            'quantity' => 1,
             'date' => fake()->date(now()),
             'payment_id' => \App\Models\Payment::factory(),
         ];

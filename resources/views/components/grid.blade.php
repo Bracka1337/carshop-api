@@ -1,33 +1,42 @@
 @props(['products'])
 
 <div class="relative flex min-h-96 flex-col justify-center overflow-hidden bg-gray- py-6 sm:py-12">
-  <div class="mx-auto max-w-screen-xl px-4 w-full">
-      <h2 class="mb-4 font-bold text-xl text-gray-600">Product list:</h2>
-      <div class="grid w-full sm:grid-cols-2 xl:grid-cols-4 gap-6">
-          @foreach ($products as $product)
-              {{-- element --}}
-              <div class="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-sm" id="product" product-id="{{$product->id }}">
-                  <div class="h-auto overflow-hidden">
-                      <div class="h-44 overflow-hidden relative">
-                          <img src="{{ $product->image_url }}" alt="{{ $product->title }}">
-                      </div>
-                  </div>
-                  <div class="bg-white py-4 px-3 h-full max-h-28 overflow-hidden">
-                    <h3 class="text-xs mb-2 font-medium">{{ $product->title }}</h3>
-                    <div class="flex justify-between items-center">
-                        <p class="text-xs text-gray-400 line-clamp-4">
-                            {{ $product->description }}
-                        </p>
+    <div class="mx-auto max-w-screen-xl px-4 w-full">
+        @if ($products->isEmpty())
+            <div class="flex items
+            -center justify-center">
+            <p class="text-2xl font-bold text-gray-600">No products found</p>
+            </div>
+        @else
+        <h2 class="mb-4 font-bold text-xl text-gray-600">Product list:</h2>
+        <div class="grid w-full sm:grid-cols-2 xl:grid-cols-4 gap-6">
+            @foreach ($products as $product)
+                <div class="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-sm"
+                    id="product" product-id="{{ $product->id }}">
+                    <div class="h-auto overflow-hidden">
+                        <div class="h-44 overflow-hidden relative">
+                            <img src="{{ $product->image_url }}" alt="{{ $product->title }}">
+                        </div>
                     </div>
-                </div>
-                <div class="flex"> 
+                    <div class="bg-white py-4 px-3 h-full max-h-28 overflow-hidden">
+                        <h3 class="text-xs mb-2 font-medium">{{ $product->title }}</h3>
+                        <div class="flex justify-between items-center">
+                            <p class="text-xs text-gray-400 line-clamp-4">
+                                {{ $product->description }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex"> 
                        
                 </div> <a href="{{ route('products.addToCart', $product->id) }}" class="z-100">Add to
-                    cart</a>
-              </div>
-          @endforeach
-      </div>
-    
+                            cart</a>
+            @endforeach
+            <div class="flex"></div>
+            {{$products->onEachSide(2)->links()}}
+        </div>
+        @endif
+
+
 
         {{-- product details --}}
         @foreach ($products as $product)
