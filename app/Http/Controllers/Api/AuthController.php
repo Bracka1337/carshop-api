@@ -55,7 +55,6 @@ class AuthController extends Controller
             $cookie = cookie('access_token', $token, 60, null, null, true, true);
             return redirect()->intended('profile')->cookie($cookie);
         }
-        dd();
         return back()->withErrors([
             'email' => 'Invalid Credentials.',
         ])->withInput($request->only('email'));
