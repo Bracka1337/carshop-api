@@ -17,8 +17,13 @@
     <body class="antialiased bg-gray-100 flex items-center justify-center flex-col min-h-screen">
     
     <div class="register-container bg-white p-8  shadow-md  mt-10 mb-10 w-96">
-        
-        <h1 class="text-2xl font-bold text-center text-indigo-600 mb-4"><a href="/">Register</a></h1>
+        <div class="mb-10 text- ">
+            <a href="/">
+                <span class="sr-only">East Squad</span>
+                <img class="h-10 w-auto" src="{{ asset('images/logo2.svg') }}" alt="EastSquad logo">
+            </a>
+        </div>
+        <h1 class="text-2xl font-bold  text-indigo-600 mb-4 ">Register</h1>
         <form action="{{ route('register.store') }}" method="post">
             @csrf
             <div class="mb-4">
@@ -32,11 +37,7 @@
                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
             </div>
             
-            <div class="mb-4">
-                <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-                <input type="text" id="name" name="name" required
-                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-            </div>
+            
 
             <div class="mb-4">
                 <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
