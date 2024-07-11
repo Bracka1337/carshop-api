@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\Api\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\MainController;
 use App\Http\Controllers\Api\SearchController;
+use App\Http\Controllers\Admin\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,10 +45,14 @@ Route::group(['middleware' => ['guest']], function () {
 });
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/orderdetails', function () {
+        return view('orderdetails');
+    });
 });
 
-Route::get('/profile/orderdetails', function () {
-    return view('orderdetails');
+Route::group(['middleware' => ['can:access-admin']], function () {
+    Route::get('/admin', [AdminController::class, 'showAdmin'])->name('admin');
 });
