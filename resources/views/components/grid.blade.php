@@ -32,12 +32,11 @@
                     <a href="{{ route('products.addToCart', $product->id) }}" class="px-3 w-full h-full block">Add to cart</a>
                 </div>
             </div>
-            
-                
             @endforeach
-        </div>
-            <div class="flex"></div>
-            {{$products->onEachSide(2)->links()}}
+            </div>
+                <div class="flex pt-5 justify-center gap-x-10">
+                    {{$products->onEachSide(2)->links()}}
+                </div>
             </div>
         @endif
 
