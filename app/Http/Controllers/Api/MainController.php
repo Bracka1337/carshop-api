@@ -11,8 +11,7 @@ class MainController extends Controller
 {
     public function __invoke(Request $request)
     {
-
-        $initialProducts = $this->filterProducts($request)->paginate(10)->withQueryString();
+        $initialProducts = $this->filterProducts($request)->paginate(12)->withQueryString();
 
         $searchParameters = $this->getSearchParameters();
 
@@ -110,7 +109,7 @@ class MainController extends Controller
 
     public function getInitialProducts(Request $request)
     {
-        $products = Product::inRandomOrder()->paginate(12)->appends($request->query());
+        $products = Product::inRandomOrder()->paginate(20)->appends($request->query());
         $products->load('category', 'brand');
 
         return $products;

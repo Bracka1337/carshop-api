@@ -1,41 +1,46 @@
 @props(['products'])
 
-<div class="relative flex min-h-96 flex-col justify-center overflow-hidden bg-gray- py-6 sm:py-12">
+<div class="relative flex min-h-96 flex-col justify-center overflow-hidden bg-gray-100 py-6 sm:py-12">
     <div class="mx-auto max-w-screen-xl px-4 w-full">
         @if ($products->isEmpty())
-            <div class="flex items
-            -center justify-center">
-            <p class="text-2xl font-bold text-gray-600">No products found</p>
+            <div class="flex items-center justify-center">
+                <p class="text-2xl font-bold text-gray-600">No products found</p>
             </div>
         @else
+
         <h2 class="mb-4 font-bold text-xl text-gray-600">Product list:</h2>
         <div class="grid w-full sm:grid-cols-2 xl:grid-cols-4 gap-6">
             @foreach ($products as $product)
-                <div class="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-sm"
-                    id="product" product-id="{{ $product->id }}">
+            <div class="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 w-full md:w-72"
+            >
+                <div class="flex flex-col hover:cursor-pointer" id="product" product-id="{{ $product->id }}">
                     <div class="h-auto overflow-hidden">
                         <div class="h-44 overflow-hidden relative">
                             <img src="{{ $product->image_url }}" alt="{{ $product->title }}">
                         </div>
                     </div>
-                    <div class="bg-white py-4 px-3">
+                    <div class="bg-white py-4 px-3 overflow-hidden h-28">
                         <h3 class="text-xs mb-2 font-medium">{{ $product->title }}</h3>
                         <div class="flex justify-between items-center">
-                            <p class="text-xs text-gray-400">
+                            <p class="text-xs text-gray-400 line-clamp-4">
                                 {{ $product->description }}
                             </p>
                         </div>
                     </div>
-                    <div class="flex"> 
-                       
-                    </div>
-                </div> <a href="{{ route('products.addToCart', $product->id) }}" class="z-100">Add to
-                            cart</a>
+                </div>
+                <div id="addToCart" class="hover:bg-gray-200 hover:cursor-pointer h-12">
+                    <a href="{{ route('products.addToCart', $product->id) }}" class="px-3 w-full h-full block">Add to cart</a>
+                </div>
+            </div>
             @endforeach
-                <div class="flex"></div>
-            {{$products->onEachSide(2)->links()}}
-        </div>
+            </div>
+            <div class="mt-8 flex justify-center">
+                {{$products->onEachSide(2)->links('components.pagination.pagination')}}
+            </div>
         @endif
+    </div>
+</div>
+
 
 
 

@@ -44,7 +44,9 @@
                                         aria-expanded="false">Home</button>
                                 </div>
                             </div>
-                            <a href="#"
+
+                            <a href="/aboutus"
+
                                 class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">About
                                 us</a>
                             <a href="#"

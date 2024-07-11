@@ -45,11 +45,14 @@ Route::group(['middleware' => ['guest']], function () {
 });
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/orderdetails', function () {
+        return view('orderdetails');
+    });
 });
 
 Route::group(['middleware' => ['can:access-admin']], function () {
     Route::get('/admin', [AdminController::class, 'showAdmin'])->name('admin');
-
 });
