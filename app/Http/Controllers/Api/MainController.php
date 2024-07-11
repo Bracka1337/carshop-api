@@ -55,14 +55,14 @@ class MainController extends Controller
 
     public function getSearchParameters()
     {
-        $categories = Category::select('id', 'title')->distinct('title')->get();
+        // $categories = Category::select('id', 'title')->distinct('title')->get();
         $brands = Brand::select(['id', 'title'])->distinct("title")->get();
         $sizes = Product::select('size')->distinct()->get();
         $minPrice = Product::min('price');
         $maxPrice = Product::max('price');
 
         $searchParametrs =  [
-            'categories' => $categories,
+            // 'categories' => $categories,
             'brands' => $brands,
             'sizes' => $sizes,
             'priceRange' => [
