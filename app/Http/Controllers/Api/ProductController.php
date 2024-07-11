@@ -30,7 +30,7 @@ class ProductController extends Controller
 
     public function addProductsToCart(Request $request, $id)
     {
-        
+
         $product = Product::findOrFail($id);
         $cart = session()->get('cart', []);
         $quantity = $request->input('quantity', 1);
@@ -48,9 +48,7 @@ class ProductController extends Controller
 
         session()->put('cart', $cart);
 
-        return response()->json($cart);
-
-
+        return redirect()->back()->with('success', 'Product added successfully!');
     }
 
 

@@ -5,7 +5,6 @@
         <h2 class="mb-4 font-bold text-xl text-gray-600">Product list:</h2>
         <div class="grid w-full sm:grid-cols-2 xl:grid-cols-4 gap-6">
             @foreach ($products as $product)
-                {{-- element --}}
                 <div class="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-sm"
                     id="product" product-id="{{ $product->id }}">
                     <div class="h-auto overflow-hidden">
@@ -17,16 +16,18 @@
                         <h3 class="text-xs mb-2 font-medium">{{ $product->title }}</h3>
                         <div class="flex justify-between items-center">
                             <p class="text-xs text-gray-400">
-                                {{ $product->description }}git 
+                                {{ $product->description }}
                             </p>
                         </div>
-
+                    </div>
+                    <div class="flex"> 
+                        <a href="{{ route('products.addToCart', $product->id) }}" class="z-100">Add to
+                            cart</a>
                     </div>
                 </div>
-                <a href={{ route('products.addToCart', $product->id) }} class=" inset-0 z-100">Add to cart</a>
             @endforeach
-
         </div>
+
 
 
         {{-- product details --}}
