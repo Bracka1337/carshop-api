@@ -37,6 +37,36 @@ document.addEventListener('DOMContentLoaded', function() {
         }));
     });
 
+    // grid infinite scroll
+
+    // document.getElementById('fetchDataForm').submit();
+
+    document.getElementById('productListDataForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+// 
+        fetch('/path/to/server/script', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams(new FormData(this))
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Update the page with the new data
+            document.getElementById('user-name').textContent = data.name;
+            // Update other elements similarly
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+    });
+
 //shopping cart
     //shopping cart close button 
    
