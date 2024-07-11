@@ -1,6 +1,6 @@
 <x-app-layout>
     @include('components.search', [
-        'categories' => $search['categories'],
+        // 'categories' => $search['categories'],
         'brands' => $search['brands'],
         'sizes' => $search['sizes'],
         'price_range' => $search['priceRange'],
