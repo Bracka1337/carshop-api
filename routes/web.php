@@ -37,7 +37,7 @@ Route::get('/aboutus', function () {
 
 Route::group(['middleware' => ['guest']], function () {
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-    Route::get('/register', [AuthController::class,'register'])->name('register.store');
+    Route::post('/register', [AuthController::class,'register'])->name('register.store');
 
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class,'login'])->name('login.store');
@@ -46,4 +46,8 @@ Route::group(['middleware' => ['guest']], function () {
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+});
+
+Route::get('/profile/orderdetails', function () {
+    return view('orderdetails');
 });
