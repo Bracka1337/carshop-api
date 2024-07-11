@@ -22,7 +22,6 @@ class AuthController extends Controller
             'password'=> 'required|confirmed',
             'email'=> 'required|email',
             'phone_nr' => 'required',
-            'name' => 'required',
         ]);
 
         User::create([
@@ -31,7 +30,6 @@ class AuthController extends Controller
             'email' => $request->email,
             'phone_nr' => $request->phone_nr,
             'role' => 'User',
-            'name'=> $request->name
         ]);
 
         return redirect()->route('login')->with('success','Registered Sucessfully!');
@@ -57,7 +55,6 @@ class AuthController extends Controller
             $cookie = cookie('access_token', $token, 60, null, null, true, true);
             return redirect()->intended('profile')->cookie($cookie);
         }
-        dd();
         return back()->withErrors([
             'email' => 'Invalid Credentials.',
         ])->withInput($request->only('email'));
