@@ -81,4 +81,30 @@ document.addEventListener('DOMContentLoaded', function() {
         modal.classList.add('hidden');
     });
 
+
+
+// banner
+
+    const subtitles = [
+        "for everyone",
+        "empowering developers",
+        "building the future",
+        "secure and fast"
+      ];
+      
+      let currentSubtitleIndex = 0;
+      
+      function updateSubtitle() {
+        const subtitle = subtitles[currentSubtitleIndex];
+        document.getElementById('bannerSubtitle').innerText = subtitle;
+      
+        currentSubtitleIndex++;
+        if (currentSubtitleIndex >= subtitles.length) {
+          currentSubtitleIndex = 0; // Loop back to the first subtitle after showing all
+        }
+      
+        setTimeout(updateSubtitle, 3000); // Change subtitle every 3 seconds
+      }
+      
+      updateSubtitle(); // Initialize the subtitle
 });

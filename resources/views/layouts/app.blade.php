@@ -26,6 +26,7 @@
 
         <!-- Page Content -->
         <main>
+            @include('components.checkout')
             @include('components.NavBar')
             @include('components.banner')
             @include('components.cart')
