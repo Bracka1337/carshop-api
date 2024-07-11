@@ -21,10 +21,10 @@
                         </div>
                     </div>
                     <div class="flex"> 
-                        <a href="{{ route('products.addToCart', $product->id) }}" class="z-100">Add to
-                            cart</a>
+                       
                     </div>
-                </div>
+                </div> <a href="{{ route('products.addToCart', $product->id) }}" class="z-100">Add to
+                            cart</a>
             @endforeach
         </div>
 
