@@ -120,7 +120,8 @@ class MainController extends Controller
         $product = Product::findOrFail($id);
         $cart = session()->get('cart', []);
         $quantity = $request->input('quantity', 1);
-
+        $image = $product->images[0]['img_uri'];
+    
         if (isset($cart[$id])) {
             $cart[$id]['quantity'] += $quantity;
         } else {
@@ -128,28 +129,36 @@ class MainController extends Controller
                 'title' => $product->title,
                 'brand' => $product->brand->title,
                 'quantity' => $quantity,
-                'price' => $product->price,
-                'preview_img' => $product->preview_img_uri
+                'price' => (int)$product->price,
+                'image' => $image
             ];
         }
-
+    
         session()->put('cart', $cart);
 
+         
+ 
         $total = 0;
+ 
         foreach ($cart as $item) {
-            $total += $item['price'] * $item['quantity'];
+            
+            if (is_array($item)) {
+                    $total += $item['price'] * $item['quantity'];
+               
+            }
+            
         }
-
         session()->put('cart.total', $total);
-
+    
         return redirect()->back()->with('success', 'Product added successfully!');
     }
+    
 
-    public function updateCart(Request $request, $id)
+    public function updateCart(Request $request, $id, $quantity)
     {
         $cart = session()->get('cart', []);
 
-        dd($id);
+        dd($id, $quantity, $cart);
 
         if (isset($cart[$id])) {
 
