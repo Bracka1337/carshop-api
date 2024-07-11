@@ -12,7 +12,6 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->string('preview_img_uri');
             $table->string('diameter');
             $table->string('width');
             $table->string('et');
