@@ -11,8 +11,7 @@ class MainController extends Controller
 {
     public function __invoke(Request $request)
     {
-
-        $initialProducts = $this->filterProducts($request)->paginate(10)->withQueryString();
+        $initialProducts = $this->filterProducts($request)->paginate(12)->withQueryString();
 
         $searchParameters = $this->getSearchParameters();
 
