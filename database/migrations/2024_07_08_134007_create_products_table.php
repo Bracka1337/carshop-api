@@ -12,7 +12,7 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->string('img_uri');
+            $table->string('preview_img_uri');
             $table->string('material');
             $table->string('size');
             $table->decimal('price', 10, 2);
