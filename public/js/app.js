@@ -76,4 +76,69 @@ document.addEventListener('DOMContentLoaded', function() {
         shoppingCart.classList.add('hidden');
         modal.classList.add('hidden');
     });
+
+
+//banner
+
+    // window.onload = function() {
+        const dynamicWords = ["cars", "motorcycles", "enthusiasts", "everyone"];
+        // const dynamicWords = ["cars", "motorcycles"];
+        // Retrieve the current word index from localStorage, default to 0 if not found
+        let currentWordIndex = parseInt(localStorage.getItem('dynamicWordIndex')) || 0;
+        const targetElement = document.querySelector('.Banner__title--second');
+
+        async function updateDynamicWord() {
+            const dynamicWord = dynamicWords[currentWordIndex];
+            const targetElement = document.querySelector('.Banner__title--second');
+            // Clear existing content
+            if (targetElement.textContent.length > 0) {
+                let str = targetElement.textContent;
+               await eraseText(targetElement);
+            }
+            targetElement.innerHTML = ''; // Use innerHTML to clear the element
+            
+            // Typing effect
+            await typeText(targetElement, dynamicWord);
+
+            currentWordIndex++;
+            if (currentWordIndex >= dynamicWords.length) {
+                currentWordIndex = 0; // Loop back to the first word after showing all
+            }
+
+        setTimeout(updateDynamicWord, 3000); // Change word every 3 seconds
+        }
+
+        // Typing effect function
+        async function typeText(element, text, index = 0) {
+            return new Promise((resolve) => {
+                function typeNextCharacter() {
+                    if (index < text.length) {
+                        element.innerHTML += text.charAt(index);
+                        index++;
+                        setTimeout(typeNextCharacter, 100); // Adjust delay as needed
+                    } else {
+                        resolve();
+                    }
+                }
+                typeNextCharacter();
+            });
+        }
+
+        async function eraseText(element) {
+            return new Promise((resolve) => {
+                function eraseNextCharacter() {
+                    if (element.textContent.length > 0) {
+                        element.textContent = element.textContent.slice(0, -1);
+                        setTimeout(eraseNextCharacter, 100); // Adjust delay as needed
+                    } else {
+                        resolve();
+                    }
+                }
+                eraseNextCharacter();
+            });
+        }
+
+        updateDynamicWord(); // Initialize the dynamic word
+    // };
 });
+

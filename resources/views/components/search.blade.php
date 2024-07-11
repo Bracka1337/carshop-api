@@ -1,5 +1,5 @@
 <div class="search">
-    <div class="flex items-center justify-center mt-40">
+    <div class="flex items-center justify-center mt-16">
         <form action="{{ route('products.search') }}" method="POST"
             class="bg-white p-6 rounded-lg shadow-lg grid grid-cols-4 gap-2 w-full max-w-5xl">
             @csrf

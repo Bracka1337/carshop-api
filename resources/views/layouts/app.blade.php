@@ -28,6 +28,7 @@
         <main>
             @include('components.NavBar')
             @include('components.banner')
+            
             @include('components.cart')
             {{ $slot }}
         </main>
