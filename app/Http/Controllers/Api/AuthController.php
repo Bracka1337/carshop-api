@@ -22,7 +22,6 @@ class AuthController extends Controller
             'password'=> 'required|confirmed',
             'email'=> 'required|email',
             'phone_nr' => 'required',
-            'name' => 'required',
         ]);
 
         User::create([
@@ -31,7 +30,6 @@ class AuthController extends Controller
             'email' => $request->email,
             'phone_nr' => $request->phone_nr,
             'role' => 'User',
-            'name'=> $request->name
         ]);
 
         return redirect()->route('login')->with('success','Registered Sucessfully!');

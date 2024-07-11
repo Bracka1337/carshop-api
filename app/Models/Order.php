@@ -13,6 +13,7 @@ class Order extends Model
         'status',
         'date',
         'user_id',
+        'payment_id'
     ];
 
     public function user() {
@@ -20,6 +21,10 @@ class Order extends Model
     }
 
     public function payment() { 
-        return $this->hasOne(Payment::class, 'order_id');
+        return $this->hasOne(Payment::class);
+    }
+
+    public function productQuantities() {
+        return $this->hasMany(Product_quantity::class);
     }
 }
