@@ -26,6 +26,8 @@
                     </div>
                 </div>
             @endforeach
+
+            {{$products->onEachSide(2)->links()}}
         </div>
 
 
