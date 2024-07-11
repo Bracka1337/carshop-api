@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Gate;
+use App\Models\User;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,7 +23,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Blade::component('layouts.app', 'app-layout');
-        
         //needs to be included in the blade file
+
+        Gate::define('admin-access', function (User $user) {
+            return $user->role === 'Admin';
+        });
     }
 }
