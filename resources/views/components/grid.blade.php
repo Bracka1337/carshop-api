@@ -68,10 +68,10 @@
                                         <span class="font-bold text-gray-700 dark:text-gray-300">Price:</span>
                                         <span class="text-gray-600 dark:text-gray-300">${{ $product->price }}</span>
                                     </div>
-                                    <div>
+                                    {{-- <div>
                                         <span class="font-bold text-gray-700 dark:text-gray-300">Category:</span>
                                         <span class="text-gray-600 dark:text-gray-300">{{ $product->category }}</span>
-                                    </div>
+                                    </div> --}}
                                     <div>
                                         <span class="font-bold text-gray-700 dark:text-gray-300">Size:</span>
                                         <span class="text-gray-600 dark:text-gray-300">{{ $product->size }}</span>
