@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Product;
+use Illuminate\Support\Facades\Log;
 
 
 class ProductController extends Controller
@@ -14,6 +16,8 @@ class ProductController extends Controller
     public function index()
     {
         //
+        $products = Product::all();
+        return response()->json($products);
     }
 
     /**
@@ -23,6 +27,30 @@ class ProductController extends Controller
     {
         //
     }
+
+    public function addProductsToCart(Request $request, $id)
+    {
+
+        $product = Product::findOrFail($id);
+        $cart = session()->get('cart', []);
+        $quantity = $request->input('quantity', 1);
+
+        if (isset($cart[$id])) {
+            $cart[$id]['quantity'] += $quantity;
+        } else {
+            $cart[$id] = [
+                'title' => $product->title,
+                'quantity' => $quantity,
+                'price' => $product->price,
+                'img_uri' => $product->img_uri
+            ];
+        }
+
+        session()->put('cart', $cart);
+
+        return redirect()->back()->with('success', 'Product added successfully!');
+    }
+
 
 
     /**

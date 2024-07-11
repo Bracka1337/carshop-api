@@ -26,22 +26,25 @@ Route::get('/csrf-token', function () {
 });
 
 Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/{id}', [ProductController::class, 'addProductsToCart'])->name('products.addToCart');
 
 Route::post('/search', [SearchController::class, 'search'])->name('products.search');
 Route::get('/search', [SearchController::class, 'search'])->name('products.search');
 
-Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-Route::post('/register', [AuthController::class,'register'])->name('register.store');
-
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [AuthController::class,'login'])->name('login.store');
-
 Route::get('/aboutus', function () {
     return view('aboutus');
+})->name('aboutus');
+
+Route::group(['middleware' => ['guest']], function () {
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    Route::get('/register', [AuthController::class,'register'])->name('register.store');
+
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class,'login'])->name('login.store');
 });
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/profile', [ProfileController::class,'show'])->name('profile.show');
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 

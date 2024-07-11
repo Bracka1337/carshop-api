@@ -9,11 +9,17 @@ class Product_quantity extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'id';
-
     protected $fillable = [
         'quantity',
         'order_id',
         'product_id',
     ];
+
+    public function products() {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function orders() {
+        return $this->belongsTo(Order::class);
+    }
 }
