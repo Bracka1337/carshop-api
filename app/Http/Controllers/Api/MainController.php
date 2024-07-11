@@ -114,4 +114,81 @@ class MainController extends Controller
 
         return $products;
     }
+
+    public function addProductsToCart(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+        $cart = session()->get('cart', []);
+        $quantity = $request->input('quantity', 1);
+
+        if (isset($cart[$id])) {
+            $cart[$id]['quantity'] += $quantity;
+        } else {
+            $cart[$id] = [
+                'title' => $product->title,
+                'brand' => $product->brand->title,
+                'quantity' => $quantity,
+                'price' => $product->price,
+                'preview_img' => $product->preview_img_uri
+            ];
+        }
+
+        session()->put('cart', $cart);
+
+        $total = 0;
+        foreach ($cart as $item) {
+            $total += $item['price'] * $item['quantity'];
+        }
+
+        session()->put('cart.total', $total);
+
+        return redirect()->back()->with('success', 'Product added successfully!');
+    }
+
+    public function updateCart(Request $request, $id)
+    {
+        $cart = session()->get('cart', []);
+
+        dd($id);
+
+        if (isset($cart[$id])) {
+
+            $cart[$id]['quantity'] = $request->input('quantity', 1);
+            session()->put('cart', $cart);
+
+            $total = 0;
+            foreach ($cart as $item) {
+                $total += $item['price'] * $item['quantity'];
+            }
+
+            session()->put('cart.total', $total);
+
+            return redirect()->back()->with('success', 'Cart updated successfully!');
+        }
+
+        return redirect()->back()->with('error', 'Product not found in cart!');
+    }
+
+    public function removeFromCart($id)
+    {
+        
+        $cart = session()->get('cart', []);
+
+        if (isset($cart[$id])) {
+            unset($cart[$id]);
+            session()->put('cart', $cart);
+
+            $total = 0;
+            foreach ($cart as $item) {
+                $total += $item['price'] * $item['quantity'];
+            }
+
+            session()->put('cart.total', $total);
+
+            return redirect()->back()->with('success', 'Product removed successfully!');
+        }
+
+        return redirect()->back()->with('error', 'Product not found in cart!');
+    }
 }
+
