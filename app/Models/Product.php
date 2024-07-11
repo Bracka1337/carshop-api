@@ -22,6 +22,7 @@ class Product extends Model
         'type',
         'price',
         'brand_id',
+        'preview_img_uri'
     ];
 
     public function brand() {

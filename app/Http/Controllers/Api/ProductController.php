@@ -31,7 +31,7 @@ class ProductController extends Controller
     public function addProductsToCart(Request $request, $id)
     {
 
-        $product = Product::findOrFail($id);
+        $product = Product::findOrFail($id)->with('brand')->first();
         $cart = session()->get('cart', []);
         $quantity = $request->input('quantity', 1);
 
@@ -40,9 +40,10 @@ class ProductController extends Controller
         } else {
             $cart[$id] = [
                 'title' => $product->title,
+                'brand' => $product->brand->title,
                 'quantity' => $quantity,
                 'price' => $product->price,
-                'img_uri' => $product->img_uri
+                'preview_img' => $product->preview_img_uri
             ];
         }
 
