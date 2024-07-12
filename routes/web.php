@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\MainController;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,13 +23,13 @@ use App\Http\Controllers\Admin\AdminController;
 Route::get('/', MainController::class)->name('main');
 
 //route to get csrf token
-// Route::get('/csrf-token', function () {
-//     return csrf_token();
-// });
+Route::get('/csrf-token', function () {
+    return csrf_token();
+});
 
 Route::get('/products/{id}', [MainController::class, 'addProductsToCart'])->name('products.addToCart');
-Route::get('/cart/update/{id}/{quantity}', [MainController::class, 'updateCart'])->name('cart.update');
-Route::get('/cart/remove/{id}', [MainController::class, 'removeFromCart'])->name('cart.remove');
+Route::post('/cart/update/{id}/{quantity}', [MainController::class, 'updateCart'])->name('cart.update');
+Route::post('/cart/remove/{id}', [MainController::class, 'removeFromCart'])->name('cart.remove');
 
 
 
@@ -56,6 +57,8 @@ Route::group(['middleware' => ['auth']], function () {
     });
 });
 
-Route::group(['middleware' => ['can:access-admin']], function () {
-    Route::get('/admin', [AdminController::class, 'showAdmin'])->name('admin');
-});
+// Route::group(['middleware' => ['can:admin-access']], function () {
+//     Route::get('/admin', [AdminController::class, 'showAdmin'])->name('admin');
+// });
+
+// Route::resource('/admin/db/users', UserController::class);

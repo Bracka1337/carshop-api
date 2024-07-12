@@ -43,7 +43,20 @@ theme: {
         '40': '10rem',         // 40 (160px)
         '50': '12.5rem',       // 50 (200px)
       },
+      keyframes: {
+        blink: {
+          '0%': { opacity: 1 },
+          '25%': { opacity: 0 },
+          '50%': { opacity: 0 },
+          '75%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        }
+      },
+        animation: {
+          blink: 'blink 1s linear infinite', // Apply the blink animation
+        },
     },
 },
+
 plugins: [],
 }
