@@ -121,7 +121,7 @@ class MainController extends Controller
         $cart = session()->get('cart', []);
         $quantity = $request->input('quantity', 1);
         $image = $product->images[0]['img_uri'];
-    
+
         if (isset($cart[$id])) {
             $cart[$id]['quantity'] += $quantity;
         } else {
@@ -129,74 +129,74 @@ class MainController extends Controller
                 'title' => $product->title,
                 'brand' => $product->brand->title,
                 'quantity' => $quantity,
-                'price' => (int)$product->price,
+                'price' => (float)$product->price,
                 'image' => $image
             ];
         }
-    
+
         session()->put('cart', $cart);
 
-         
- 
         $total = 0;
- 
+
         foreach ($cart as $item) {
-            
+
             if (is_array($item)) {
-                    $total += $item['price'] * $item['quantity'];
-               
+                $total += $item['price'] * $item['quantity'];
             }
-            
         }
         session()->put('cart.total', $total);
-    
+
         return redirect()->back()->with('success', 'Product added successfully!');
     }
-    
 
-    public function updateCart(Request $request, $id, $quantity)
+
+    public function updateCart($id, $quantity)
     {
         $cart = session()->get('cart', []);
 
-        dd($id, $quantity, $cart);
-
         if (isset($cart[$id])) {
-
-            $cart[$id]['quantity'] = $request->input('quantity', 1);
-            session()->put('cart', $cart);
+            if ($quantity == 0) {
+                unset($cart[$id]);
+                session()->put('cart', $cart);
+            } else {
+                $cart[$id]['quantity'] = $quantity;
+            }
 
             $total = 0;
             foreach ($cart as $item) {
-                $total += $item['price'] * $item['quantity'];
+                if (is_array($item)) {
+                    $total += $item['price'] * $item['quantity'];
+                }
             }
 
             session()->put('cart.total', $total);
-
-            return redirect()->back()->with('success', 'Cart updated successfully!');
+            session()->put('cart', $cart);
         }
 
         return redirect()->back()->with('error', 'Product not found in cart!');
     }
+
 
     public function removeFromCart($id)
-    {
+{
+    $cart = session()->get('cart', []);
 
-        $cart = session()->get('cart', []);
+    if (isset($cart[$id])) {
+        unset($cart[$id]);
+        session()->put('cart', $cart);
 
-        if (isset($cart[$id])) {
-            unset($cart[$id]);
-            session()->put('cart', $cart);
-
-            $total = 0;
-            foreach ($cart as $item) {
+        $total = 0;
+        foreach ($cart as $item) {
+            if (is_array($item)) {
                 $total += $item['price'] * $item['quantity'];
             }
-
-            session()->put('cart.total', $total);
-
-            return redirect()->back()->with('success', 'Product removed successfully!');
         }
+        session()->put('cart.total', $total);
 
-        return redirect()->back()->with('error', 'Product not found in cart!');
+        return response()->json(['message' => 'Product removed successfully!'], 200);
     }
+
+    return response()->json(['message' => 'Product not found in cart!'], 404);
+}
+
 }
