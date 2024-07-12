@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Brand;
+use Illuminate\Support\Facades\Log;
 
 class MainController extends Controller
 {
@@ -119,7 +120,7 @@ class MainController extends Controller
     {
         $product = Product::findOrFail($id);
         $cart = session()->get('cart', []);
-        $quantity = $request->input('quantity', 1);
+        $quantity = (float)1;
         $image = $product->images[0]['img_uri'];
 
         if (isset($cart[$id])) {
@@ -135,16 +136,8 @@ class MainController extends Controller
         }
 
         session()->put('cart', $cart);
+        $this->calculateCartTotal();
 
-        $total = 0;
-
-        foreach ($cart as $item) {
-
-            if (is_array($item)) {
-                $total += $item['price'] * $item['quantity'];
-            }
-        }
-        session()->put('cart.total', $total);
 
         return redirect()->back()->with('success', 'Product added successfully!');
     }
@@ -159,18 +152,11 @@ class MainController extends Controller
                 unset($cart[$id]);
                 session()->put('cart', $cart);
             } else {
-                $cart[$id]['quantity'] = $quantity;
+                $cart[$id]['quantity'] = (float)$quantity;
             }
-
-            $total = 0;
-            foreach ($cart as $item) {
-                if (is_array($item)) {
-                    $total += $item['price'] * $item['quantity'];
-                }
-            }
-
-            session()->put('cart.total', $total);
             session()->put('cart', $cart);
+
+            $this->calculateCartTotal();
         }
 
         return redirect()->back()->with('error', 'Product not found in cart!');
@@ -178,25 +164,37 @@ class MainController extends Controller
 
 
     public function removeFromCart($id)
-{
-    $cart = session()->get('cart', []);
+    {
+        $cart = session()->get('cart', []);
 
-    if (isset($cart[$id])) {
-        unset($cart[$id]);
-        session()->put('cart', $cart);
+        if (isset($cart[$id])) {
+            unset($cart[$id]);
+            session()->put('cart', $cart);
 
+
+            $this->calculateCartTotal();
+
+
+            return response()->json([
+                'message' => 'Product removed successfully!'
+            ], 200);
+        }
+
+        return response()->json(['message' => 'Product not found in cart!'], 404);
+    }
+
+
+    private function calculateCartTotal()
+    {
+        $cart = session()->get('cart', []);
         $total = 0;
-        foreach ($cart as $item) {
-            if (is_array($item)) {
+
+        foreach ($cart as $key => $item) {
+            if (is_array($item) && $key !== 'total') {
                 $total += $item['price'] * $item['quantity'];
             }
         }
+
         session()->put('cart.total', $total);
-
-        return response()->json(['message' => 'Product removed successfully!'], 200);
     }
-
-    return response()->json(['message' => 'Product not found in cart!'], 404);
-}
-
 }
