@@ -28,14 +28,15 @@
         <main>
             @include('components.NavBar')
             @include('components.banner')
+            
             @include('components.cart')
             {{ $slot }}
         </main>
 
         <!-- Footer -->
-        @include('components.footer')   
+           
     </div>
-    
+    @include('components.footer')
 </body>
 
 </html>
