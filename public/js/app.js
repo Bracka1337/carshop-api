@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
 //banner
 
     // window.onload = function() {
-        const dynamicWords = ["cars", "motorcycles", "enthusiasts", "everyone"];
+        const dynamicWords = ["cars", "enthusiasts", "magebit", "everyone"];
         // const dynamicWords = ["cars", "motorcycles"];
         // Retrieve the current word index from localStorage, default to 0 if not found
         let currentWordIndex = parseInt(localStorage.getItem('dynamicWordIndex')) || 0;
@@ -140,5 +140,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
         updateDynamicWord(); // Initialize the dynamic word
     // };
+
+        // blink animation for caret coursor
+
+    // function toggleVisibility(Banner__caret) {
+    //     const element = document.getElementById(Banner__caret);
+    //     if (element.style.display === "none") {
+    //         element.style.display = "inline";
+    //     } else {
+    //         element.style.display = "none";
+    //     }
+    // }
+
+    // // rgba(124, 58, 237, 1)
+    
+    // function startBlinking(Banner__caret, intervalDuration) {
+    //     setInterval(() => toggleVisibility(Banner__caret), intervalDuration);
+    // }
+    
+    // // Example usage: Make an element with ID 'blinkMe' blink every 500 milliseconds
+    // startBlinking('blinkMe', 500);
 });
 
