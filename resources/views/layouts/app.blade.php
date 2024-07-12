@@ -28,7 +28,7 @@
         <main>
             @include('components.NavBar')
             @include('components.banner')
-            @include('components.cart')
+            {{-- @include('components.cart') --}}
             {{ $slot }}
         </main>
 
