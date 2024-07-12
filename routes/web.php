@@ -27,8 +27,8 @@ Route::get('/', MainController::class)->name('main');
 // });
 
 Route::get('/products/{id}', [MainController::class, 'addProductsToCart'])->name('products.addToCart');
-Route::get('/cart/update/{id}/{quantity}', [MainController::class, 'updateCart'])->name('cart.update');
-Route::get('/cart/remove/{id}', [MainController::class, 'removeFromCart'])->name('cart.remove');
+Route::post('/cart/update/{id}/{quantity}', [MainController::class, 'updateCart'])->name('cart.update');
+Route::post('/cart/remove/{id}', [MainController::class, 'removeFromCart'])->name('cart.remove');
 
 
 
