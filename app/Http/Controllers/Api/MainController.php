@@ -11,7 +11,7 @@ class MainController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $initialProducts = $this->filterProducts($request)->paginate(12)->withQueryString();
+        $initialProducts = $this->filterProducts($request)->with("images")->paginate(12)->withQueryString();
 
         $searchParameters = $this->getSearchParameters();
 
@@ -114,4 +114,89 @@ class MainController extends Controller
 
         return $products;
     }
+
+    public function addProductsToCart(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+        $cart = session()->get('cart', []);
+        $quantity = $request->input('quantity', 1);
+        $image = $product->images[0]['img_uri'];
+
+        if (isset($cart[$id])) {
+            $cart[$id]['quantity'] += $quantity;
+        } else {
+            $cart[$id] = [
+                'title' => $product->title,
+                'brand' => $product->brand->title,
+                'quantity' => $quantity,
+                'price' => (float)$product->price,
+                'image' => $image
+            ];
+        }
+
+        session()->put('cart', $cart);
+
+        $total = 0;
+
+        foreach ($cart as $item) {
+
+            if (is_array($item)) {
+                $total += $item['price'] * $item['quantity'];
+            }
+        }
+        session()->put('cart.total', $total);
+
+        return redirect()->back()->with('success', 'Product added successfully!');
+    }
+
+
+    public function updateCart($id, $quantity)
+    {
+        $cart = session()->get('cart', []);
+
+        if (isset($cart[$id])) {
+            if ($quantity == 0) {
+                unset($cart[$id]);
+                session()->put('cart', $cart);
+            } else {
+                $cart[$id]['quantity'] = $quantity;
+            }
+
+            $total = 0;
+            foreach ($cart as $item) {
+                if (is_array($item)) {
+                    $total += $item['price'] * $item['quantity'];
+                }
+            }
+
+            session()->put('cart.total', $total);
+            session()->put('cart', $cart);
+        }
+
+        return redirect()->back()->with('error', 'Product not found in cart!');
+    }
+
+
+    public function removeFromCart($id)
+{
+    $cart = session()->get('cart', []);
+
+    if (isset($cart[$id])) {
+        unset($cart[$id]);
+        session()->put('cart', $cart);
+
+        $total = 0;
+        foreach ($cart as $item) {
+            if (is_array($item)) {
+                $total += $item['price'] * $item['quantity'];
+            }
+        }
+        session()->put('cart.total', $total);
+
+        return response()->json(['message' => 'Product removed successfully!'], 200);
+    }
+
+    return response()->json(['message' => 'Product not found in cart!'], 404);
+}
+
 }
