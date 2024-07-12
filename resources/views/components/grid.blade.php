@@ -22,6 +22,7 @@
                                 <p class="text-xs text-gray-400 line-clamp-3 flex-grow">
                                     {{ $product->description }}
                                 </p>
+                                <br>
                             </div>
                         </div>
                         <div class="p-3 bg-white flex justify-between items-center mt-auto">
