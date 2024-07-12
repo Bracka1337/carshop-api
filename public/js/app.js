@@ -137,28 +137,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 eraseNextCharacter();
             });
         }
+         // Initialize the dynamic word
+        updateDynamicWord(); 
+        
+       //dropdown button in navbar
 
-        updateDynamicWord(); // Initialize the dynamic word
-    // };
+       const button = document.getElementById('menu-button');
+       const sidebar = document.getElementById('sidebar-menu');
+     
+       button.addEventListener('click', () => {
+         const expanded = button.getAttribute('aria-expanded') === 'true' || false;
+         button.setAttribute('aria-expanded', !expanded);
+         sidebar.classList.toggle('hidden');
+         if (!sidebar.classList.contains('hidden')) {
+           sidebar.classList.remove('-translate-x-full');
+         } else {
+           sidebar.classList.add('-translate-x-full');
+         }
+       });
+     
+       document.addEventListener('click', (event) => {
+         if (!button.contains(event.target) && !sidebar.contains(event.target)) {
+           button.setAttribute('aria-expanded', 'false');
+           sidebar.classList.add('hidden');
+           sidebar.classList.add('-translate-x-full');
+         }
+       });
 
-        // blink animation for caret coursor
-
-    // function toggleVisibility(Banner__caret) {
-    //     const element = document.getElementById(Banner__caret);
-    //     if (element.style.display === "none") {
-    //         element.style.display = "inline";
-    //     } else {
-    //         element.style.display = "none";
-    //     }
-    // }
-
-    // // rgba(124, 58, 237, 1)
-    
-    // function startBlinking(Banner__caret, intervalDuration) {
-    //     setInterval(() => toggleVisibility(Banner__caret), intervalDuration);
-    // }
-    
-    // // Example usage: Make an element with ID 'blinkMe' blink every 500 milliseconds
-    // startBlinking('blinkMe', 500);
 });
 

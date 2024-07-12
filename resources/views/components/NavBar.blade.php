@@ -1,15 +1,12 @@
 <div class="">
-    <div class="relative z-40 lg:hidden" role="dialog" aria-modal="true">
+    {{-- <div class="relative z-40 lg:hidden" role="dialog" aria-modal="true">
         <div class="fixed inset-0 z-40 flex">
             <!-- side mobile menu for now keep same headings as on main navbar -->
             <div class="relative flex w-full max-w-[250px] flex-col items-center overflow-y-auto bg-white pb-12">
                 <div class="flex flex-col gap-5">
-                    <div class="ml-4 flex lg:ml-0">
-                        <a href="/">
-                            <span class="sr-only">Your Company</span>
-                            <img class="h-10 w-auto" src="{{ asset('images/logo2.svg') }}" alt="">
-                        </a>
-                    </div>
+                   <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+          <span class="absolute -inset-0.5"></span>
+          <span class="sr-only">Open main menu</span>
                     <a href="#"
                         class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Home</a>
                     <a href="#"
@@ -19,7 +16,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
+    
+
     <header class="relative bg-white">
         <p
             class="flex h-10 items-center justify-center bg-indigo-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
@@ -28,6 +27,34 @@
         <nav aria-label="Top" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="border-b border-gray-200">
                 <div class="flex h-16 items-center">
+
+
+
+
+                          <!-- Dropdown Button -->
+                          
+                          <div class="relative ml-4 md:ml-0 lg:hidden" role="dialog" aria-modal="true">
+                            <button type="button" class="inline-flex justify-center w-full rounded-md   px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" id="menu-button" aria-expanded="false" aria-haspopup="true">
+                              <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M4 5h12a1 1 0 010 2H4a1 1 0 010-2zM4 9h12a1 1 0 010 2H4a1 1 0 010-2zM4 13h12a1 1 0 010 2H4a1 1 0 010-2z" clip-rule="evenodd" />
+                              </svg>
+                            </button>
+                            <div class="mt-24 fixed inset-y-0 left-0 w-64 mt-2 transform -translate-x-full transition-transform duration-300 bg-white divide-y divide-gray-100 shadow-lg ring-1 ring-black ring-opacity-5 hidden" id="sidebar-menu" role="menu">
+                              <div class="py-1 flex flex-col gap-5" role="none">
+                                <button type="button" class="text-gray-400 hover:text-gray-700 focus:outline-none" id="close-button">
+                                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                  </button>
+                                <a href="#" class=" block px-4 py-2  text-sm font-medium text-gray-700 hover:text-gray-800" role="menuitem">Home</a>
+                                <a href="#" class="block px-4 py-2  text-sm font-medium text-gray-700 hover:text-gray-800" role="menuitem">About us</a>
+                                <a href="#" class="block px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-800" role="menuitem">My orders</a>
+                              </div>
+                            </div>
+                          </div>
+                    
+
+                
                     <!-- Logo -->
                     <div class="ml-4 flex lg:ml-0">
                         <a href="/">
@@ -46,11 +73,10 @@
                             </div>
 
                             <a href="/aboutus"
-
                                 class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">About
                                 us</a>
                             <a href="#"
-                                class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Products</a>
+                                class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">My orders</a>
                         </div>
                     </div>
                     <div class="ml-auto flex items-center">

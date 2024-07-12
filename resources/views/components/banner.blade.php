@@ -1,7 +1,7 @@
 
     
 
-    <div class=" p-6 flex justify-center text-center mt-16">
+    <div class=" p-6 flex justify-center text-center mt-28">
         
         <h1 class="Banner__title">
             <div class="text-7xl font-bold text-center ">The Best Disks</div>
