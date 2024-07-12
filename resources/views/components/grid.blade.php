@@ -7,29 +7,6 @@
                 <p class="text-2xl font-bold text-gray-600">No products found</p>
             </div>
         @else
-<<<<<<< HEAD
-            <h2 class="mb-4 font-bold text-xl text-gray-600">Product list:</h2>
-            <div class="grid w-full sm:grid-cols-2 xl:grid-cols-4 gap-6">
-                @foreach ($products as $product)
-                    <div class="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 w-full md:w-72">
-                        <div class="flex flex-col hover:cursor-pointer" id="product" product-id="{{ $product->id }}">
-                            <div class="h-auto overflow-hidden">
-                                <div class="h-44 overflow-hidden relative">
-                                    <img src="{{ $product->image_url }}" alt="{{ $product->title }}" class="w-full h-full object-cover">
-                                </div>
-                            </div>
-                            <div class="bg-white flex flex-col justify-between flex-grow py-4 px-3">
-                                <h3 class="text-xs mb-2 font-medium">{{ $product->title }}</h3>
-                                <p class="text-xs text-gray-400 line-clamp-3 flex-grow">
-                                    {{ $product->description }}
-                                </p>
-                                <br>
-                            </div>
-                        </div>
-                        <div class="p-3 bg-white flex justify-between items-center mt-auto">
-                            <p class="text-sm font-semibold text-gray-600">${{ $product->price }}</p>
-                            <a href="{{ route('products.addToCart', $product->id) }}" class="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-indigo-600 uppercase align-middle transition-all rounded-full select-none hover:bg-indigo-600/10 active:bg-indigo-600/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">Add to cart</a>
-=======
 
         <h2 class="mb-4 font-bold text-xl text-gray-600">Product list:</h2>
         <div class="grid w-full sm:grid-cols-2 xl:grid-cols-4 gap-6">
@@ -41,10 +18,22 @@
                         <div class="h-44 overflow-hidden relative">
 
                             <img src="{{ $product->images[0]->img_uri }}" alt="{{ $product->title }}">
->>>>>>> origin/main
                         </div>
                     </div>
-                @endforeach
+                    <div class="bg-white py-4 px-3 overflow-hidden h-28">
+                        <h3 class="text-xs mb-2 font-medium">{{ $product->title }}</h3>
+                        <div class="flex justify-between items-center">
+                            <p class="text-xs text-gray-400 line-clamp-4">
+                                {{ $product->description }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div id="addToCart" class="hover:bg-gray-200 hover:cursor-pointer h-12">
+                    <a href="{{ route('products.addToCart', $product->id) }}" class="px-3 w-full h-full block">Add to cart</a>
+                </div>
+            </div>
+            @endforeach
             </div>
             <div class="mt-8 flex justify-center">
                 {{$products->onEachSide(2)->links('components.pagination.pagination')}}
@@ -52,7 +41,6 @@
         @endif
     </div>
 </div>
-
 
 
 
