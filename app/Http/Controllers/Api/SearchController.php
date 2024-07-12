@@ -41,8 +41,8 @@ class SearchController extends Controller
             $query->where('size', $validated['size']);
         }
 
-        $products = $query->get();
-
+        $products = $query->paginate(8);
+        
         return view('main', [
             'search' => $this->getSearchParameters(),
             'initialProducts' => $products

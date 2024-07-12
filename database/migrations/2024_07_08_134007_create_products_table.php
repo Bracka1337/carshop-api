@@ -12,16 +12,18 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->string('preview_img_uri');
-            $table->string('material');
-            $table->string('size');
+            $table->string('diameter');
+            $table->string('width');
+            $table->string('et');
+            $table->string('cb');
+            $table->string('bolt');
+            $table->string('bolt_diameter');
+            $table->string('type');
             $table->decimal('price', 10, 2);
             $table->foreignId('brand_id')->constrained('brands');
-            $table->foreignId('category_id')->constrained('categories');
             $table->timestamps();
         });
     }
-
     public function down()
     {
         Schema::dropIfExists('products');
