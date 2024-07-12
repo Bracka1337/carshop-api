@@ -48,56 +48,50 @@
         {{-- product details --}}
         @foreach ($products as $product)
             <div id="modal" class="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 z-50 hidden">
-                <div class="mt-10 max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 bg-white shadow-lg rounded-xl hidden h-5/6"
-                        id="productDetail"
-                        product-data-id="{{ $product->id }}">
-                    <div class="flex justify-end">
+                <div class="mt-10 max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 bg-white 
+                shadow-lg rounded-xl hidden h-4/6 flex flex-col"
+                id="productDetail"
+                product-data-id="{{ $product->id }}">
+                    <div class="flex justify-end h-10">
                         <span id="closeModal"
                             class="cursor-pointer text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-300 text-3xl">&times;</span>
                     </div>
-                    <div class="flex md:flex-row -mx-4 border-solid border-2 ">
-                        <div class="md:flex-1 px-4 h-full ">
-                            <div class="rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
-                                <img class="w-full h-full object-cover" src="{{ $product->image_url }}"
-                                    alt="{{ $product->title }}">
-                            </div>
+                    <div class="flex flex-grow">
+                    <div class="px-4 basis-2/5 h-full flex items-center justify-center">
+                        <div class="rounded-lg bg-gray-300 dark:bg-gray-700 mb-4 h-full w-full flex items-center justify-center">
+                            <img class="w-full h-full object-cover" src="{{ $product->image_url }}" alt="{{ $product->title }}">
                         </div>
-                        <div class="md:flex-1 px-4 pt-10">
-                            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">{{ $product->title }}
-                            </h2>
-                            <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">
-                                {{ $product->brand }}
-                            </p>
-                            <div class="mb-4">
-                                <div class="mr-4">
-                                    <span class="font-bold text-gray-700 dark:text-gray-300">Price:</span>
+                    </div>
+                    <div class="px-4 basis-3/5 h-full flex flex-col justify-between">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2 text-5xl">{{ $product->title }}</h2>
+                            <p class="text-gray-600 dark:text-gray-300 text-sm mb-4 text-base">{{ $product->brand->title}}</p>
+                            <div class="mb-4 flex text-4xl ">
+                                <div class="mr-10">
+                                    <span class="font-bold text-gray-700 dark:text-gray-300 ">Price:</span>
                                     <span class="text-gray-600 dark:text-gray-300">${{ $product->price }}</span>
                                 </div>
-                                {{-- <div>
-                                    <span class="font-bold text-gray-700 dark:text-gray-300">Category:</span>
-                                    <span class="text-gray-600 dark:text-gray-300">{{ $product->category }}</span>
-                                </div> --}}
                                 <div>
                                     <span class="font-bold text-gray-700 dark:text-gray-300">Size:</span>
-                                    <span class="text-gray-600 dark:text-gray-300">{{ $product->size }}</span>
+                                    <span class="text-gray-600 dark:text-gray-300">{{ $product->diameter }}</span>
                                 </div>
                             </div>
                             <div>
                                 <span class="font-bold text-gray-700 dark:text-gray-300">Product Description:</span>
-                                <p class="text-gray-600 dark:text-gray-300 text-sm mt-2">
-                                    {{ $product->description }}
-                                </p>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm mt-2">{{ $product }}</p>
                             </div>
-                            <div class="flex -mx-2 mb-4 pt-5 justify-end">
-                                <div class="w-1/2 px-2">
-                                    <button
-                                        class="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">Add
-                                        to Cart</button>
-                                </div>
+                        </div>
+                        <div class="flex -mx-2 mb-4 pt-5 justify-end">
+                            <div class="w-1/2 px-2">
+                                <button class="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">
+                                Add to Cart
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        @endforeach
+        </div>
     </div>
+    @endforeach
+</div>
