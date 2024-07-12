@@ -1,7 +1,7 @@
 <div class="search">
     <div class="flex items-center justify-center mt-40">
         <form action="{{ route('main') }}" method="get"
-            class="bg-white p-6 rounded-lg shadow-lg grid grid-cols-4 gap-2 w-full max-w-5xl">
+            class="bg-white p-6 rounded-lg shadow-lg grid grid-cols-4 gap-2 w-full max-w-6xl">
             <div class="p-4">
                 <label for="diameter" class="block mt-2 text-sm font-medium text-gray-900 dark:text-white">Diameter</label>
                 <select id="diameter" name="diameter"

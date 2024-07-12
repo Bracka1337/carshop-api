@@ -2,15 +2,18 @@
     <section class="py-24 relative">
         <div class="w-full max-w-7xl px-4 md:px-5 lg-6 mx-auto">
             <div class="container mx-auto p-8">
-                <h1 class="text-2xl font-bold text-left text-indigo-600 mb-4">Hello, {{ $user->name }}</h1>
-                <h2 class="text-xl font-semibold text-gray-800 mb-4">Your Orders:</h2>
-        
-                <!--<div class="bg-white p-8 rounded-lg   shadow-md">
+                <h1 class="text-5xl font-bold text-left text-indigo-500 mb-8">Hello, {{ $user->username }}</h1>
+                <h2 class="text-3xl font-semibold text-gray-800 mb-8">Your Orders:</h2>
+
+                
+                @if ($user->orders->isEmpty())
+                <div class="bg-white p-8 rounded-lg   shadow-md">
                 
                         <p class="text-gray-600 ">You have no orders :(</p>
         
         
-                </div>-->
+                </div>
+                @else
                 <div class="bg-white p-6 rounded-lg shadow-md">
                     <ul>
                         @foreach ($user->orders as $order)
@@ -31,6 +34,7 @@
                     </ul>
                 </div>
             </div>
+            @endif
         </div>
     </section>    
  
