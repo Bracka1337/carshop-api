@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     {
 
         \App\Models\User::create([
-            'username' => 'admin',
+            'name' => 'admin',
             'email'=> 'admin@eastsquad.com',
             'password'=> Hash::make('admin'),
             'phone_nr' => 1337,
@@ -23,11 +23,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\User::create([
-            'username' => 'Default user',
+            'name' => 'Default user',
             'email'=> 'default@eastsquad.com',
             'password'=> Hash::make('default'),
             'phone_nr' => 12345678,
-            'role' => 'User',
+            'role' => 'Default',
         ]);
 
         \App\Models\Brand::factory()->count(61)->create();

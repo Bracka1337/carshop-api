@@ -54,8 +54,8 @@ Route::group(['middleware' => ['auth']], function () {
     });
 });
 
-Route::group(['middleware' => ['can:admin-access']], function () {
-    Route::get('/admin', [AdminController::class, 'showAdmin'])->name('admin');
-});
+// Route::group(['middleware' => ['can:admin-access']], function () {
+//     Route::get('/admin', [AdminController::class, 'showAdmin'])->name('admin');
+// });
 
-Route::resource('/admin/db/users', UserController::class);
+// Route::resource('/admin/db/users', UserController::class);
