@@ -64,3 +64,7 @@ Route::group(['middleware' => ['can:access-admin']], function () {
 Route::get('/checkout', function () {
     return view('checkout');
 })->name('checkout');
+
+Route::get('/payment', function () {
+    return view('payment');
+})->name('payment');
