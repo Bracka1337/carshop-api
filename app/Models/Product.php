@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Product_quantity;
 
 class Product extends Model
 {
@@ -12,7 +13,6 @@ class Product extends Model
     protected $fillable = [
         'title',
         'description',
-        'material',
         'diameter',
         'width',
         'et',
@@ -30,6 +30,10 @@ class Product extends Model
 
     public function images() {
         return $this->hasMany(Image::class);
+    }
+
+    public function productQuantities() {
+        return $this->hasMany(Product_quantity::class);
     }
 
 }
