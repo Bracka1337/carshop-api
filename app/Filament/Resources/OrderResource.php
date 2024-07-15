@@ -26,12 +26,19 @@ class OrderResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('user.email')->searchable()->options(User::all()->pluck('email', 'id')),
+                Select::make('user_id')->relationship('user', 'email')->label('User Email')->searchable()->options(User::all()->pluck('email', 'id')),
                 Select::make('status')->options([
                     'Processing' => 'Processing',
                     'Delivering' => 'Delivering',
                     'Delivered' => 'Delivered',
                     'Failed' => 'Failed',
+                ]),
+                Select::make('payment.status')->label('Payment Status')->options([
+                    'Processing' => 'Processing',
+                    'Unpaid' => 'Unpaid',
+                    'Refunded' => 'Refunded',
+                    'Failed' => 'Failed',
+                    'Success'=> 'Success',
                 ]),
             ]);
     }

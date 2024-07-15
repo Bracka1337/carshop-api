@@ -56,9 +56,3 @@ Route::group(['middleware' => ['auth']], function () {
         return view('orderdetails');
     });
 });
-
-// Route::group(['middleware' => ['can:admin-access']], function () {
-//     Route::get('/admin', [AdminController::class, 'showAdmin'])->name('admin');
-// });
-
-// Route::resource('/admin/db/users', UserController::class);
