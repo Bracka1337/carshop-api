@@ -80,16 +80,16 @@ class MainController extends Controller
     public function getSearchParameters()
     {
 
-        $diameter = Product::select('diameter')->where('diameter', '>', 0)->distinct()->get();
-        $width = Product::select('width')->where('width', '>', 0)->distinct()->get();
-        $et = Product::select('et')->where('et', '>', 0)->distinct()->get();
-        $cb = Product::select('cb')->where('cb', '>', 0)->distinct()->get();
-        $bolt = Product::select('bolt')->where('bolt', '>', 0)->distinct()->get();
-        $bolt_diameter = Product::select('bolt_diameter')->where('bolt_diameter', '>', 0)->distinct()->get();
-        $type = Product::select('type')->where('type', '>', 0)->distinct()->get();
+        $diameter = Product::select('diameter')->where('diameter', '>', 0)->distinct()->get()->sortBy('diameter');
+        $width = Product::select('width')->where('width', '>', 0)->distinct()->get()->sortBy('width');
+        $et = Product::select('et')->where('et', '>', 0)->distinct()->get()->sortBy('et');
+        $cb = Product::select('cb')->where('cb', '>', 0)->distinct()->get()->sortBy('cb');
+        $bolt = Product::select('bolt')->where('bolt', '>', 0)->distinct()->get()->sortBy('bolt');
+        $bolt_diameter = Product::select('bolt_diameter')->where('bolt_diameter', '>', 0)->distinct()->get()->sortBy('bolt_diameter');
+        $type = Product::select('type')->distinct()->get()->sortBy('type');
         $minPrice = Product::min('price');
         $maxPrice = Product::max('price');
-        $brands = Brand::select('id', 'title')->get();
+        $brands = Brand::select('id', 'title')->get()->sortBy('title');
 
         $searchParameters = [
             'brands' => $brands,

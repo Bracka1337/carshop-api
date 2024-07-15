@@ -8,7 +8,7 @@
             <div class="w-full sm:w-1/3 mb-6 sm:mb-0">
                 <h4 class="text-xl font-bold mb-4">Contact Us</h4>
                 <ul class="text-indigo-400">
-                    <li>Email: EastSquad@gmail.com</li>
+                    <li>Email: Contact@eastsquad.com</li>
                     <li>Phone: 22040687</li>
                 </ul>
             </div>
