@@ -197,4 +197,20 @@ class MainController extends Controller
 
         session()->put('cart.total', $total);
     }
+
+    public function getCart()
+    {
+        $cart = session()->get('cart', []);
+
+        $total = session()->get('cart.total', []);
+        $tax = number_format($total * 0.001, 2);
+
+        $cart['tax'] = $tax;
+
+        session()->put('cart.tax', $tax);
+
+        return view('checkout', [
+            'cart' => $cart,
+        ]);
+    }
 }

@@ -64,6 +64,5 @@ Route::group(['middleware' => ['can:access-admin']], function () {
     Route::get('/admin', [AdminController::class, 'showAdmin'])->name('admin');
 });
 
-Route::get('/checkout', function () {
-    return view('checkout');
-})->name('checkout');
+//get session details
+Route::get('/checkout', [MainController::class, 'getCart'])->name('checkout');
