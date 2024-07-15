@@ -68,3 +68,7 @@ Route::get('/checkout', function () {
 Route::get('/payment', function () {
     return view('payment');
 })->name('payment');
+
+Route::get('/paymentSucess', function () {
+    return view('paymentSucess');
+})->name('paymentSucess');
