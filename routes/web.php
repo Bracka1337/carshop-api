@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\MainController;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Api\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,8 @@ Route::get('/products/{id}', [MainController::class, 'addProductsToCart'])->name
 Route::post('/cart/update/{id}/{quantity}', [MainController::class, 'updateCart'])->name('cart.update');
 Route::post('/cart/remove/{id}', [MainController::class, 'removeFromCart'])->name('cart.remove');
 
+// Route::get('/checkout', [OrderController::class, 'index'])->name('checkout');
+
 
 
 Route::post('/search', [SearchController::class, 'search'])->name('products.search');
@@ -52,9 +55,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
-    Route::get('/profile/orderdetails', function () {
-        return view('orderdetails');
-    });
+
+    Route::get('profile/orderdetails/{id}', [OrderController::class, 'show'])->name('orderdetails');
+
 });
 
 // Route::group(['middleware' => ['can:admin-access']], function () {
