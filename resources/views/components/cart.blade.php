@@ -1,5 +1,5 @@
 <div class="relative z-10 hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true" id="modal">
-    <div class="fixed inset-0 overflow-hidden">
+    <div class="fixed inset-0 overflow-hidden bg-gray-500 bg-opacity-75 transition-opacity">
         <div class="absolute inset-0 overflow-hidden">
             <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
                 <div class="pointer-events-auto w-screen max-w-md">
@@ -8,7 +8,7 @@
                             <div class="flex items-start justify-between">
                                 <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">Shopping cart</h2>
                                 <div class="ml-3 flex h-7 items-center">
-                                    <button id="close-button" type="button"
+                                    <button id="cart-close-button" type="button"
                                         class="relative -m-2 p-2 text-gray-400 hover:text-gray-500">
                                         <span class="absolute -inset-0.5"></span>
                                         <span class="sr-only">Close panel</span>
