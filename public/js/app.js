@@ -1,45 +1,67 @@
 document.addEventListener("DOMContentLoaded", function () {
   // homepage modal window
 
-    const products = document.querySelectorAll("#product");
-    const modals = document.querySelectorAll("#modal");
-    const productsDetail = document.querySelectorAll("#productDetail");
-    const addToCart = document.querySelectorAll("#addToCart");
-    const updateCartButtons = document.querySelectorAll(".updateCart");
-
-    // open modal
-    products.forEach((product) => {
-        product.addEventListener('click', ((event) => {
-            event.preventDefault();
-            const productId = event.currentTarget.getAttribute('product-id');
-            const productsDetailArr = Array.from(productsDetail);
-            const productDetail = productsDetailArr.find((detail) => {
-                const detailId = detail.getAttribute('product-data-id');
-                return productId === detailId;
-            });
-            const modal = productDetail.parentElement;
-            modal.classList.remove('hidden');
-            productDetail.classList.remove('hidden');
-        }));
-    });
-    // close modal
+  const products = document.querySelectorAll("#product");
+  const modals = document.querySelectorAll("#modal");
+  const productsDetail = document.querySelectorAll("#productDetail");
+  const addToCart = document.querySelectorAll("#addToCart");
+  const updateCartButtons = document.querySelectorAll(".updateCart");
+  
+  // open modal
+  products.forEach((product) => {
+      product.addEventListener('click', ((event) => {
+          event.preventDefault();
+          const productId = event.currentTarget.getAttribute('product-id');
+          const productsDetailArr = Array.from(productsDetail);
+          const productDetail = productsDetailArr.find((detail) => {
+              const detailId = detail.getAttribute('product-data-id');
+              return productId === detailId;
+          });
+          const modal = productDetail ? productDetail.parentElement : null;
+          if (modal) {
+              modal.classList.remove('hidden');
+              productDetail.classList.remove('hidden');
+          }
+      }));
+  });
+  
+  // close modal
   modals.forEach((modal) => {
-    modal.addEventListener("click", (event) => {
+      modal.addEventListener("click", (event) => {
+          closeModal(event);
+      });
+  });
+  
+  document.addEventListener("keydown", (event) => {
+      if (event.key === 'Escape') {
+          closeModal(event);
+      }
+  });
+  
+  function closeModal(event) {
       event.preventDefault();
       const productsDetailArr = Array.from(productsDetail);
       const productDetail = productsDetailArr.find((detail) => {
-        return !detail.classList.contains("hidden");
+          return !detail.classList.contains("hidden");
       });
-      const closeModal = productDetail.querySelector("#closeModal");
-      if (
-        !productDetail.contains(event.target) ||
-        event.target === closeModal
-      ) {
-        modal.classList.add("hidden");
-        productDetail.classList.add("hidden");
+  
+      if (productDetail) {
+          const modal = productDetail.parentElement;
+          const closeModalButton = productDetail.querySelector("#closeModal");
+  
+          if (
+              !productDetail.contains(event.target) ||
+              event.target === closeModalButton || 
+              event.key === 'Escape'
+          ) {
+              if (modal && productDetail) {
+                  modal.classList.add("hidden");
+                  productDetail.classList.add("hidden");
+              }
+          }
       }
-    });
-  });
+  }
+  
 
      // modal images slideshow
      const carousels = document.querySelectorAll('[data-carousel-inner]');
