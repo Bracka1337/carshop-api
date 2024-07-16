@@ -23,4 +23,11 @@ class Delivery_details extends Model
         'payment_method',
         'delivery_method',
     ];
+
+    public function order()
+    {
+        return $this->hasOne(Order::class, 'id');
+    }
+
+
 }
