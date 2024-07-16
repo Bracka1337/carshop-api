@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Brand;
-use Illuminate\Support\Facades\Log;
+
+
 
 class MainController extends Controller
 {
@@ -135,45 +136,50 @@ class MainController extends Controller
             ];
         }
 
+
         session()->put('cart', $cart);
         $this->calculateCartTotal();
 
-
         return redirect()->back()->with('success', 'Product added successfully!');
     }
-
 
     public function updateCart($id, $quantity)
     {
         $cart = session()->get('cart', []);
 
+        if (empty($cart)) {
+            return redirect()->back()->with('error', 'Cart is empty!');
+        }
+
         if (isset($cart[$id])) {
             if ($quantity == 0) {
                 unset($cart[$id]);
-                session()->put('cart', $cart);
             } else {
                 $cart[$id]['quantity'] = (float)$quantity;
             }
             session()->put('cart', $cart);
 
             $this->calculateCartTotal();
+
+            return redirect()->back()->with('success', 'Cart updated successfully!');
         }
 
         return redirect()->back()->with('error', 'Product not found in cart!');
     }
 
-
     public function removeFromCart($id)
     {
         $cart = session()->get('cart', []);
+
+        if (empty($cart)) {
+            return response()->json(['message' => 'Cart is empty!'], 404);
+        }
 
         if (isset($cart[$id])) {
             unset($cart[$id]);
             session()->put('cart', $cart);
 
-
             $this->calculateCartTotal();
-
 
             return response()->json([
                 'message' => 'Product removed successfully!'
@@ -183,10 +189,15 @@ class MainController extends Controller
         return response()->json(['message' => 'Product not found in cart!'], 404);
     }
 
-
     private function calculateCartTotal()
     {
         $cart = session()->get('cart', []);
+
+        if (empty($cart)) {
+            session()->put('cart.total', 0);
+            return;
+        }
+
         $total = 0;
 
         foreach ($cart as $key => $item) {
@@ -197,4 +208,30 @@ class MainController extends Controller
 
         session()->put('cart.total', $total);
     }
+
+    public function getCart()
+    {
+        $cart = session()->get('cart', []);
+    
+        if (!empty($cart) && count($cart) > 0) {
+    
+            $total = session()->get('cart.total', 0);  
+            $total = str_replace(',', '', $total);  
+            $total = (float)$total;
+    
+            $tax = $total * 0.21;
+            $cart['total'] = number_format($total, 2, '.', '');
+            $cart['tax'] = number_format($tax, 2, '.', '');
+    
+            session()->put('cart.tax', $cart['tax']);
+            session()->put('cart.total', $cart['total']);
+    
+            return view('checkout', [
+                'cart' => $cart,
+            ]);
+        } else {
+            return response()->json(['message' => 'Cart is empty'], 404);
+        }
+    }
+    
 }

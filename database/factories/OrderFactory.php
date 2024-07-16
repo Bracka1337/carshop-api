@@ -19,6 +19,7 @@ class OrderFactory extends Factory
         return [
             'status' => fake()->randomElement(['Processing','Delivered', 'Delivering', 'Failed']),
             'date' => fake()->date(now()),
+            'delivery_details_id' => \App\Models\Delivery_details::factory(),
             'payment_id' => \App\Models\Payment::factory(),
         ];
     }
