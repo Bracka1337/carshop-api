@@ -385,4 +385,11 @@ document.addEventListener("DOMContentLoaded", function () {
       successMessage.style.display = "none";
     }, 1000);
   }
+
+  const checkoutButton = document.getElementById('checkout');
+
+  checkoutButton.addEventListener('click', function (event) {
+      event.preventDefault();
+      window.location.href = '/checkout';
+  });
 });
