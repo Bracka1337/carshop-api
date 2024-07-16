@@ -28,8 +28,8 @@
                                         </svg>
                                     </button>
                                     <a href="#" class="block px-8 py-4 text-sm text-lg text-gray-700 hover:text-gray-800 w-[fit-content]" role="menuitem">Home</a>
-                                    <a href="#" class="block px-8 py-4 text-sm text-lg text-gray-700 hover:text-gray-800 w-[fit-content]" role="menuitem">About us</a>
-                                    <a href="#" class="block px-8 py-4 text-sm text-lg text-gray-700 hover:text-gray-800 w-[fit-content]" role="menuitem">My orders</a>
+                                    <a href="/aboutus" class="block px-8 py-4 text-sm text-lg text-gray-700 hover:text-gray-800 w-[fit-content]" role="menuitem">About us</a>
+                                    <a href="/profile" class="block px-8 py-4 text-sm text-lg text-gray-700 hover:text-gray-800 w-[fit-content]" role="menuitem">My orders</a>
                             
                                     <div class="mt-auto flex justify-center border-t py-10 px-4 sm:px-6">
                                         <img class="transform scale-50" src="{{ asset('images/logo2.svg') }}" alt="EastSquad logo">
@@ -58,7 +58,7 @@
 
                             class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">About
                             us</a>
-                        <a href="#"
+                        <a href="/profile"
                             class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">My orders</a>
                     </div>
                 </div>

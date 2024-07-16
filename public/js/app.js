@@ -394,10 +394,17 @@ modals.forEach((modal) => {
 
           //Notification message
 
-        const successMessage = document.getElementById("success-message");
-        if (successMessage) {
-            setTimeout(() => {
-            successMessage.style.display = "none";
-            }, 1000);
-        }
-    });
+  const successMessage = document.getElementById("success-message");
+  if (successMessage) {
+    setTimeout(() => {
+      successMessage.style.display = "none";
+    }, 1000);
+  }
+
+  const checkoutButton = document.getElementById('checkout');
+
+  checkoutButton.addEventListener('click', function (event) {
+      event.preventDefault();
+      window.location.href = '/checkout';
+  });
+});
