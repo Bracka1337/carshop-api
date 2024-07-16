@@ -27,9 +27,9 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                         </svg>
                                     </button>
-                                    <a href="#" class="block px-8 py-4 text-sm text-lg text-gray-700 hover:text-gray-800 w-[fit-content]" role="menuitem">Home</a>
+                                    <a href="#" class="block px-8 py-4 text-sm text-lg text-gray-700 hover:text-gray-800 w-[fit-content]" role="menuitem" id="homeButton">Home</a>
                                     <a href="/aboutus" class="block px-8 py-4 text-sm text-lg text-gray-700 hover:text-gray-800 w-[fit-content]" role="menuitem">About us</a>
-                                    <a href="/profile" class="block px-8 py-4 text-sm text-lg text-gray-700 hover:text-gray-800 w-[fit-content]" role="menuitem">My orders</a>
+                                    @auth <a href="/profile" class="block px-8 py-4 text-sm text-lg text-gray-700 hover:text-gray-800 w-[fit-content]" role="menuitem" id="myOrdersButton">My orders</a> @endauth
                             
                                     <div class="mt-auto flex justify-center border-t py-10 px-4 sm:px-6">
                                         <img class="transform scale-50" src="{{ asset('images/logo2.svg') }}" alt="EastSquad logo">
@@ -50,7 +50,7 @@
                             <div class="relative flex  ">
                                 <button type="button"
                                     class="relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800"
-                                    aria-expanded="false">Home</button>
+                                    aria-expanded="false" id="homeButton">Home</button>
                             </div>
                         </div>
 
@@ -58,8 +58,8 @@
 
                             class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">About
                             us</a>
-                        <a href="/profile"
-                            class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">My orders</a>
+                        @auth <a href="/profile"
+                            class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800" id="myOrdersButton">My orders</a> @endauth
                     </div>
                 </div>
                 <div class="ml-auto flex items-center">
