@@ -6,115 +6,120 @@ document.addEventListener("DOMContentLoaded", function () {
   const productsDetail = document.querySelectorAll("#productDetail");
   const addToCart = document.querySelectorAll("#addToCart");
   const updateCartButtons = document.querySelectorAll(".updateCart");
-  
+
   // open modal
   products.forEach((product) => {
-      product.addEventListener('click', ((event) => {
-          event.preventDefault();
-          const productId = event.currentTarget.getAttribute('product-id');
-          const productsDetailArr = Array.from(productsDetail);
-          const productDetail = productsDetailArr.find((detail) => {
-              const detailId = detail.getAttribute('product-data-id');
-              return productId === detailId;
-          });
-          const modal = productDetail ? productDetail.parentElement : null;
-          if (modal) {
-              modal.classList.remove('hidden');
-              productDetail.classList.remove('hidden');
-          }
-      }));
-  });
-  
-  // close modal
-  modals.forEach((modal) => {
-      modal.addEventListener("click", (event) => {
-          closeModal(event);
-      });
-  });
-  
-  document.addEventListener("keydown", (event) => {
-      if (event.key === 'Escape') {
-          closeModal(event);
-      }
-  });
-  
-  function closeModal(event) {
+    product.addEventListener("click", (event) => {
       event.preventDefault();
+      const productId = event.currentTarget.getAttribute("product-id");
       const productsDetailArr = Array.from(productsDetail);
       const productDetail = productsDetailArr.find((detail) => {
-          return !detail.classList.contains("hidden");
+        const detailId = detail.getAttribute("product-data-id");
+        return productId === detailId;
       });
-  
-      if (productDetail) {
-          const modal = productDetail.parentElement;
-          const closeModalButton = productDetail.querySelector("#closeModal");
-  
-          if (
-              !productDetail.contains(event.target) ||
-              event.target === closeModalButton || 
-              event.key === 'Escape'
-          ) {
-              if (modal && productDetail) {
-                  modal.classList.add("hidden");
-                  productDetail.classList.add("hidden");
-              }
-          }
+      const modal = productDetail ? productDetail.parentElement : null;
+      if (modal) {
+        modal.classList.remove("hidden");
+        productDetail.classList.remove("hidden");
       }
-  }
-  
+    });
+  });
 
-     // modal images slideshow
-     const carousels = document.querySelectorAll('[data-carousel-inner]');
-     carousels.forEach(carousel => {
-         const items = carousel.querySelectorAll('[data-carousel-item]');
-         const indicators = carousel.nextElementSibling.querySelectorAll('[data-carousel-slide-to]');
-         const prevButton = carousel.parentElement.querySelector('[data-carousel-prev]');
-         const nextButton = carousel.parentElement.querySelector('[data-carousel-next]');
-         let activeIndex = 0;
- 
-         const showItem = (index) => {
-             items.forEach((item, i) => {
-                 if (i === index) {
-                     item.classList.remove('hidden');
-                 } else {
-                     item.classList.add('hidden');
-                 }
-             });
- 
-             indicators.forEach((indicator, i) => {
-                 if (i === index) {
-                     indicator.classList.add('bg-gray-400');
-                     indicator.classList.remove('bg-gray-300');
-                 } else {
-                     indicator.classList.add('bg-gray-300');
-                     indicator.classList.remove('bg-gray-400');
-                 }
-             });
-         };
- 
-         const prevItem = () => {
-             activeIndex = (activeIndex > 0) ? activeIndex - 1 : items.length - 1;
-             showItem(activeIndex);
-         };
- 
-         const nextItem = () => {
-             activeIndex = (activeIndex < items.length - 1) ? activeIndex + 1 : 0;
-             showItem(activeIndex);
-         };
- 
-         prevButton.addEventListener('click', prevItem);
-         nextButton.addEventListener('click', nextItem);
- 
-         indicators.forEach((indicator, index) => {
-             indicator.addEventListener('click', () => {
-                 activeIndex = index;
-                 showItem(activeIndex);
-             });
-         });
-         showItem(activeIndex);
-     });
- 
- //shopping cart
+  // close modal
+  modals.forEach((modal) => {
+    modal.addEventListener("click", (event) => {
+      closeModal(event);
+    });
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeModal(event);
+    }
+  });
+
+  function closeModal(event) {
+    event.preventDefault();
+    const productsDetailArr = Array.from(productsDetail);
+    const productDetail = productsDetailArr.find((detail) => {
+      return !detail.classList.contains("hidden");
+    });
+
+    if (productDetail) {
+      const modal = productDetail.parentElement;
+      const closeModalButton = productDetail.querySelector("#closeModal");
+
+      if (
+        !productDetail.contains(event.target) ||
+        event.target === closeModalButton ||
+        event.key === "Escape"
+      ) {
+        if (modal && productDetail) {
+          modal.classList.add("hidden");
+          productDetail.classList.add("hidden");
+        }
+      }
+    }
+  }
+
+  // modal images slideshow
+  const carousels = document.querySelectorAll("[data-carousel-inner]");
+  carousels.forEach((carousel) => {
+    const items = carousel.querySelectorAll("[data-carousel-item]");
+    const indicators = carousel.nextElementSibling.querySelectorAll(
+      "[data-carousel-slide-to]"
+    );
+    const prevButton = carousel.parentElement.querySelector(
+      "[data-carousel-prev]"
+    );
+    const nextButton = carousel.parentElement.querySelector(
+      "[data-carousel-next]"
+    );
+    let activeIndex = 0;
+
+    const showItem = (index) => {
+      items.forEach((item, i) => {
+        if (i === index) {
+          item.classList.remove("hidden");
+        } else {
+          item.classList.add("hidden");
+        }
+      });
+
+      indicators.forEach((indicator, i) => {
+        if (i === index) {
+          indicator.classList.add("bg-gray-400");
+          indicator.classList.remove("bg-gray-300");
+        } else {
+          indicator.classList.add("bg-gray-300");
+          indicator.classList.remove("bg-gray-400");
+        }
+      });
+    };
+
+    const prevItem = () => {
+      activeIndex = activeIndex > 0 ? activeIndex - 1 : items.length - 1;
+      showItem(activeIndex);
+    };
+
+    const nextItem = () => {
+      activeIndex = activeIndex < items.length - 1 ? activeIndex + 1 : 0;
+      showItem(activeIndex);
+    };
+
+    prevButton.addEventListener("click", prevItem);
+    nextButton.addEventListener("click", nextItem);
+
+    indicators.forEach((indicator, index) => {
+      indicator.addEventListener("click", () => {
+        activeIndex = index;
+        showItem(activeIndex);
+      });
+    });
+    showItem(activeIndex);
+  });
+
+  //shopping cart
   //shopping cart close button
 
   const closeButton = document.getElementById("close-button");
@@ -133,7 +138,7 @@ document.addEventListener("DOMContentLoaded", function () {
     shoppingCart.classList.remove("hidden");
   });
 
-  // Update cart using AJAX on quantity change
+  // Update cart  on quantity change
   const quantityInputs = document.querySelectorAll(".quantity-display");
   quantityInputs.forEach((display) => {
     const productId = display.getAttribute("id").split("-")[1];
@@ -152,7 +157,6 @@ document.addEventListener("DOMContentLoaded", function () {
         display.innerText = quantity;
         updateCart(productId, quantity);
         calculateSubtotal();
-        console.log("Subtotal: ", calculateSubtotal());
       }
     });
 
@@ -167,10 +171,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function updateCart(productId, quantity) {
-    console.log("Updating cart:", {
-      productId: productId,
-      quantity: quantity,
-    });
     const url = `/cart/update/${productId}/${quantity}`;
     fetch(url, {
       method: "POST",
@@ -180,6 +180,7 @@ document.addEventListener("DOMContentLoaded", function () {
           .querySelector('meta[name="csrf-token"]')
           .getAttribute("content"),
       },
+
       body: JSON.stringify({
         productId: productId,
         quantity: quantity,
@@ -192,7 +193,6 @@ document.addEventListener("DOMContentLoaded", function () {
         throw new Error("Network response was not ok.");
       })
       .then((data) => {
-        console.log("Success:", data);
         window.location.reload();
       });
   }
@@ -200,14 +200,10 @@ document.addEventListener("DOMContentLoaded", function () {
   updateCartButtons.forEach((button) => {
     button.addEventListener("click", (event) => {
       event.preventDefault();
-      console.log("Update cart button clicked:", button);
       const productId = button.getAttribute("data-id");
       const quantityInput = document.getElementById(`quantity-${productId}`);
       const quantity = quantityInput.value;
-      console.log("Updating cart:", {
-        productId: productId,
-        quantity: quantity,
-      });
+
       const url = `cart/update/${productId}/${quantity}`;
     });
   });
@@ -218,7 +214,6 @@ document.addEventListener("DOMContentLoaded", function () {
   removeButtons.forEach((button) => {
     button.addEventListener("click", (event) => {
       event.preventDefault();
-      console.log("Remove button clicked:", button);
       const productId = button.getAttribute("data-id");
       const url = `/cart/remove/${productId}`;
       fetch(url, {
@@ -262,13 +257,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const quantityDisplays = document.querySelectorAll(".quantity-display");
     quantityDisplays.forEach((display) => {
       const productId = display.getAttribute("id").split("-")[1];
-      console.log(productId);
 
       const priceElement = document.querySelector(
         `.product-price[data-id="${productId}"]`
       );
 
-      console.log(priceElement);
       if (priceElement) {
         const price = parseFloat(priceElement.innerText.replace("$", ""));
         const quantity = parseInt(display.innerText);
@@ -300,90 +293,96 @@ document.addEventListener("DOMContentLoaded", function () {
     modal.classList.add("hidden");
   });
 
+  //banner
 
-//banner
+  // window.onload = function() {
+  const dynamicWords = ["cars", "enthusiasts", "magebit", "everyone"];
+  // const dynamicWords = ["cars", "motorcycles"];
+  // Retrieve the current word index from localStorage, default to 0 if not found
+  let currentWordIndex =
+    parseInt(localStorage.getItem("dynamicWordIndex")) || 0;
+  const targetElement = document.querySelector(".Banner__title--second");
 
-    // window.onload = function() {
-        const dynamicWords = ["cars", "enthusiasts", "magebit", "everyone"];
-        // const dynamicWords = ["cars", "motorcycles"];
-        // Retrieve the current word index from localStorage, default to 0 if not found
-        let currentWordIndex = parseInt(localStorage.getItem('dynamicWordIndex')) || 0;
-        const targetElement = document.querySelector('.Banner__title--second');
+  async function updateDynamicWord() {
+    const dynamicWord = dynamicWords[currentWordIndex];
+    const targetElement = document.querySelector(".Banner__title--second");
+    // Clear existing content
+    if (targetElement.textContent.length > 0) {
+      let str = targetElement.textContent;
+      await eraseText(targetElement);
+    }
+    targetElement.innerHTML = ""; // Use innerHTML to clear the element
 
-        async function updateDynamicWord() {
-            const dynamicWord = dynamicWords[currentWordIndex];
-            const targetElement = document.querySelector('.Banner__title--second');
-            // Clear existing content
-            if (targetElement.textContent.length > 0) {
-                let str = targetElement.textContent;
-               await eraseText(targetElement);
-            }
-            targetElement.innerHTML = ''; // Use innerHTML to clear the element
-            
-            // Typing effect
-            await typeText(targetElement, dynamicWord);
+    // Typing effect
+    await typeText(targetElement, dynamicWord);
 
-            currentWordIndex++;
-            if (currentWordIndex >= dynamicWords.length) {
-                currentWordIndex = 0; // Loop back to the first word after showing all
-            }
+    currentWordIndex++;
+    if (currentWordIndex >= dynamicWords.length) {
+      currentWordIndex = 0; // Loop back to the first word after showing all
+    }
 
-        setTimeout(updateDynamicWord, 3000); // Change word every 3 seconds
+    setTimeout(updateDynamicWord, 3000); // Change word every 3 seconds
+  }
+
+  // Typing effect function
+  async function typeText(element, text, index = 0) {
+    return new Promise((resolve) => {
+      function typeNextCharacter() {
+        if (index < text.length) {
+          element.innerHTML += text.charAt(index);
+          index++;
+          setTimeout(typeNextCharacter, 100); // Adjust delay as needed
+        } else {
+          resolve();
         }
+      }
+      typeNextCharacter();
+    });
+  }
 
-        // Typing effect function
-        async function typeText(element, text, index = 0) {
-            return new Promise((resolve) => {
-                function typeNextCharacter() {
-                    if (index < text.length) {
-                        element.innerHTML += text.charAt(index);
-                        index++;
-                        setTimeout(typeNextCharacter, 100); // Adjust delay as needed
-                    } else {
-                        resolve();
-                    }
-                }
-                typeNextCharacter();
-            });
+  async function eraseText(element) {
+    return new Promise((resolve) => {
+      function eraseNextCharacter() {
+        if (element.textContent.length > 0) {
+          element.textContent = element.textContent.slice(0, -1);
+          setTimeout(eraseNextCharacter, 100); // Adjust delay as needed
+        } else {
+          resolve();
         }
+      }
+      eraseNextCharacter();
+    });
+  }
 
-        async function eraseText(element) {
-            return new Promise((resolve) => {
-                function eraseNextCharacter() {
-                    if (element.textContent.length > 0) {
-                        element.textContent = element.textContent.slice(0, -1);
-                        setTimeout(eraseNextCharacter, 100); // Adjust delay as needed
-                    } else {
-                        resolve();
-                    }
-                }
-                eraseNextCharacter();
-            });
-        }
+  updateDynamicWord(); // Initialize the dynamic word
+  // };
 
-        updateDynamicWord(); // Initialize the dynamic word
-    // };
+  // blink animation for caret coursor
 
-        // blink animation for caret coursor
+  // function toggleVisibility(Banner__caret) {
+  //     const element = document.getElementById(Banner__caret);
+  //     if (element.style.display === "none") {
+  //         element.style.display = "inline";
+  //     } else {
+  //         element.style.display = "none";
+  //     }
+  // }
 
-    // function toggleVisibility(Banner__caret) {
-    //     const element = document.getElementById(Banner__caret);
-    //     if (element.style.display === "none") {
-    //         element.style.display = "inline";
-    //     } else {
-    //         element.style.display = "none";
-    //     }
-    // }
+  // // rgba(124, 58, 237, 1)
 
-    // // rgba(124, 58, 237, 1)
-    
-    // function startBlinking(Banner__caret, intervalDuration) {
-    //     setInterval(() => toggleVisibility(Banner__caret), intervalDuration);
-    // }
-    
-    // // Example usage: Make an element with ID 'blinkMe' blink every 500 milliseconds
-    // startBlinking('blinkMe', 500);
+  // function startBlinking(Banner__caret, intervalDuration) {
+  //     setInterval(() => toggleVisibility(Banner__caret), intervalDuration);
+  // }
+
+  // // Example usage: Make an element with ID 'blinkMe' blink every 500 milliseconds
+  // startBlinking('blinkMe', 500);
+
+  //Notification message
+
+  const successMessage = document.getElementById("success-message");
+  if (successMessage) {
+    setTimeout(() => {
+      successMessage.style.display = "none";
+    }, 1000);
+  }
 });
-
-
-

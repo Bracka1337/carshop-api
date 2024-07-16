@@ -83,8 +83,9 @@
                                 <span class="sr-only">items in cart, view bag</span>
                             </button>
                             @if (session('success'))
-                            <div class="text-sm text-green-400">{{ session('success') }}</div>
+                            <div id="success-message" class="text-sm text-green-400">{{ session('success') }}</div>
                         @endif
+                        
                         </div>
                     </div>
                 </div>
