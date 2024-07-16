@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit9c491b8531eec05ba41a11d9276a5749
+class ComposerStaticInitad8357da3ca15a5d67a1ef24d1331363
 {
     public static $files = array (
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
@@ -456,8 +456,8 @@ class ComposerStaticInit9c491b8531eec05ba41a11d9276a5749
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -521,8 +521,8 @@ class ComposerStaticInit9c491b8531eec05ba41a11d9276a5749
         ),
         'League\\Uri\\' => 
         array (
-            0 => __DIR__ . '/..' . '/league/uri',
-            1 => __DIR__ . '/..' . '/league/uri-interfaces',
+            0 => __DIR__ . '/..' . '/league/uri-interfaces',
+            1 => __DIR__ . '/..' . '/league/uri',
         ),
         'League\\OAuth2\\Server\\' => 
         array (
@@ -776,14 +776,24 @@ class ComposerStaticInit9c491b8531eec05ba41a11d9276a5749
         'AnourValar\\EloquentSerialize\\Service' => __DIR__ . '/..' . '/anourvalar/eloquent-serialize/src/Service.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Filament\\Resources\\BrandResource' => __DIR__ . '/../..' . '/app/Filament/Resources/BrandResource.php',
+        'App\\Filament\\Resources\\BrandResource\\Pages\\CreateBrand' => __DIR__ . '/../..' . '/app/Filament/Resources/BrandResource/Pages/CreateBrand.php',
+        'App\\Filament\\Resources\\BrandResource\\Pages\\EditBrand' => __DIR__ . '/../..' . '/app/Filament/Resources/BrandResource/Pages/EditBrand.php',
+        'App\\Filament\\Resources\\BrandResource\\Pages\\ListBrands' => __DIR__ . '/../..' . '/app/Filament/Resources/BrandResource/Pages/ListBrands.php',
+        'App\\Filament\\Resources\\BrandResource\\RelationManagers\\ProductsRelationManager' => __DIR__ . '/../..' . '/app/Filament/Resources/BrandResource/RelationManagers/ProductsRelationManager.php',
         'App\\Filament\\Resources\\OrderResource' => __DIR__ . '/../..' . '/app/Filament/Resources/OrderResource.php',
         'App\\Filament\\Resources\\OrderResource\\Pages\\CreateOrder' => __DIR__ . '/../..' . '/app/Filament/Resources/OrderResource/Pages/CreateOrder.php',
         'App\\Filament\\Resources\\OrderResource\\Pages\\EditOrder' => __DIR__ . '/../..' . '/app/Filament/Resources/OrderResource/Pages/EditOrder.php',
         'App\\Filament\\Resources\\OrderResource\\Pages\\ListOrders' => __DIR__ . '/../..' . '/app/Filament/Resources/OrderResource/Pages/ListOrders.php',
+        'App\\Filament\\Resources\\PaymentResource' => __DIR__ . '/../..' . '/app/Filament/Resources/PaymentResource.php',
+        'App\\Filament\\Resources\\PaymentResource\\Pages\\CreatePayment' => __DIR__ . '/../..' . '/app/Filament/Resources/PaymentResource/Pages/CreatePayment.php',
+        'App\\Filament\\Resources\\PaymentResource\\Pages\\EditPayment' => __DIR__ . '/../..' . '/app/Filament/Resources/PaymentResource/Pages/EditPayment.php',
+        'App\\Filament\\Resources\\PaymentResource\\Pages\\ListPayments' => __DIR__ . '/../..' . '/app/Filament/Resources/PaymentResource/Pages/ListPayments.php',
         'App\\Filament\\Resources\\ProductResource' => __DIR__ . '/../..' . '/app/Filament/Resources/ProductResource.php',
         'App\\Filament\\Resources\\ProductResource\\Pages\\CreateProduct' => __DIR__ . '/../..' . '/app/Filament/Resources/ProductResource/Pages/CreateProduct.php',
         'App\\Filament\\Resources\\ProductResource\\Pages\\EditProduct' => __DIR__ . '/../..' . '/app/Filament/Resources/ProductResource/Pages/EditProduct.php',
         'App\\Filament\\Resources\\ProductResource\\Pages\\ListProducts' => __DIR__ . '/../..' . '/app/Filament/Resources/ProductResource/Pages/ListProducts.php',
+        'App\\Filament\\Resources\\ProductResource\\RelationManagers\\ImagesRelationManager' => __DIR__ . '/../..' . '/app/Filament/Resources/ProductResource/RelationManagers/ImagesRelationManager.php',
         'App\\Filament\\Resources\\UserResource' => __DIR__ . '/../..' . '/app/Filament/Resources/UserResource.php',
         'App\\Filament\\Resources\\UserResource\\Pages\\CreateUser' => __DIR__ . '/../..' . '/app/Filament/Resources/UserResource/Pages/CreateUser.php',
         'App\\Filament\\Resources\\UserResource\\Pages\\EditUser' => __DIR__ . '/../..' . '/app/Filament/Resources/UserResource/Pages/EditUser.php',
@@ -9297,9 +9307,9 @@ class ComposerStaticInit9c491b8531eec05ba41a11d9276a5749
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit9c491b8531eec05ba41a11d9276a5749::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit9c491b8531eec05ba41a11d9276a5749::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit9c491b8531eec05ba41a11d9276a5749::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitad8357da3ca15a5d67a1ef24d1331363::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitad8357da3ca15a5d67a1ef24d1331363::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitad8357da3ca15a5d67a1ef24d1331363::$classMap;
 
         }, null, ClassLoader::class);
     }
