@@ -407,4 +407,23 @@ modals.forEach((modal) => {
       event.preventDefault();
       window.location.href = '/checkout';
   });
+
+
+
+  const cardNumberInput = document.getElementById('card-number-input');
+  const errorMessage = document.getElementById('error-message');
+
+  cardNumberInput.addEventListener('input', function (e) {
+      let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+      let formattedValue = value.replace(/(.{4})/g, '$1 ').trim();
+
+      e.target.value = formattedValue;
+
+      // Check if the input matches the pattern
+      if (cardNumberInput.validity.patternMismatch) {
+          errorMessage.textContent = 'Please enter a valid card number format (xxxx xxxx xxxx xxxx).';
+      } else {
+          errorMessage.textContent = '';
+      }
+  });
 });

@@ -67,6 +67,9 @@ Route::group(['middleware' => ['auth']], function () {
     //get session details
     Route::get('/checkout', [MainController::class, 'getCart'])->name('checkout');
     Route::get('/payment', [CheckoutController::class,'proceedToPayment'])->name('proceedToPayment');
+    Route::get('/payment-details', function(){
+        return view('payment');
+    })->name('payment-details');
 
 
 
