@@ -8,7 +8,7 @@
 
         <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     </head>
-    <div class="lg:px-24 lg:py-24 md:py-20 md:px-44 px-4 py-24 items-center flex justify-center flex-col-reverse lg:flex-row md:gap-28 gap-16">
+    <div class=" h-screen flex items-center lg:px-24 lg:py-24 md:py-20 md:px-44 px-4 py-24 items-center flex justify-center flex-col-reverse lg:flex-row md:gap-28 gap-16">
         <div class="xl:pt-24 w-full xl:w-1/2 relative pb-12 lg:pb-0">
             <div class="relative">
                 <div class="absolute">
@@ -18,7 +18,9 @@
                             doorway to the great nothing
                         </h1>
                         <p class="my-2 text-gray-800">Sorry about that! Please visit our hompage to get where you need to go.</p>
-                        <button class="block rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 hover:shadow-md">Take me there!</button>
+                        <a href="/"  class="block w-36 rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 hover:shadow-md"
+                        
+                        >Take me there!</a>
                     </div>
                 </div>
                 <div>
