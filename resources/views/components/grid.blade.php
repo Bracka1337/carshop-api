@@ -10,7 +10,7 @@
             <h2 class="mb-4 font-bold text-xl text-gray-600">Product list:</h2>
             <div class="grid w-full sm:grid-cols-2 xl:grid-cols-4 gap-6">
                 @foreach ($products as $product)
-                    <div class="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 w-full md:w-72">
+                    <div class="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 w-full md:w-11/12">
                         <div class="flex flex-col hover:cursor-pointer" id="product" product-id="{{ $product->id }}">
                             <div class="h-auto overflow-hidden">
                                 <div class="h-44 overflow-hidden relative">
