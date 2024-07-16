@@ -1,3 +1,4 @@
+
 <section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
 
     @if (session('cart') && count(session('cart')) > 0)
@@ -25,6 +26,8 @@
                             width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+roke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7" />
+
                         </svg>
                         Checkout
                     </span>
