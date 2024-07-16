@@ -12,16 +12,17 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->string('diameter');
-            $table->string('width');
-            $table->string('et');
-            $table->string('cb');
-            $table->string('bolt');
-            $table->string('bolt_diameter');
+            $table->integer('diameter');
+            $table->double('width');
+            $table->double('et');
+            $table->double('cb');
+            $table->integer('bolt');
+            $table->double('bolt_diameter');
             $table->string('type');
-            $table->decimal('price', 10, 2);
+            $table->double('price', 10, 2);
             $table->foreignId('brand_id')->constrained('brands');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
     public function down()

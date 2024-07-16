@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->string('img_uri');
+            $table->text('img_uri');
             $table->foreignId('product_id')->constrained('products');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
