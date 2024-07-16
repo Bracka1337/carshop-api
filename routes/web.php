@@ -58,11 +58,14 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('profile/orderdetails/{id}', [OrderController::class, 'show'])->name('orderdetails');
 
-});
-
-Route::group(['middleware' => ['can:access-admin']], function () {
-    Route::get('/admin', [AdminController::class, 'showAdmin'])->name('admin');
-});
-
 //get session details
 Route::get('/checkout', [MainController::class, 'getCart'])->name('checkout');
+
+    Route::get('/payment', function () {
+        return view('payment');
+    })->name('payment');
+
+    Route::get('/paymentSucess', function () {
+        return view('paymentSucess');
+    })->name('paymentSucess');
+});
