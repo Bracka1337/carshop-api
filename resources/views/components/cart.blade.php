@@ -21,13 +21,13 @@
                                 </div>
                             </div>
 
-                            @if (session('cart') && count(session('cart')) > 0)
+                            @if (session('cart'))
                                 <div class="mt-8">
                                     <div class="flow-root">
                                         <ul role="list" class="-my-6 divide-y divide-gray-200">
                                             @foreach (session('cart') as $id => $details) 
                                         
-                                                @if (is_array($details)) 
+                                                @if (is_array($details)) {{-- Check for this --}}
                                                     <li class="flex py-6">
                                                         <div
                                                             class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
@@ -77,6 +77,7 @@
                                                         </div>
 
                                                     </li>
+                                                @endif
                                             @endforeach
                                         </ul>
                                     </div>
