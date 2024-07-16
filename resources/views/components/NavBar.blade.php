@@ -39,10 +39,10 @@
                     </div>
                 <!-- Logo -->
                 <div class="ml-4 flex lg:ml-0 ">
-                    <a href="/">
+                    <div>
                         <span class="sr-only ">East Squad</span>
                         <img class="h-10 w-auto " src="{{ asset('images/logo2.svg') }}" alt="EastSquad logo">
-                    </a>
+                </div>
                 </div>
                 <div class="hidden lg:ml-8 lg:block lg:self-stretch ">
                     <div class="flex h-full space-x-8 ">

@@ -14,7 +14,22 @@
 
 
     </head>
-    <body class="antialiased bg-gray-100 flex items-center justify-center  flex-col min-h-screen mt-10">
+    
+    <body class="antialiased bg-gray-100 flex items-center justify-center  flex-col min-h-screen">
+        <div class="area">
+			<ul class="circles">
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
     
     <div class="login-container bg-white p-8 shadow-md w-96">
         <div class="mb-4 flex justify-center ">
