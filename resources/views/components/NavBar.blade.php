@@ -45,16 +45,16 @@
                                 </div>
                             </div>
 
-                                 @auth
-                                    <div class="flex">
-                                        <div class="relative flex">
-                                            <a type="button" href="/profile"
-                                                class="relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800"
-                                                aria-expanded="false">Profile</a>
-                                        </div>
+                            @auth
+                                <div class="flex">
+                                    <div class="relative flex">
+                                        <a type="button" href="/profile"
+                                            class="relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800"
+                                            aria-expanded="false">Profile</a>
                                     </div>
-                                @endauth
- 
+                                </div>
+                            @endauth
+
                             <a href="/aboutus"
                                 class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">About
                                 us</a>
