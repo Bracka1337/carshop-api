@@ -122,7 +122,7 @@ modals.forEach((modal) => {
 //shopping cart
   //shopping cart close button
 
-  const closeButton = document.getElementById("close-button");
+  const closeButton = document.getElementById("cart-close-button");
   const shoppingCart = document.getElementById("shopping-cart");
   const modal = document.getElementById("modal");
   closeButton.addEventListener("click", (event) => {
