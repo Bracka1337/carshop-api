@@ -118,12 +118,25 @@ modals.forEach((modal) => {
     showItem(activeIndex);
   });
 
+  // modal Add To Cart
+  document.body.addEventListener('click', (event) => {
+    if (event.target.matches('#btn-addToCart')) {
+        event.preventDefault();
+        const productLink = event.target.getAttribute('productlink');
+        const newLink = document.createElement('a');
+        newLink.setAttribute('href', productLink);;
+        document.body.appendChild(newLink);
+        newLink.click();
+    }
+  });
+
 //shopping cart
   //shopping cart close button
 
   const closeButton = document.getElementById("cart-close-button");
   const shoppingCart = document.getElementById("shopping-cart");
   const modal = document.getElementById("modal");
+
   closeButton.addEventListener("click", (event) => {
     event.preventDefault();
     shoppingCart.classList.add("hidden");

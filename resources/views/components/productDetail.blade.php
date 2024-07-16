@@ -1,5 +1,5 @@
 {{-- product details --}}
-@props(['product' => [], 'īsOrderPage' => false])
+@props(['product' => []])
 
     <div id="modal" class="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 z-30 hidden">
         <div class="mt-10 max-w-screen-2xl mx-auto px-4 sm:px-4 lg:px-5 bg-white 
@@ -126,13 +126,14 @@
                                 </thead>
                             </table>     
                         </div>
-                        <div class="flex -mx-2 justify-end my-5">
-                            <div class="w-1/2 px-2">
-                                <button class="w-full bg-gray-900 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800">
+                        @if (!Route::has('orderdetails'))                 
+                         <div class="flex -mx-2 justify-end my-5">
+                                <button class="w-1/2 px-2 bg-gray-900 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800"
+                                id="btn-addToCart" productLink="{{ route('products.addToCart', $product->id) }}" >
                                     Add to Cart
                                 </button>
-                            </div>
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
