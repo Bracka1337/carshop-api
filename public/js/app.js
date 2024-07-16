@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const products = document.querySelectorAll("#product");
   const modals = document.querySelectorAll("#modal");
   const productsDetail = document.querySelectorAll("#productDetail");
-  const addToCart = document.querySelectorAll("#addToCart");
   const updateCartButtons = document.querySelectorAll(".updateCart");
 
   // open modal

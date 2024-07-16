@@ -29,7 +29,6 @@
                             <a href="{{ route('products.addToCart', $product->id) }}" class="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-indigo-600 uppercase align-middle transition-all rounded-full select-none hover:bg-indigo-600/10 active:bg-indigo-600/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">Add to cart</a>
                         </div>
                     </div>
-                    {{-- @include('components.productDetail') --}}
                     <x-productDetail :product="$product"/>
                 @endforeach
             </div>

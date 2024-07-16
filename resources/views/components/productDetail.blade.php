@@ -1,5 +1,5 @@
 {{-- product details --}}
-@props(['product' => []])
+@props(['product' => [], 'īsOrderPage' => false])
 
     {{-- @foreach ($products as $product) --}}
     <div id="modal" class="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 z-30 hidden">
@@ -51,44 +51,44 @@
             </div>
             <div class="px-4 basis-1/2 h-full flex flex-col justify-between">
                 <div>
-                    <h2 class="font-bold text-gray-800 dark:text-white mb-2 text-5xl">{{ $product->title }}</h2>
-                    <p class="text-gray-600 dark:text-gray-300 text-3xl mb-4">{{ $product->brand->title}}</p>
+                    <h2 class="font-bold text-gray-800 mb-2 text-5xl">{{ $product->title }}</h2>
+                    <p class="text-gray-600 text-3xl mb-4">{{ $product->brand->title}}</p>
                     <div class="mb-4 flex text-4xl">
                         <div class="mr-10">
-                            <span class="text-gray-600 dark:text-gray-300">${{ $product->price }}</span>
+                            <span class="text-gray-600">${{ $product->price }}</span>
                         </div>
                     </div>
                     <div class="h-52 mt-10 overflow-auto">
-                        <span class="font-bold text-gray-700 dark:text-gray-300 text-xl">Product Description:</span>
-                        <p class="text-gray-600 dark:text-gray-300 text-sm mt-2 text-lg">{{ $product->description }}</p>
+                        <span class="font-bold text-gray-700 text-xl">Product Description:</span>
+                        <p class="text-gray-600 text-sm mt-2 text-lg">{{ $product->description }}</p>
                     </div>
                     <div class="mt-3">
-                        <p class="font-bold text-gray-700 dark:text-gray-300 text-xl">Product Specification:</span>
+                        <p class="font-bold text-gray-700 text-xl">Product Specification:</span>
                     </div>
                     <div class="">
-                        <table class="w-full text-base text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                            <thead class="text-base text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+                        <table class="w-full text-base text-left rtl:text-right text-gray-500">
+                            <thead class="text-base text-gray-700">
                                 <tr>
                                     <th scope="col" class="px-6 py-2 border-b  border-gray-200 ">
                                         Type
                                     </th>
-                                    <td class="px-6 py-2 border-b border-gray-200  font-bold text-right">
+                                    <td class="px-6 py-2 border-b border-gray-200 font-bold text-right">
                                         {{ $product->type }}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="col" class="px-6 py-2 border-b  border-gray-200 ">
+                                    <th scope="col" class="px-6 py-2 border-b  border-gray-200">
                                         Size
                                     </th>
-                                    <td class="px-6 py-2 border-b border-gray-200  font-bold text-right">
+                                    <td class="px-6 py-2 border-b border-gray-200 font-bold text-right">
                                         {{ $product->diameter }}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="col" class="px-6 py-2 border-b  border-gray-200 ">
+                                    <th scope="col" class="px-6 py-2 border-b  border-gray-200">
                                         Width
                                     </th>
-                                    <td class="px-6 py-2 border-b border-gray-200  font-bold text-right">
+                                    <td class="px-6 py-2 border-b border-gray-200 font-bold text-right">
                                         {{ $product->width }}
                                     </td>
                                 </tr>
@@ -96,31 +96,31 @@
                                     <th scope="col" class="px-6 py-2 border-b  border-gray-200 ">
                                         Et
                                     </th>
-                                    <td class="px-6 py-2 border-b border-gray-200  font-bold text-right">
+                                    <td class="px-6 py-2 border-b border-gray-200 font-bold text-right">
                                         {{ $product->et }}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="col" class="px-6 py-2 border-b  border-gray-200 ">
+                                    <th scope="col" class="px-6 py-2 border-b  border-gray-200">
                                         Cb
                                     </th>
-                                    <td class="px-6 py-2 border-b border-gray-200  font-bold text-right">
+                                    <td class="px-6 py-2 border-b border-gray-200 font-bold text-right">
                                         {{ $product->cb }}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="col" class="px-6 py-2 border-b  border-gray-200 ">
+                                    <th scope="col" class="px-6 py-2 border-b  border-gray-200">
                                         Bolt
                                     </th>
-                                    <td class="px-6 py-2 border-b border-gray-200  font-bold text-right">
+                                    <td class="px-6 py-2 border-b border-gray-200 font-bold text-right">
                                         {{ $product->bolt }}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="col" class="px-6 py-2 border-b  border-gray-200 d">
+                                    <th scope="col" class="px-6 py-2 border-b  border-gray-200">
                                         Bolt Diameter
                                     </th>
-                                    <td class="px-6 py-2 border-b border-gray-200  font-bold text-right">
+                                    <td class="px-6 py-2 border-b border-gray-200 font-bold text-right">
                                         {{ $product->bolt_diameter }}
                                     </td>
                                 </tr>
@@ -130,7 +130,7 @@
                 </div>
                 <div class="flex -mx-2 mb-3 justify-end">
                     <div class="w-1/2 px-2">
-                        <button class="w-full bg-gray-900">
+                        <button class="w-full bg-gray-900 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800">
                             Add to Cart
                         </button>
                     </div>
