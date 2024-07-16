@@ -269,7 +269,7 @@
           </div>
   
           <div class="space-y-3">
-            <a href="/payment"><button class="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300">Proceed to Payment</button></a>
+            <button onclick="window.location.href='/payment'" class="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">Proceed to Payment</button>
   
             <p class="text-sm font-normal text-gray-500">One or more items in your cart require an account. <a href="/login" title="" class="font-medium text-primary-700 underline hover:no-underline ">Sign in or create an account now.</a></p>
           </div>
