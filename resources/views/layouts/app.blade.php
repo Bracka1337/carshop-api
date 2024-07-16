@@ -26,7 +26,7 @@
 
         <!-- Page Content -->
         <main>
-            @include('components.NavBar')
+      
             
             @if (Route::currentRouteName() == 'main')
                 
