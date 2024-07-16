@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Brand;
-use Illuminate\Support\Facades\Notification;
-use Laracasts\Flash\Flash;
+
 
  
 class MainController extends Controller

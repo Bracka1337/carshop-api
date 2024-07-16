@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'd37bee8bb6c1a084818e6ee5010e121c1e11b671',
+        'reference' => 'af7a8dabf22d0dc6088b1bbc368b6556b819f247',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -550,15 +550,6 @@
                 0 => '*',
             ),
         ),
-        'laracasts/flash' => array(
-            'pretty_version' => '3.2.3',
-            'version' => '3.2.3.0',
-            'reference' => 'c2c4be1132f1bec3a689e84417a1c5787e6c71fd',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../laracasts/flash',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
         'laravel/framework' => array(
             'pretty_version' => 'v10.48.16',
             'version' => '10.48.16.0',
@@ -571,7 +562,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'd37bee8bb6c1a084818e6ee5010e121c1e11b671',
+            'reference' => 'af7a8dabf22d0dc6088b1bbc368b6556b819f247',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
