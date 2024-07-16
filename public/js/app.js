@@ -139,8 +139,6 @@ modals.forEach((modal) => {
     shoppingCart.classList.remove("hidden");
   });
 
-
-
   // Update cart  on quantity change
   const quantityInputs = document.querySelectorAll(".quantity-display");
   quantityInputs.forEach((display) => {
