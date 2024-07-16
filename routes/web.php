@@ -58,4 +58,15 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('profile/orderdetails/{id}', [OrderController::class, 'show'])->name('orderdetails');
 
+    Route::get('/checkout', function () {
+        return view('checkout');
+    })->name('checkout');
+
+    Route::get('/payment', function () {
+        return view('payment');
+    })->name('payment');
+
+    Route::get('/paymentSucess', function () {
+        return view('paymentSucess');
+    })->name('paymentSucess');
 });

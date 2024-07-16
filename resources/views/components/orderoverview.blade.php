@@ -1,4 +1,4 @@
-<section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
+<section class="py-8 antialiased dark:bg-gray-900 md:py-16">
     <div class="w-full max-w-7xl px-4 md:px-5 lg:px-6 mx-auto">
         <h2 class="font-manrope font-bold text-3xl md:text-4xl leading-10 text-black text-center">
             <ol class="items-center flex w-full max-w-3xl text-center text-sm font-medium text-gray-500 dark:text-gray-400 sm:text-base">

@@ -1,5 +1,5 @@
 <x-app-layout>
-    <section class="py-24 relative">
+    <section class="relative">
         <div class="w-full max-w-7xl px-4 md:px-5 lg-6 mx-auto">
             <div class="container mx-auto p-8">
                 <h1 class="text-5xl font-bold text-left text-indigo-500 mb-8">Hello, {{ $user->username }}</h1>
