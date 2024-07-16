@@ -1,79 +1,118 @@
-<section class="py-24 relative">
-    <div class="w-full max-w-7xl px-4 md:px-5 lg-6 mx-auto">
-        <h2 class="font-manrope font-bold text-4xl leading-10 text-black text-center">
-            Payment Successful
+<section class="py-8 antialiased md:py-16">
+    <div class="w-full max-w-7xl px-4 md:px-5 lg:px-6 mx-auto">
+        <h2 class="font-manrope font-bold text-3xl md:text-4xl leading-10 text-black text-center">
+            <ol class="items-center flex w-full max-w-3xl text-center text-sm font-medium text-gray-500 sm:text-base">
+                <li class="after:border-1 flex items-center text-primary-700 after:mx-6 after:hidden after:h-1 after:w-full after:border-b after:border-gray-200 sm:after:inline-block sm:after:content-[''] md:w-full xl:after:mx-10">
+                  <span class="flex items-center after:mx-2 after:text-gray-200 after:content-['/'] sm:after:hidden">
+                    <svg class="me-2 h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    Cart
+                  </span>
+                </li>
+          
+                <li class="after:border-1 flex items-center text-primary-700 after:mx-6 after:hidden after:h-1 after:w-full after:border-b after:border-gray-200 sm:after:inline-block sm:after:content-[''] md:w-full xl:after:mx-10">
+                  <span class="flex items-center after:mx-2 after:text-gray-200 after:content-['/'] sm:after:hidden">
+                    <svg class="me-2 h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    Checkout
+                  </span>
+                </li>
+          
+                <li class=" flex items-center text-primary-700 ">
+                    <span class="flex items-center ">
+                      <svg class="me-2 h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                      </svg>
+                      Order&nbspSummary
+                    </span>
+                  </li>
+              </ol>
         </h2>
-        <p class="mt-4 font-normal text-lg leading-8 text-gray-500 mb-11 text-center">Thanks for making a purchase you can check our order summary below</p>
-        <div class="main-box border border-gray-200 rounded-xl pt-6 max-w-xl max-lg:mx-auto lg:max-w-full">
+        <p class="mt-4 font-normal text-base md:text-lg leading-8 text-gray-500 mb-11 text-center"></p>
+        <div class="bg-indigo-100 main-box border border-gray-200 rounded-xl pt-6 max-w-xl mx-auto lg:max-w-full">
             <div class="flex flex-col lg:flex-row lg:items-center justify-between px-6 pb-6 border-b border-gray-200">
                 <div class="data">
-                    <p class="font-semibold text-base leading-7 text-black">Order Id: <span class="text-indigo-600 font-medium">#3</span></p>
-                    <p class="font-semibold text-base leading-7 text-black mt-4">Order Payment : <span class="text-gray-400 font-medium"> July 10, 2024</span></p>
+                    <p class="font-semibold text-base leading-7 text-black">Order Id: <span
+                            class="text-indigo-600 font-medium">{{ $order->id }}</span></p>
+                    <p class="font-semibold text-base leading-7 text-black mt-4">Order Date: <span
+                            class="text-gray-500 font-medium">{{ $order->date }}</span></p>
+                </div>
+                <div>
+                    <div>
+                        @php
+                            [$paymentBgColor, $paymentTextColor, $paymentText] = $order->getPaymentStatusAttributes();
+                            [
+                                $deliveryBgColor,
+                                $deliveryTextColor,
+                                $deliveryText,
+                            ] = $order->getDeliveryStatusAttributes();
+                        @endphp
+                        <p class="font-semibold text-base leading-7 text-black mt-4">Payment Status: <span
+                                class="font-medium px-2 py-1 rounded {{ $paymentBgColor }} {{ $paymentTextColor }}">{{ $paymentText }}</span>
+                        </p>
+                        <p class="font-semibold text-base leading-7 text-black mt-4">Delivery Status: <span
+                                class="font-medium px-2 py-1 rounded {{ $deliveryBgColor }} {{ $deliveryTextColor }}">{{ $deliveryText }}</span>
+                        </p>
+                    </div>
                 </div>
             </div>
-            <div class="w-full px-8 min-[400px]:px-6">
+
+
+
+            <div class="bg-white w-full">
                 <!-- First item -->
-                <div class="flex flex-col lg:flex-row items-center py-6 border-b border-gray-200 gap-6 w-full">
-                    <div class="img-box max-lg:w-full">
-                        <img src="https://cdn.discordapp.com/attachments/1260118461368238105/1260130360122015764/Screenshot_20240709_091501_Gallery1.jpg?ex=668e3359&is=668ce1d9&hm=15e1a82db57076c7be16f09dffbf0f0c8fdab85969ba119b4c3de2c356236757&" alt="Product Image" class="w-30 rounded-lg object-cover shadow-md">
-                    </div>
-                    <div class="flex flex-row items-center w-full">
-                        <div class="grid grid-cols-1 lg:grid-cols-2 w-full">
-                            <div class="flex items-center">
-                                <div>
-                                    <h2 class="font-semibold text-xl leading-8 text-black mb-3">Disks Labākais</h2>
-                                    <p class="font-normal text-lg leading-8 text-gray-500 mb-3">By: Dāvis Laksbergs</p>
-                                    <div class="flex items-center">
-                                        <p class="font-medium text-base leading-7 text-black pr-4 mr-4 border-r border-gray-200">Size: <span class="text-gray-500">19"</span></p>
-                                        <p class="font-medium text-base leading-7 text-black">Quantity: <span class="text-gray-500">2</span></p>
-                                    </div>
+                @foreach ($order->productQuantities as $productQuantity)
+                    <div class="px-2 md:px-6 flex flex-row items-center py-6 border-b border-gray-200 gap-6 w-full" id="product" product-id="{{ $productQuantity->product->id }}"">
+                        <div class="img-box flex-shrink-0">
+                            <img src="{{ $productQuantity->product->images[0]->img_uri }}" alt="Product Image"
+                                class="w-20 lg:w-30 rounded-lg object-cover shadow-md">
+                        </div>
+                        <div class="flex flex-1 items-center justify-between">
+                            <div class="flex flex-col">
+                                <h2 class="font-semibold text-lg lg:text-lg leading-8 text-black mb-1">
+                                    {{ $productQuantity->product->title }}</h2>
+                                <div class="flex items-center">
+                                    <p
+                                        class="font-medium text-sm leading-7 text-black pr-4 mr-4 border-r border-gray-200">
+                                        Size: <span
+                                            class="text-gray-500">{{ $productQuantity->product->diameter }}"</span></p>
+                                    <p class="font-medium text-sm leading-7 text-black">Quantity: <span
+                                            class="text-gray-500">{{ $productQuantity->quantity }}</span></p>
                                 </div>
                             </div>
-                            <div class="flex items-center lg:justify-end lg:ml-6">
-                                <div>
-                                    <p class="font-medium text-sm leading-7 text-black">Price</p>
-                                    <p class="lg:mt-4 font-medium text-sm leading-7 text-indigo-600">$100</p>
-                                </div>
+                            <div class="flex items-center justify-end">
+                                <p class="font-medium text-lg leading-7 text-indigo-600">
+                                    ${{ $productQuantity->quantity * $productQuantity->product->price }}</p>
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                <!-- Second item -->
-                <div class="flex flex-col lg:flex-row items-center py-6 gap-6 w-full">
-                    <div class="img-box max-lg:w-full">
-                        <img src="https://cdn.discordapp.com/attachments/1260118461368238105/1260130360122015764/Screenshot_20240709_091501_Gallery1.jpg?ex=668e3359&is=668ce1d9&hm=15e1a82db57076c7be16f09dffbf0f0c8fdab85969ba119b4c3de2c356236757&" alt="Product Image" class="w-30 rounded-lg object-cover shadow-md">
+                    {{-- add boolean order page... so that it doesnt show add to cart --}}
+                    <x-productDetail :product="$productQuantity->product" />
+                @endforeach
+
+
+                <div class="bg-white w-full border-t border-gray-200 px-4 flex items-center justify-between">
+                    <div class="flex items-center">
+                        <p class="font-medium text-lg text-gray-900 pl-6 py-3">Sales Tax:</p>
                     </div>
-                    <div class="flex flex-row items-center w-full">
-                        <div class="grid grid-cols-1 lg:grid-cols-2 w-full">
-                            <div class="flex items-center">
-                                <div>
-                                    <h2 class="font-semibold text-xl leading-8 text-black mb-3">Disks Viduvējs</h2>
-                                    <p class="font-normal text-lg leading-8 text-gray-500 mb-3">By: Sergejs Makarovs</p>
-                                    <div class="flex items-center">
-                                        <p class="font-medium text-base leading-7 text-black pr-4 mr-4 border-r border-gray-200">Size: <span class="text-gray-500">15"</span></p>
-                                        <p class="font-medium text-base leading-7 text-black">Quantity: <span class="text-gray-500 ">1</span></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex items-center lg:justify-end lg:ml-6">
-                                <div>
-                                    <p class="font-medium text-sm leading-7 text-black">Price</p>
-                                    <p class="lg:mt-4 font-medium text-sm leading-7 text-indigo-600">$1</p>
-                                </div>
-                            </div>
-                        </div>
+                    <p class="font-semibold text-lg text-indigo-600 py-3">${{ $cost['tax'] }}</p>
+                </div>
+                <div class="bg-indigo-50 w-full border-t border-gray-200 px-4 flex items-center justify-between">
+                    <div class="flex items-center">
+                        <p class="font-medium text-lg text-gray-900 pl-6 py-3">Shipping Fee:</p>
                     </div>
+                    <p class="font-semibold text-lg text-indigo-600 py-3">${{ $cost['shipping'] }}</p>
                 </div>
-                
-            </div>
-            
-            <div class="w-full border-t border-gray-200 px-4 flex flex-col lg:flex-row items-center justify-between">
-                <div class="flex flex-col sm:flex-row items-center max-lg:border-b border-gray-200">
-                    <p class="font-medium text-lg text-gray-900 pl-6 py-3 max-lg:text-center">Paid using Credit Card <span class="text-gray-500">ending with 8822</span></p>
+                <div
+                    class="bg-white w-full rounded-b-xl border-t border-gray-200 px-4 flex items-center justify-between">
+                    <div class="flex items-center">
+                        <p class="font-medium text-2xl text-gray-900 pl-6 py-3">Total Price:</p>
+                    </div>
+                    <p class="font-semibold text-2xl text-indigo-600 py-3">${{ $cost['total'] }}</p>
                 </div>
-                <p class="font-semibold text-lg text-black py-6">Total Price: <span class="text-indigo-600">$101.00</span></p>
             </div>
-        </div>
-    </div>
+
+
 </section>

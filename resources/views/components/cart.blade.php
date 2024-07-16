@@ -20,49 +20,65 @@
                                     </button>
                                 </div>
                             </div>
+
                             @if (session('cart'))
                                 <div class="mt-8">
                                     <div class="flow-root">
                                         <ul role="list" class="-my-6 divide-y divide-gray-200">
-                                            @foreach (session('cart') as $id => $details)
-                                                <li class="flex py-6">
-                                                    <div
-                                                        class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                                        <img src="{{ $details['preview_img'] }}"
-                                                            alt="{{ $details['title'] }}"
-                                                            class="h-full w-full object-cover object-center">
-                                                    </div>
-                                                    <div class="ml-4 flex flex-1 flex-col">
-                                                        <div>
-                                                            <div
-                                                                class="flex justify-between text-base font-medium text-gray-900">
-                                                                <h3>
-                                                                    <a href="#">{{ $details['title'] }}</a>
-                                                                </h3>
-                                                                <p class="ml-4">${{ $details['price'] }}</p>
-                                                            </div>
-                                                            <p class="mt-1 text-sm text-gray-500">
-                                                                {{ $details['brand'] }}</p>
+                                            @foreach (session('cart') as $id => $details) 
+                                        
+                                                @if (is_array($details)) {{-- Check for this --}}
+                                                    <li class="flex py-6">
+                                                        <div
+                                                            class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                                                            <img src="{{ $details['image'] }}"
+                                                                class="w-full h-full object-center object-cover">
                                                         </div>
-                                                        <div class="flex flex-1 items-end justify-between text-sm">
-                                                            <div class="flex w-full gap-4">
-                                                                <input type="number" name="quantity"
-                                                                    id="quantity-{{ $id }}"
-                                                                    class="text-gray-500 border-gray-300 rounded-md w-12"
-                                                                    value="{{ $details['quantity'] }}" min="1">
-                                                                <a href="{{ route('cart.update', ['id' => $id, 'quantity' => 1]) }}"
-                                                                    class="font-medium text-indigo-600 hover:text-indigo-500 ml-2">Update</a>
+                                                        <div class="ml-4 flex flex-1 flex-col">
+                                                            <div>
+                                                                <div
+                                                                    class="flex justify-between text-base font-medium text-gray-900">
+                                                                    <h3>
+                                                                        <a
+                                                                            href="#">{{ $details['title'] ?? 'N/A' }}</a>
+                                                                    </h3>
+                                                                    <p class="ml-4 product-price"
+                                                                        data-id="{{ $id }}">
+                                                                        ${{ $details['price'] ?? 'N/A' }}
+                                                                    </p>
+                                                                </div>
+                                                                <p class="mt-1 text-sm text-gray-500">
+                                                                    {{ $details['brand'] ?? 'N/A' }}</p>
                                                             </div>
-                                                            <div class="flex">
-                                                                <a href="{{ route('cart.remove', ['id' => $id]) }}"
-                                                                    class="font-medium text-indigo-600 hover:text-indigo-500 ml-4">Remove</a>
+                                                            <div class="flex flex-1 items-end justify-between text-sm">
+                                                                <div
+                                                                    class="flex flex-1 items-end justify-between text-sm">
+                                                                    <div class="flex items-center w-full gap-4">
+                                                                        <div class="quantity-control flex items-center">
+                                                                            <button type="button"
+                                                                                class="decrease-quantity bg-gray-200 hover:bg-gray-300 rounded-md px-2 py-1"
+                                                                                data-id="{{ $id }}">-</button>
+                                                                            <div id="quantity-{{ $id }}"
+                                                                                class="quantity-display text-gray-500 border-gray-300 rounded-md w-12 text-center">
+                                                                                {{ $details['quantity'] ?? 1 }}
+                                                                            </div>
+                                                                            <button type="button"
+                                                                                class="increase-quantity bg-gray-200 hover:bg-gray-300 rounded-md px-2 py-1"
+                                                                                data-id="{{ $id }}">+</button>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <a id="remove-item"
+                                                                        href="{{ route('cart.remove', ['id' => $id]) }}"
+                                                                        data-id="{{ $id }}"
+                                                                        class="font-medium text-indigo-600 hover:text-indigo-500 ml-4">Remove</a>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </li>
+
+                                                    </li>
+                                                @endif
                                             @endforeach
-                                             <a href="{{ route('cart.update', ['id' => 2, 'quantity' => 1]) }}"
-                                                class="font-medium text-indigo-600 hover:text-indigo-500 ml-2">Update</a>
                                         </ul>
                                     </div>
                                 </div>
@@ -73,7 +89,7 @@
                         <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
                             <div class="flex justify-between text-base font-medium text-gray-900">
                                 <p>Subtotal</p>
-                                <p>$ {{ session('total', 0) }}</p>
+                                <p id="subtotal-amount">$0.00</p>
                             </div>
                             <p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                             <div class="mt-6">

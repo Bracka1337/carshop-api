@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite('resources/css/app.css')
-
+    
     <title>Carshop</title>
     {{-- <link rel="icon" href="/public/favicon/favicon.svg" sizes="16x16" type="image/x-icon" > --}}
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon/faviconn.ico') }}" size="32x32">
@@ -28,16 +28,20 @@
         <!-- Page Content -->
         <main>
             @include('components.NavBar')
-            @include('components.banner')
+            
+            @if (Route::currentRouteName() == 'main')
+                
+                @include('components.banner')
+            @endif
             
             @include('components.cart')
             {{ $slot }}
         </main>
 
         <!-- Footer -->
-        @include('components.footer')   
+           
     </div>
-    
+    @include('components.footer')
 </body>
 
 </html>

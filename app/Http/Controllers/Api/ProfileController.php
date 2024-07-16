@@ -10,7 +10,7 @@ class ProfileController extends Controller
     public function show() {
         $user = auth()->user();
         $user->load('orders');
-
+ 
         return view('profile', compact('user'));
     }
 }

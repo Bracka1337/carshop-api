@@ -15,11 +15,19 @@ class Product_quantity extends Model
         'product_id',
     ];
 
-    public function products() {
+    // public function products()
+    // {
+    //     return $this->belongsTo(Product::class);
+    // }
+
+    public function product()
+    {
         return $this->belongsTo(Product::class);
     }
 
-    public function orders() {
+
+    public function orders()
+    {
         return $this->belongsTo(Order::class);
     }
 }

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Brand;
 
+
+ 
 class MainController extends Controller
 {
     public function __invoke(Request $request)
@@ -79,16 +81,16 @@ class MainController extends Controller
     public function getSearchParameters()
     {
 
-        $diameter = Product::select('diameter')->where('diameter', '>', 0)->distinct()->get();
-        $width = Product::select('width')->where('width', '>', 0)->distinct()->get();
-        $et = Product::select('et')->where('et', '>', 0)->distinct()->get();
-        $cb = Product::select('cb')->where('cb', '>', 0)->distinct()->get();
-        $bolt = Product::select('bolt')->where('bolt', '>', 0)->distinct()->get();
-        $bolt_diameter = Product::select('bolt_diameter')->where('bolt_diameter', '>', 0)->distinct()->get();
-        $type = Product::select('type')->where('type', '>', 0)->distinct()->get();
+        $diameter = Product::select('diameter')->where('diameter', '>', 0)->distinct()->get()->sortBy('diameter');
+        $width = Product::select('width')->where('width', '>', 0)->distinct()->get()->sortBy('width');
+        $et = Product::select('et')->where('et', '>', 0)->distinct()->get()->sortBy('et');
+        $cb = Product::select('cb')->where('cb', '>', 0)->distinct()->get()->sortBy('cb');
+        $bolt = Product::select('bolt')->where('bolt', '>', 0)->distinct()->get()->sortBy('bolt');
+        $bolt_diameter = Product::select('bolt_diameter')->where('bolt_diameter', '>', 0)->distinct()->get()->sortBy('bolt_diameter');
+        $type = Product::select('type')->distinct()->get()->sortBy('type');
         $minPrice = Product::min('price');
         $maxPrice = Product::max('price');
-        $brands = Brand::select('id', 'title')->get();
+        $brands = Brand::select('id', 'title')->get()->sortBy('title');
 
         $searchParameters = [
             'brands' => $brands,
@@ -119,8 +121,9 @@ class MainController extends Controller
     {
         $product = Product::findOrFail($id);
         $cart = session()->get('cart', []);
-        $quantity = $request->input('quantity', 1);
-
+        $quantity = (float)1;
+        $image = $product->images[0]['img_uri'];
+    
         if (isset($cart[$id])) {
             $cart[$id]['quantity'] += $quantity;
         } else {
@@ -128,66 +131,105 @@ class MainController extends Controller
                 'title' => $product->title,
                 'brand' => $product->brand->title,
                 'quantity' => $quantity,
-                'price' => $product->price,
-                'preview_img' => $product->preview_img_uri
+                'price' => (float)$product->price,
+                'image' => $image
             ];
         }
 
+    
         session()->put('cart', $cart);
+        $this->calculateCartTotal();
 
-        $total = 0;
-        foreach ($cart as $item) {
-            $total += $item['price'] * $item['quantity'];
-        }
-
-        session()->put('cart.total', $total);
-
-        return redirect()->back()->with('success', 'Product added successfully!');
+        return redirect()->back()->with('success', 'Product added successfully!' );
     }
-
-    public function updateCart(Request $request, $id)
+    
+    public function updateCart($id, $quantity)
     {
         $cart = session()->get('cart', []);
-
-        dd($id);
-
+    
+        if (empty($cart)) {
+            return redirect()->back()->with('error', 'Cart is empty!');
+        }
+    
         if (isset($cart[$id])) {
-
-            $cart[$id]['quantity'] = $request->input('quantity', 1);
-            session()->put('cart', $cart);
-
-            $total = 0;
-            foreach ($cart as $item) {
-                $total += $item['price'] * $item['quantity'];
+            if ($quantity == 0) {
+                unset($cart[$id]);
+            } else {
+                $cart[$id]['quantity'] = (float)$quantity;
             }
-
-            session()->put('cart.total', $total);
-
+            session()->put('cart', $cart);
+    
+            $this->calculateCartTotal();
+    
             return redirect()->back()->with('success', 'Cart updated successfully!');
         }
-
+    
         return redirect()->back()->with('error', 'Product not found in cart!');
     }
-
+    
     public function removeFromCart($id)
     {
-
         $cart = session()->get('cart', []);
-
+    
+        if (empty($cart)) {
+            return response()->json(['message' => 'Cart is empty!'], 404);
+        }
+    
         if (isset($cart[$id])) {
             unset($cart[$id]);
             session()->put('cart', $cart);
-
-            $total = 0;
-            foreach ($cart as $item) {
+    
+            $this->calculateCartTotal();
+    
+            return response()->json([
+                'message' => 'Product removed successfully!'
+            ], 200);
+        }
+    
+        return response()->json(['message' => 'Product not found in cart!'], 404);
+    }
+    
+    private function calculateCartTotal()
+    {
+        $cart = session()->get('cart', []);
+    
+        if (empty($cart)) {
+            session()->put('cart.total', 0);
+            return;
+        }
+    
+        $total = 0;
+    
+        foreach ($cart as $key => $item) {
+            if (is_array($item) && $key !== 'total') {
                 $total += $item['price'] * $item['quantity'];
             }
-
-            session()->put('cart.total', $total);
-
-            return redirect()->back()->with('success', 'Product removed successfully!');
         }
-
-        return redirect()->back()->with('error', 'Product not found in cart!');
+    
+        session()->put('cart.total', $total);
     }
+    
+    public function getCart()
+    {
+        $cart = session()->get('cart', []);
+    
+        if (empty($cart)) {
+            return view('checkout', [
+                'cart' => [],
+            ]);
+        }
+    
+        $total = session()->get('cart.total', 0);
+        $tax = number_format($total * 0.001, 2);
+        $total = number_format($total, 2);
+        $cart['total'] = $total;
+        $cart['tax'] = $tax;
+        session()->put('cart.tax', $tax);
+        session()->put('cart.total', $total);
+    
+        return view('checkout', [
+            'cart' => $cart,
+        ]);
+    }
+    
 }
