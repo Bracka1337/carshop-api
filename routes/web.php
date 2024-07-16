@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\MainController;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Api\FakePaymentController;
 use App\Http\Controllers\Api\OrderController;
 
 
@@ -67,10 +68,15 @@ Route::group(['middleware' => ['auth']], function () {
     //get session details
     Route::get('/checkout', [MainController::class, 'getCart'])->name('checkout');
     Route::get('/payment', [CheckoutController::class,'proceedToPayment'])->name('proceedToPayment');
+
+
+
+
     Route::get('/payment-details', function(){
         return view('payment');
     })->name('payment-details');
 
+    Route::get('/process-payment', [FakePaymentController::class, 'processPayment'])->name('processPayment');
 
 
 
