@@ -17,7 +17,7 @@ class Delivery_detailsFactory extends Factory
     public function definition(): array
     {
         return [
-            'f_name' => fake()->name(),
+            'f_name' => fake()->firstName(),
             'l_name' => fake()->lastName(),
             'addr_line_1' => fake()->streetAddress(),
             'country' => fake()->randomElement(['EST', 'LV', 'LT']),
