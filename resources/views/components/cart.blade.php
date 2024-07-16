@@ -77,6 +77,7 @@
                                                         </div>
 
                                                     </li>
+                                                @endif
                                             @endforeach
                                         </ul>
                                     </div>
