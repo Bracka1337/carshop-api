@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Delivery_details;
 
 class Order extends Model
 {
@@ -14,7 +15,7 @@ class Order extends Model
         'status',
         'date',
         'user_id',
-        'delivery_details',
+        'delivery_details_id',
         'payment_id'
     ];
 
@@ -26,6 +27,10 @@ class Order extends Model
     public function payment()
     {
         return $this->hasOne(Payment::class, 'id', 'payment_id');
+    }
+
+    public function delivery_details() {
+        return $this->belongsTo(Delivery_details::class);
     }
 
     public function productQuantities()

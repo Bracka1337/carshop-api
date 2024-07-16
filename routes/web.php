@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CheckoutController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\ProductController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Api\OrderController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -45,11 +47,15 @@ Route::get('/aboutus', function () {
 
 Route::group(['middleware' => ['guest']], function () {
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-    Route::post('/register', [AuthController::class,'register'])->name('register.store');
+    Route::post('/register', [AuthController::class, 'register'])->name('register.store');
 
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AuthController::class,'login'])->name('login.store');
+    Route::post('/login', [AuthController::class, 'login'])->name('login.store');
+
+
 });
+
+
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -58,12 +64,12 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('profile/orderdetails/{id}', [OrderController::class, 'show'])->name('orderdetails');
 
-//get session details
-Route::get('/checkout', [MainController::class, 'getCart'])->name('checkout');
+    //get session details
+    Route::get('/checkout', [MainController::class, 'getCart'])->name('checkout');
+    Route::get('/payment', [CheckoutController::class,'proceedToPayment'])->name('proceedToPayment');
 
-    Route::get('/payment', function () {
-        return view('payment');
-    })->name('payment');
+
+
 
     Route::get('/paymentSucess', function () {
         return view('paymentSucess');
