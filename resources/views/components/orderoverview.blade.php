@@ -89,7 +89,7 @@
                         </div>
                     </div>
                     {{-- add boolean order page... so that it doesnt show add to cart --}}
-                    <x-productDetail :product="$productQuantity->product" />
+                    <x-productDetail :product="$productQuantity->product" :isOrderPage="true"/>
                 @endforeach
 
 

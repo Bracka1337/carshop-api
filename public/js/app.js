@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const products = document.querySelectorAll("#product");
   const modals = document.querySelectorAll("#modal");
   const productsDetail = document.querySelectorAll("#productDetail");
-  const addToCart = document.querySelectorAll("#addToCart");
   const updateCartButtons = document.querySelectorAll(".updateCart");
 
   // open modal
@@ -139,8 +138,6 @@ modals.forEach((modal) => {
     modal.classList.remove("hidden");
     shoppingCart.classList.remove("hidden");
   });
-
-
 
   // Update cart  on quantity change
   const quantityInputs = document.querySelectorAll(".quantity-display");
