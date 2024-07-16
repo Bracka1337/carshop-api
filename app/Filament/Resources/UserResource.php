@@ -45,7 +45,7 @@ class UserResource extends Resource
                 TextColumn::make('email')->searchable(),
                 TextColumn::make('phone_nr')->searchable(),
                 TextColumn::make('role'),
-                TextColumn::make('orders.id')->limitList()->expandableLimitedList()->searchable(),
+                TextColumn::make('orders.id')->limitList()->expandableLimitedList()->searchable()->suffix('...'),
             ])
             ->filters([
                 //
