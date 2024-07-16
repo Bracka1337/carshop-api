@@ -13,6 +13,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        \App\Models\Brand::factory()->count(61)->create();
+        \App\Models\Product::factory()->has(\App\Models\Image::factory()->count(2))
+        ->count(200)->create();
 
         \App\Models\User::create([
             'name' => 'admin',
@@ -30,9 +33,6 @@ class DatabaseSeeder extends Seeder
             'role' => 'Default',
         ]);
 
-        \App\Models\Brand::factory()->count(61)->create();
-        \App\Models\Product::factory()->has(\App\Models\Image::factory()->count(2))
-        ->count(200)->create();
         \App\Models\User::factory()
             ->has(\App\Models\Order::factory()->count(rand(1, 20))
                 ->has(\App\Models\Product_quantity::factory()->count(3)))
