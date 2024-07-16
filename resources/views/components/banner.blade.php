@@ -1,6 +1,6 @@
 
 <div class>
-<div class="p-6 flex justify-center text-center mt-28 truncate ">
+<div class="p-6 flex justify-center text-center mt-28 truncate">
     <h1 class="Banner__title">
         <div class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-center">The Best Disks</div>
         <div class="text-5xl sm:text-7xl md:text-8xl h-28 font-bold text-center inline-block text-transparent 
