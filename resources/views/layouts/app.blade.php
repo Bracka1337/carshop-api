@@ -27,8 +27,12 @@
 
         <!-- Page Content -->
         <main>
-            @include('components.NavBar')
-            @include('components.banner')
+      
+            
+            @if (Route::currentRouteName() == 'main')
+                
+                @include('components.banner')
+            @endif
             
             @include('components.cart')
             {{ $slot }}

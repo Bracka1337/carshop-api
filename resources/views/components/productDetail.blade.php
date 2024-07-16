@@ -48,9 +48,6 @@
                         </svg>
                     </button>
                 </div>
-            
-                
-                
                 <div class="px-4 basis-1/2  flex flex-col justify-between overflow-y-auto">
                     <div>
                         <h2 class="font-bold text-gray-800 mb-2 text-5xl">{{ $product->title }}</h2>
@@ -141,4 +138,3 @@
             </div>
         </div>
     </div>
-  {{-- <script src="https://unpkg.com/flowbite@1.4.0/dist/flowbite.js"></script> --}}
