@@ -10,11 +10,11 @@
         {{-- close modal --}}
             <div class="relative flex justify-end h-5 z-50">
                 <span id="closeModal"
-                    class="cursor-pointer text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-300 text-3xl">&times;</span>
+                    class="cursor-pointer text-gray-500 hover:text-gray-800 text-3xl">&times;</span>
             </div>
             {{-- product description --}}
             <div class="flex flex-grow relative">
-            <div class="basis-1/2 h-11/12 w-full items-center justify-center rounded-lg bg-gray-300 dark:bg-gray-700 mb-5 relative">
+            <div class="basis-1/2 h-11/12 w-full items-center justify-center rounded-lg bg-gray-300 mb-5 relative">
                 {{-- product image --}}
                 <div class="relative w-full h-full" data-carousel-inner>
                     <!-- Item 1 -->
@@ -69,58 +69,58 @@
                         <table class="w-full text-base text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead class="text-base text-gray-700 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
-                                    <th scope="col" class="px-6 py-2 border-b  border-gray-200 dark:border-gray-700">
+                                    <th scope="col" class="px-6 py-2 border-b  border-gray-200 ">
                                         Type
                                     </th>
-                                    <td class="px-6 py-2 border-b border-gray-200 dark:border-gray-700 font-bold text-right">
+                                    <td class="px-6 py-2 border-b border-gray-200  font-bold text-right">
                                         {{ $product->type }}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="col" class="px-6 py-2 border-b  border-gray-200 dark:border-gray-700">
+                                    <th scope="col" class="px-6 py-2 border-b  border-gray-200 ">
                                         Size
                                     </th>
-                                    <td class="px-6 py-2 border-b border-gray-200 dark:border-gray-700 font-bold text-right">
+                                    <td class="px-6 py-2 border-b border-gray-200  font-bold text-right">
                                         {{ $product->diameter }}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="col" class="px-6 py-2 border-b  border-gray-200 dark:border-gray-700">
+                                    <th scope="col" class="px-6 py-2 border-b  border-gray-200 ">
                                         Width
                                     </th>
-                                    <td class="px-6 py-2 border-b border-gray-200 dark:border-gray-700 font-bold text-right">
+                                    <td class="px-6 py-2 border-b border-gray-200  font-bold text-right">
                                         {{ $product->width }}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="col" class="px-6 py-2 border-b  border-gray-200 dark:border-gray-700">
+                                    <th scope="col" class="px-6 py-2 border-b  border-gray-200 ">
                                         Et
                                     </th>
-                                    <td class="px-6 py-2 border-b border-gray-200 dark:border-gray-700 font-bold text-right">
+                                    <td class="px-6 py-2 border-b border-gray-200  font-bold text-right">
                                         {{ $product->et }}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="col" class="px-6 py-2 border-b  border-gray-200 dark:border-gray-700">
+                                    <th scope="col" class="px-6 py-2 border-b  border-gray-200 ">
                                         Cb
                                     </th>
-                                    <td class="px-6 py-2 border-b border-gray-200 dark:border-gray-700 font-bold text-right">
+                                    <td class="px-6 py-2 border-b border-gray-200  font-bold text-right">
                                         {{ $product->cb }}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="col" class="px-6 py-2 border-b  border-gray-200 dark:border-gray-700">
+                                    <th scope="col" class="px-6 py-2 border-b  border-gray-200 ">
                                         Bolt
                                     </th>
-                                    <td class="px-6 py-2 border-b border-gray-200 dark:border-gray-700 font-bold text-right">
+                                    <td class="px-6 py-2 border-b border-gray-200  font-bold text-right">
                                         {{ $product->bolt }}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="col" class="px-6 py-2 border-b  border-gray-200 dark:border-gray-700">
+                                    <th scope="col" class="px-6 py-2 border-b  border-gray-200 d">
                                         Bolt Diameter
                                     </th>
-                                    <td class="px-6 py-2 border-b border-gray-200 dark:border-gray-700 font-bold text-right">
+                                    <td class="px-6 py-2 border-b border-gray-200  font-bold text-right">
                                         {{ $product->bolt_diameter }}
                                     </td>
                                 </tr>
@@ -130,7 +130,7 @@
                 </div>
                 <div class="flex -mx-2 mb-3 justify-end">
                     <div class="w-1/2 px-2">
-                        <button class="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">
+                        <button class="w-full bg-gray-900">
                             Add to Cart
                         </button>
                     </div>
