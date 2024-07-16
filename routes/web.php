@@ -58,9 +58,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('profile/orderdetails/{id}', [OrderController::class, 'show'])->name('orderdetails');
 
-    Route::get('/checkout', function () {
-        return view('checkout');
-    })->name('checkout');
+//get session details
+Route::get('/checkout', [MainController::class, 'getCart'])->name('checkout');
 
     Route::get('/payment', function () {
         return view('payment');

@@ -1,5 +1,5 @@
 <x-app-layout>
-    @include('components.checkout')
+    @include('components.checkout', ['cart' => $cart])
     <script>
     document.addEventListener('DOMContentLoaded', function() {
   const dropdownButton = document.getElementById('dropdown-phone-button-3');

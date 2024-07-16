@@ -64,7 +64,7 @@
             <div class="bg-white w-full">
                 <!-- First item -->
                 @foreach ($order->productQuantities as $productQuantity)
-                    <div class="px-2 md:px-6 flex flex-row items-center py-6 border-b border-gray-200 gap-6 w-full">
+                    <div class="px-2 md:px-6 flex flex-row items-center py-6 border-b border-gray-200 gap-6 w-full" id="product" product-id="{{ $productQuantity->product->id }}"">
                         <div class="img-box flex-shrink-0">
                             <img src="{{ $productQuantity->product->images[0]->img_uri }}" alt="Product Image"
                                 class="w-20 lg:w-30 rounded-lg object-cover shadow-md">
@@ -88,6 +88,8 @@
                             </div>
                         </div>
                     </div>
+                    {{-- add boolean order page... so that it doesnt show add to cart --}}
+                    <x-productDetail :product="$productQuantity->product" />
                 @endforeach
 
 
@@ -111,4 +113,6 @@
                     <p class="font-semibold text-2xl text-indigo-600 py-3">${{ $cost['total'] }}</p>
                 </div>
             </div>
+
+
 </section>
