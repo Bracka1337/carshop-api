@@ -17,7 +17,7 @@ class ImageFactory extends Factory
     public function definition(): array
     {
         return [
-            'img_uri' => fake()->imageUrl(640, 480, null, true, 'Rim', false, 'png'),
+            'img_uri' => 'storage/images/Borbet.webp',
         ];
     }
 }
