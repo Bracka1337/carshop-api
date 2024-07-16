@@ -1,4 +1,4 @@
-<div class="relative z-10 hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true" id="modal">
+<div class="relative z-30 hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true" id="modal">
     <div class="fixed inset-0 overflow-hidden bg-gray-500 bg-opacity-75 transition-opacity">
         <div class="absolute inset-0 overflow-hidden">
             <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">

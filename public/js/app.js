@@ -147,7 +147,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const sidebarModal = document.getElementById('sidebar-modal');
 // sidebar
     button.addEventListener('click', () => {
-        console.log(1111);
         const expanded = button.getAttribute('aria-expanded') === 'true' || false;
         button.setAttribute('aria-expanded', !expanded);
         sidebarModal.classList.toggle('hidden');
@@ -156,23 +155,21 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             sidebarModal.classList.add('-translate-x-full');
         }
-    });
 
+        sidebarModal.addEventListener('click', (event) => {
+            if (!sidebar.contains(event.target)) {
+                button.setAttribute('aria-expanded', 'false');
+                sidebarModal.classList.add('hidden');
+                sidebarModal.classList.add('-translate-x-full');
+            }
+        });
 
-    document.addEventListener('click', (event) => {
-        if (!sidebar.contains(event.target)) {
-            button.setAttribute('aria-expanded', 'false');
-            sidebar.classList.add('hidden');
-            sidebar.classList.add('-translate-x-full');
-        }
         // close sideBar modal
         const closeButton = document.getElementById('close-button');
-        const modal = document.getElementById('modal');
 
         closeButton.addEventListener('click', (event) => {
             event.preventDefault();
-            sidebar.classList.add('hidden');
-            modal.classList.add('hidden');
+            sidebarModal.classList.add('hidden');
         });
     });
 });
