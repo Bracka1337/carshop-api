@@ -1,4 +1,3 @@
-
 <section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
 
     @if (session('cart') && count(session('cart')) > 0)
@@ -26,7 +25,6 @@
                             width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-roke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7" />
 
                         </svg>
                         Checkout
@@ -470,8 +468,9 @@ roke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7" 
                         <div class="-my-3 divide-y divide-gray-200 dark:divide-gray-800">
                             <dl class="flex items-center justify-between gap-4 py-3">
                                 <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Subtotal</dt>
-                                <dd class="text-base font-medium text-gray-900 dark:text-white">
-                                    ${{ $cart['total'] - $cart['tax'] }}</dd>
+                                <dd>
+                                    ${{ number_format((float)str_replace(',', '', $cart['total']) - (float)str_replace(',', '', $cart['tax']), 2) }}
+                                </dd>
                             </dl>
 
                             {{-- <dl class="flex items-center justify-between gap-4 py-3">
@@ -494,7 +493,9 @@ roke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7" 
                     </div>
 
                     <div class="space-y-3">
-                        <a href="/payment"><button class="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Proceed to Payment</button></a>
+                        <a href="/payment"><button
+                                class="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Proceed
+                                to Payment</button></a>
 
 
                         <p class="text-sm font-normal text-gray-500 dark:text-gray-400">One or more items in your cart
