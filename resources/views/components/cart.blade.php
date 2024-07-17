@@ -24,10 +24,10 @@
                             @if (session('cart') && array_sum(array_column(session('cart'), 'quantity')) > 0)
                                 <div class="mt-8">
                                     <div class="flow-root">
-                                        <ul role="list" class="-my-6 divide-y divide-gray-200">
+                                        <ul role="list" class="-my-6 divide-y divide-gray-200" id="cart-items">
                                             @foreach (session('cart') as $id => $details)
                                                 @if (is_array($details))
-                                                    <li class="flex py-6">
+                                                    <li class="flex py-6 cart-item" data-id="{{ $id }}">
                                                         <div
                                                             class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                                             <img src="{{ asset('/storage/' . $details['image']) }}"
@@ -81,11 +81,12 @@
                                         </ul>
                                     </div>
                                 </div>
-                            @else
-                                <p class="mt-8 text-center text-lg font-semibold text-gray-600">
-                                    Your cart is empty.
-                                </p>
+
                             @endif
+
+                            <p class="mt-8 text-center text-lg font-semibold text-gray-600" id="empty-cart-message">
+                                Your cart is empty.
+                            </p>
                         </div>
                         <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
                             <div class="flex justify-between text-base font-medium text-gray-900">
