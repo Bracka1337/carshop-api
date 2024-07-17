@@ -16,7 +16,7 @@
             <div class="md:h-10/12 h-11/12 basis-1/2 w-full flex items-center justify-center rounded-lg mb-5 relative overflow-hidden">
                 <!-- product image -->
                 <div class="relative w-full h-full flex transition-transform duration-500 ease" data-carousel-inner>
-                    <!-- Item 1 -->
+                    <!-- Item loop -->
                     @foreach ($product->images as $key => $image)
                         <div class=" flex-100"
                             data-carousel-item= "{{$key}}">
@@ -25,7 +25,6 @@
                         </div>
                     @endforeach
                 </div>
-                
                 <!-- Slider indicators -->
                 <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 w-max" data-carousel-indicators>
                     @foreach ($product->images as $key => $image)
@@ -53,6 +52,7 @@
                     </svg>
                 </button>
             </div>
+            {{-- Product description --}}
             <div class="px-4 basis-1/2 flex flex-col justify-between overflow-y-auto">
                 <div>
                     <h2 class="font-bold text-gray-800 mb-2 text-5xl">{{ $product->title }}</h2>
@@ -69,6 +69,7 @@
                     <div class="mt-3">
                         <p class="font-bold text-gray-700 text-xl">Product Specification:</p>
                     </div>
+                    {{-- Product data table --}}
                     <div>
                         <table class="w-full text-base text-left rtl:text-right text-gray-500">
                             <thead class="text-base text-gray-700">
@@ -131,6 +132,7 @@
                             </thead>
                         </table>     
                     </div>
+                    {{-- Add to Cart button --}}
                     @if (!Request::is('*/orderdetails/*'))
                      <div class="flex -mx-2 justify-end my-5">
                             <button class="w-1/2 px-2 bg-gray-900 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800"
