@@ -27,7 +27,6 @@
                         <p class="text-red-500 text-xs mt-1">{{ $errors->first('diameter') }}</p>
                     @endif
                 </div>
-
             </div>
             <div class="p-4">
                 <label for="width" class="block mt-2 text-sm font-medium text-gray-900">Width</label>
