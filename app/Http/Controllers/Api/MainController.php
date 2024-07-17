@@ -92,6 +92,7 @@ class MainController extends Controller
         $minPrice = Product::min('price');
         $maxPrice = Product::max('price');
         $brands = Brand::select('id', 'title')->get()->sortBy('title');
+        
 
         $searchParameters = [
             'brands' => $brands,
