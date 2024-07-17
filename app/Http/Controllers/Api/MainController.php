@@ -7,24 +7,26 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Brand;
 
-
-
 class MainController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $initialProducts = $this->filterProducts($request)->with("images")->paginate(12)->withQueryString();
+        $initialProducts = $this->filterProducts($request)
+            ->with("images")
+            ->paginate(12)
+            ->withQueryString();
 
         $searchParameters = $this->getSearchParameters();
 
         return view('main', [
             'search' => $searchParameters,
-            'initialProducts' => $initialProducts
+            'initialProducts' => $initialProducts,
         ]);
     }
 
     private function filterProducts(Request $request)
     {
+        // TODO: implement validator for request
         $query = Product::query();
 
         if ($request->has('title') && !empty($request->title)) {
@@ -80,7 +82,6 @@ class MainController extends Controller
 
     public function getSearchParameters()
     {
-
         $diameter = Product::select('diameter')->where('diameter', '>', 0)->distinct()->get()->sortBy('diameter');
         $width = Product::select('width')->where('width', '>', 0)->distinct()->get()->sortBy('width');
         $et = Product::select('et')->where('et', '>', 0)->distinct()->get()->sortBy('et');
@@ -103,15 +104,17 @@ class MainController extends Controller
             'type' => $type,
             'priceRange' => [
                 'min' => $minPrice,
-                'max' => $maxPrice
-            ]
+                'max' => $maxPrice,
+            ],
         ];
         return $searchParameters;
     }
 
     public function getInitialProducts(Request $request)
     {
-        $products = Product::inRandomOrder()->paginate(20)->appends($request->query());
+        $products = Product::inRandomOrder()
+            ->paginate(20)
+            ->appends($request->query());
         $products->load('category', 'brand');
 
         return $products;
@@ -132,10 +135,9 @@ class MainController extends Controller
                 'brand' => $product->brand->title,
                 'quantity' => $quantity,
                 'price' => (float)$product->price,
-                'image' => $image
+                'image' => $image,
             ];
         }
-
 
         session()->put('cart', $cart);
         $this->calculateCartTotal();
@@ -182,7 +184,7 @@ class MainController extends Controller
             $this->calculateCartTotal();
 
             return response()->json([
-                'message' => 'Product removed successfully!'
+                'message' => 'Product removed successfully!',
             ], 200);
         }
 
@@ -209,29 +211,36 @@ class MainController extends Controller
         session()->put('cart.total', $total);
     }
 
-    public function getCart()
+    public function getCart(Request $request)
     {
-        $cart = session()->get('cart', []);
-    
-        if (!empty($cart) && count($cart) > 0) {
-    
-            $total = session()->get('cart.total', 0);  
-            $total = str_replace(',', '', $total);  
+        $cart = session()->get('cart');
+        $total = session()->get('cart.total', 0);
+
+        if (!empty($cart) && ($total > 0)) {
+            $total = session()->get('cart.total', 0);
+            $total = str_replace(',', '', $total);
             $total = (float)$total;
-    
+
             $tax = $total * 0.21;
             $cart['total'] = number_format($total, 2, '.', '');
             $cart['tax'] = number_format($tax, 2, '.', '');
-    
+
             session()->put('cart.tax', $cart['tax']);
             session()->put('cart.total', $cart['total']);
-    
+
             return view('checkout', [
                 'cart' => $cart,
             ]);
         } else {
-            return response()->json(['message' => 'Cart is empty'], 404);
+            $initialProducts = $this->filterProducts($request)
+                ->with("images")
+                ->paginate(12)
+                ->withQueryString();
+            $searchParameters = $this->getSearchParameters();
+
+            return redirect()->route('main')
+                ->with('search', $searchParameters)
+                ->with('initialProducts', $initialProducts);
         }
     }
-    
 }

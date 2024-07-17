@@ -9,12 +9,10 @@ use App\Rules\CardNumber;
 use App\Models\Payment;
 use App\Models\Order;
 
-
 class FakePaymentController extends Controller
 {
     public function processPayment(Request $request)
     {
-
         $validate = $request->validate([
             "full_name" => "required|string|max:255",
             'card_number' => ['required', new CardNumber],
@@ -24,16 +22,9 @@ class FakePaymentController extends Controller
             ],
             'cvv' => 'required|digits:3',
         ]);
-        //TODO
-        //clear cart on success,
-
-        //update with payment id and payment status
-
-
 
         if ($validate) {
             $mockyUrl = 'https://run.mocky.io/v3/192c87e3-e951-4c7d-af1c-b70dea4de70b';
-
             $client = new Client();
 
             try {
@@ -47,9 +38,7 @@ class FakePaymentController extends Controller
 
                 $responseBody = json_decode($response->getBody(), true);
 
-
                 if ($response->getStatusCode() == 200 && $responseBody['status'] === 'success') {
-
                     $payment = Payment::find(session('payment_id'));
                     $payment->status = 'Success';
                     $order = Order::find(session('order_id'));
@@ -60,6 +49,7 @@ class FakePaymentController extends Controller
                     session()->forget('cart');
                     session()->forget('order_id');
                     session()->forget('payment_id');
+
                     return view('paymentSuccess');
                 } else {
                     return response()->json([
@@ -76,8 +66,7 @@ class FakePaymentController extends Controller
         } else {
             return response()->json([
                 'status' => 'error',
-                'message' => ' Please enter a valid card number, expiry date and cvv.
-                ',
+                'message' => 'Please enter a valid card number, expiry date and cvv.',
             ], 400);
         }
     }
