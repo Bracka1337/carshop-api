@@ -15,6 +15,14 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $user = auth()->user();
+        $orders = $user->orders->map(function ($order) {
+            $cost = $this->calculateOrderCost($order);
+            $order->calculatedTotal = $cost['total'];
+            return $order;
+        });
+
+        return view('orders.index', compact('user', 'orders'));
     }
 
     /**
@@ -40,30 +48,31 @@ class OrderController extends Controller
     {
         $authId = auth()->user()->id;
         $user = User::where("id", $authId)->first();
-        $orders = $user->orders;
-
-        //validate user id vs order id....
-
-
         $order = Order::find($id);
-
-
-        $productQuantities = $order->productQuantities;
-
-        $total = 0;
-        foreach ($order->productQuantities as $productQuantities) {
-            $total += $productQuantities->quantity * $productQuantities->product->price;
-        }
-        $tax = number_format($total * 0.21, 2);
-        $shippingFee = number_format($total * 0.001, 2);
-        $cost = [
-            'total' => number_format($total, 2),
-            'tax' => $tax,
-            'shipping' => $shippingFee
-        ];
+        
+        // Validate user id vs order id (you might want to add this logic)
+        
+        $cost = $this->calculateOrderCost($order);
 
         return view("orderdetails", compact("order", 'cost'));
     }
+
+    private function calculateOrderCost($order)
+    {
+        $total = $order->productQuantities->sum(function ($productQuantity) {
+            return $productQuantity->quantity * $productQuantity->product->price;
+        });
+
+        $tax = number_format($total * 0.21, 2);
+        $shippingFee = number_format($total * 0.001, 2);
+
+        return [
+            'total' => number_format($total + $tax + $shippingFee, 2),
+            'tax' => $tax,
+            'shipping' => $shippingFee
+        ];
+    }
+
 
 
 
