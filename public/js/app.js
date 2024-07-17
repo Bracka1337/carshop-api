@@ -62,7 +62,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // modal images slideshow
+
   const carousels = document.querySelectorAll("[data-carousel-inner]");
+
   carousels.forEach((carousel) => {
     const items = carousel.querySelectorAll("[data-carousel-item]");
     const indicators = carousel.nextElementSibling.querySelectorAll(
@@ -74,48 +76,42 @@ document.addEventListener("DOMContentLoaded", function () {
     const nextButton = carousel.parentElement.querySelector(
       "[data-carousel-next]"
     );
+    const totalSlides = items.length;
     let activeIndex = 0;
 
     const showItem = (index) => {
-      items.forEach((item, i) => {
-        if (i === index) {
-          item.classList.remove("hidden");
-        } else {
-          item.classList.add("hidden");
-        }
-      });
-
+      const offset = -index * 100;
+      carousel.style.transform = `translateX(${offset}%)`;
+      
       indicators.forEach((indicator, i) => {
-        if (i === index) {
-          indicator.classList.add("bg-gray-400");
-          indicator.classList.remove("bg-gray-300");
-        } else {
-          indicator.classList.add("bg-gray-300");
-          indicator.classList.remove("bg-gray-400");
-        }
+        indicator.classList.toggle('bg-gray-400', i === index);
+        indicator.classList.toggle('bg-gray-300', i !== index);
       });
     };
 
+    indicators.forEach((indicator, i) => {
+
+      indicator.addEventListener('click', (event) => {
+        index = i;
+        showItem(index);
+      });
+
+    });
+
     const prevItem = () => {
-      activeIndex = activeIndex > 0 ? activeIndex - 1 : items.length - 1;
+      let prevIndex = activeIndex;
+      activeIndex = (activeIndex - 1 + totalSlides) % totalSlides;
       showItem(activeIndex);
     };
 
     const nextItem = () => {
-      activeIndex = activeIndex < items.length - 1 ? activeIndex + 1 : 0;
+      let prevIndex = activeIndex;
+      activeIndex = (activeIndex + 1) % totalSlides;
       showItem(activeIndex);
     };
 
     prevButton.addEventListener("click", prevItem);
     nextButton.addEventListener("click", nextItem);
-
-    indicators.forEach((indicator, index) => {
-      indicator.addEventListener("click", () => {
-        activeIndex = index;
-        showItem(activeIndex);
-      });
-    });
-    showItem(activeIndex);
   });
 
   // modal Add To Cart
