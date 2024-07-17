@@ -50,7 +50,7 @@ class FakePaymentController extends Controller
                     session()->forget('order_id');
                     session()->forget('payment_id');
 
-                    return view('paymentSuccess');
+                    return redirect()->route('paymentSuccess')->with('success', 'Payment successful. Your order is being processed.');
                 } else {
                     return response()->json([
                         'status' => 'error',

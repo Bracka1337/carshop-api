@@ -167,3 +167,15 @@
 /*
 -- End BackGround Animation 
 */
+
+.carousel-item {
+    position: absolute;
+    inset: 0;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    opacity: 0;
+  }
+
+  .carousel-item.active {
+    opacity: 1;
+    transform: translateX(0);
+  }
