@@ -437,7 +437,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const cardNumberInput = document.getElementById("card-number-input");
   const errorMessage = document.getElementById("error-message");
-
+if(cardNumberInput){
   cardNumberInput.addEventListener("input", function (e) {
     let value = e.target.value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
     let formattedValue = value.replace(/(.{4})/g, "$1 ").trim();
@@ -451,8 +451,9 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       errorMessage.textContent = "";
     }
+ 
   });
-
+ }
   
   // //expiry date
   // document.getElementById('card-expiration-input').addEventListener('input', function (e) {
