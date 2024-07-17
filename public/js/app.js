@@ -406,24 +406,34 @@ document.addEventListener("DOMContentLoaded", function () {
     window.location.href = "/checkout";
   });
 
-  const cardNumberInput = document.getElementById("card-number-input");
-  const errorMessage = document.getElementById("error-message");
+  //home button
+  
+//   document.addEventListener('DOMContentLoaded', function() {
+//     // Initially hide the home button
+//     document.getElementById('homeButton').style.display = 'none';
 
-  cardNumberInput.addEventListener("input", function (e) {
-    let value = e.target.value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
-    let formattedValue = value.replace(/(.{4})/g, "$1 ").trim();
+//     // Check if the user is authenticated
+//     if (window.location.href.includes('/dashboard')) { // Adjust '/dashboard' to match your route
+//         // Show the home button if the user is on the dashboard page
+//         document.getElementById('homeButton').style.display = 'inline-block';
+//     }
+// });
 
-    e.target.value = formattedValue;
+const cardNumberInput = document.getElementById("card-number-input");
+const errorMessage = document.getElementById("error-message");
 
-    // Check if the input matches the pattern
-    if (cardNumberInput.validity.patternMismatch) {
-      errorMessage.textContent =
-        "Please enter a valid card number format (xxxx xxxx xxxx xxxx).";
-    } else {
-      errorMessage.textContent = "";
-    }
-  });
+cardNumberInput.addEventListener("input", function (e) {
+  let value = e.target.value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
+  let formattedValue = value.replace(/(.{4})/g, "$1 ").trim();
 
+  e.target.value = formattedValue;
 
-
+  // Check if the input matches the pattern
+  if (cardNumberInput.validity.patternMismatch) {
+    errorMessage.textContent =
+      "Please enter a valid card number format (xxxx xxxx xxxx xxxx).";
+  } else {
+    errorMessage.textContent = "";
+  }
+});
 });

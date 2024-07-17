@@ -10,7 +10,7 @@
       <ul role="list" class="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2">
         <li>
           <div class="flex items-center gap-x-6">
-            <img class="h-16 w-16 rounded-full" src="https://cdn.discordapp.com/attachments/1260118461368238105/1260130360122015764/Screenshot_20240709_091501_Gallery1.jpg?ex=668e3359&is=668ce1d9&hm=15e1a82db57076c7be16f09dffbf0f0c8fdab85969ba119b4c3de2c356236757&" alt="">
+            <img class="h-16 w-16 rounded-full" src="https://media.discordapp.net/attachments/1260118461368238105/1262774245738545152/rn_image_picker_lib_temp_477e489e-8a51-441c-a778-c823cec9ee422.jpg?ex=6697d1a9&is=66968029&hm=c057f6462a719ece0bb6682013b132f9419e11192ec3edf1285ad88677a69010&=&format=webp&width=660&height=660" alt="">
             <div>
               <h3 class="text-base font-semibold leading-7 tracking-tight text-gray-900">Sergejs Makarovs</h3>
               <p class="text-sm font-semibold leading-6 text-indigo-600">Team lead</p>
