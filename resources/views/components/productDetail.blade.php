@@ -126,7 +126,7 @@
                                 </thead>
                             </table>     
                         </div>
-                        @if (!Route::has('orderdetails'))                 
+                        @if (!Request::is('*/orderdetails/*'))
                          <div class="flex -mx-2 justify-end my-5">
                                 <button class="w-1/2 px-2 bg-gray-900 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800"
                                 id="btn-addToCart" productLink="{{ route('products.addToCart', $product->id) }}" >

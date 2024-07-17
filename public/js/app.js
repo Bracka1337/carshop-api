@@ -315,11 +315,14 @@ modals.forEach((modal) => {
         // Retrieve the current word index from localStorage, default to 0 if not found
         let currentWordIndex = parseInt(localStorage.getItem('dynamicWordIndex')) || 0;
         const targetElement = document.querySelector('.Banner__title--second');
-    
-        async function updateDynamicWord() {
+        if (targetElement) {
+
+          async function updateDynamicWord() {
             const dynamicWord = dynamicWords[currentWordIndex];
             const targetElement = document.querySelector('.Banner__title--second');
+            
             // Clear existing content
+            
             if (targetElement.textContent.length > 0) {
                 let str = targetElement.textContent;
                 await eraseText(targetElement);
@@ -327,16 +330,16 @@ modals.forEach((modal) => {
             targetElement.innerHTML = ''; // Use innerHTML to clear the element
             
             // Typing effect
+            
             await typeText(targetElement, dynamicWord);
-    
             currentWordIndex++;
             if (currentWordIndex >= dynamicWords.length) {
                 currentWordIndex = 0; // Loop back to the first word after showing all
             }
-    
+
         setTimeout(updateDynamicWord, 3000); // Change word every 3 seconds
         }
-    
+
         // Typing effect function
         async function typeText(element, text, index = 0) {
             return new Promise((resolve) => {
@@ -352,7 +355,7 @@ modals.forEach((modal) => {
                 typeNextCharacter();
             });
         }
-    
+
         async function eraseText(element) {
             return new Promise((resolve) => {
                 function eraseNextCharacter() {
@@ -368,7 +371,7 @@ modals.forEach((modal) => {
         }
             // Initialize the dynamic word
         updateDynamicWord(); 
-        
+        }
         //dropdown button in navbar
     
         const button = document.getElementById('menu-button');
