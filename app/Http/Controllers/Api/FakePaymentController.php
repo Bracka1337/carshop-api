@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use App\Rules\CardNumber;
+use App\Models\Payment;
+use App\Models\Order;
+
 
 class FakePaymentController extends Controller
 {
@@ -15,11 +18,15 @@ class FakePaymentController extends Controller
         $validate = $request->validate([
             "full_name" => "required|string|max:255",
             'card_number' => ['required', new CardNumber],
-            'expiry_date' => 'required|date_format:m/y',
+            'expiry_date' => [
+                'required',
+                'regex:/^(0[1-9]|1[0-2])\/([0-9]{2})$/'
+            ],
             'cvv' => 'required|digits:3',
         ]);
         //TODO
         //clear cart on success,
+
         //update with payment id and payment status
 
 
@@ -39,10 +46,20 @@ class FakePaymentController extends Controller
                 ]);
 
                 $responseBody = json_decode($response->getBody(), true);
- 
+
 
                 if ($response->getStatusCode() == 200 && $responseBody['status'] === 'success') {
 
+                    $payment = Payment::find(session('payment_id'));
+                    $payment->status = 'Success';
+                    $order = Order::find(session('order_id'));
+                    $order->status = 'Delivering';
+                    $payment->save();
+                    $order->save();
+
+                    session()->forget('cart');
+                    session()->forget('order_id');
+                    session()->forget('payment_id');
                     return view('paymentSuccess');
                 } else {
                     return response()->json([
