@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductSearchRequest;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Brand;
 
 class MainController extends Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke(ProductSearchRequest $request)
     {
         $initialProducts = $this->filterProducts($request)
             ->with("images")
@@ -23,62 +24,57 @@ class MainController extends Controller
             'initialProducts' => $initialProducts,
         ]);
     }
-
-    private function filterProducts(Request $request)
+    private function filterProducts(ProductSearchRequest $request)
     {
-        // TODO: implement validator for request
         $query = Product::query();
 
-        if ($request->has('title') && !empty($request->title)) {
-            $query->where('title', 'like', "%{$request->title}%");
+        $filters = [
+            'title' => 'like',
+            'brand_id' => '=',
+            'size' => '=',
+            'diameter' => '=',
+            'width' => '=',
+            'et' => '=',
+            'cb' => '=',
+            'bolt' => '=',
+            'bolt_diameter' => '=',
+            'type' => '='
+        ];
+
+        $validatedRequest = $request->validated();
+
+        foreach ($filters as $field => $operator) {
+            if (array_key_exists($field, $validatedRequest) && !empty($validatedRequest[$field])) {
+                $value = $operator === 'like' ? "%{$validatedRequest[$field]}%" : $validatedRequest[$field];
+                $query->where($field, $operator, $value);
+            }
         }
 
-        if ($request->has('brand') && !empty($request->brand)) {
-            $query->where('brand_id', $request->brand);
+        if (array_key_exists('price_from', $validatedRequest) && !empty($validatedRequest['price_from'])) {
+            $query->where('price', '>=', $validatedRequest['price_from']);
         }
 
-        if ($request->has('price_from') && !empty($request->price_from)) {
-            $query->where('price', '>=', $request->price_from);
+        if (array_key_exists('price_to', $validatedRequest) && !empty($validatedRequest['price_to'])) {
+            $query->where('price', '<=', $validatedRequest['price_to']);
         }
 
-        if ($request->has('price_to') && !empty($request->price_to)) {
-            $query->where('price', '<=', $request->price_to);
-        }
+        if (array_key_exists('order', $validatedRequest) && !empty($validatedRequest['order'])) {
+            $orderOptions = [
+                'price_asc' => ['price', 'asc'],
+                'price_desc' => ['price', 'desc'],
+                'brand_asc' => ['brand_id', 'asc'],
+                'brand_desc' => ['brand_id', 'desc'],
+            ];
 
-        if ($request->has('size') && !empty($request->size)) {
-            $query->where('size', $request->size);
-        }
-
-        if ($request->has('diameter') && !empty($request->diameter)) {
-            $query->where('diameter', $request->diameter);
-        }
-
-        if ($request->has('width') && !empty($request->width)) {
-            $query->where('width', $request->width);
-        }
-
-        if ($request->has('et') && !empty($request->et)) {
-            $query->where('et', $request->et);
-        }
-
-        if ($request->has('cb') && !empty($request->cb)) {
-            $query->where('cb', $request->cb);
-        }
-
-        if ($request->has('bolt') && !empty($request->bolt)) {
-            $query->where('bolt', $request->bolt);
-        }
-
-        if ($request->has('bolt_diameter') && !empty($request->bolt_diameter)) {
-            $query->where('bolt_diameter', $request->bolt_diameter);
-        }
-
-        if ($request->has('type') && !empty($request->type)) {
-            $query->where('type', $request->type);
+            if (isset($orderOptions[$validatedRequest['order']])) {
+                $query->orderBy($orderOptions[$validatedRequest['order']][0], $orderOptions[$validatedRequest['order']][1]);
+            }
         }
 
         return $query;
     }
+
+
 
     public function getSearchParameters()
     {
@@ -92,7 +88,7 @@ class MainController extends Controller
         $minPrice = Product::min('price');
         $maxPrice = Product::max('price');
         $brands = Brand::select('id', 'title')->get()->sortBy('title');
-        
+
 
         $searchParameters = [
             'brands' => $brands,
@@ -121,7 +117,7 @@ class MainController extends Controller
         return $products;
     }
 
-    public function addProductsToCart(Request $request, $id)
+    public function addProductsToCart($id)
     {
         $product = Product::findOrFail($id);
         $cart = session()->get('cart', []);
