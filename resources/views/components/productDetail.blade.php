@@ -19,7 +19,7 @@
                         <!-- Item 1 -->
                         @foreach ($product->images as $key => $image)
                             <div class="md:absolute md:inset-0 duration-700 ease-in-out h-full" data-carousel-item>
-                                <img src="{{ $image->img_uri }}"
+                                <img src="{{ asset('/storage/' . $image->img_uri )}}"
                                     class="object-cover w-full h-full rounded-lg" alt="Slide {{$key}}">
                             </div>
                         @endforeach

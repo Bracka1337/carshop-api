@@ -31,7 +31,7 @@
                                                     <li class="flex py-6">
                                                         <div
                                                             class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                                            <img src="{{ $details['image'] }}"
+                                                            <img src="{{ asset('/storage/' . $details['image']) }}"
                                                                 class="w-full h-full object-center object-cover">
                                                         </div>
                                                         <div class="ml-4 flex flex-1 flex-col">
