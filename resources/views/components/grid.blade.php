@@ -14,7 +14,7 @@
                         <div class="flex flex-col hover:cursor-pointer" id="product" product-id="{{ $product->id }}">
                             <div class="h-auto overflow-hidden">
                                 <div class="h-44 overflow-hidden relative">
-                                    <img src="{{ $product->images[0]->img_uri }}" alt="{{ $product->title }}">
+                                    <img src="{{ asset('/storage/' . $product->images[0]->img_uri ) }}" alt="{{ $product->title }}">
                                 </div>
                             </div>
                             <div class="bg-white flex flex-col justify-between flex-grow py-4 px-3">

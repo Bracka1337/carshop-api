@@ -65,14 +65,16 @@ class CheckoutController extends Controller
                         ]);
                     }
                 }
-
-
-                return response()->json([
-                    'status' => 'success',
-                    'message' => 'Order placed successfully',
+                session([
                     'order_id' => $order->id,
+                    'payment_id' => $payment->id,
+                    'delivery_details_id' => $deliveryDetails->id
                 ]);
-                
+                return redirect()->route('payment-details')->with('success','');
+
+
+      
+
             } catch (\Exception $e) {
                 return response()->json([
                     'status' => 'error',
