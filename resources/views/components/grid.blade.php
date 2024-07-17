@@ -19,7 +19,7 @@
                             </div>
                             <div class="bg-white flex flex-col justify-between flex-grow py-4 px-3">
                                 <h3 class="text-xs mb-2 font-medium">{{ $product->title }}</h3>
-                                <p class="text-xs text-gray-400 line-clamp-3 flex-grow">
+                                <p class="text-xs text-gray-400 line-clamp-2 flex-grow">
                                     {{ $product->description }}
                                 </p>
                             </div>
