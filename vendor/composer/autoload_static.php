@@ -456,8 +456,8 @@ class ComposerStaticInitad8357da3ca15a5d67a1ef24d1331363
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -521,8 +521,8 @@ class ComposerStaticInitad8357da3ca15a5d67a1ef24d1331363
         ),
         'League\\Uri\\' => 
         array (
-            0 => __DIR__ . '/..' . '/league/uri-interfaces',
-            1 => __DIR__ . '/..' . '/league/uri',
+            0 => __DIR__ . '/..' . '/league/uri',
+            1 => __DIR__ . '/..' . '/league/uri-interfaces',
         ),
         'League\\OAuth2\\Server\\' => 
         array (
@@ -781,10 +781,15 @@ class ComposerStaticInitad8357da3ca15a5d67a1ef24d1331363
         'App\\Filament\\Resources\\BrandResource\\Pages\\EditBrand' => __DIR__ . '/../..' . '/app/Filament/Resources/BrandResource/Pages/EditBrand.php',
         'App\\Filament\\Resources\\BrandResource\\Pages\\ListBrands' => __DIR__ . '/../..' . '/app/Filament/Resources/BrandResource/Pages/ListBrands.php',
         'App\\Filament\\Resources\\BrandResource\\RelationManagers\\ProductsRelationManager' => __DIR__ . '/../..' . '/app/Filament/Resources/BrandResource/RelationManagers/ProductsRelationManager.php',
+        'App\\Filament\\Resources\\ImageResource' => __DIR__ . '/../..' . '/app/Filament/Resources/ImageResource.php',
+        'App\\Filament\\Resources\\ImageResource\\Pages\\CreateImage' => __DIR__ . '/../..' . '/app/Filament/Resources/ImageResource/Pages/CreateImage.php',
+        'App\\Filament\\Resources\\ImageResource\\Pages\\EditImage' => __DIR__ . '/../..' . '/app/Filament/Resources/ImageResource/Pages/EditImage.php',
+        'App\\Filament\\Resources\\ImageResource\\Pages\\ListImages' => __DIR__ . '/../..' . '/app/Filament/Resources/ImageResource/Pages/ListImages.php',
         'App\\Filament\\Resources\\OrderResource' => __DIR__ . '/../..' . '/app/Filament/Resources/OrderResource.php',
         'App\\Filament\\Resources\\OrderResource\\Pages\\CreateOrder' => __DIR__ . '/../..' . '/app/Filament/Resources/OrderResource/Pages/CreateOrder.php',
         'App\\Filament\\Resources\\OrderResource\\Pages\\EditOrder' => __DIR__ . '/../..' . '/app/Filament/Resources/OrderResource/Pages/EditOrder.php',
         'App\\Filament\\Resources\\OrderResource\\Pages\\ListOrders' => __DIR__ . '/../..' . '/app/Filament/Resources/OrderResource/Pages/ListOrders.php',
+        'App\\Filament\\Resources\\OrderResource\\RelationManagers\\DeliveryDetailsRelationManager' => __DIR__ . '/../..' . '/app/Filament/Resources/OrderResource/RelationManagers/DeliveryDetailsRelationManager.php',
         'App\\Filament\\Resources\\PaymentResource' => __DIR__ . '/../..' . '/app/Filament/Resources/PaymentResource.php',
         'App\\Filament\\Resources\\PaymentResource\\Pages\\CreatePayment' => __DIR__ . '/../..' . '/app/Filament/Resources/PaymentResource/Pages/CreatePayment.php',
         'App\\Filament\\Resources\\PaymentResource\\Pages\\EditPayment' => __DIR__ . '/../..' . '/app/Filament/Resources/PaymentResource/Pages/EditPayment.php',
@@ -800,6 +805,7 @@ class ComposerStaticInitad8357da3ca15a5d67a1ef24d1331363
         'App\\Filament\\Resources\\UserResource\\Pages\\ListUsers' => __DIR__ . '/../..' . '/app/Filament/Resources/UserResource/Pages/ListUsers.php',
         'App\\Filament\\Resources\\UserResource\\RelationManagers\\OrdersRelationManager' => __DIR__ . '/../..' . '/app/Filament/Resources/UserResource/RelationManagers/OrdersRelationManager.php',
         'App\\Http\\Controllers\\Api\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/AuthController.php',
+        'App\\Http\\Controllers\\Api\\CheckoutController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/CheckoutController.php',
         'App\\Http\\Controllers\\Api\\MainController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/MainController.php',
         'App\\Http\\Controllers\\Api\\OrderController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/OrderController.php',
         'App\\Http\\Controllers\\Api\\PaymentController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/PaymentController.php',
@@ -832,6 +838,8 @@ class ComposerStaticInitad8357da3ca15a5d67a1ef24d1331363
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\Filament\\AdminPanelProvider' => __DIR__ . '/../..' . '/app/Providers/Filament/AdminPanelProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'App\\Rules\\AlphaOnly' => __DIR__ . '/../..' . '/app/Rules/AlphaOnly.php',
+        'App\\Rules\\NumericOnly' => __DIR__ . '/../..' . '/app/Rules/NumericOnly.php',
         'App\\View\\Components\\banner' => __DIR__ . '/../..' . '/app/View/Components/banner.php',
         'App\\View\\Components\\cart' => __DIR__ . '/../..' . '/app/View/Components/cart.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
@@ -8049,13 +8057,11 @@ class ComposerStaticInitad8357da3ca15a5d67a1ef24d1331363
         'Symfony\\Component\\CssSelector\\Node\\ElementNode' => __DIR__ . '/..' . '/symfony/css-selector/Node/ElementNode.php',
         'Symfony\\Component\\CssSelector\\Node\\FunctionNode' => __DIR__ . '/..' . '/symfony/css-selector/Node/FunctionNode.php',
         'Symfony\\Component\\CssSelector\\Node\\HashNode' => __DIR__ . '/..' . '/symfony/css-selector/Node/HashNode.php',
-        'Symfony\\Component\\CssSelector\\Node\\MatchingNode' => __DIR__ . '/..' . '/symfony/css-selector/Node/MatchingNode.php',
         'Symfony\\Component\\CssSelector\\Node\\NegationNode' => __DIR__ . '/..' . '/symfony/css-selector/Node/NegationNode.php',
         'Symfony\\Component\\CssSelector\\Node\\NodeInterface' => __DIR__ . '/..' . '/symfony/css-selector/Node/NodeInterface.php',
         'Symfony\\Component\\CssSelector\\Node\\PseudoNode' => __DIR__ . '/..' . '/symfony/css-selector/Node/PseudoNode.php',
         'Symfony\\Component\\CssSelector\\Node\\SelectorNode' => __DIR__ . '/..' . '/symfony/css-selector/Node/SelectorNode.php',
         'Symfony\\Component\\CssSelector\\Node\\Specificity' => __DIR__ . '/..' . '/symfony/css-selector/Node/Specificity.php',
-        'Symfony\\Component\\CssSelector\\Node\\SpecificityAdjustmentNode' => __DIR__ . '/..' . '/symfony/css-selector/Node/SpecificityAdjustmentNode.php',
         'Symfony\\Component\\CssSelector\\Parser\\Handler\\CommentHandler' => __DIR__ . '/..' . '/symfony/css-selector/Parser/Handler/CommentHandler.php',
         'Symfony\\Component\\CssSelector\\Parser\\Handler\\HandlerInterface' => __DIR__ . '/..' . '/symfony/css-selector/Parser/Handler/HandlerInterface.php',
         'Symfony\\Component\\CssSelector\\Parser\\Handler\\HashHandler' => __DIR__ . '/..' . '/symfony/css-selector/Parser/Handler/HashHandler.php',
