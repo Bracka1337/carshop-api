@@ -66,7 +66,7 @@
                 @foreach ($order->productQuantities as $productQuantity)
                     <div class="px-2 md:px-6 flex flex-row items-center py-6 border-b border-gray-200 gap-6 w-full" id="product" product-id="{{ $productQuantity->product->id }}"">
                         <div class="img-box flex-shrink-0">
-                            <img src="{{ asset('/storage/' . $productQuantity->$product->images[0]->img_uri )  }}" alt="Product Image"
+                            <img src="{{ asset('/storage/' . $productQuantity->product->images[0]->img_uri )  }}" alt="Product Image"
                                 class="w-20 lg:w-30 rounded-lg object-cover shadow-md">
                         </div>
                         <div class="flex flex-1 items-center justify-between">

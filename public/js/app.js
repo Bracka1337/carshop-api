@@ -473,28 +473,42 @@ if(cardNumberInput){
   // document.getElementById('card-expiration-input').addEventListener('input', function (e) {
   //   let input = e.target.value;
   
-  //    input = input.replace(/[^\d\/]/g, '');
+  //   // Remove any non-digit or non-slash characters
+  //   input = input.replace(/[^\d\/]/g, '');
   
-  //    if (input.length === 2 && !input.includes('/')) {
+  //   // Automatically add slash after 2 digits (month)
+  //   if (input.length === 2 && !input.includes('/')) {
   //     input += '/';
   //   }
   
-  //    if (input.length > 0 && input.length <= 2) {
-  //     let month = parseInt(input, 10);
-  //     if (month < 1) {
-  //       input = '01';
-  //     } else if (month > 12) {
-  //       input = '12';
+  //   // Allow deletion of slash
+  //   if (input.length === 3 && input.charAt(2) === '/') {
+  //     if (e.inputType === 'deleteContentBackward') {
+  //       input = input.slice(0, 2);
   //     }
   //   }
   
-  //    if (input.length > 5) {
+  //   // Ensure valid month
+  //   if (input.length >= 2) {
+  //     let month = parseInt(input.slice(0, 2), 10);
+  //     if (month < 1 || month > 12) {
+  //       input = input.slice(0, 1);
+  //     }
+  //   }
+  
+  //   // Ensure only one slash is present
+  //   if (input.indexOf('/') !== input.lastIndexOf('/')) {
+  //     input = input.slice(0, input.indexOf('/') + 1) + input.slice(input.indexOf('/') + 1).replace('/', '');
+  //   }
+  
+  //   // Limit input to 5 characters (MM/YY)
+  //   if (input.length > 5) {
   //     input = input.slice(0, 5);
   //   }
   
   //   e.target.value = input;
   // });
-  
+     
 
 });
 
