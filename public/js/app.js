@@ -436,4 +436,32 @@ cardNumberInput.addEventListener("input", function (e) {
     errorMessage.textContent = "";
   }
 });
+
+  // //expiry date
+  // document.getElementById('card-expiration-input').addEventListener('input', function (e) {
+  //   let input = e.target.value;
+  
+  //    input = input.replace(/[^\d\/]/g, '');
+  
+  //    if (input.length === 2 && !input.includes('/')) {
+  //     input += '/';
+  //   }
+  
+  //    if (input.length > 0 && input.length <= 2) {
+  //     let month = parseInt(input, 10);
+  //     if (month < 1) {
+  //       input = '01';
+  //     } else if (month > 12) {
+  //       input = '12';
+  //     }
+  //   }
+  
+  //    if (input.length > 5) {
+  //     input = input.slice(0, 5);
+  //   }
+  
+  //   e.target.value = input;
+  // });
+  
+
 });

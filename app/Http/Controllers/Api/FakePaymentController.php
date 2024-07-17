@@ -25,7 +25,7 @@ class FakePaymentController extends Controller
 
 
         if ($validate) {
-            $mockyUrl = 'https://run.mocky.io/v3/43730507-7c65-4222-81a7-cb951368cdc7';
+            $mockyUrl = 'https://run.mocky.io/v3/192c87e3-e951-4c7d-af1c-b70dea4de70b';
 
             $client = new Client();
 
@@ -39,7 +39,7 @@ class FakePaymentController extends Controller
                 ]);
 
                 $responseBody = json_decode($response->getBody(), true);
-
+ 
 
                 if ($response->getStatusCode() == 200 && $responseBody['status'] === 'success') {
 

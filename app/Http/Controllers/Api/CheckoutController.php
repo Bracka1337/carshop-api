@@ -65,7 +65,6 @@ class CheckoutController extends Controller
                         ]);
                     }
                 }
-                // redirect to payment page with all the stuff needed order id, payment id, delivery details id
                 session([
                     'order_id' => $order->id,
                     'payment_id' => $payment->id,
@@ -74,11 +73,7 @@ class CheckoutController extends Controller
                 return redirect()->route('payment-details')->with('success','');
 
 
-                // return response()->json([
-                //     'status' => 'success',
-                //     'message' => 'Order placed successfully',
-                //     'order_id' => $order->id,
-                // ]);
+      
 
             } catch (\Exception $e) {
                 return response()->json([
