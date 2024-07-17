@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
 use App\Filament\Resources\OrderResource\RelationManagers\DeliveryDetailsRelationManager;
+use App\Filament\Resources\OrderResource\RelationManagers\ProductQuantitiesRelationManager;
 use App\Models\Order;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -84,6 +85,7 @@ class OrderResource extends Resource
     {
         return [
             DeliveryDetailsRelationManager::class,
+            ProductQuantitiesRelationManager::class,
         ];
     }
 
