@@ -404,4 +404,17 @@ modals.forEach((modal) => {
       event.preventDefault();
       window.location.href = '/checkout';
   });
+
+  //home button
+  
+//   document.addEventListener('DOMContentLoaded', function() {
+//     // Initially hide the home button
+//     document.getElementById('homeButton').style.display = 'none';
+
+//     // Check if the user is authenticated
+//     if (window.location.href.includes('/dashboard')) { // Adjust '/dashboard' to match your route
+//         // Show the home button if the user is on the dashboard page
+//         document.getElementById('homeButton').style.display = 'inline-block';
+//     }
+// });
 });
