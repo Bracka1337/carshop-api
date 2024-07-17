@@ -409,7 +409,7 @@ document.addEventListener("DOMContentLoaded", function () {
   //Notification message
 
   function fadeOut(element) {
-    let currentOpacity = 4;
+    let currentOpacity = 3.5;
   
     function frame() {
       if (currentOpacity <= 0) {
