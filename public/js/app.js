@@ -82,20 +82,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const showItem = (index) => {
       const offset = -index * 100;
       carousel.style.transform = `translateX(${offset}%)`;
-      
+
       indicators.forEach((indicator, i) => {
-        indicator.classList.toggle('bg-gray-400', i === index);
-        indicator.classList.toggle('bg-gray-300', i !== index);
+        indicator.classList.toggle("bg-gray-400", i === index);
+        indicator.classList.toggle("bg-gray-300", i !== index);
       });
     };
 
     indicators.forEach((indicator, i) => {
-
-      indicator.addEventListener('click', (event) => {
+      indicator.addEventListener("click", (event) => {
         index = i;
         showItem(index);
       });
-
     });
 
     const prevItem = () => {
@@ -148,7 +146,6 @@ document.addEventListener("DOMContentLoaded", function () {
     shoppingCart.classList.remove("hidden");
   });
 
-  
   //--
 
   modal.addEventListener("click", (event) => {
@@ -270,27 +267,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function fadeOut(element) {
     let currentOpacity = 3.5;
-  
+
     function frame() {
       if (currentOpacity <= 0) {
-        element.style.display = 'none';
+        element.style.display = "none";
         return;
       }
       currentOpacity -= 0.02; // Adjust speed of fade-out
       element.style.opacity = currentOpacity;
       requestAnimationFrame(frame);
     }
-  
+
     requestAnimationFrame(frame);
   }
-  
+
   const successMessage = document.getElementById("success-message");
   if (successMessage) {
     fadeOut(successMessage);
   }
-  
+
   const checkoutButton = document.getElementById("checkout");
-  
+
   checkoutButton.addEventListener("click", function (event) {
     event.preventDefault();
     window.location.href = "/checkout";
@@ -327,6 +324,149 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
+
+  const removeButtons = document.querySelectorAll("#remove-item");
+  const quantityInputs = document.querySelectorAll(".quantity-display");
+  const emptyCartMessage = document.getElementById("empty-cart-message");
+
+  function checkIfCartIsEmpty() {
+    const cartItems = document.querySelectorAll(".cart-item");
+    if (cartItems.length === 0) {
+      emptyCartMessage.classList.remove("hidden");
+    } else {
+      emptyCartMessage.classList.add("hidden");
+    }
+  }
+
+  removeButtons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const productId = button.getAttribute("data-id");
+      const url = `/cart/remove/${productId}`;
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-TOKEN": document
+            .querySelector('meta[name="csrf-token"]')
+            .getAttribute("content"),
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error("Network response was not ok.");
+        })
+        .then((data) => {
+          // Remove the item from the DOM
+          const itemElement = document.querySelector(
+            `.cart-item[data-id="${productId}"]`
+          );
+          if (itemElement) {
+            itemElement.remove();
+          }
+          calculateSubtotal();
+          updateCartCount();
+          checkIfCartIsEmpty();
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    });
+  });
+
+  quantityInputs.forEach((display) => {
+    const productId = display.getAttribute("id").split("-")[1];
+    const decreaseButton = document.querySelector(
+      `.decrease-quantity[data-id="${productId}"]`
+    );
+    const increaseButton = document.querySelector(
+      `.increase-quantity[data-id="${productId}"]`
+    );
+
+    decreaseButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      let quantity = parseInt(display.innerText);
+      if (quantity > 1) {
+        quantity -= 1;
+        display.innerText = quantity;
+        updateCart(productId, quantity);
+        calculateSubtotal();
+        updateCartCount();
+      }
+    });
+
+    increaseButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      let quantity = parseInt(display.innerText);
+      quantity += 1;
+      display.innerText = quantity;
+      updateCart(productId, quantity);
+      calculateSubtotal();
+      updateCartCount();
+    });
+  });
+
+  function updateCart(productId, quantity) {
+    const url = `/cart/update/${productId}/${quantity}`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-TOKEN": document
+          .querySelector('meta[name="csrf-token"]')
+          .getAttribute("content"),
+      },
+      body: JSON.stringify({
+        productId: productId,
+        quantity: quantity,
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Network response was not ok.");
+      })
+      .then((data) => {
+        console.log("Cart updated successfully.");
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+
+  function calculateSubtotal() {
+    let subtotal = 0;
+    const quantityDisplays = document.querySelectorAll(".quantity-display");
+    quantityDisplays.forEach((display) => {
+      const productId = display.getAttribute("id").split("-")[1];
+      const priceElement = document.querySelector(
+        `.product-price[data-id="${productId}"]`
+      );
+
+      if (priceElement) {
+        const price = parseFloat(priceElement.innerText.replace("$", ""));
+        const quantity = parseInt(display.innerText);
+        subtotal += price * quantity;
+      }
+    });
+    document.getElementById("subtotal-amount").innerText = `$${subtotal.toFixed(
+      2
+    )}`;
+  }
+
+  function updateCartCount() {
+    let totalQuantity = 0;
+    const quantityDisplays = document.querySelectorAll(".quantity-display");
+    quantityDisplays.forEach((display) => {
+      totalQuantity += parseInt(display.innerText);
+    });
+    document.getElementById("cart-count").innerText = totalQuantity;
+  }
+
+  checkIfCartIsEmpty();
+  calculateSubtotal();
+  updateCartCount();
 });
-
-

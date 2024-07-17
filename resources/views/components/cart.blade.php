@@ -81,11 +81,12 @@
                                         </ul>
                                     </div>
                                 </div>
-                            @else
-                                <p class="mt-8 text-center text-lg font-semibold text-gray-600" id="empty-cart-message">
-                                    Your cart is empty.
-                                </p>
+
                             @endif
+
+                            <p class="mt-8 text-center text-lg font-semibold text-gray-600" id="empty-cart-message">
+                                Your cart is empty.
+                            </p>
                         </div>
                         <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
                             <div class="flex justify-between text-base font-medium text-gray-900">
@@ -116,145 +117,3 @@
         </div>
     </div>
 </div>
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const removeButtons = document.querySelectorAll("#remove-item");
-        const quantityInputs = document.querySelectorAll(".quantity-display");
-
-        removeButtons.forEach((button) => {
-            button.addEventListener("click", (event) => {
-                event.preventDefault();
-                const productId = button.getAttribute("data-id");
-                const url = `/cart/remove/${productId}`;
-                fetch(url, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRF-TOKEN": document
-                            .querySelector('meta[name="csrf-token"]')
-                            .getAttribute("content"),
-                    },
-                })
-                    .then((response) => {
-                        if (response.ok) {
-                            return response.json();
-                        }
-                        throw new Error("Network response was not ok.");
-                    })
-                    .then((data) => {
-                        // Remove the item from the DOM
-                        const itemElement = document.querySelector(`.cart-item[data-id="${productId}"]`);
-                        if (itemElement) {
-                            itemElement.remove();
-                        }
-                        // Recalculate the subtotal and update cart count
-                        calculateSubtotal();
-                        updateCartCount();
-
-                        // If the cart is empty, show the empty cart message
-                        const cartItems = document.querySelectorAll(".cart-item");
-                        if (cartItems.length === 0) {
-                            document.getElementById("empty-cart-message").classList.remove("hidden");
-                        }
-                    })
-                    .catch((error) => {
-                        console.error("Error:", error);
-                    });
-            });
-        });
-
-        quantityInputs.forEach((display) => {
-            const productId = display.getAttribute("id").split("-")[1];
-            const decreaseButton = document.querySelector(
-                `.decrease-quantity[data-id="${productId}"]`
-            );
-            const increaseButton = document.querySelector(
-                `.increase-quantity[data-id="${productId}"]`
-            );
-
-            decreaseButton.addEventListener("click", (event) => {
-                event.preventDefault();
-                let quantity = parseInt(display.innerText);
-                if (quantity > 1) {
-                    quantity -= 1;
-                    display.innerText = quantity;
-                    updateCart(productId, quantity);
-                    calculateSubtotal();
-                    updateCartCount();
-                }
-            });
-
-            increaseButton.addEventListener("click", (event) => {
-                event.preventDefault();
-                let quantity = parseInt(display.innerText);
-                quantity += 1;
-                display.innerText = quantity;
-                updateCart(productId, quantity);
-                calculateSubtotal();
-                updateCartCount();
-            });
-        });
-
-        function updateCart(productId, quantity) {
-            const url = `/cart/update/${productId}/${quantity}`;
-            fetch(url, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": document
-                        .querySelector('meta[name="csrf-token"]')
-                        .getAttribute("content"),
-                },
-                body: JSON.stringify({
-                    productId: productId,
-                    quantity: quantity,
-                }),
-            })
-                .then((response) => {
-                    if (response.ok) {
-                        return response.json();
-                    }
-                    throw new Error("Network response was not ok.");
-                })
-                .then((data) => {
-                    console.log("Cart updated successfully.");
-                })
-                .catch((error) => {
-                    console.error("Error:", error);
-                });
-        }
-
-        function calculateSubtotal() {
-            let subtotal = 0;
-            const quantityDisplays = document.querySelectorAll(".quantity-display");
-            quantityDisplays.forEach((display) => {
-                const productId = display.getAttribute("id").split("-")[1];
-                const priceElement = document.querySelector(
-                    `.product-price[data-id="${productId}"]`
-                );
-
-                if (priceElement) {
-                    const price = parseFloat(priceElement.innerText.replace("$", ""));
-                    const quantity = parseInt(display.innerText);
-                    subtotal += price * quantity;
-                }
-            });
-            document.getElementById("subtotal-amount").innerText = `$${subtotal.toFixed(2)}`;
-        }
-
-        function updateCartCount() {
-            let totalQuantity = 0;
-            const quantityDisplays = document.querySelectorAll(".quantity-display");
-            quantityDisplays.forEach((display) => {
-                totalQuantity += parseInt(display.innerText);
-            });
-            document.getElementById("cart-count").innerText = totalQuantity;
-        }
-
-        calculateSubtotal();
-        updateCartCount();
-    });
-</script>
-
