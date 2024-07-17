@@ -24,8 +24,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-// close modal
-modals.forEach((modal) => {
+  // close modal
+  modals.forEach((modal) => {
     modal.addEventListener("click", (event) => {
       closeModal(event);
     });
@@ -118,7 +118,7 @@ modals.forEach((modal) => {
     showItem(activeIndex);
   });
 
-//shopping cart
+  //shopping cart
   //shopping cart close button
 
   const closeButton = document.getElementById("cart-close-button");
@@ -130,7 +130,7 @@ modals.forEach((modal) => {
     modal.classList.add("hidden");
   });
 
-//shopping cart open button 
+  //shopping cart open button
 
   const openButton = document.getElementById("open-button");
   openButton.addEventListener("click", (event) => {
@@ -294,102 +294,103 @@ modals.forEach((modal) => {
     modal.classList.add("hidden");
   });
 
- //banner
+  //banner
 
-    // window.onload = function() {
-        const dynamicWords = ["cars", "enthusiasts", "magebit", "everyone"];
+  // window.onload = function() {
+  const dynamicWords = ["cars", "enthusiasts", "magebit", "everyone"];
 
-        // Retrieve the current word index from localStorage, default to 0 if not found
-        let currentWordIndex = parseInt(localStorage.getItem('dynamicWordIndex')) || 0;
-        const targetElement = document.querySelector('.Banner__title--second');
-    
-        async function updateDynamicWord() {
-            const dynamicWord = dynamicWords[currentWordIndex];
-            const targetElement = document.querySelector('.Banner__title--second');
-            // Clear existing content
-            if (targetElement.textContent.length > 0) {
-                let str = targetElement.textContent;
-                await eraseText(targetElement);
-            }
-            targetElement.innerHTML = ''; // Use innerHTML to clear the element
-            
-            // Typing effect
-            await typeText(targetElement, dynamicWord);
-    
-            currentWordIndex++;
-            if (currentWordIndex >= dynamicWords.length) {
-                currentWordIndex = 0; // Loop back to the first word after showing all
-            }
-    
-        setTimeout(updateDynamicWord, 3000); // Change word every 3 seconds
-        }
-    
-        // Typing effect function
-        async function typeText(element, text, index = 0) {
-            return new Promise((resolve) => {
-                function typeNextCharacter() {
-                    if (index < text.length) {
-                        element.innerHTML += text.charAt(index);
-                        index++;
-                        setTimeout(typeNextCharacter, 100); // Adjust delay as needed
-                    } else {
-                        resolve();
-                    }
-                }
-                typeNextCharacter();
-            });
-        }
-    
-        async function eraseText(element) {
-            return new Promise((resolve) => {
-                function eraseNextCharacter() {
-                    if (element.textContent.length > 0) {
-                        element.textContent = element.textContent.slice(0, -1);
-                        setTimeout(eraseNextCharacter, 100); // Adjust delay as needed
-                    } else {
-                        resolve();
-                    }
-                }
-                eraseNextCharacter();
-            });
-        }
-            // Initialize the dynamic word
-        updateDynamicWord(); 
-        
-        //dropdown button in navbar
-    
-        const button = document.getElementById('menu-button');
-        const sidebar = document.getElementById('sidebar-menu');
-        const sidebarModal = document.getElementById('sidebar-modal');
-    // sidebar
-        button.addEventListener('click', () => {
-            const expanded = button.getAttribute('aria-expanded') === 'true' || false;
-            button.setAttribute('aria-expanded', !expanded);
-            sidebarModal.classList.toggle('hidden');
-            if (!sidebarModal.classList.contains('hidden')) {
-                sidebarModal.classList.remove('-translate-x-full');
-            } else {
-                sidebarModal.classList.add('-translate-x-full');
-            }
-    
-            sidebarModal.addEventListener('click', (event) => {
-                if (!sidebar.contains(event.target)) {
-                    button.setAttribute('aria-expanded', 'false');
-                    sidebarModal.classList.add('hidden');
-                    sidebarModal.classList.add('-translate-x-full');
-                }
-            });
-    
-            // close sideBar modal
-            const closeButton = document.getElementById('close-button');
-    
-            closeButton.addEventListener('click', (event) => {
-                event.preventDefault();
-                sidebarModal.classList.add('hidden');
-            });
-        });
+  // Retrieve the current word index from localStorage, default to 0 if not found
+  let currentWordIndex =
+    parseInt(localStorage.getItem("dynamicWordIndex")) || 0;
+  const targetElement = document.querySelector(".Banner__title--second");
 
-          //Notification message
+  async function updateDynamicWord() {
+    const dynamicWord = dynamicWords[currentWordIndex];
+    const targetElement = document.querySelector(".Banner__title--second");
+    // Clear existing content
+    if (targetElement.textContent.length > 0) {
+      let str = targetElement.textContent;
+      await eraseText(targetElement);
+    }
+    targetElement.innerHTML = ""; // Use innerHTML to clear the element
+
+    // Typing effect
+    await typeText(targetElement, dynamicWord);
+
+    currentWordIndex++;
+    if (currentWordIndex >= dynamicWords.length) {
+      currentWordIndex = 0; // Loop back to the first word after showing all
+    }
+
+    setTimeout(updateDynamicWord, 3000); // Change word every 3 seconds
+  }
+
+  // Typing effect function
+  async function typeText(element, text, index = 0) {
+    return new Promise((resolve) => {
+      function typeNextCharacter() {
+        if (index < text.length) {
+          element.innerHTML += text.charAt(index);
+          index++;
+          setTimeout(typeNextCharacter, 100); // Adjust delay as needed
+        } else {
+          resolve();
+        }
+      }
+      typeNextCharacter();
+    });
+  }
+
+  async function eraseText(element) {
+    return new Promise((resolve) => {
+      function eraseNextCharacter() {
+        if (element.textContent.length > 0) {
+          element.textContent = element.textContent.slice(0, -1);
+          setTimeout(eraseNextCharacter, 100); // Adjust delay as needed
+        } else {
+          resolve();
+        }
+      }
+      eraseNextCharacter();
+    });
+  }
+  // Initialize the dynamic word
+  updateDynamicWord();
+
+  //dropdown button in navbar
+
+  const button = document.getElementById("menu-button");
+  const sidebar = document.getElementById("sidebar-menu");
+  const sidebarModal = document.getElementById("sidebar-modal");
+  // sidebar
+  button.addEventListener("click", () => {
+    const expanded = button.getAttribute("aria-expanded") === "true" || false;
+    button.setAttribute("aria-expanded", !expanded);
+    sidebarModal.classList.toggle("hidden");
+    if (!sidebarModal.classList.contains("hidden")) {
+      sidebarModal.classList.remove("-translate-x-full");
+    } else {
+      sidebarModal.classList.add("-translate-x-full");
+    }
+
+    sidebarModal.addEventListener("click", (event) => {
+      if (!sidebar.contains(event.target)) {
+        button.setAttribute("aria-expanded", "false");
+        sidebarModal.classList.add("hidden");
+        sidebarModal.classList.add("-translate-x-full");
+      }
+    });
+
+    // close sideBar modal
+    const closeButton = document.getElementById("close-button");
+
+    closeButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      sidebarModal.classList.add("hidden");
+    });
+  });
+
+  //Notification message
 
   const successMessage = document.getElementById("success-message");
   if (successMessage) {
@@ -398,11 +399,11 @@ modals.forEach((modal) => {
     }, 1000);
   }
 
-  const checkoutButton = document.getElementById('checkout');
+  const checkoutButton = document.getElementById("checkout");
 
-  checkoutButton.addEventListener('click', function (event) {
-      event.preventDefault();
-      window.location.href = '/checkout';
+  checkoutButton.addEventListener("click", function (event) {
+    event.preventDefault();
+    window.location.href = "/checkout";
   });
 
   //home button
@@ -417,4 +418,50 @@ modals.forEach((modal) => {
 //         document.getElementById('homeButton').style.display = 'inline-block';
 //     }
 // });
+
+const cardNumberInput = document.getElementById("card-number-input");
+const errorMessage = document.getElementById("error-message");
+
+cardNumberInput.addEventListener("input", function (e) {
+  let value = e.target.value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
+  let formattedValue = value.replace(/(.{4})/g, "$1 ").trim();
+
+  e.target.value = formattedValue;
+
+  // Check if the input matches the pattern
+  if (cardNumberInput.validity.patternMismatch) {
+    errorMessage.textContent =
+      "Please enter a valid card number format (xxxx xxxx xxxx xxxx).";
+  } else {
+    errorMessage.textContent = "";
+  }
+});
+
+  // //expiry date
+  // document.getElementById('card-expiration-input').addEventListener('input', function (e) {
+  //   let input = e.target.value;
+  
+  //    input = input.replace(/[^\d\/]/g, '');
+  
+  //    if (input.length === 2 && !input.includes('/')) {
+  //     input += '/';
+  //   }
+  
+  //    if (input.length > 0 && input.length <= 2) {
+  //     let month = parseInt(input, 10);
+  //     if (month < 1) {
+  //       input = '01';
+  //     } else if (month > 12) {
+  //       input = '12';
+  //     }
+  //   }
+  
+  //    if (input.length > 5) {
+  //     input = input.slice(0, 5);
+  //   }
+  
+  //   e.target.value = input;
+  // });
+  
+
 });
