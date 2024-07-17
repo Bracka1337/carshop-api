@@ -17,7 +17,9 @@ class CheckoutController extends Controller
     {
 
 
-        $validated = $request->validated();
+        $validated = $request->validated([
+            
+        ]);
 
         if ($validated) {
             try {

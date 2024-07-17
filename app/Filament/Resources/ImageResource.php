@@ -29,8 +29,11 @@ class ImageResource extends Resource
     {
         return $form
             ->schema([
-                TextColumn::make('id')->label('ID')->searchable(),
-                FileUpload::make('img_uri')->label('Image')->disk('public')->directory('images'),
+                FileUpload::make('img_uri')->label('Image')->disk('public')->directory('images')->endsWith([
+                    '.webp',
+                ])->validationMessages([
+                    'endsWith' => 'Image should be in .webp format',
+                ]),
                 Select::make('product_id')->label('Product')->options(Product::pluck('id','id'))->searchable(),
             ]);
     }
