@@ -36,6 +36,8 @@
             
             @include('components.cart')
             {{ $slot }}
+
+
         </main>
 
         <!-- Footer -->

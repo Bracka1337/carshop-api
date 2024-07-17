@@ -404,15 +404,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
   //Notification message
 
+  function fadeOut(element) {
+    let currentOpacity = 3.5;
+  
+    function frame() {
+      if (currentOpacity <= 0) {
+        element.style.display = 'none';
+        return;
+      }
+      currentOpacity -= 0.02; // Adjust speed of fade-out
+      element.style.opacity = currentOpacity;
+      requestAnimationFrame(frame);
+    }
+  
+    requestAnimationFrame(frame);
+  }
+  
   const successMessage = document.getElementById("success-message");
   if (successMessage) {
-    setTimeout(() => {
-      successMessage.style.display = "none";
-    }, 1000);
+    fadeOut(successMessage);
   }
-
+  
   const checkoutButton = document.getElementById("checkout");
-
+  
   checkoutButton.addEventListener("click", function (event) {
     event.preventDefault();
     window.location.href = "/checkout";
@@ -493,3 +507,5 @@ if(cardNumberInput){
      
 
 });
+
+

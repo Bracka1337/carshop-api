@@ -15,8 +15,8 @@
             <div class="w-full sm:w-1/3">
                 <h4 class="text-xl font-bold mb-4">Follow Us</h4>
                 <ul class="text-indigo-400">
-                    <li><a href="#" class="hover:underline">Facebook</a></li>
-                    <li><a href="#" class="hover:underline">Twitter</a></li>
+                    <li><a href="https://www.facebook.com/" class="hover:underline">Facebook</a></li>
+                    <li><a href="https://x.com/en/privacy" class="hover:underline">Twitter</a></li>
                 </ul>
             </div>
         </div>
