@@ -48,7 +48,7 @@ class OrderResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')->searchable(),
+                TextColumn::make('id')->label('ID')->searchable(),
                 TextColumn::make('user.email')->searchable(),
                 TextColumn::make('date')->dateTime(),
                 TextColumn::make('status')->badge()->color(fn (string $state): string => match ($state) {

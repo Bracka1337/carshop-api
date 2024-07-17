@@ -33,9 +33,8 @@ class OrdersRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('user_id')
             ->columns([
-                TextColumn::make('id')->searchable(),
+                TextColumn::make('id')->label('ID')->searchable(),
                 TextColumn::make('user.email')->searchable(),
                 TextColumn::make('payment_id')->searchable(),
                 TextColumn::make('date')->dateTime(),

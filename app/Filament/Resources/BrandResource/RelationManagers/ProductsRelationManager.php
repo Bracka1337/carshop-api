@@ -41,9 +41,8 @@ class ProductsRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('brand_id')
             ->columns([
-                TextColumn::make('id')->label('Product ID'),
+                TextColumn::make('id')->label('ID')->searchable(),
                 TextColumn::make('title')->searchable(),
                 TextColumn::make('brand.title'),
                 TextColumn::make('price'),

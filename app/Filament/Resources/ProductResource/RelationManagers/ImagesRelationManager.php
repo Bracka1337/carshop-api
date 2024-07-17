@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\FileUpload;
 
 class ImagesRelationManager extends RelationManager
 {
@@ -23,7 +24,7 @@ class ImagesRelationManager extends RelationManager
         return $form
             ->schema([
                 Select::make('product_id')->relationship('product', 'id')->searchable()->required(),
-                TextInput::make('img_uri')->required(),
+                FileUpload::make('img_uri')->label('Image')->disk('public')->directory('images')->required()->columnSpanFull(),
             ]);
     }
 
@@ -32,7 +33,7 @@ class ImagesRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('product_id')
             ->columns([
-                TextColumn::make('id'),
+                TextColumn::make('id')->label('ID')->searchable(),
                 ImageColumn::make('img_uri')->label('Image'),
             ])
             ->filters([
