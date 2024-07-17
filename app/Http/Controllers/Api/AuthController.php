@@ -24,7 +24,7 @@ class AuthController extends Controller
                 'email'=> 'required|email|unique:users,email|max:255',
                 'phone_nr' => 'required|min:8|max:32',
             ]);
-    
+            
             User::create([
                 'name' => $request->name,
                 'password' => Hash::make($request->password),
@@ -35,9 +35,7 @@ class AuthController extends Controller
     
             return redirect()->route('login')->with('success','Registered Sucessfully!');
         } catch (\Exception $e) {
-            return back()->withErrors([
-                'default' => $e->getMessage(),
-            ])->withInput($request->only('default'));
+            return back()->withErrors($e->getMessage())->withInput($request->only('default'));
         }
     }
 
