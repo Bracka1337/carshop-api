@@ -21,17 +21,16 @@
                                 </div>
                             </div>
 
-                            @if (session('cart'))
+                            @if (session('cart') && array_sum(array_column(session('cart'), 'quantity')) > 0)
                                 <div class="mt-8">
                                     <div class="flow-root">
                                         <ul role="list" class="-my-6 divide-y divide-gray-200">
-                                            @foreach (session('cart') as $id => $details) 
-                                        
-                                                @if (is_array($details)) {{-- Check for this --}}
+                                            @foreach (session('cart') as $id => $details)
+                                                @if (is_array($details))
                                                     <li class="flex py-6">
                                                         <div
                                                             class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                                            <img src="{{ $details['image'] }}"
+                                                            <img src="{{ asset('/storage/' . $details['image']) }}"
                                                                 class="w-full h-full object-center object-cover">
                                                         </div>
                                                         <div class="ml-4 flex flex-1 flex-col">
@@ -83,7 +82,9 @@
                                     </div>
                                 </div>
                             @else
-                                <p>Your cart is empty.</p>
+                                <p class="mt-8 text-center text-lg font-semibold text-gray-600">
+                                    Your cart is empty.
+                                </p>
                             @endif
                         </div>
                         <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
@@ -92,10 +93,12 @@
                                 <p id="subtotal-amount">$0.00</p>
                             </div>
                             <p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
-                            <div class="mt-6">
-                                <a id="checkout" href='{{ route('checkout') }}'
-                                    class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Checkout</a>
-                            </div>
+                            @if (session('cart') && array_sum(array_column(session('cart'), 'quantity')) > 0)
+                                <div class="mt-6">
+                                    <a id="checkout" href='{{ route('checkout') }}'
+                                        class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Checkout</a>
+                                </div>
+                            @endif
                             <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
                                 <p>
                                     or

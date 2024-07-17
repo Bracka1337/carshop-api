@@ -19,9 +19,8 @@
                     <!-- Item 1 -->
                     @foreach ($product->images as $key => $image)
                         <div class=" flex-100"
-                        {{-- {{ $key === 0 ? 'opacity-100 translate-x-0' : '' }}" --}}
                             data-carousel-item= "{{$key}}">
-                            <img src="{{ $image->img_uri }}"
+                            <img src="{{ asset('/storage' . $image->img_uri) }}"
                                 class="object-cover w-full h-full rounded-lg" alt="Slide {{ $key }}">
                         </div>
                     @endforeach

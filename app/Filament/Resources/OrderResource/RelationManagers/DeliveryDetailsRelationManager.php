@@ -38,8 +38,9 @@ class DeliveryDetailsRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('id')
+            ->recordTitle("Delivery Details")
             ->columns([
+                TextColumn::make('id')->label('ID')->searchable(),
                 TextColumn::make('f_name')->placeholder('-')->label('First name'),
                 TextColumn::make('m_name')->placeholder('-')->label('Middle name'),
                 TextColumn::make('l_name')->placeholder('-')->label('Last name'),
@@ -56,7 +57,6 @@ class DeliveryDetailsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

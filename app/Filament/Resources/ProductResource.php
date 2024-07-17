@@ -47,6 +47,7 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('id')->label('ID')->searchable(),
                 TextColumn::make('title')->searchable()->limit(16),
                 TextColumn::make('description')->limit(16),
                 TextColumn::make('diameter'),

@@ -52,8 +52,6 @@ Route::group(['middleware' => ['guest']], function () {
 
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.store');
-
-
 });
 
 
@@ -65,19 +63,14 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('profile/orderdetails/{id}', [OrderController::class, 'show'])->name('orderdetails');
 
-    //get session details
     Route::get('/checkout', [MainController::class, 'getCart'])->name('checkout');
-    Route::get('/payment', [CheckoutController::class,'proceedToPayment'])->name('proceedToPayment');
+    Route::get('/payment', [CheckoutController::class, 'proceedToPayment'])->name('proceedToPayment');
 
-
-
-
-    Route::get('/payment-details', function(){
+    Route::get('/payment-details', function () {
         return view('payment');
     })->name('payment-details');
 
     Route::get('/process-payment', [FakePaymentController::class, 'processPayment'])->name('processPayment');
-
 
 
     Route::get('/paymentSucess', function () {

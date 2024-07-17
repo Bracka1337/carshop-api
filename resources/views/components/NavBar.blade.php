@@ -27,7 +27,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                         </svg>
                                     </button>
-                                    <a href="#" class="block px-8 py-4 text-sm text-lg text-gray-700 hover:text-gray-800 w-[fit-content]" role="menuitem" id="homeButton">Home</a>
+                                    <a href="/" class="block px-8 py-4 text-sm text-lg text-gray-700 hover:text-gray-800 w-[fit-content]" role="menuitem" id="homeButton">Home</a>
                                     <a href="/aboutus" class="block px-8 py-4 text-sm text-lg text-gray-700 hover:text-gray-800 w-[fit-content]" role="menuitem">About us</a>
                                     @auth <a href="/profile" class="block px-8 py-4 text-sm text-lg text-gray-700 hover:text-gray-800 w-[fit-content]" role="menuitem" id="myOrdersButton">My orders</a> @endauth
                             
@@ -39,18 +39,18 @@
                     </div>
                 <!-- Logo -->
                 <div class="ml-4 flex lg:ml-0 ">
-                    <div>
+                    <a href="/">
                         <span class="sr-only ">East Squad</span>
                         <img class="h-10 w-auto " src="{{ asset('images/logo2.svg') }}" alt="EastSquad logo">
-                </div>
+                </a>
                 </div>
                 <div class="hidden lg:ml-8 lg:block lg:self-stretch ">
                     <div class="flex h-full space-x-8 ">
                         <div class="flex ">
                             <div class="relative flex  ">
-                                <button type="button"
+                                <a href="/" type="button"
                                     class="relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800"
-                                    aria-expanded="false" id="homeButton">Home</button>
+                                    aria-expanded="false" id="homeButton">Home</a>
                             </div>
                         </div>
 

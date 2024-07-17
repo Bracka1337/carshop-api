@@ -14,24 +14,28 @@ class ProductSearchRequest extends FormRequest
         return true;
     }
 
-    // /**
-    //  * Get the validation rules that apply to the request.
-    //  *
-    //  * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-    //  */
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
     public function rules(): array
     {
         return [
-            'category' => 'nullable|int',
-            'title' => 'nullable|string',
-            'size' => 'nullable|string',
-            'price_from' => 'nullable|numeric',
+            'diameter' => 'nullable|numeric',
+            'width' => 'nullable|numeric',
+            'et' => 'nullable|numeric',
+            'cb' => 'nullable|numeric',
+            'bolt' => 'nullable|integer',
+            'bolt_diameter' => 'nullable|numeric',
+            'type' => 'nullable|string',
+            'brand' => 'nullable|exists:brands,id',
+            'price_from' => 'nullable|numeric|min:0',
             'price_to' => 'nullable|numeric|gte:price_from',
-            'brand'=> 'nullable|int',
-            'material'=> 'nullable|string',
+            'order' => 'nullable|in:price_asc,price_desc,brand_asc,brand_desc',
         ];
+        
     }
-
 
     /**
      * Get the validation error messages.

@@ -17,6 +17,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Storage;
 
 class ImageResource extends Resource
 {
@@ -28,7 +29,11 @@ class ImageResource extends Resource
     {
         return $form
             ->schema([
-                FileUpload::make('img_uri')->label('Image')->disk('public')->directory('images'),
+                FileUpload::make('img_uri')->label('Image')->disk('public')->directory('images')->endsWith([
+                    '.webp',
+                ])->validationMessages([
+                    'endsWith' => 'Image should be in .webp format',
+                ]),
                 Select::make('product_id')->label('Product')->options(Product::pluck('id','id'))->searchable(),
             ]);
     }
