@@ -20,7 +20,7 @@
                     @foreach ($product->images as $key => $image)
                         <div class=" flex-100"
                             data-carousel-item= "{{$key}}">
-                            <img src="{{ asset('/storage' . $image->img_uri) }}"
+                            <img src="{{ asset('/storage/' . $image->img_uri) }}"
                                 class="object-cover w-full h-full rounded-lg" alt="Slide {{ $key }}">
                         </div>
                     @endforeach
