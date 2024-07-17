@@ -38,12 +38,12 @@
             {{ $slot }}
 
 
-            <x-myownnotif />
         </main>
 
         <!-- Footer -->
            
     </div>
     @include('components.footer')
+    <script src="https://unpkg.com/flowbite@1.4.0/dist/flowbite.js"></script>
 </body>
 </html>

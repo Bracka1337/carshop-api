@@ -96,9 +96,14 @@ theme: {
           '100%': { opacity: 1 },
         }
       },
-        animation: {
-          blink: 'blink 1s linear infinite', // Apply the blink animation
-        },
+      
+      animation: {
+        blink: 'blink 1s linear infinite', // Apply the blink animation
+      },
+
+      flex: {
+        '100': '0 0 100%', // each item takes 100% of width
+      },
     },
 },
 
