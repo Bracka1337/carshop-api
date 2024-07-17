@@ -39,8 +39,9 @@ class PaymentResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id'),
+                TextColumn::make('id')->label('ID')->searchable(),
                 TextColumn::make('date')->label('Paid On'),
+                TextColumn::make('order.id')->label('Order ID'),
                 TextColumn::make('status')->label('Payment Status')->badge()->color(fn (string $state): string => match ($state) {
                     'Processing' => 'gray',
                     'Unpaid' => 'warning',
@@ -73,8 +74,12 @@ class PaymentResource extends Resource
     {
         return [
             'index' => Pages\ListPayments::route('/'),
-            'create' => Pages\CreatePayment::route('/create'),
             'edit' => Pages\EditPayment::route('/{record}/edit'),
         ];
+    }
+
+    public static function canCreate(): bool
+    {
+        return false;
     }
 }

@@ -29,6 +29,7 @@ class ImageResource extends Resource
     {
         return $form
             ->schema([
+                TextColumn::make('id')->label('ID')->searchable(),
                 FileUpload::make('img_uri')->label('Image')->disk('public')->directory('images'),
                 Select::make('product_id')->label('Product')->options(Product::pluck('id','id'))->searchable(),
             ]);
