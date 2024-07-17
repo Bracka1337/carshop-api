@@ -11,6 +11,7 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
         
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        
 
 
     </head>
@@ -57,6 +58,9 @@
                 <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                 <input type="password" id="password" name="password" required
                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                       <div id="password-hint" class="hidden text-xs text-gray-500 mt-1">
+                        Your password should be 8-16 characters long and include atleast one upper case letter, a number and special character.
+                    </div>
             </div>
             <div class="mb-4">
                 <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Confirm Password</label>
@@ -90,6 +94,37 @@
             
         </div>
     </div>
-    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('password');
+            const passwordHint = document.getElementById('password-hint');
+            const submitButton = document.querySelector('button[type="submit"]');
+        
+            passwordInput.addEventListener('focus', function() {
+                passwordHint.classList.remove('hidden');
+            });
+        
+            passwordInput.addEventListener('blur', function() {
+                passwordHint.classList.add('hidden');
+            });
+        
+            passwordInput.addEventListener('input', function() {
+                const password = passwordInput.value;
+                const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
+        
+                if (regex.test(password)) {
+                    passwordHint.classList.remove('text-red-500');
+                    passwordHint.classList.add('text-green-500');
+                    passwordHint.textContent = 'Password meets all requirements.';
+                    submitButton.disabled = false;
+                } else {
+                    passwordHint.classList.remove('text-green-500');
+                    passwordHint.classList.add('text-red-500');
+                    passwordHint.textContent = 'Your password should be 8-16 characters long and include at least one uppercase letter, a number, and a special character.';
+                    submitButton.disabled = true;
+                }
+            });
+        });
+        </script>
     </body>
     </html>
