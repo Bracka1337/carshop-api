@@ -22,17 +22,17 @@ class ProductSearchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'diameter' => 'nullable|numeric',
-            'width' => 'nullable|numeric',
-            'et' => 'nullable|numeric',
-            'cb' => 'nullable|numeric',
-            'bolt' => 'nullable|integer',
-            'bolt_diameter' => 'nullable|numeric',
-            'type' => 'nullable|string',
-            'brand' => 'nullable|exists:brands,id',
-            'price_from' => 'nullable|numeric|min:0',
-            'price_to' => 'nullable|numeric|gte:price_from',
-            'order' => 'nullable|in:price_asc,price_desc,brand_asc,brand_desc',
+            'diameter' => 'sometimes|nullable|numeric',
+            'width' => 'sometimes|nullable|numeric',
+            'et' => 'sometimes|nullable|numeric',
+            'cb' => 'sometimes|nullable|numeric',
+            'bolt' => 'sometimes|nullable|integer',
+            'bolt_diameter' => 'sometimes|nullable|numeric',
+            'type' => 'sometimes|nullable|string',
+            'brand' => 'sometimes|nullable|exists:brands,id',
+            'price_from' => 'sometimes|nullable|numeric|min:0',
+            'price_to' => 'sometimes|nullable|numeric|gte:price_from',
+            'order' => 'sometimes|nullable|in:price_asc,price_desc,brand_asc,brand_desc',
         ];
         
     }
