@@ -26,9 +26,9 @@
       
 
         <!-- Page Content -->
-        <main>
-      
+        <main>    
             @include('components.NavBar')
+
             @if (Route::currentRouteName() == 'main')
                 
                 @include('components.banner')
