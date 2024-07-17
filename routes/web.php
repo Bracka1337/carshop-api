@@ -73,7 +73,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/process-payment', [FakePaymentController::class, 'processPayment'])->name('processPayment');
 
 
-    Route::get('/paymentSucess', function () {
-        return view('paymentSucess');
-    })->name('paymentSucess');
+    Route::get('/paymentSuccess', function () {
+        return view('paymentSuccess');
+    })->name('paymentSuccess');
 });
