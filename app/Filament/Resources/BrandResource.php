@@ -33,6 +33,7 @@ class BrandResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('id')->label('ID')->searchable(),
                 TextColumn::make('title'),
                 TextColumn::make('products.id')->limitList()->expandableLimitedList()->searchable()->suffix('...'),
             ])
