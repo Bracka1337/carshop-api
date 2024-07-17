@@ -36,6 +36,9 @@
             
             @include('components.cart')
             {{ $slot }}
+
+
+            <x-myownnotif />
         </main>
 
         <!-- Footer -->
