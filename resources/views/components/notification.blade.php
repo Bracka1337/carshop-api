@@ -1,3 +1,4 @@
+
 @if (session('success'))
 <div class="flex flex-col gap-2 w-60 sm:w-60 text-[10px] sm:text-xs z-10" id="success-message" >
     <div
@@ -20,10 +21,14 @@
             ></path>
           </svg>
         </div>
-        <div class="text-sm text-white">{{ session('success') }}</div>
+            <div class="pt-0.5 text-sm text-white ">{{ session('success') }}</div>
+      </div>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18 18 6M6 6l12 12"
+          ></path>
+        </svg>
     </div>
-</div>
-@endif
-
-  
-  
+  </div>
+  @endif

@@ -474,5 +474,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   checkIfCartIsEmpty();
   calculateSubtotal();
-  updateCartCount();
+  if ( document.getElementById("cart-count")) {
+    updateCartCount();
+  }
 });
