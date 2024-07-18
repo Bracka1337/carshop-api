@@ -74,7 +74,7 @@ class CheckoutController extends Controller
                     'delivery_details_id' => $deliveryDetails->id,
                 ]);
 
-                return redirect()->route('payment-details')->with('success', 'Order placed successfully!');
+                return redirect()->route('payment-details')->with('success', 'Order created successfully!');
             } catch (\Exception $e) {
                 return response()->json([
                     'status' => 'error',
