@@ -63,17 +63,14 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('profile/orderdetails/{id}', [OrderController::class, 'show'])->name('orderdetails');
 
-    Route::get('/checkout', [MainController::class, 'getCart'])->name('checkout');
+    Route::get('/checkout', [MainController::class, 'getCheckout'])->name('checkout');
     Route::get('/payment', [CheckoutController::class, 'proceedToPayment'])->name('proceedToPayment');
 
-    Route::get('/payment-details', function () {
-        return view('payment');
-    })->name('payment-details');
+    Route::get('/payment-details', [MainController::class,'getPaymentDetails'])->name('payment-details');
 
     Route::get('/process-payment', [FakePaymentController::class, 'processPayment'])->name('processPayment');
 
 
-    Route::get('/paymentSuccess', function () {
-        return view('paymentSuccess');
-    })->name('paymentSuccess');
+
+    Route::get('/paymentSuccess', [CheckoutController::class, 'finalise'])->name('paymentSuccess');
 });
