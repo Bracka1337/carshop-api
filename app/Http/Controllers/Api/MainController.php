@@ -7,6 +7,7 @@ use App\Http\Requests\ProductSearchRequest;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Brand;
+use App\Models\User;
 
 class MainController extends Controller
 {
@@ -215,26 +216,78 @@ class MainController extends Controller
 
     public function getCart(Request $request)
     {
+
         $cart = session()->get('cart');
         $total = session()->get('cart.total', 0);
-
         if (!empty($cart) && ($total > 0)) {
+
             $total = session()->get('cart.total', 0);
             $total = str_replace(',', '', $total);
             $total = (float)$total;
 
             $tax = $total * 0.21;
             $cart['total'] = number_format($total, 2, '.', '');
-            $cart['tax'] = number_format($tax, 2, '.', '');
+            $cart['tax'] = (float)number_format($tax, 2, '.', '');
 
-            session()->put('cart.tax', $cart['tax']);
-            session()->put('cart.total', $cart['total']);
+
+            if ($cart['total'] >= 1000) {
+                $cart['shipping'] = 0;
+                $cart["subtotal"] = $cart['total'] - $cart['tax'];
+            } else {
+                $shipping = $total * 0.1;
+                $cart['shipping'] =  (float)$shipping;
+                $cart['total'] = $cart['total'] + $cart['shipping'];
+                $subtotal = $cart['total'] - $cart['tax'];
+                $cart['subtotal'] = (float)number_format($subtotal, 2, '.', '');
+            }
+
+            return $cart;
+        }
+
+        return $cart;
+    }
+
+    public function getCheckout(Request $request)
+    {
+        $cart = $this->getCart($request);
+
+        if (!empty($cart) && ($cart['total'] > 0)) {
 
             return view('checkout', [
                 'cart' => $cart,
             ]);
         } else {
 
+            $searchParameters = $this->getSearchParameters();
+
+            return redirect()->route('main')
+                ->with('search', $searchParameters);
+        }
+    }
+
+    public function getPaymentDetails(Request $request)
+    {
+        $user = User::find(auth()->user()->id);
+        $orders = $user->orders()->get();
+
+        $unPaidOrders = $orders->filter(function ($order) {
+            return $order->payment->status == 'Processing';
+        });
+
+        $unPaidOrder = $unPaidOrders->filter(function ($order) {
+            return $order->payment->id == session('payment_id');
+        });
+
+        if ($unPaidOrder->isNotEmpty()) {
+            $cart = $this->getCart($request);
+            $total = $cart['total'];
+
+            if (!empty($cart) && ($total > 0)) {
+                return view("payment", [
+                    'cart' => $cart,
+                ]);
+            }
+        } else {
             $searchParameters = $this->getSearchParameters();
 
             return redirect()->route('main')

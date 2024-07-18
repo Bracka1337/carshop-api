@@ -503,7 +503,8 @@
                             <dl class="flex items-center justify-between gap-4 py-3">
                                 <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Subtotal</dt>
                                 <dd>
-                                    ${{ number_format((float) str_replace(',', '', $cart['total']) - (float) str_replace(',', '', $cart['tax']), 2) }}
+                                    <span class="text-base font-medium text-gray-900 dark:text-white">${{ $cart['subtotal'] }}
+                                    </span>
                                 </dd>
                             </dl>
 
@@ -512,6 +513,20 @@
                                 <dd class="text-base font-medium text-gray-900 dark:text-white">${{ $cart['tax'] }}
                                 </dd>
                             </dl>
+
+                            @if(isset($cart['shipping']) && $cart['shipping'] > 0)
+                             <dl class="flex items-center justify-between gap-4 py-3">
+                                <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Shipping</dt>
+                                <dd class="text-base font-medium text-gray-900 dark:text-white">${{ $cart['shipping'] }}
+                                </dd>
+                            </dl>
+                            @else
+                            <dl class="flex items
+                            -center justify-between gap-4 py-3">
+                                <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Shipping</dt>
+                                <dd class="text-base font-medium text-emerald-500 dark:text-white">Free</dd>
+                            </dl>
+                            @endif
 
                             <dl class="flex items-center justify-between gap-4 py-3">
                                 <dt class="text-base font-bold text-gray-900 dark:text-white">Total</dt>
@@ -533,9 +548,6 @@
                 </div>
             </div>
         </form>
-    @else
-        <div class="flex items-center justify-center h-96">
-            <p class="text-gray-500 dark:text-gray-400">Your cart is empty</p>
-        </div>
+    
     @endif
 </section>
