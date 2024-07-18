@@ -84,7 +84,7 @@
                             </div>
                             <div class="flex items-center justify-end">
                                 <p class="font-medium text-lg leading-7 text-indigo-600">
-                                    ${{ $productQuantity->quantity * $productQuantity->product->price }}</p>
+                                    ${{ number_format($productQuantity->quantity * $productQuantity->product->price-$productQuantity->product->price*0.21, 2) }}</p>
                             </div>
                         </div>
                     </div>

@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             'email'=> 'default@eastsquad.com',
             'password'=> Hash::make('default'),
             'phone_nr' => 12345678,
-            'role' => 'Default',
+            'role' => 'User',
         ]);
 
         \App\Models\User::factory()

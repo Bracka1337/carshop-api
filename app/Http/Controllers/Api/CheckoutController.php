@@ -17,9 +17,7 @@ class CheckoutController extends Controller
     {
 
 
-        $validated = $request->validated([
-            
-        ]);
+        $validated = $request->validated([]);
 
         if ($validated) {
             try {
@@ -93,5 +91,18 @@ class CheckoutController extends Controller
                 'message' => 'Payment details validation failed',
             ], 400);
         }
+    }
+
+    public function finalise()
+    {
+        if (session('payment_id') !== null) {
+
+            session()->forget('cart');
+            session()->forget('order_id');
+            session()->forget('payment_id');
+            return view('paymentSuccess');
+        }
+
+        return redirect()->route('main');
     }
 }

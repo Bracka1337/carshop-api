@@ -13,8 +13,8 @@
                                 displayed on card)* </label>
                             <input type="text" id="full_name" name="full_name" pattern="[A-Za-z\s]+"
                                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
-                                placeholder="Janis Berzins" title="Full name should only contain letters."
-                                oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');" required />
+                                oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"
+                                placeholder="Janis Berzins" title="Full name should only contain letters." required />
                             @error('full_name')
                                 <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                             @enderror
@@ -25,8 +25,8 @@
                                 number* </label>
                             <input type="text" id="card-number-input" name="card_number"
                                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pe-10 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
-                                placeholder="xxxx xxxx xxxx xxxx" pattern="^\d{4}\s\d{4}\s\d{4}\s\d{4}$"
-                                maxlength="19" required/>
+                                placeholder="xxxx xxxx xxxx xxxx" pattern="^\d{4}\s\d{4}\s\d{4}\s\d{4}$" maxlength="19"
+                                required />
                             @error('card_number')
                                 <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                             @enderror
@@ -54,7 +54,8 @@
                                 class="mb-2 flex items-center gap-1 text-sm font-medium text-gray-900">CVV*</label>
                             <input type="text" name="cvv" id="cvv-input" pattern="\d{3}"
                                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
-                                placeholder="•••" maxlength="3" title="Please enter exactly 3 digits for CVV." required />
+                                placeholder="•••" maxlength="3" title="Please enter exactly 3 digits for CVV."
+                                required />
                             @error('cvv')
                                 <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                             @enderror
@@ -66,29 +67,37 @@
                         now</button>
                 </form>
 
+
                 <div class="mt-6 grow sm:mt-8 lg:mt-0">
                     <div class="space-y-4 rounded-lg border border-gray-100 bg-gray-50 p-6">
                         <div class="space-y-2">
                             <dl class="flex items-center justify-between gap-4">
                                 <dt class="text-base font-normal text-gray-500">Original price</dt>
                                 <dd class="text-base font-medium text-gray-900">
-                                    ${{ session('cart.total') - session('cart.tax') }}</dd>
+                                    ${{ $cart['subtotal'] }}</dd>
                             </dl>
-
-                            {{-- <dl class="flex items-center justify-between gap-4">
-                                <dt class="text-base font-normal text-gray-500">Savings</dt>
-                                <dd class="text-base font-medium text-green-500">-$299.00</dd>
-                            </dl> --}}
 
                             <dl class="flex items-center justify-between gap-4">
                                 <dt class="text-base font-normal text-gray-500">Tax</dt>
-                                <dd class="text-base font-medium text-gray-900">${{ session('cart.tax') }}</dd>
+                                <dd class="text-base font-medium text-gray-900">${{ $cart['tax'] }}</dd>
                             </dl>
                         </div>
+                        @if (isset($cart['shipping']) && $cart['shipping'] > 0)
+                            <dl class="flex items-center justify-between gap-4">
+                                <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Shipping</dt>
+                                <dd class="text-base font-medium text-gray-900 dark:text-white">${{ $cart['shipping'] }}
+                                </dd>
+                            </dl>
+                        @else
+                            <dl class="flex items-center justify-between gap-4">
+                                <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Shipping</dt>
+                                <dd class="text-base font-medium text-emerald-500 dark:text-white">Free</dd>
+                            </dl>
+                        @endif
 
                         <dl class="flex items-center justify-between gap-4 border-t border-gray-200 pt-2">
                             <dt class="text-base font-bold text-gray-900">Total</dt>
-                            <dd class="text-base font-bold text-gray-900">${{ session('cart.total') }}</dd>
+                            <dd class="text-base font-bold text-gray-900">${{ $cart['total'] }}</dd>
                         </dl>
                     </div>
 
