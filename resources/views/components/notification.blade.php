@@ -1,5 +1,5 @@
 @if (session('success'))
-<div class="flex flex-col gap-2 w-52 sm:w-60 text-[10px] sm:text-xs z-50" id="success-message">
+<div class="absolute sm:relative w-52 sm:w-60 text-[10px] sm:text-xs z-50" id="success-message">
     <div class="succsess-alert cursor-default flex items-center justify-between w-full h-10 rounded-lg bg-indigo-600 px-[10px]">
         <div class="flex items-center gap-2">
             <div class="flex items-center justify-center w-6 h-6 text-white bg-indigo-600 rounded-lg">
