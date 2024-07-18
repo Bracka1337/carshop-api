@@ -140,11 +140,13 @@ document.addEventListener("DOMContentLoaded", function () {
   //shopping cart open button
 
   const openButton = document.getElementById("open-button");
-  openButton.addEventListener("click", (event) => {
-    event.preventDefault();
-    modal.classList.remove("hidden");
-    shoppingCart.classList.remove("hidden");
-  });
+  if (openButton) {
+    openButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      modal.classList.remove("hidden");
+      shoppingCart.classList.remove("hidden");
+    });
+  }
 
   //--
 
@@ -169,8 +171,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // window.onload = function() {
   const dynamicWords = ["cars", "enthusiasts", "magebit", "everyone"];
 
-  // Retrieve the current word index from localStorage, default to 0 if not found
-  // Retrieve the current word index from localStorage, default to 0 if not found
+// Retrieve the current word index from localStorage, default to 0 if not found
   let currentWordIndex =
     parseInt(localStorage.getItem("dynamicWordIndex")) || 0;
   const targetElement = document.querySelector(".Banner__title--second");
@@ -229,39 +230,41 @@ document.addEventListener("DOMContentLoaded", function () {
     // Initialize the dynamic word
     updateDynamicWord();
   }
+ 
+        //dropdown button in navbar
+    
+        const button = document.getElementById('menu-button');
+        const sidebar = document.getElementById('sidebar-menu');
+        const sidebarModal = document.getElementById('sidebar-modal');
+    // sidebar
+    if (button) {
+      button.addEventListener('click', () => {
+        const expanded = button.getAttribute('aria-expanded') === 'true' || false;
+        button.setAttribute('aria-expanded', !expanded);
+        sidebarModal.classList.toggle('hidden');
+        if (!sidebarModal.classList.contains('hidden')) {
+            sidebarModal.classList.remove('-translate-x-full');
+        } else {
+            sidebarModal.classList.add('-translate-x-full');
+        }
 
-  //dropdown button in navbar
+        sidebarModal.addEventListener('click', (event) => {
+            if (!sidebar.contains(event.target)) {
+                button.setAttribute('aria-expanded', 'false');
+                sidebarModal.classList.add('hidden');
+                sidebarModal.classList.add('-translate-x-full');
+            }
+        });
 
-  const button = document.getElementById("menu-button");
-  const sidebar = document.getElementById("sidebar-menu");
-  const sidebarModal = document.getElementById("sidebar-modal");
-  // sidebar
-  button.addEventListener("click", () => {
-    const expanded = button.getAttribute("aria-expanded") === "true" || false;
-    button.setAttribute("aria-expanded", !expanded);
-    sidebarModal.classList.toggle("hidden");
-    if (!sidebarModal.classList.contains("hidden")) {
-      sidebarModal.classList.remove("-translate-x-full");
-    } else {
-      sidebarModal.classList.add("-translate-x-full");
+        // close sideBar modal
+        const closeButton = document.getElementById('close-button');
+
+        closeButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            sidebarModal.classList.add('hidden');
+        });
+      });
     }
-
-    sidebarModal.addEventListener("click", (event) => {
-      if (!sidebar.contains(event.target)) {
-        button.setAttribute("aria-expanded", "false");
-        sidebarModal.classList.add("hidden");
-        sidebarModal.classList.add("-translate-x-full");
-      }
-    });
-
-    // close sideBar modal
-    const closeButton = document.getElementById("close-button");
-
-    closeButton.addEventListener("click", (event) => {
-      event.preventDefault();
-      sidebarModal.classList.add("hidden");
-    });
-  });
 
   //Notification message
 
@@ -287,11 +290,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   const checkoutButton = document.getElementById("checkout");
-
-  checkoutButton.addEventListener("click", function (event) {
-    event.preventDefault();
-    window.location.href = "/checkout";
-  });
+  if (checkoutButton) {
+    checkoutButton.addEventListener("click", function (event) {
+      event.preventDefault();
+      window.location.href = "/checkout";
+    });
+  }
 
   //home button
 
@@ -305,7 +309,6 @@ document.addEventListener("DOMContentLoaded", function () {
   //         document.getElementById('homeButton').style.display = 'inline-block';
   //     }
   // });
-
   const removeButtons = document.querySelectorAll("#remove-item");
   const quantityInputs = document.querySelectorAll(".quantity-display");
   const emptyCartMessage = document.getElementById("empty-cart-message");
@@ -449,7 +452,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   checkIfCartIsEmpty();
   calculateSubtotal();
-  updateCartCount();
+  if ( document.getElementById("cart-count")) {
+    updateCartCount();
+  }
 });
 
 const cardNumberInput = document.getElementById("card-number-input");
