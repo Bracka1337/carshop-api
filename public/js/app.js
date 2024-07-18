@@ -468,7 +468,6 @@ if (cardNumberInput) {
 
   });
 }
-
 document.getElementById('card-expiration-input').addEventListener('input', function(e) {
   let input = e.target.value;
   if (e.inputType === 'deleteContentBackward') {
@@ -497,3 +496,35 @@ function checkValue(str, max) {
   }
   return str;
 }
+
+window.onload = function() {
+  // Check if the banner has already been shown
+  if (!localStorage.getItem('cookieBannerShown')) {
+    setTimeout(function() {
+      const banner = document.getElementById('cookie-banner');
+      banner.classList.remove('opacity-0'); // Make the banner visible
+      banner.classList.add('opacity-100'); // Animate to full opacity
+    }, 3000); // Wait for 3 seconds
+
+    // Event listeners for buttons
+    document.getElementById('acceptButton').addEventListener('click', function() {
+      console.log('User accepted cookies.');
+      // Logic for accepting cookies
+      localStorage.setItem('cookie_consent', 'yes');
+      hideCookieBanner();
+    });
+
+    document.getElementById('declineButton').addEventListener('click', function() {
+      console.log('User declined cookies.');
+      // Logic for declining cookies
+      localStorage.setItem('cookie_consent', 'no');
+      hideCookieBanner();
+    });
+
+    function hideCookieBanner() {
+      const banner = document.getElementById('cookie-banner');
+      banner.style.display = 'none'; // Alternatively, you can use banner.classList.add('hidden');
+      localStorage.setItem('cookieBannerShown', 'true'); // Set the flag
+    }
+  }
+};
