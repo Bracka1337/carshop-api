@@ -20,18 +20,21 @@ class ProfileController extends Controller
     }
 
     private function calculateOrderCost($order)
-    {
-        $total = $order->productQuantities->sum(function ($productQuantity) {
-            return $productQuantity->quantity * $productQuantity->product->price;
-        });
+{
+    $total = $order->productQuantities->sum(function ($productQuantity) {
+        $quantity = floatval($productQuantity->quantity);
+        $price = floatval($productQuantity->product->price);
+        return $quantity * $price;
+    });
 
-        $tax = number_format($total * 0.21, 2);
-        $shippingFee = number_format($total * 0.001, 2);
+    $tax = $total * 0.21;
+    
+    $shippingFee = ($total <= 1000) ? $total * 0.001 : 0;
 
-        return [
-            'total' => number_format($total + $tax + $shippingFee, 2),
-            'tax' => $tax,
-            'shipping' => $shippingFee
-        ];
-    }
+    return [
+        'total' => number_format($total + $shippingFee, 2),
+        'tax' => number_format($tax, 2),
+        'shipping' => number_format($shippingFee, 2)
+    ];
+}
 }
