@@ -9,6 +9,11 @@
             </div>
             <div class="text-sm text-white">{{ session('success') }}</div>
         </div>
+        <button type="button" class="ml-auto flex-shrink-0 text-white focus:outline-none" onclick="this.parentElement.parentElement.remove()">
+            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
     </div>
 </div>
 @endif

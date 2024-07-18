@@ -42,6 +42,8 @@
                                 </div>
                                 <input datepicker datepicker-format="mm/yy" name="expiry_date"
                                     id="card-expiration-input" type="text"
+                                    pattern="^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$"
+                                    maxlength="5"
                                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 ps-9 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                                     placeholder="12/23" required />
                             </div>

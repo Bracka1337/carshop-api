@@ -466,13 +466,6 @@ if (cardNumberInput) {
 
     e.target.value = formattedValue;
 
-    // Check if the input matches the pattern
-    if (cardNumberInput.validity.patternMismatch) {
-      errorMessage.textContent =
-        "Please enter a valid card number format (xxxx xxxx xxxx xxxx).";
-    } else {
-      errorMessage.textContent = "";
-    }
   });
 }
 
