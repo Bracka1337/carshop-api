@@ -24,10 +24,6 @@ class ProductSearchRequest extends FormRequest
         return [
             'diameter' => 'sometimes|nullable|numeric',
             'width' => 'sometimes|nullable|numeric',
-            'et' => 'sometimes|nullable|numeric',
-            'cb' => 'sometimes|nullable|numeric',
-            'bolt' => 'sometimes|nullable|integer',
-            'bolt_diameter' => 'sometimes|nullable|numeric',
             'type' => 'sometimes|nullable|string',
             'brand' => 'sometimes|nullable|exists:brands,id',
             'price_from' => 'sometimes|nullable|numeric|min:0',

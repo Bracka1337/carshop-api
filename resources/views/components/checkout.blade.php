@@ -41,8 +41,6 @@
 
             <div class="mt-6 sm:mt-8 lg:flex lg:items-start lg:gap-12 xl:gap-16">
                 <div class="min-w-0 flex-1 space-y-8">
-
-
                     {{-- Order Summary --}}
                     <div class="space-y-4">
                         <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Delivery Details</h2>
@@ -494,9 +492,7 @@
                         @enderror
                     </div>
                 </div>
-
                 {{-- Cart sums Items --}}
-
                 <div class="mt-6 w-full space-y-6 sm:mt-8 lg:mt-0 lg:max-w-xs xl:max-w-md">
                     <div class="flow-root">
                         <div class="-my-3 divide-y divide-gray-200 dark:divide-gray-800">
