@@ -11,7 +11,7 @@
     <div class="flex w-full items-center justify-center mt-28 px-4">
         <form action="{{ route('main') }}" method="get"
             class="bg-white p-6 w-full rounded-lg shadow-lg grid grid-cols-1 gap-2 w-full max-w-6xl md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <div class="p-4">
+            {{-- <div class="p-4">
                 <label for="diameter" class="block mt-2 text-sm font-medium text-gray-900">Diameter</label>
                 <div class="flex">
                     <select id="diameter" name="diameter"
@@ -27,7 +27,9 @@
                         <p class="text-red-500 text-xs mt-1">{{ $errors->first('diameter') }}</p>
                     @endif
                 </div>
-            </div>
+            </div> --}}
+            {{-- <x-inputSelect name="diameter" :options="$diameter" :selected="request('diameter')" /> --}}
+            @include('components.inputSelect', ['name' => 'diameter', 'options' => $diameter, 'selected' => request('diameter')])
             <div class="p-4">
                 <label for="width" class="block mt-2 text-sm font-medium text-gray-900">Width</label>
                 <select id="width" name="width"
