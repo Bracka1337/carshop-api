@@ -142,11 +142,13 @@ document.addEventListener("DOMContentLoaded", function () {
   //shopping cart open button
 
   const openButton = document.getElementById("open-button");
-  openButton.addEventListener("click", (event) => {
-    event.preventDefault();
-    modal.classList.remove("hidden");
-    shoppingCart.classList.remove("hidden");
-  });
+  if (openButton) {
+    openButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      modal.classList.remove("hidden");
+      shoppingCart.classList.remove("hidden");
+    });
+  }
 
   // Update cart  on quantity change
   const quantityInputs = document.querySelectorAll(".quantity-display");
@@ -308,7 +310,6 @@ document.addEventListener("DOMContentLoaded", function () {
   // window.onload = function() {
   const dynamicWords = ["cars", "enthusiasts", "magebit", "everyone"];
 
-        // Retrieve the current word index from localStorage, default to 0 if not found
 // Retrieve the current word index from localStorage, default to 0 if not found
   let currentWordIndex =
   parseInt(localStorage.getItem("dynamicWordIndex")) || 0;
@@ -375,32 +376,34 @@ document.addEventListener("DOMContentLoaded", function () {
         const sidebar = document.getElementById('sidebar-menu');
         const sidebarModal = document.getElementById('sidebar-modal');
     // sidebar
-        button.addEventListener('click', () => {
-            const expanded = button.getAttribute('aria-expanded') === 'true' || false;
-            button.setAttribute('aria-expanded', !expanded);
-            sidebarModal.classList.toggle('hidden');
-            if (!sidebarModal.classList.contains('hidden')) {
-                sidebarModal.classList.remove('-translate-x-full');
-            } else {
+    if (button) {
+      button.addEventListener('click', () => {
+        const expanded = button.getAttribute('aria-expanded') === 'true' || false;
+        button.setAttribute('aria-expanded', !expanded);
+        sidebarModal.classList.toggle('hidden');
+        if (!sidebarModal.classList.contains('hidden')) {
+            sidebarModal.classList.remove('-translate-x-full');
+        } else {
+            sidebarModal.classList.add('-translate-x-full');
+        }
+
+        sidebarModal.addEventListener('click', (event) => {
+            if (!sidebar.contains(event.target)) {
+                button.setAttribute('aria-expanded', 'false');
+                sidebarModal.classList.add('hidden');
                 sidebarModal.classList.add('-translate-x-full');
             }
-    
-            sidebarModal.addEventListener('click', (event) => {
-                if (!sidebar.contains(event.target)) {
-                    button.setAttribute('aria-expanded', 'false');
-                    sidebarModal.classList.add('hidden');
-                    sidebarModal.classList.add('-translate-x-full');
-                }
-            });
-    
-            // close sideBar modal
-            const closeButton = document.getElementById('close-button');
-    
-            closeButton.addEventListener('click', (event) => {
-                event.preventDefault();
-                sidebarModal.classList.add('hidden');
-            });
         });
+
+        // close sideBar modal
+        const closeButton = document.getElementById('close-button');
+
+        closeButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            sidebarModal.classList.add('hidden');
+        });
+      });
+    }
 
   //Notification message
 
@@ -426,11 +429,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   
   const checkoutButton = document.getElementById("checkout");
-  
-  checkoutButton.addEventListener("click", function (event) {
-    event.preventDefault();
-    window.location.href = "/checkout";
-  });
+  if (checkoutButton) {
+    checkoutButton.addEventListener("click", function (event) {
+      event.preventDefault();
+      window.location.href = "/checkout";
+    });
+  }
 
   //home button
   

@@ -1,6 +1,6 @@
 
 @if (session('success'))
-<div class="flex flex-col gap-2 w-60 sm:w-60 text-[10px] sm:text-xs z-50" id="success-message" >
+<div class="flex flex-col gap-2 w-60 sm:w-60 text-[10px] sm:text-xs z-10" id="success-message" >
     <div
       class="succsess-alert cursor-default flex items-center justify-between w-full h-10 rounded-lg bg-indigo-600  px-[10px]"
     >

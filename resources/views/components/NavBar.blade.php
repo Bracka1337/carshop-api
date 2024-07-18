@@ -2,13 +2,13 @@
     <header class="relative bg-white">
         <p
             class="flex h-10 items-center justify-center bg-indigo-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
-            Get free delivery on orders over $100
+            Get free delivery on orders over $1000
         </p>
         <nav aria-label="Top" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="border-b border-gray-200">
                 <div class="flex h-16 items-center">
                     <!-- Dropdown Menu -->
-
+                    @if (Route::currentRouteName() !== 'checkout')
                     <div class="relative z-20 md:ml-0 lg:hidden " role="dialog" aria-modal="true">
 
                         <button type="button"
@@ -50,6 +50,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                     <!-- Logo -->
                     <div class="ml-4 flex lg:ml-0 ">
                         <a href="/">
@@ -115,9 +116,6 @@
                                     </span>
                                     <span class="sr-only">items in cart, view bag</span>
                                 </button>
-                                
-                              
-
                             </div>
                         @endif
                     </div>
