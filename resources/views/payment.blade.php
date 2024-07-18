@@ -1,3 +1,3 @@
 <x-app-layout>
-    @include('components.payment')
+    @include('components.payment' , ['cart' => $cart])
 </x-app-layout>
