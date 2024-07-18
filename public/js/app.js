@@ -508,7 +508,7 @@ window.onload = function() {
       const banner = document.getElementById('cookie-banner');
       banner.classList.remove('opacity-0'); // Make the banner visible
       banner.classList.add('opacity-100'); // Animate to full opacity
-    }, 3000); // Wait for 3 seconds
+    }, 1000); // Wait for 3 seconds
 
     // Event listeners for buttons
     document.getElementById('acceptButton').addEventListener('click', function() {
