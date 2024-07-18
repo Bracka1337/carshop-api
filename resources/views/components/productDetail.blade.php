@@ -39,9 +39,6 @@
                     <img src="{{asset('images/arrowLeft.svg')}}" alt="" class="w-5 h-5 text-gray-600">
                 </button>
                 <button type="button" class="absolute top-1/2 right-3 z-40 flex items-center justify-center w-10 h-10 bg-gray-200/50 rounded-full hover:bg-gray-300 focus:outline-none transition" data-carousel-next>
-                    {{-- <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg> --}}
                     <img src="{{asset('images/arrowRight.svg')}}" alt="" class="w-5 h-5 text-gray-600">
                 </button>
             </div>

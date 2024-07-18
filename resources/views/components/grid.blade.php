@@ -1,5 +1,3 @@
-@props(['products'])
-
 <div class="relative flex min-h-96 flex-col justify-center overflow-hidden bg-gray-100 py-6 sm:py-12">
     <div class="mx-auto max-w-screen-xl px-4 w-full">
         @if ($products->isEmpty())
@@ -8,9 +6,9 @@
             </div>
         @else
             <h2 class="mb-4 font-bold text-xl text-gray-600">Product list:</h2>
-            <div class="grid w-full sm:grid-cols-2 xl:grid-cols-4 gap-6">
-                @foreach ($products as $product)
-                    <div class="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 w-full md:w-11/12">
+            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+                @foreach ($products as $index => $product)
+                    <div class="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                         <div class="flex flex-col hover:cursor-pointer" id="product" product-id="{{ $product->id }}">
                             <div class="h-auto overflow-hidden">
                                 <div class="h-44 overflow-hidden relative">
@@ -29,7 +27,6 @@
                             <a href="{{ route('products.addToCart', $product->id) }}" class="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-indigo-600 uppercase align-middle transition-all rounded-full select-none hover:bg-indigo-600/10 active:bg-indigo-600/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">Add to cart</a>
                         </div>
                     </div>
-                    <x-productDetail :product="$product"/>
                 @endforeach
             </div>
             <div class="mt-8 flex justify-center">
