@@ -27,9 +27,9 @@ class ProfileController extends Controller
             return $quantity * $price;
         });
 
-        $tax = $total * 0.21;
-
-        $shippingFee = ($total <= 1000) ? $total * 0.001 : 0;
+    $tax = $total * 0.21;
+    
+    $shippingFee = ($total <= 1000) ? $total * 0.02 : 0;
 
         return [
             'total' => number_format($total + $shippingFee, 2),
