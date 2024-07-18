@@ -23,7 +23,7 @@ php artisan db:seed
 php artisan serve
 ```
 
-## Tailwind part
+## Tailwind part 
 
 ### install tailwind
 
@@ -31,8 +31,14 @@ php artisan serve
 npm i
 ```
 
-### run dev
+### run dev (for development)
 
 ```
 npm run dev
+```
+
+### run build (for prod)
+
+```
+npm run build
 ```
