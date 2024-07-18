@@ -309,28 +309,6 @@ document.addEventListener("DOMContentLoaded", function () {
   //         document.getElementById('homeButton').style.display = 'inline-block';
   //     }
   // });
-
-  const cardNumberInput = document.getElementById("card-number-input");
-  const errorMessage = document.getElementById("error-message");
-  if (cardNumberInput) {
-    cardNumberInput.addEventListener("input", function (e) {
-      let value = e.target.value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
-      let formattedValue = value.replace(/(.{4})/g, "$1 ").trim();
-
-      e.target.value = formattedValue;
-
-      // Check if the input matches the pattern
-      if (cardNumberInput.validity.patternMismatch) {
-        errorMessage.textContent =
-          "Please enter a valid card number format (xxxx xxxx xxxx xxxx).";
-      } else {
-        errorMessage.textContent = "";
-      }
-    });
-  }
-
-  // Update cart  on quantity change
-
   const removeButtons = document.querySelectorAll("#remove-item");
   const quantityInputs = document.querySelectorAll(".quantity-display");
   const emptyCartMessage = document.getElementById("empty-cart-message");
@@ -478,3 +456,22 @@ document.addEventListener("DOMContentLoaded", function () {
     updateCartCount();
   }
 });
+
+const cardNumberInput = document.getElementById("card-number-input");
+const errorMessage = document.getElementById("error-message");
+if (cardNumberInput) {
+  cardNumberInput.addEventListener("input", function (e) {
+    let value = e.target.value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
+    let formattedValue = value.replace(/(.{4})/g, "$1 ").trim();
+
+    e.target.value = formattedValue;
+
+    // Check if the input matches the pattern
+    if (cardNumberInput.validity.patternMismatch) {
+      errorMessage.textContent =
+        "Please enter a valid card number format (xxxx xxxx xxxx xxxx).";
+    } else {
+      errorMessage.textContent = "";
+    }
+  });
+}
