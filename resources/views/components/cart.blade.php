@@ -8,14 +8,11 @@
                             <div class="flex items-start justify-between">
                                 <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">Shopping cart</h2>
                                 <div class="ml-3 flex h-7 items-center">
-                                    <button id="cart-close-button" type="button"
-                                        class="relative -m-2 p-2 text-gray-400 hover:text-gray-500">
+                                    <button id="cart-close-button" type="button" class="relative -m-2 p-2 text-gray-400 hover:text-gray-500">
                                         <span class="absolute -inset-0.5"></span>
                                         <span class="sr-only">Close panel</span>
-                                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                            stroke="currentColor" aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M6 18L18 6M6 6l12 12" />
+                                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                                         </svg>
                                     </button>
                                 </div>
@@ -28,65 +25,45 @@
                                             @foreach (session('cart') as $id => $details)
                                                 @if (is_array($details))
                                                     <li class="flex py-6 cart-item" data-id="{{ $id }}">
-                                                        <div
-                                                            class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                                            <img src="{{ asset('/storage/' . $details['image']) }}"
-                                                                class="w-full h-full object-center object-cover">
+                                                        <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                                                            <img src="{{ asset('/storage/' . $details['image']) }}" class="w-full h-full object-center object-cover">
                                                         </div>
                                                         <div class="ml-4 flex flex-1 flex-col">
                                                             <div>
-                                                                <div
-                                                                    class="flex justify-between text-base font-medium text-gray-900">
+                                                                <div class="flex justify-between text-base font-medium text-gray-900">
                                                                     <h3>
-                                                                        <a
-                                                                            href="#">{{ $details['title'] ?? 'N/A' }}</a>
+                                                                        <a href="#">{{ $details['title'] ?? 'N/A' }}</a>
                                                                     </h3>
-                                                                    <p class="ml-4 product-price"
-                                                                        data-id="{{ $id }}">
+                                                                    <p class="ml-4 product-price" data-id="{{ $id }}">
                                                                         ${{ $details['price'] ?? 'N/A' }}
                                                                     </p>
                                                                 </div>
-                                                                <p class="mt-1 text-sm text-gray-500">
-                                                                    {{ $details['brand'] ?? 'N/A' }}</p>
+                                                                <p class="mt-1 text-sm text-gray-500">{{ $details['brand'] ?? 'N/A' }}</p>
                                                             </div>
                                                             <div class="flex flex-1 items-end justify-between text-sm">
-                                                                <div
-                                                                    class="flex flex-1 items-end justify-between text-sm">
+                                                                <div class="flex flex-1 items-end justify-between text-sm">
                                                                     <div class="flex items-center w-full gap-4">
                                                                         <div class="quantity-control flex items-center">
-                                                                            <button type="button"
-                                                                                class="decrease-quantity bg-gray-200 hover:bg-gray-300 rounded-md px-2 py-1"
-                                                                                data-id="{{ $id }}">-</button>
-                                                                            <div id="quantity-{{ $id }}"
-                                                                                class="quantity-display text-gray-500 border-gray-300 rounded-md w-12 text-center">
+                                                                            <button type="button" class="decrease-quantity bg-gray-200 hover:bg-gray-300 rounded-md px-2 py-1" data-id="{{ $id }}">-</button>
+                                                                            <div id="quantity-{{ $id }}" class="quantity-display text-gray-500 border-gray-300 rounded-md w-12 text-center">
                                                                                 {{ $details['quantity'] ?? 1 }}
                                                                             </div>
-                                                                            <button type="button"
-                                                                                class="increase-quantity bg-gray-200 hover:bg-gray-300 rounded-md px-2 py-1"
-                                                                                data-id="{{ $id }}">+</button>
+                                                                            <button type="button" class="increase-quantity bg-gray-200 hover:bg-gray-300 rounded-md px-2 py-1" data-id="{{ $id }}">+</button>
                                                                         </div>
                                                                     </div>
-
-                                                                    <a id="remove-item"
-                                                                        href="{{ route('cart.remove', ['id' => $id]) }}"
-                                                                        data-id="{{ $id }}"
-                                                                        class="font-medium text-indigo-600 hover:text-indigo-500 ml-4">Remove</a>
+                                                                    <a id="remove-item" href="{{ route('cart.remove', ['id' => $id]) }}" data-id="{{ $id }}" class="font-medium text-indigo-600 hover:text-indigo-500 ml-4">Remove</a>
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                     </li>
                                                 @endif
                                             @endforeach
                                         </ul>
                                     </div>
                                 </div>
-
                             @endif
 
-                            <p class="mt-8 text-center text-lg font-semibold text-gray-600" id="empty-cart-message">
-                                Your cart is empty.
-                            </p>
+                            <p class="mt-8 text-center text-lg font-semibold text-gray-600" id="empty-cart-message">Your cart is empty.</p>
                         </div>
                         <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
                             <div class="flex justify-between text-base font-medium text-gray-900">
@@ -96,15 +73,13 @@
                             <p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                             @if (session('cart') && array_sum(array_column(session('cart'), 'quantity')) > 0)
                                 <div class="mt-6">
-                                    <a id="checkout" href='{{ route('checkout') }}'
-                                        class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Checkout</a>
+                                    <a id="checkout" href='{{ route('checkout') }}' class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Checkout</a>
                                 </div>
                             @endif
                             <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
                                 <p>
                                     or
-                                    <button id="continue-shopping" type="button"
-                                        class="font-medium text-indigo-600 hover:text-indigo-500">
+                                    <button id="continue-shopping" type="button" class="font-medium text-indigo-600 hover:text-indigo-500">
                                         Continue Shopping
                                         <span aria-hidden="true"> &rarr;</span>
                                     </button>

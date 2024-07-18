@@ -31,15 +31,10 @@ class MainController extends Controller
         $validatedRequest = $request->validated();
 
         $filters = [
-            'title' => 'like',
             'brand_id' => '=',
             'size' => '=',
             'diameter' => '=',
             'width' => '=',
-            'et' => '=',
-            'cb' => '=',
-            'bolt' => '=',
-            'bolt_diameter' => '=',
             'type' => '='
         ];
 
@@ -79,17 +74,14 @@ class MainController extends Controller
         $parameters = [
             'diameter' => 'diameter',
             'width' => 'width',
-            'et' => 'et',
-            'cb' => 'cb',
-            'bolt' => 'bolt',
             'bolt_diameter' => 'bolt_diameter',
-            'type' => 'type'
         ];
 
         $searchParameters = array_map(function($param) {
             return Product::select($param)->where($param, '>', 0)->distinct()->get()->sortBy($param);
         }, $parameters);
 
+        $searchParameters['type'] = Product::select('type')->distinct()->get()->sortBy('type');
         $searchParameters['brands'] = Brand::select('id', 'title')->get()->sortBy('title');
         $searchParameters['priceRange'] = [
             'min' => Product::min('price'),

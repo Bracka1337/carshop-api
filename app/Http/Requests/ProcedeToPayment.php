@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\AlphaOnly;
 use App\Rules\NumericOnly;
+use App\Rules\PhoneNumber;
 class ProcedeToPayment extends FormRequest
 {
     /**
@@ -31,7 +32,7 @@ class ProcedeToPayment extends FormRequest
             'addr_line_1' => 'required|string|max:255',
             'payment_method' => 'required|string|max:255',
             'delivery_method' => 'required|string|max:255',
-            'phone' => ['required', 'string', 'max:20', new NumericOnly],
+            'phone' => ['required', 'string', 'max:15', new PhoneNumber],
             'm_name' => 'nullable|string|max:255',
             'addr_line_2' => 'nullable|string|max:255',
             'company_email' => 'nullable|email|max:255',
