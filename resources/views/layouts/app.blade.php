@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css','resources/js/app.js'])
     
     <title>Carshop</title>
     {{-- <link rel="icon" href="/public/favicon/favicon.svg" sizes="16x16" type="image/x-icon" > --}}
@@ -17,6 +17,7 @@
     <!-- Styles & Scripts -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script> --}}
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
@@ -26,7 +27,7 @@
       
 
         <!-- Page Content -->
-        <main>    
+        <main>
             @include('components.NavBar')
 
             @if (Route::currentRouteName() == 'main')
@@ -44,6 +45,5 @@
            
     </div>
     @include('components.footer')
-    <script src="https://unpkg.com/flowbite@1.4.0/dist/flowbite.js"></script>
 </body>
 </html>

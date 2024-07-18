@@ -74,7 +74,6 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                     </li>
                                                 @endif
                                             @endforeach
