@@ -250,9 +250,8 @@ class MainController extends Controller
     public function getCheckout(Request $request)
     {
         $cart = $this->getCart($request);
-        $total = $cart['total'];
 
-        if (!empty($cart) && ($total > 0)) {
+        if (!empty($cart) && ($cart['total'] > 0)) {
 
             return view('checkout', [
                 'cart' => $cart,
