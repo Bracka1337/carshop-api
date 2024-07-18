@@ -98,7 +98,7 @@
                                 @endauth
                             </div>
                         @endif
-                        @if (Route::currentRouteName() !== 'checkout')
+                        @if (Route::currentRouteName() !== 'checkout' && Route::currentRouteName() !== 'paymentSuccess' && Route::currentRouteName() !== 'payment-details')
                             <div class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                                 <span class="h-6 w-px bg-gray-200" aria-hidden="true"></span>
                             </div>
