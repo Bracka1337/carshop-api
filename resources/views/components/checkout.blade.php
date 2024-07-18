@@ -41,8 +41,6 @@
 
             <div class="mt-6 sm:mt-8 lg:flex lg:items-start lg:gap-12 xl:gap-16">
                 <div class="min-w-0 flex-1 space-y-8">
-
-
                     {{-- Order Summary --}}
                     <div class="space-y-4">
                         <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Delivery Details</h2>
@@ -344,8 +342,8 @@
                                     <div class="relative w-full">
                                         <input type="tel" id="phone-input" name="phone"
                                             class="z-20 block w-full rounded-e-lg border border-s-0 border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:border-s-gray-700 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500"
-                                            inputmode="numeric" pattern="[0-9]{7,20}"
-                                            title="Phone number should be numeric and between 7 to 20 digits."
+                                            inputmode="numeric" pattern="[0-9]{7,16}"
+                                            title="Phone number should be numeric and between 7 to 16 digits."
                                             placeholder="29227648" required
                                             oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
                                         @error('phone')
@@ -494,9 +492,7 @@
                         @enderror
                     </div>
                 </div>
-
                 {{-- Cart sums Items --}}
-
                 <div class="mt-6 w-full space-y-6 sm:mt-8 lg:mt-0 lg:max-w-xs xl:max-w-md">
                     <div class="flow-root">
                         <div class="-my-3 divide-y divide-gray-200 dark:divide-gray-800">

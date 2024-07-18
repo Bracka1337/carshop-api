@@ -16,10 +16,6 @@ class Product_quantity extends Model
         'product_id',
     ];
 
-    // public function products()
-    // {
-    //     return $this->belongsTo(Product::class);
-    // }
 
     public function product()
     {
