@@ -64,9 +64,10 @@ class OrderController extends Controller
         });
 
         $tax = $total * 0.21;
-
-        $shippingFee = ($total <= 1000) ? $total * 0.001 : 0;
-
+        
+        // Only apply shipping fee if total is less than or equal to $1000
+        $shippingFee = ($total <= 1000) ? $total * 0.02 : 0;
+    
         return [
             'total' => number_format($total + $shippingFee, 2),
             'tax' => number_format($tax, 2),
