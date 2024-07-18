@@ -10,61 +10,57 @@ use App\Models\Delivery_details;
 use App\Models\Product_quantity;
 use App\Models\Payment;
 
-
 class CheckoutController extends Controller
 {
     public function proceedToPayment(ProcedeToPayment $request)
     {
-
-
-        $validated = $request->validated([]);
+        $validated = $request->validated();
 
         if ($validated) {
             try {
                 $user = auth()->user();
 
-                $deliveryDetails = new Delivery_details();
-                $deliveryDetails->f_name = $validated['f_name'];
-                $deliveryDetails->m_name = $validated['m_name'];
-                $deliveryDetails->l_name = $validated['l_name'];
-                $deliveryDetails->addr_line_1 = $validated['addr_line_1'] . ', ' . $validated['city'];
-                $deliveryDetails->addr_line_2 = $validated['addr_line_2'];
-                $deliveryDetails->country = $validated['country'];
-                $deliveryDetails->company_email = $validated['company_email'];
-                $deliveryDetails->company_name = $validated['company_name'];
-                $deliveryDetails->company_reg_nr = $validated['vat_number'];
-                $deliveryDetails->payment_method = $validated['payment_method'];
-                $deliveryDetails->delivery_method = $validated['delivery_method'];
+                $deliveryDetails = new Delivery_details([
+                    'f_name' => $validated['f_name'],
+                    'm_name' => $validated['m_name'],
+                    'l_name' => $validated['l_name'],
+                    'addr_line_1' => $validated['addr_line_1'] . ', ' . $validated['city'],
+                    'addr_line_2' => $validated['addr_line_2'],
+                    'country' => $validated['country'],
+                    'company_email' => $validated['company_email'],
+                    'company_name' => $validated['company_name'],
+                    'company_reg_nr' => $validated['vat_number'],
+                    'payment_method' => $validated['payment_method'],
+                    'delivery_method' => $validated['delivery_method'],
+                ]);
 
-                $payment = new Payment();
-                $payment->status = 'Processing';
-                $payment->date = now();
+                $payment = new Payment([
+                    'status' => 'Processing',
+                    'date' => now(),
+                ]);
 
-                $order = new Order();
-                $order->status = 'Processing';
-                $order->date = now();
-                $order->user_id = $user->id;
+                $order = new Order([
+                    'status' => 'Processing',
+                    'date' => now(),
+                    'user_id' => $user->id,
+                ]);
 
                 $cartItems = session('cart');
 
-                $productQuantities = [];
-                foreach ($cartItems as $productId => $item) {
-                    if ($productId === 'total' || $productId === 'tax') {
-                        continue;
-                    } else {
-                        $productQuantities[] = new Product_quantity([
+                $productQuantities = collect($cartItems)
+                    ->except(['total', 'tax'])
+                    ->map(function ($item, $productId) {
+                        return new Product_quantity([
                             'quantity' => (int)$item['quantity'],
                             'product_id' => $productId,
                         ]);
-                    }
-                }
+                    })->all();
 
                 $deliveryDetails->save();
                 $payment->save();
 
                 $order->delivery_details_id = $deliveryDetails->id;
                 $order->payment_id = $payment->id;
-
                 $order->save();
 
                 foreach ($productQuantities as $productQuantity) {
@@ -75,10 +71,10 @@ class CheckoutController extends Controller
                 session([
                     'order_id' => $order->id,
                     'payment_id' => $payment->id,
-                    'delivery_details_id' => $deliveryDetails->id
+                    'delivery_details_id' => $deliveryDetails->id,
                 ]);
 
-                return redirect()->route('payment-details')->with('success', '');
+                return redirect()->route('payment-details')->with('success', 'Order placed successfully!');
             } catch (\Exception $e) {
                 return response()->json([
                     'status' => 'error',
@@ -95,11 +91,8 @@ class CheckoutController extends Controller
 
     public function finalise()
     {
-        if (session('payment_id') !== null) {
-
-            session()->forget('cart');
-            session()->forget('order_id');
-            session()->forget('payment_id');
+        if (session('payment_id') && session('payment_confirmed')) {
+            session()->forget(['cart', 'order_id', 'payment_id', 'delivery_details_id', 'payment_confirmed']);
             return view('paymentSuccess');
         }
 
