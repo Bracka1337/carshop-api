@@ -46,9 +46,6 @@ class FakePaymentController extends Controller
                     $payment->save();
                     $order->save();
 
-                    session()->forget('cart');
-                    session()->forget('order_id');
-                    session()->forget('payment_id');
 
                     return redirect()->route('paymentSuccess')->with('success', 'Payment successful. Your order is being processed.');
                 } else {

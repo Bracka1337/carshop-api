@@ -10,7 +10,6 @@
                     <!-- Dropdown Menu -->
 
                     <div class="relative z-20 md:ml-0 lg:hidden " role="dialog" aria-modal="true">
-
                         <button type="button"
                             class="justify-center w-full rounded-md px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
                             id="menu-button" aria-expanded="false" aria-haspopup="true">
@@ -75,7 +74,7 @@
                                 id="myOrdersButton">My orders</a> @endauth
                         </div>
                     </div>
-                    
+
                     <div class="ml-auto flex items-center">
                         <x-notification />
                         <!-- Cart display only if logged in -->
@@ -98,7 +97,9 @@
                                 @endauth
                             </div>
                         @endif
-                        @if (Route::currentRouteName() !== 'checkout' && Route::currentRouteName() !== 'paymentSuccess' && Route::currentRouteName() !== 'payment-details')
+                        @if (Route::currentRouteName() !== 'checkout' &&
+                                Route::currentRouteName() !== 'paymentSuccess' &&
+                                Route::currentRouteName() !== 'payment-details')
                             <div class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                                 <span class="h-6 w-px bg-gray-200" aria-hidden="true"></span>
                             </div>
@@ -110,14 +111,12 @@
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                                     </svg>
-                                    <span id="cart-count" class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
+                                    <span id="cart-count"
+                                        class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
                                         {{ session('cart') ? array_sum(array_column(session('cart'), 'quantity')) : 0 }}
                                     </span>
                                     <span class="sr-only">items in cart, view bag</span>
                                 </button>
-                                
-                              
-
                             </div>
                         @endif
                     </div>
