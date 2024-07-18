@@ -12,10 +12,15 @@ class MainController extends Controller
 {
     public function __invoke(ProductSearchRequest $request)
     {
-        $initialProducts = $this->filterProducts($request)
-            ->with("images")
-            ->paginate(12)
-            ->withQueryString();
+        // Check if there are any search parameters in the request
+        if ($request->all()) {
+            $initialProducts = $this->filterProducts($request)
+                ->with("images")
+                ->paginate(12)
+                ->withQueryString();
+        } else {
+            $initialProducts = Product::with('images')->paginate(12);
+        }
 
         $searchParameters = $this->getSearchParameters();
 
@@ -229,15 +234,11 @@ class MainController extends Controller
                 'cart' => $cart,
             ]);
         } else {
-            $initialProducts = $this->filterProducts($request)
-                ->with("images")
-                ->paginate(12)
-                ->withQueryString();
+
             $searchParameters = $this->getSearchParameters();
 
             return redirect()->route('main')
-                ->with('search', $searchParameters)
-                ->with('initialProducts', $initialProducts);
+                ->with('search', $searchParameters);
         }
     }
 }

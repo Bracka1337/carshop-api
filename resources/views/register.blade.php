@@ -4,16 +4,10 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         @vite('resources/css/app.css')
-         <title>Register</title>
-
+        <title>Register</title>
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-        
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-        
-
-
     </head>
     <body class="antialiased bg-gray-100 flex items-center justify-center flex-col min-h-screen">
         <div class="area">
@@ -266,8 +260,12 @@
     inputmode="numeric" pattern="[0-9]{7,20}"
     title="Phone number should be numeric and between 7 to 20 digits."
     oninput="this.value = this.value.replace(/[^0-9]/g, ''); updateFullPhoneNumber();" />
-                        
+    
                     </div>
+                    
+                </div>
+                <div id="phone-length" class="hidden text-xs text-gray-500 mt-1">
+                    Phone number too short.
                 </div>
             </div>
 
@@ -295,11 +293,13 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
     const passwordInput = document.getElementById('password');
+    const phoneLength = document.getElementById('phone-length');
     const passwordHint = document.getElementById('password-hint');
     const confirmPasswordInput = document.getElementById('password_confirmation');
     const passwordMatchHint = document.getElementById('password-match');
     const emailInput = document.getElementById('email');
     const emailHint = document.getElementById('email-hint');
+    const phoneInput = document.getElementById('phone-input');
     const submitButton = document.querySelector('button[type="submit"]');
     
     let passwordHasBeenFocused = false;
@@ -349,6 +349,17 @@
         }
     }
 
+    function validatePhoneNumber() {
+        const phoneNumber = phoneInput.value;
+        if(phoneNumber.length>=8){
+            phoneLength.classList.add('hidden');
+            return true;
+        }
+        phoneLength.classList.add('text-red-500');
+        phoneLength.classList.remove('hidden');
+        return false;
+    }
+
     function validateForm() {
         if (!passwordHasBeenFocused) {
             return; // Don't validate if password hasn't been focused yet
@@ -356,7 +367,8 @@
         
         const isPasswordValid = validatePassword();
         const isEmailValid = validateEmail();
-        submitButton.disabled = !(isPasswordValid && isEmailValid);
+        const isPhoneValid = validatePhoneNumber();
+        submitButton.disabled = !(isPasswordValid && isEmailValid && isPhoneValid);
     }
 
     passwordInput.addEventListener('focus', function() {
@@ -377,6 +389,7 @@
     passwordInput.addEventListener('input', validateForm);
     confirmPasswordInput.addEventListener('input', validateForm);
     emailInput.addEventListener('input', validateForm);
+    phoneInput.addEventListener('input', validateForm);
 
     // Initial state: disable submit button
     submitButton.disabled = true;
