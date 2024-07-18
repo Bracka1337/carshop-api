@@ -140,11 +140,13 @@ document.addEventListener("DOMContentLoaded", function () {
   //shopping cart open button
 
   const openButton = document.getElementById("open-button");
-  openButton.addEventListener("click", (event) => {
-    event.preventDefault();
-    modal.classList.remove("hidden");
-    shoppingCart.classList.remove("hidden");
-  });
+  if (openButton) {
+    openButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      modal.classList.remove("hidden");
+      shoppingCart.classList.remove("hidden");
+    });
+  }
 
   //--
 
@@ -169,8 +171,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // window.onload = function() {
   const dynamicWords = ["cars", "enthusiasts", "magebit", "everyone"];
 
-  // Retrieve the current word index from localStorage, default to 0 if not found
-  // Retrieve the current word index from localStorage, default to 0 if not found
+// Retrieve the current word index from localStorage, default to 0 if not found
   let currentWordIndex =
     parseInt(localStorage.getItem("dynamicWordIndex")) || 0;
   const targetElement = document.querySelector(".Banner__title--second");
@@ -229,39 +230,41 @@ document.addEventListener("DOMContentLoaded", function () {
     // Initialize the dynamic word
     updateDynamicWord();
   }
+ 
+        //dropdown button in navbar
+    
+        const button = document.getElementById('menu-button');
+        const sidebar = document.getElementById('sidebar-menu');
+        const sidebarModal = document.getElementById('sidebar-modal');
+    // sidebar
+    if (button) {
+      button.addEventListener('click', () => {
+        const expanded = button.getAttribute('aria-expanded') === 'true' || false;
+        button.setAttribute('aria-expanded', !expanded);
+        sidebarModal.classList.toggle('hidden');
+        if (!sidebarModal.classList.contains('hidden')) {
+            sidebarModal.classList.remove('-translate-x-full');
+        } else {
+            sidebarModal.classList.add('-translate-x-full');
+        }
 
-  //dropdown button in navbar
+        sidebarModal.addEventListener('click', (event) => {
+            if (!sidebar.contains(event.target)) {
+                button.setAttribute('aria-expanded', 'false');
+                sidebarModal.classList.add('hidden');
+                sidebarModal.classList.add('-translate-x-full');
+            }
+        });
 
-  const button = document.getElementById("menu-button");
-  const sidebar = document.getElementById("sidebar-menu");
-  const sidebarModal = document.getElementById("sidebar-modal");
-  // sidebar
-  button.addEventListener("click", () => {
-    const expanded = button.getAttribute("aria-expanded") === "true" || false;
-    button.setAttribute("aria-expanded", !expanded);
-    sidebarModal.classList.toggle("hidden");
-    if (!sidebarModal.classList.contains("hidden")) {
-      sidebarModal.classList.remove("-translate-x-full");
-    } else {
-      sidebarModal.classList.add("-translate-x-full");
+        // close sideBar modal
+        const closeButton = document.getElementById('close-button');
+
+        closeButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            sidebarModal.classList.add('hidden');
+        });
+      });
     }
-
-    sidebarModal.addEventListener("click", (event) => {
-      if (!sidebar.contains(event.target)) {
-        button.setAttribute("aria-expanded", "false");
-        sidebarModal.classList.add("hidden");
-        sidebarModal.classList.add("-translate-x-full");
-      }
-    });
-
-    // close sideBar modal
-    const closeButton = document.getElementById("close-button");
-
-    closeButton.addEventListener("click", (event) => {
-      event.preventDefault();
-      sidebarModal.classList.add("hidden");
-    });
-  });
 
   //Notification message
 
@@ -287,11 +290,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   const checkoutButton = document.getElementById("checkout");
-
-  checkoutButton.addEventListener("click", function (event) {
-    event.preventDefault();
-    window.location.href = "/checkout";
-  });
+  if (checkoutButton) {
+    checkoutButton.addEventListener("click", function (event) {
+      event.preventDefault();
+      window.location.href = "/checkout";
+    });
+  }
 
   //home button
 
@@ -305,7 +309,6 @@ document.addEventListener("DOMContentLoaded", function () {
   //         document.getElementById('homeButton').style.display = 'inline-block';
   //     }
   // });
-
   const removeButtons = document.querySelectorAll("#remove-item");
   const quantityInputs = document.querySelectorAll(".quantity-display");
   const emptyCartMessage = document.getElementById("empty-cart-message");
@@ -449,7 +452,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   checkIfCartIsEmpty();
   calculateSubtotal();
-  updateCartCount();
+  if ( document.getElementById("cart-count")) {
+    updateCartCount();
+  }
 });
 
 const cardNumberInput = document.getElementById("card-number-input");
@@ -461,13 +466,6 @@ if (cardNumberInput) {
 
     e.target.value = formattedValue;
 
-    // Check if the input matches the pattern
-    if (cardNumberInput.validity.patternMismatch) {
-      errorMessage.textContent =
-        "Please enter a valid card number format (xxxx xxxx xxxx xxxx).";
-    } else {
-      errorMessage.textContent = "";
-    }
   });
 
   // checkout
@@ -494,3 +492,67 @@ if (cardNumberInput) {
     }
   });
 }
+
+const cardExpirationInput = document.getElementById('card-expiration-input');
+if (cardExpirationInput) {
+  cardExpirationInput.addEventListener('input', function(e) {
+    let input = e.target.value;
+    if (e.inputType === 'deleteContentBackward') {
+        e.target.value = input;
+        return;
+    }
+  
+    if (/\D\/$/.test(input)) input = input.substr(0, input.length - 3);
+    const values = input.split('/').map(function(v) {
+        return v.replace(/\D/g, '');
+    });
+    if (values[0]) values[0] = checkValue(values[0], 12);
+    if (values[1]) values[1] = checkValue(values[1], 99);
+    const output = values.map(function(v, i) {
+        return v.length == 2 && i == 0 ? v + '/' : v;
+    });
+    e.target.value = output.join('').substr(0, 5);
+  });
+}
+
+function checkValue(str, max) {
+  if (str.charAt(0) !== '0' || str === '00') {
+      let num = parseInt(str);
+      if (isNaN(num) || num <= 0 || num > max) num = 1;
+      str = num > parseInt(max.toString().charAt(0)) && num.toString().length == 1 ?
+          '0' + num : num.toString();
+  }
+  return str;
+}
+
+window.onload = function() {
+  // Check if the banner has already been shown
+  if (!localStorage.getItem('cookieBannerShown')) {
+    setTimeout(function() {
+      const banner = document.getElementById('cookie-banner');
+      banner.classList.remove('opacity-0'); // Make the banner visible
+      banner.classList.add('opacity-100'); // Animate to full opacity
+    }, 3000); // Wait for 3 seconds
+
+    // Event listeners for buttons
+    document.getElementById('acceptButton').addEventListener('click', function() {
+      console.log('User accepted cookies.');
+      // Logic for accepting cookies
+      localStorage.setItem('cookie_consent', 'yes');
+      hideCookieBanner();
+    });
+
+    document.getElementById('declineButton').addEventListener('click', function() {
+      console.log('User declined cookies.');
+      // Logic for declining cookies
+      localStorage.setItem('cookie_consent', 'no');
+      hideCookieBanner();
+    });
+
+    function hideCookieBanner() {
+      const banner = document.getElementById('cookie-banner');
+      banner.style.display = 'none'; // Alternatively, you can use banner.classList.add('hidden');
+      localStorage.setItem('cookieBannerShown', 'true'); // Set the flag
+    }
+  }
+};
