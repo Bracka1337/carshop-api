@@ -344,8 +344,8 @@
                                     <div class="relative w-full">
                                         <input type="tel" id="phone-input" name="phone"
                                             class="z-20 block w-full rounded-e-lg border border-s-0 border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:border-s-gray-700 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500"
-                                            inputmode="numeric" pattern="[0-9]{7,20}"
-                                            title="Phone number should be numeric and between 7 to 20 digits."
+                                            inputmode="numeric" pattern="[0-9]{7,16}"
+                                            title="Phone number should be numeric and between 7 to 16 digits."
                                             placeholder="29227648" required
                                             oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
                                         @error('phone')

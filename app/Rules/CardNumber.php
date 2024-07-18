@@ -15,11 +15,9 @@ class CardNumber implements Rule
      */
     public function passes($attribute, $value)
     {
-        // Remove spaces from the value
-        $value = str_replace(' ', '', $value);
+         $value = str_replace(' ', '', $value);
         
-        // Check if the value is exactly 16 digits
-        return preg_match('/^\d{16}$/', $value);
+         return preg_match('/^\d{16}$/', $value);
     }
 
     /**
