@@ -159,15 +159,19 @@
                                         class="az-10 inline-flex items-center rounded-s-lg border border-gray-300 bg-gray-100 px-4 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-200 focus:outline-none focus:ring-4 focus:ring-gray-100 "
                                         type="button">
                                         <span class="inline-flex items-center" id="selected-country-code">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="me-2 h-4 w-4" fill="none" viewBox="0 0 200 100">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="me-2 h-4 w-4"
+                                                fill="none" viewBox="0 0 200 100">
                                                 <rect width="200" height="40" fill="#CF142B" />
                                                 <rect y="40" width="200" height="20" fill="#FFFFFF" />
                                                 <rect y="60" width="200" height="40" fill="#CF142B" />
                                             </svg>
                                             +371
                                         </span>
-                                        <svg class="-me-0.5 ms-2 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7" />
+                                        <svg class="-me-0.5 ms-2 h-4 w-4" aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-linecap="round"
+                                                stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7" />
                                         </svg>
                                     </button>
                                     <div id="dropdown-phone-3"
@@ -178,10 +182,13 @@
                                                     class="dropdown-item inline-flex w-full rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-indigo-100 hover:text-gray-900 "
                                                     role="menuitem" onclick="selectCountryCode('+371')">
                                                     <span class="inline-flex items-center">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="me-2 h-4 w-4" fill="none" viewBox="0 0 200 100">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="me-2 h-4 w-4"
+                                                            fill="none" viewBox="0 0 200 100">
                                                             <rect width="200" height="40" fill="#CF142B" />
-                                                            <rect y="40" width="200" height="20" fill="#FFFFFF" />
-                                                            <rect y="60" width="200" height="40" fill="#CF142B" />
+                                                            <rect y="40" width="200" height="20"
+                                                                fill="#FFFFFF" />
+                                                            <rect y="60" width="200" height="40"
+                                                                fill="#CF142B" />
                                                         </svg>
                                                         +371
                                                     </span>
@@ -193,35 +200,63 @@
                                                     role="menuitem" onclick="selectCountryCode('+370')">
                                                     <span class="inline-flex items-center">
                                                         <svg class="w-4 h-4 me-2" fill="none" viewBox="0 0 20 15">
-                                                            <rect width="19.6" height="14" y=".5" fill="#fff" rx="2" />
-                                                            <mask id="a" style="mask-type:luminance" width="20" height="15" x="0" y="0" maskUnits="userSpaceOnUse">
-                                                                <rect width="19.6" height="14" y=".5" fill="#fff" rx="2" />
+                                                            <rect width="19.6" height="14" y=".5" fill="#fff"
+                                                                rx="2" />
+                                                            <mask id="a" style="mask-type:luminance"
+                                                                width="20" height="15" x="0" y="0"
+                                                                maskUnits="userSpaceOnUse">
+                                                                <rect width="19.6" height="14" y=".5"
+                                                                    fill="#fff" rx="2" />
                                                             </mask>
                                                             <g mask="url(#a)">
-                                                                <path fill="#FFD700" fill-rule="evenodd" d="M0 5.167h19.6V.5H0v4.667z" clip-rule="evenodd" />
+                                                                <path fill="#FFD700" fill-rule="evenodd"
+                                                                    d="M0 5.167h19.6V.5H0v4.667z"
+                                                                    clip-rule="evenodd" />
                                                                 <g filter="url(#filter0_d_374_135180)">
-                                                                    <path fill="#006A4E" fill-rule="evenodd" d="M0 9.833h19.6V5.167H0v4.666z" clip-rule="evenodd" />
+                                                                    <path fill="#006A4E" fill-rule="evenodd"
+                                                                        d="M0 9.833h19.6V5.167H0v4.666z"
+                                                                        clip-rule="evenodd" />
                                                                 </g>
                                                                 <g filter="url(#filter1_d_374_135180)">
-                                                                    <path fill="#C1272D" fill-rule="evenodd" d="M0 14.5h19.6V9.833H0V14.5z" clip-rule="evenodd" />
+                                                                    <path fill="#C1272D" fill-rule="evenodd"
+                                                                        d="M0 14.5h19.6V9.833H0V14.5z"
+                                                                        clip-rule="evenodd" />
                                                                 </g>
                                                             </g>
                                                             <defs>
-                                                                <filter id="filter0_d_374_135180" width="19.6" height="4.667" x="0" y="5.167" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
-                                                                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                                                                    <feColorMatrix in="SourceAlpha" result="hardAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
+                                                                <filter id="filter0_d_374_135180" width="19.6"
+                                                                    height="4.667" x="0" y="5.167"
+                                                                    color-interpolation-filters="sRGB"
+                                                                    filterUnits="userSpaceOnUse">
+                                                                    <feFlood flood-opacity="0"
+                                                                        result="BackgroundImageFix" />
+                                                                    <feColorMatrix in="SourceAlpha" result="hardAlpha"
+                                                                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
                                                                     <feOffset />
-                                                                    <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0" />
-                                                                    <feBlend in2="BackgroundImageFix" result="effect1_dropShadow_374_135180" />
-                                                                    <feBlend in="SourceGraphic" in2="effect1_dropShadow_374_135180" result="shape" />
+                                                                    <feColorMatrix
+                                                                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0" />
+                                                                    <feBlend in2="BackgroundImageFix"
+                                                                        result="effect1_dropShadow_374_135180" />
+                                                                    <feBlend in="SourceGraphic"
+                                                                        in2="effect1_dropShadow_374_135180"
+                                                                        result="shape" />
                                                                 </filter>
-                                                                <filter id="filter1_d_374_135180" width="19.6" height="4.667" x="0" y="9.833" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
-                                                                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                                                                    <feColorMatrix in="SourceAlpha" result="hardAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
+                                                                <filter id="filter1_d_374_135180" width="19.6"
+                                                                    height="4.667" x="0" y="9.833"
+                                                                    color-interpolation-filters="sRGB"
+                                                                    filterUnits="userSpaceOnUse">
+                                                                    <feFlood flood-opacity="0"
+                                                                        result="BackgroundImageFix" />
+                                                                    <feColorMatrix in="SourceAlpha" result="hardAlpha"
+                                                                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
                                                                     <feOffset />
-                                                                    <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0" />
-                                                                    <feBlend in2="BackgroundImageFix" result="effect1_dropShadow_374_135180" />
-                                                                    <feBlend in="SourceGraphic" in2="effect1_dropShadow_374_135180" result="shape" />
+                                                                    <feColorMatrix
+                                                                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0" />
+                                                                    <feBlend in2="BackgroundImageFix"
+                                                                        result="effect1_dropShadow_374_135180" />
+                                                                    <feBlend in="SourceGraphic"
+                                                                        in2="effect1_dropShadow_374_135180"
+                                                                        result="shape" />
                                                                 </filter>
                                                             </defs>
                                                         </svg>
@@ -235,35 +270,63 @@
                                                     role="menuitem" onclick="selectCountryCode('+372')">
                                                     <span class="inline-flex items-center">
                                                         <svg class="w-4 h-4 me-2" fill="none" viewBox="0 0 20 15">
-                                                            <rect width="19.6" height="14" y=".5" fill="#fff" rx="2" />
-                                                            <mask id="a" style="mask-type:luminance" width="20" height="15" x="0" y="0" maskUnits="userSpaceOnUse">
-                                                                <rect width="19.6" height="14" y=".5" fill="#fff" rx="2" />
+                                                            <rect width="19.6" height="14" y=".5" fill="#fff"
+                                                                rx="2" />
+                                                            <mask id="a" style="mask-type:luminance"
+                                                                width="20" height="15" x="0" y="0"
+                                                                maskUnits="userSpaceOnUse">
+                                                                <rect width="19.6" height="14" y=".5"
+                                                                    fill="#fff" rx="2" />
                                                             </mask>
                                                             <g mask="url(#a)">
-                                                                <path fill="#0072CE" fill-rule="evenodd" d="M0 5.167h19.6V.5H0v4.667z" clip-rule="evenodd" />
+                                                                <path fill="#0072CE" fill-rule="evenodd"
+                                                                    d="M0 5.167h19.6V.5H0v4.667z"
+                                                                    clip-rule="evenodd" />
                                                                 <g filter="url(#filter0_d_374_135180)">
-                                                                    <path fill="#000000" fill-rule="evenodd" d="M0 9.833h19.6V5.167H0v4.666z" clip-rule="evenodd" />
+                                                                    <path fill="#000000" fill-rule="evenodd"
+                                                                        d="M0 9.833h19.6V5.167H0v4.666z"
+                                                                        clip-rule="evenodd" />
                                                                 </g>
                                                                 <g filter="url(#filter1_d_374_135180)">
-                                                                    <path fill="#FFFFFF" fill-rule="evenodd" d="M0 14.5h19.6V9.833H0V14.5z" clip-rule="evenodd" />
+                                                                    <path fill="#FFFFFF" fill-rule="evenodd"
+                                                                        d="M0 14.5h19.6V9.833H0V14.5z"
+                                                                        clip-rule="evenodd" />
                                                                 </g>
                                                             </g>
                                                             <defs>
-                                                                <filter id="filter0_d_374_135180" width="19.6" height="4.667" x="0" y="5.167" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
-                                                                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                                                                    <feColorMatrix in="SourceAlpha" result="hardAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
+                                                                <filter id="filter0_d_374_135180" width="19.6"
+                                                                    height="4.667" x="0" y="5.167"
+                                                                    color-interpolation-filters="sRGB"
+                                                                    filterUnits="userSpaceOnUse">
+                                                                    <feFlood flood-opacity="0"
+                                                                        result="BackgroundImageFix" />
+                                                                    <feColorMatrix in="SourceAlpha" result="hardAlpha"
+                                                                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
                                                                     <feOffset />
-                                                                    <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0" />
-                                                                    <feBlend in2="BackgroundImageFix" result="effect1_dropShadow_374_135180" />
-                                                                    <feBlend in="SourceGraphic" in2="effect1_dropShadow_374_135180" result="shape" />
+                                                                    <feColorMatrix
+                                                                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0" />
+                                                                    <feBlend in2="BackgroundImageFix"
+                                                                        result="effect1_dropShadow_374_135180" />
+                                                                    <feBlend in="SourceGraphic"
+                                                                        in2="effect1_dropShadow_374_135180"
+                                                                        result="shape" />
                                                                 </filter>
-                                                                <filter id="filter1_d_374_135180" width="19.6" height="4.667" x="0" y="9.833" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
-                                                                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                                                                    <feColorMatrix in="SourceAlpha" result="hardAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
+                                                                <filter id="filter1_d_374_135180" width="19.6"
+                                                                    height="4.667" x="0" y="9.833"
+                                                                    color-interpolation-filters="sRGB"
+                                                                    filterUnits="userSpaceOnUse">
+                                                                    <feFlood flood-opacity="0"
+                                                                        result="BackgroundImageFix" />
+                                                                    <feColorMatrix in="SourceAlpha" result="hardAlpha"
+                                                                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
                                                                     <feOffset />
-                                                                    <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0" />
-                                                                    <feBlend in2="BackgroundImageFix" result="effect1_dropShadow_374_135180" />
-                                                                    <feBlend in="SourceGraphic" in2="effect1_dropShadow_374_135180" result="shape" />
+                                                                    <feColorMatrix
+                                                                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0" />
+                                                                    <feBlend in2="BackgroundImageFix"
+                                                                        result="effect1_dropShadow_374_135180" />
+                                                                    <feBlend in="SourceGraphic"
+                                                                        in2="effect1_dropShadow_374_135180"
+                                                                        result="shape" />
                                                                 </filter>
                                                             </defs>
                                                         </svg>
@@ -447,7 +510,7 @@
                                 </dd>
                             </dl>
                             @else
-                            <dl class="flex items
+                                <dl class="flex items
                             -center justify-between gap-4 py-3">
                                 <dt class="text-base font-normal text-gray-500 ">Shipping</dt>
                                 <dd class="text-base font-medium text-emerald-500 ">Free</dd>
@@ -474,7 +537,7 @@
                 </div>
             </div>
         </form>
-    
+
     @endif
 </section>
 

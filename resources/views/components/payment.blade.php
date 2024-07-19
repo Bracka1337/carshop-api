@@ -33,8 +33,8 @@
                         </div>
 
                         <div>
-                            <label for="card-expiration-input"
-                                class="mb-2 block text-sm font-medium text-gray-900 ">Card expiration*
+                            <label for="card-expiration-input" class="mb-2 block text-sm font-medium text-gray-900">Card
+                                expiration*
                             </label>
                             <div class="relative">
                                 <div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3.5">
@@ -42,7 +42,7 @@
                                 </div>
                                 <input name="expiry_date" id="card-expiration-input" type="text"
                                     pattern="^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$" maxlength="5"
-                                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5  text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 "
+                                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
                                     placeholder="01/23" required />
                             </div>
                             @error('expiry_date')
@@ -84,14 +84,14 @@
                         </div>
                         @if (isset($cart['shipping']) && $cart['shipping'] > 0)
                             <dl class="flex items-center justify-between gap-4">
-                                <dt class="text-base font-normal text-gray-500 ">Shipping</dt>
-                                <dd class="text-base font-medium text-gray-900 ">${{ $cart['shipping'] }}
+                                <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Shipping</dt>
+                                <dd class="text-base font-medium text-gray-900">${{ $cart['shipping'] }}
                                 </dd>
                             </dl>
                         @else
                             <dl class="flex items-center justify-between gap-4">
-                                <dt class="text-base font-normal text-gray-500 ">Shipping</dt>
-                                <dd class="text-base font-medium text-emerald-500 ">Free</dd>
+                                <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Shipping</dt>
+                                <dd class="text-base font-medium text-gray-900">Free</dd>
                             </dl>
                         @endif
 
@@ -121,6 +121,4 @@
     </div>
 </section>
 
-<script>
-
-</script>
+<script></script>
