@@ -21,7 +21,7 @@
         <!-- Page Heading -->
         
         <!-- Page Content -->
-        <main>    
+        <main>
             @include('components.NavBar')
             @include('components.cookie')
 
@@ -40,6 +40,5 @@
            
     </div>
     @include('components.footer')
-    <script src="https://unpkg.com/flowbite@1.4.0/dist/flowbite.js"></script>
 </body>
 </html>

@@ -107,5 +107,7 @@ theme: {
     },
 },
 
-plugins: [],
+plugins: [
+  require('flowbite/plugin')
+],
 }
