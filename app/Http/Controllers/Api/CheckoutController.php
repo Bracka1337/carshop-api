@@ -9,9 +9,18 @@ use App\Models\Delivery_details;
 use App\Models\Product_quantity;
 use App\Models\Payment;
 use Exception;
-
+use Illuminate\Http\Request;
+use App\Services\CartService;
+ 
 class CheckoutController extends Controller
 {
+
+    protected $cartService;
+
+    public function __construct(CartService $cartService)
+    {
+        $this->cartService = $cartService;
+    }
     public function proceedToPayment(ProcedeToPayment $request)
     {
         $validated = $request->validated();
@@ -118,5 +127,21 @@ class CheckoutController extends Controller
             $productQuantity->order_id = $order->id;
             $productQuantity->save();
         }
+    }
+
+
+    public function getCart(Request $request)
+    {
+        return $this->cartService->getCart($request);
+    }
+
+    public function getCheckout(Request $request)
+    {
+        return $this->cartService->getCheckout($request);
+    }
+
+    public function getPaymentDetails(Request $request)
+    {
+        return $this->cartService->getPaymentDetails($request);
     }
 }

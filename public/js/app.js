@@ -125,6 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   //shopping cart
+
   //shopping cart close button
 
   const closeButton = document.getElementById("cart-close-button");
@@ -231,11 +232,12 @@ document.addEventListener("DOMContentLoaded", function () {
     updateDynamicWord();
   }
  
-        //dropdown button in navbar
+    //dropdown button in navbar
     
-        const button = document.getElementById('menu-button');
-        const sidebar = document.getElementById('sidebar-menu');
-        const sidebarModal = document.getElementById('sidebar-modal');
+      const button = document.getElementById('menu-button');
+      const sidebar = document.getElementById('sidebar-menu');
+      const sidebarModal = document.getElementById('sidebar-modal');
+
     // sidebar
     if (button) {
       button.addEventListener('click', () => {
@@ -546,6 +548,7 @@ window.onload = function() {
       console.log('User declined cookies.');
       // Logic for declining cookies
       localStorage.setItem('cookie_consent', 'no');
+      showDeclineMessage();
       hideCookieBanner();
     });
 
@@ -556,3 +559,6 @@ window.onload = function() {
     }
   }
 };
+function showDeclineMessage() {
+  alert('We respect your choice. Some features may not work as intended.'); // Or manipulate the DOM to show a custom message
+}
