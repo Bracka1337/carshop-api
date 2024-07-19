@@ -19,9 +19,9 @@ class AuthController extends Controller
 
         try {
             $request->validate([
-                'name' => 'required|max:255',
-                'password'=> 'required|confirmed|min:8|max:16',
-                'email'=> 'required|email|unique:users,email|max:255',
+                'name' => 'required|max:32',
+                'password'=> 'required|confirmed|min:7|max:16',
+                'email'=> 'required|email|unique:users,email|max:32',
                 'phone_nr' => 'required|min:8|max:32',
             ]);
             
@@ -35,7 +35,9 @@ class AuthController extends Controller
     
             return redirect()->route('login')->with('success','Registered Sucessfully!');
         } catch (\Exception $e) {
-            return back()->withErrors($e->getMessage())->withInput($request->only('default'));
+            return back()->withErrors([
+                'default' => 'An error occured, try again later',
+            ])->withInput($request->only('default'));
         }
     }
 
