@@ -45,6 +45,10 @@ class MainController extends Controller
             }
         }
 
+         if (!empty($validatedRequest['brand'])) {
+            $query->where('brand_id', $validatedRequest['brand']);
+        }
+
         if (!empty($validatedRequest['price_from'])) {
             $query->where('price', '>=', $validatedRequest['price_from']);
         }
@@ -123,6 +127,8 @@ class MainController extends Controller
 
         return redirect()->back()->with('success', 'Product added successfully!');
     }
+
+    //----Checkout Controller
 
     public function updateCart($id, $quantity)
     {
@@ -226,6 +232,9 @@ class MainController extends Controller
             }
         }
 
-        return redirect()->route('main')->with('search', $this->getSearchParameters());
+        return redirect()->route('main');
     }
+
+
+    
 }
