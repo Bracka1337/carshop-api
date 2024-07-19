@@ -17,8 +17,7 @@ class ImageFactory extends Factory
     public function definition(): array
     {
         return [
-            'img_uri' => fake()->randomElement(
-                ['images/885.webp', 'images/Borbet.webp', 'images/AEZ.webp', 'images/Alcar-HybridRad.webp', 'images/ALUTEC.webp', 'images/ATS.webp', 'images/Autec.webp']),
+            'img_uri' => fake()->randomElement(['images/885.webp', 'images/Borbet.webp', 'images/AEZ.webp', 'images/Alcar-HybridRad.webp', 'images/ALUTEC.webp', 'images/ATS.webp', 'images/Autec.webp']),
         ];
     }
 }
