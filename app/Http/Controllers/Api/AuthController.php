@@ -12,13 +12,13 @@ class AuthController extends Controller
 {
     //
 
-    public function showRegister() {
+    public function showRegister() { // show register page
         return view('register');
     }
-    public function register(Request $request) {
+    public function register(Request $request) { // register user
 
-        try {
-            $request->validate([
+        try { // catching errors
+            $request->validate([ // Validate
                 'name' => 'required|max:32',
                 'password'=> 'required|confirmed|min:7|max:16',
                 'email'=> 'required|email|unique:users,email|max:32',
@@ -33,19 +33,19 @@ class AuthController extends Controller
                 'role' => 'User',
             ]);
     
-            return redirect()->route('login')->with('success','Registered Sucessfully!');
+            return redirect()->route('login')->with('success','Registered Sucessfully!'); // redirect to login onsuccess
         } catch (\Exception $e) {
             return back()->withErrors([
-                'default' => 'An error occured, try again later',
+                'default' => 'An error occured, try again later', // display that there are errors
             ])->withInput($request->only('default'));
         }
     }
 
-    public function showLogin() {
+    public function showLogin() { // show login page
         return view('login');
     }
 
-    public function login(Request $request) {
+    public function login(Request $request) { //login user
         $request->validate([
             'email'=> 'required|email',
             'password'=> 'required'
@@ -58,15 +58,15 @@ class AuthController extends Controller
             $user = Auth::user();
             $token = $user->createToken('myToken')->accessToken;
             
-            $cookie = cookie('access_token', $token, 60, null, null, true, true);
+            $cookie = cookie('access_token', $token, 60, null, null, true, true); // create tokens etc.
             return redirect()->intended('profile')->cookie($cookie);
         }
         return back()->withErrors([
-            'email' => 'Invalid Credentials.',
+            'email' => 'Invalid Credentials.',  // send error
         ])->withInput($request->only('email'));
     }
 
-    public function logout(Request $request) {
+    public function logout(Request $request) { 
         $user = Auth::user();
         if ($user) {
             $user->tokens()->delete(); // Revoke all tokens

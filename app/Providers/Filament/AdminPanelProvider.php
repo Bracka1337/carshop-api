@@ -18,6 +18,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Filament\Widgets\StatsOverview;
+use App\Filament\Widgets\StatsRevenue;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -38,7 +39,8 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                StatsOverview::class,
+                StatsOverview::class, // added selfmade widgets
+                StatsRevenue::class,
             ])
             ->middleware([
                 EncryptCookies::class,
