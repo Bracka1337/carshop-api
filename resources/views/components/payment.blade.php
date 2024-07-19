@@ -120,5 +120,3 @@
         </div>
     </div>
 </section>
-
-<script></script>

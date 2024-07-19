@@ -11,67 +11,11 @@
     <div class="flex w-full items-center justify-center mt-28 px-4">
         <form action="{{ route('main') }}" method="get"
             class="bg-white p-6 w-full rounded-lg shadow-lg grid grid-cols-1 gap-2 w-full max-w-6xl md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <div class="p-4">
-                <label for="diameter" class="block mt-2 text-sm font-medium text-gray-900">Diameter</label>
-                <div class="flex">
-                    <select id="diameter" name="diameter"
-                        class="block mt-2 w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 hover:shadow-md">
-                        <option value="">Choose a diameter</option>
-                        @foreach ($diameter as $dia)
-                            <option value="{{ $dia->diameter }}"
-                                {{ request('diameter') == $dia->diameter ? 'selected' : '' }}>{{ $dia->diameter }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @if ($errors->has('diameter'))
-                        <p class="text-red-500 text-xs mt-1">{{ $errors->first('diameter') }}</p>
-                    @endif
-                </div>
-
-            </div>
-            <div class="p-4">
-                <label for="width" class="block mt-2 text-sm font-medium text-gray-900">Width</label>
-                <select id="width" name="width"
-                    class="block mt-2 w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 hover:shadow-md">
-                    <option value="">Choose a width</option>
-                    @foreach ($width as $w)
-                        <option value="{{ $w->width }}" {{ request('width') == $w->width ? 'selected' : '' }}>
-                            {{ $w->width }}</option>
-                    @endforeach
-                </select>
-                @if ($errors->has('width'))
-                    <p class="text-red-500 text-xs mt-1">{{ $errors->first('width') }}</p>
-                @endif
-
-            </div>
-            <div class="p-4">
-                <label for="type" class="block mt-2 text-sm font-medium text-gray-900">Type</label>
-                <select id="type" name="type"
-                    class="block mt-2 w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 hover:shadow-md">
-                    <option value="">Choose a type</option>
-                    @foreach ($type as $t)
-                        <option value="{{ $t->type }}" {{ request('type') == $t->type ? 'selected' : '' }}>
-                            {{ $t->type }}</option>
-                    @endforeach
-                </select>
-                @if ($errors->has('type'))
-                    <p class="text-red-500 text-xs mt-1">{{ $errors->first('type') }}</p>
-                @endif
-            </div>
-            <div class="p-4">
-                <label for="brand" class="block mt-2 text-sm font-medium text-gray-900">Brand</label>
-                <select id="brand" name="brand"
-                    class="block mt-2 w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 hover:shadow-md">
-                    <option value="">Choose a Brand</option>
-                    @foreach ($brands as $brand)
-                        <option value="{{ $brand->id }}" {{ request('brand') == $brand->id ? 'selected' : '' }}>
-                            {{ $brand->title }}</option>
-                    @endforeach
-                </select>
-                @if ($errors->has('brand'))
-                    <p class="text-red-500 text-xs mt-1">{{ $errors->first('brand') }}</p>
-                @endif
-            </div>
+            <x-inputSelect name="diameter" :options="$diameter" :selected="request('diameter')" />
+            <x-inputSelect name="width" :options="$width" :selected="request('width')" />
+            <x-inputSelect name="type" :options="$type" :selected="request('type')" /> 
+            <x-inputSelect name="brand" :options="$brands" :selected="request('brand')" />
+            
             <div class="p-4">
                 <label for="priceFrom" class="block text-sm font-semibold leading-6 text-gray-900">Price from:</label>
                 <div class="mt-2.5">
@@ -96,17 +40,7 @@
                     <p class="text-red-500 text-xs mt-1">{{ $errors->first('price_to') }}</p>
                 @endif
             </div>
-            <div class="p-4">
-                <label for="order" class="block text-sm font-semibold leading-6 text-gray-900">Order by:</label>
-                <select id="order" name="order"
-                    class="block mt-2 w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 hover:shadow-md">
-                    <option value="">Choose an order</option>
-                    @foreach ($orderOptions as $key => $label)
-                        <option value="{{ $key }}" {{ request('order') == $key ? 'selected' : '' }}>
-                            {{ $label }}</option>
-                    @endforeach
-                </select>
-            </div>
+            <x-inputSelect name="order" :options="$orderOptions" :selected="request('order')" />
             <div class="p-4 lg:col-start-4">
                 <div class="mt-8">
                     <button type="submit"
