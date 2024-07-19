@@ -7,6 +7,8 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\MainController;
 use App\Http\Controllers\Api\FakePaymentController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\CartController;
+
 
 
 /*
@@ -24,9 +26,9 @@ use App\Http\Controllers\Api\OrderController;
 
 
 Route::get('/', MainController::class)->name('main');
-Route::get('/products/{id}', [MainController::class, 'addProductsToCart'])->name('products.addToCart');
-Route::post('/cart/update/{id}/{quantity}', [MainController::class, 'updateCart'])->name('cart.update');
-Route::post('/cart/remove/{id}', [MainController::class, 'removeFromCart'])->name('cart.remove');
+Route::get('/products/{id}', [CartController::class, 'addProductsToCart'])->name('products.addToCart');
+Route::post('/cart/update/{id}/{quantity}', [CartController::class, 'updateCart'])->name('cart.update');
+Route::post('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 
 
 
@@ -58,11 +60,11 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('profile/orderdetails/{id}', [OrderController::class, 'show'])->name('orderdetails');
 
-    Route::get('/checkout', [MainController::class, 'getCheckout'])->name('checkout');
+    Route::get('/checkout', [CheckoutController::class, 'getCheckout'])->name('checkout');
 
     Route::get('/payment', [CheckoutController::class, 'proceedToPayment'])->name('proceedToPayment');
 
-    Route::get('/payment-details', [MainController::class, 'getPaymentDetails'])->name('payment-details');
+    Route::get('/payment-details', [CheckoutController::class, 'getPaymentDetails'])->name('payment-details');
 
     Route::get('/process-payment', [FakePaymentController::class, 'processPayment'])->name('processPayment');
 
