@@ -1,4 +1,6 @@
 *
 !images
-!images/Borbet.webp
+!images/*
+!images/AboutUs
+!images/AboutUs/*
 !.gitignore
