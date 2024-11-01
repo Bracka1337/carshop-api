@@ -1,0 +1,49 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: laravel-app
+    container_name: laravel-app
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+      - /var/www/html/node_modules  # Cache node_modules
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+    networks:
+      - laravel-network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-server
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - app
+    networks:
+      - laravel-network
+
+  mysql-db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: laravel
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf  # Add this line
+
+    networks:
+      - laravel-network
+
+volumes:
+  db_data:
+networks:
+  laravel-network:
+    driver: bridge
