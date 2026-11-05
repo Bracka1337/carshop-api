@@ -27,4 +27,12 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    /**
+     * The JSON API always answers in JSON, even without an Accept header.
+     */
+    protected function shouldReturnJson($request, Throwable $e)
+    {
+        return $request->is('api/*') || parent::shouldReturnJson($request, $e);
+    }
 }
