@@ -46,9 +46,8 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        $authId = auth()->user()->id;
-        $user = User::where("id", $authId)->first();
-        $order = Order::find($id);
+        // Only the owner may see an order; anything else is a 404.
+        $order = auth()->user()->orders()->findOrFail($id);
 
         $cost = $this->calculateOrderCost($order);
 
