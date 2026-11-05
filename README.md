@@ -7,9 +7,20 @@ card payment. Staff manage brands, products, images, orders, payments and
 users in a Filament admin panel. A small token-authenticated JSON API exposes
 the catalogue and a customer's orders.
 
-This is a team project from the **Magebit bootcamp (2024)**. I was the
-**team lead**. In 2026 it was upgraded from Laravel 10 to Laravel 12 and
-Filament 4, with feature tests added for the shop, the admin panel and the API.
+## Background
+
+This started as a team project at the **Magebit Summer Bootcamp 2024**, where
+I was the **team lead**. Our team won **first place**.
+
+In 2026 I upgraded and refactored the project on my own:
+
+- Laravel 10 → 11 → 12 and Filament 3 → 4, following the official upgrade guides
+- removed the committed `vendor/` directory and build output from git
+- updated PHP and JS dependencies until `composer audit` and `npm audit` were clean
+- replaced the unused Passport setup with Sanctum and a small read-only JSON API
+- fixed bugs found along the way, including an access-control bug on order
+  details and a production asset build that broke every page
+- added feature tests for the shop, the admin panel and the API
 
 ## Stack
 
@@ -184,3 +195,11 @@ app/Models/              Eloquent models (Product::filter, Order::costBreakdown)
 resources/views/         Blade templates
 tests/Feature/           Web, Admin and Api feature tests
 ```
+
+## Known limitations
+
+- Card payments go to a mock endpoint; no real payment provider is integrated.
+- Order totals are calculated from the current product price; prices are not
+  stored per order line.
+- Checkout shows 10% shipping below 1000, while saved orders use 2%.
+- Checkout and logout use GET requests.
