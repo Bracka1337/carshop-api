@@ -10,7 +10,6 @@
         "filament/notifications": "^3.2",
         "guzzlehttp/guzzle": "^7.8",
         "laravel/framework": "^10.10",
-        "laravel/passport": "^12.2",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8"
     },

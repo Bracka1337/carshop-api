@@ -55,27 +55,18 @@ class AuthController extends Controller
             'email'=> $request->email,
             'password'=> $request->password,
         ])){
-            $user = Auth::user();
-            $token = $user->createToken('myToken')->accessToken;
-            
-            $cookie = cookie('access_token', $token, 60, null, null, true, true); // create tokens etc.
-            return redirect()->intended('profile')->cookie($cookie);
+            return redirect()->intended('profile');
         }
         return back()->withErrors([
             'email' => 'Invalid Credentials.',  // send error
         ])->withInput($request->only('email'));
     }
 
-    public function logout(Request $request) { 
-        $user = Auth::user();
-        if ($user) {
-            $user->tokens()->delete(); // Revoke all tokens
-        }
-        
+    public function logout(Request $request) {
         Auth::logout(); // Log out the user
 
         $request->session()->invalidate(); // Invalidate the session
         $request->session()->regenerateToken(); // Regenerate the CSRF token
-        return redirect()->route('main')->withoutCookie('access_token');
-    }   
+        return redirect()->route('main');
+    }
 }
