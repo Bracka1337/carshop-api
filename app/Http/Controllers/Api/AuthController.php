@@ -55,6 +55,8 @@ class AuthController extends Controller
             'email'=> $request->email,
             'password'=> $request->password,
         ])){
+            $request->session()->regenerate(); // prevent session fixation
+
             return redirect()->intended('profile');
         }
         return back()->withErrors([
