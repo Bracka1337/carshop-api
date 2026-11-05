@@ -14,7 +14,7 @@ class MainController extends Controller
     public function __invoke(ProductSearchRequest $request)
     {
         $initialProducts = $request->all() ? 
-            $this->filterProducts($request)->with("images")->paginate(12)->withQueryString() :
+            Product::filter($request->validated())->with("images")->paginate(12)->withQueryString() :
             Product::with('images')->paginate(12);
 
         $searchParameters = $this->getSearchParameters();
@@ -23,54 +23,6 @@ class MainController extends Controller
             'search' => $searchParameters,
             'initialProducts' => $initialProducts,
         ]);
-    }
-
-    private function filterProducts(ProductSearchRequest $request)
-    {
-        $query = Product::query();
-        $validatedRequest = $request->validated();
-
-        $filters = [
-            'brand_id' => '=',
-            'size' => '=',
-            'diameter' => '=',
-            'width' => '=',
-            'type' => '='
-        ];
-
-        foreach ($filters as $field => $operator) {
-            if (!empty($validatedRequest[$field])) {
-                $value = $operator === 'like' ? "%{$validatedRequest[$field]}%" : $validatedRequest[$field];
-                $query->where($field, $operator, $value);
-            }
-        }
-
-         if (!empty($validatedRequest['brand'])) {
-            $query->where('brand_id', $validatedRequest['brand']);
-        }
-
-        if (!empty($validatedRequest['price_from'])) {
-            $query->where('price', '>=', $validatedRequest['price_from']);
-        }
-
-        if (!empty($validatedRequest['price_to'])) {
-            $query->where('price', '<=', $validatedRequest['price_to']);
-        }
-
-        if (!empty($validatedRequest['order'])) {
-            $orderOptions = [
-                'price_asc' => ['price', 'asc'],
-                'price_desc' => ['price', 'desc'],
-                'brand_asc' => ['brand_id', 'asc'],
-                'brand_desc' => ['brand_id', 'desc'],
-            ];
-
-            if (isset($orderOptions[$validatedRequest['order']])) {
-                $query->orderBy($orderOptions[$validatedRequest['order']][0], $orderOptions[$validatedRequest['order']][1]);
-            }
-        }
-
-        return $query;
     }
 
     public function getSearchParameters()
