@@ -2,10 +2,14 @@
 
 namespace App\Filament\Resources\OrderResource\RelationManagers;
 
+use Filament\Schemas\Schema;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -17,10 +21,10 @@ class DeliveryDetailsRelationManager extends RelationManager
 {
     protected static string $relationship = 'delivery_details';
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 TextInput::make('f_name')->placeholder('-')->label('First name'),
                 TextInput::make('m_name')->placeholder('-')->label('Middle name'),
                 TextInput::make('l_name')->placeholder('-')->label('Last name'),
@@ -58,13 +62,13 @@ class DeliveryDetailsRelationManager extends RelationManager
             ])
             ->headerActions([
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+            ->recordActions([
+                EditAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }

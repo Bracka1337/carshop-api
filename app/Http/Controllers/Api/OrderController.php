@@ -46,9 +46,8 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        $authId = auth()->user()->id;
-        $user = User::where("id", $authId)->first();
-        $order = Order::find($id);
+        // Only the owner may see an order; anything else is a 404.
+        $order = auth()->user()->orders()->findOrFail($id);
 
         $cost = $this->calculateOrderCost($order);
 
@@ -57,21 +56,12 @@ class OrderController extends Controller
 
     private function calculateOrderCost($order)
     {
-        $total = $order->productQuantities->sum(function ($productQuantity) {
-            $quantity = floatval($productQuantity->quantity);
-            $price = floatval($productQuantity->product->price);
-            return $quantity * $price;
-        });
+        $cost = $order->costBreakdown();
 
-        $tax = $total * 0.21;
-        
-        // Only apply shipping fee if total is less than or equal to $1000
-        $shippingFee = ($total <= 1000) ? $total * 0.02 : 0;
-    
         return [
-            'total' => number_format($total + $shippingFee, 2),
-            'tax' => number_format($tax, 2),
-            'shipping' => number_format($shippingFee, 2)
+            'total' => number_format($cost['total'], 2),
+            'tax' => number_format($cost['tax'], 2),
+            'shipping' => number_format($cost['shipping'], 2),
         ];
     }
 

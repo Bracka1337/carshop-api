@@ -40,10 +40,10 @@ RUN cp .env.example .env || true
 # Generate Laravel APP_KEY
 RUN php artisan key:generate --no-interaction
 
-# Install Node.js and NPM
-RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - && \
+# Install Node.js (Vite 8 needs Node 20.19+ / 22.12+) and build assets
+RUN curl -sL https://deb.nodesource.com/setup_22.x | bash - && \
     apt-get install -y nodejs && \
-    npm install && \
+    npm ci && \
     npm run build
 
 # Expose the port

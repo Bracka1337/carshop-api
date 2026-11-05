@@ -2,6 +2,13 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Schemas\Schema;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\Resources\ImageResource\Pages\ListImages;
+use App\Filament\Resources\ImageResource\Pages\CreateImage;
+use App\Filament\Resources\ImageResource\Pages\EditImage;
 use App\Filament\Resources\ImageResource\Pages;
 use App\Filament\Resources\ImageResource\RelationManagers;
 use App\Models\Image;
@@ -9,7 +16,6 @@ use App\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
@@ -23,12 +29,12 @@ class ImageResource extends Resource
 {
     protected static ?string $model = Image::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-photo';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-photo';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 FileUpload::make('img_uri')->label('Image')->disk('public')->directory('images')->endsWith([
                     '.webp',
                 ])->validationMessages([
@@ -49,12 +55,12 @@ class ImageResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -69,9 +75,9 @@ class ImageResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListImages::route('/'),
-            'create' => Pages\CreateImage::route('/create'),
-            'edit' => Pages\EditImage::route('/{record}/edit'),
+            'index' => ListImages::route('/'),
+            'create' => CreateImage::route('/create'),
+            'edit' => EditImage::route('/{record}/edit'),
         ];
     }
 }

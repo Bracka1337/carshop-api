@@ -1,0 +1,100 @@
+<?php
+
+namespace Tests\Feature\Web;
+
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
+use Tests\TestCase;
+
+class AuthTest extends TestCase
+{
+    use RefreshDatabase;
+
+    public function test_login_and_register_pages_render(): void
+    {
+        $this->get('/login')->assertOk();
+        $this->get('/register')->assertOk();
+    }
+
+    public function test_a_visitor_can_register(): void
+    {
+        $this->post('/register', [
+            'name' => 'Jane',
+            'email' => 'jane@example.com',
+            'phone_nr' => '+37120000000',
+            'password' => 'secret123',
+            'password_confirmation' => 'secret123',
+        ])->assertRedirect(route('login'));
+
+        $user = User::where('email', 'jane@example.com')->firstOrFail();
+        $this->assertSame('User', $user->role);
+        $this->assertTrue(Hash::check('secret123', $user->password));
+    }
+
+    public function test_registration_is_validated(): void
+    {
+        User::factory()->create(['email' => 'taken@example.com']);
+
+        $this->from('/register')->post('/register', [
+            'name' => 'Jane',
+            'email' => 'taken@example.com',
+            'phone_nr' => '123',
+            'password' => 'secret123',
+            'password_confirmation' => 'different',
+        ])->assertRedirect('/register');
+
+        $this->assertSame(1, User::count());
+        $this->assertGuest();
+    }
+
+    public function test_a_user_can_log_in(): void
+    {
+        $user = User::factory()->create(['password' => 'secret123']);
+
+        $this->post('/login', ['email' => $user->email, 'password' => 'secret123'])
+            ->assertRedirect('/profile');
+
+        $this->assertAuthenticatedAs($user);
+    }
+
+    public function test_login_regenerates_the_session_id(): void
+    {
+        $user = User::factory()->create(['password' => 'secret123']);
+
+        $this->startSession();
+        $before = session()->getId();
+
+        $this->post('/login', ['email' => $user->email, 'password' => 'secret123']);
+
+        $this->assertNotSame($before, session()->getId());
+    }
+
+    public function test_wrong_credentials_are_rejected(): void
+    {
+        $user = User::factory()->create(['password' => 'secret123']);
+
+        $this->from('/login')
+            ->post('/login', ['email' => $user->email, 'password' => 'wrong'])
+            ->assertRedirect('/login')
+            ->assertSessionHasErrors('email');
+
+        $this->assertGuest();
+    }
+
+    public function test_logged_in_users_are_sent_away_from_guest_pages(): void
+    {
+        $this->actingAs(User::factory()->create())
+            ->get('/login')
+            ->assertRedirect('/profile');
+    }
+
+    public function test_a_user_can_log_out(): void
+    {
+        $this->actingAs(User::factory()->create())
+            ->get('/logout')
+            ->assertRedirect(route('main'));
+
+        $this->assertGuest();
+    }
+}

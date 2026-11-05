@@ -38,6 +38,28 @@ class Order extends Model
         return $this->hasMany(Product_quantity::class);
     }
 
+    /**
+     * Order totals: 21% VAT (included in prices, shown for information) and
+     * a 2% shipping fee for orders up to 1000. "total" includes shipping.
+     *
+     * @return array{subtotal: float, tax: float, shipping: float, total: float}
+     */
+    public function costBreakdown(): array
+    {
+        $subtotal = $this->productQuantities->sum(
+            fn ($item) => floatval($item->quantity) * floatval($item->product->price)
+        );
+
+        $shipping = $subtotal <= 1000 ? $subtotal * 0.02 : 0;
+
+        return [
+            'subtotal' => round($subtotal, 2),
+            'tax' => round($subtotal * 0.21, 2),
+            'shipping' => round($shipping, 2),
+            'total' => round($subtotal + $shipping, 2),
+        ];
+    }
+
 
     public function getPaymentStatusAttributes()
     {
