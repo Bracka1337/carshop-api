@@ -15,9 +15,8 @@ class StatsRevenue extends BaseWidget
     {
         $totalRevenue = DB::table('orders')
             ->join('product_quantities', 'orders.id', '=', 'product_quantities.order_id')
-            ->join('products', 'product_quantities.product_id', '=', 'products.id')
             ->where('orders.status', 'Delivered')
-            ->select(DB::raw('SUM(products.price * product_quantities.quantity) as total_revenue'))
+            ->select(DB::raw('SUM(product_quantities.unit_price * product_quantities.quantity) as total_revenue'))
             ->first()
             ->total_revenue;
 

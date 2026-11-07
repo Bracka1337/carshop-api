@@ -7,6 +7,7 @@ use App\Http\Requests\ProcedeToPayment;
 use App\Models\Delivery_details;
 use App\Models\Order;
 use App\Models\Payment;
+use App\Models\Product;
 use App\Models\Product_quantity;
 use App\Services\CartService;
 use Exception;
@@ -112,11 +113,14 @@ class CheckoutController extends Controller
 
     private function getProductQuantities($cartItems)
     {
-        return collect($cartItems)
-            ->except(['total', 'tax'])
-            ->map(function ($item, $productId) {
+        $items = collect($cartItems)->except(['total', 'tax']);
+        $prices = Product::whereIn('id', $items->keys())->pluck('price', 'id');
+
+        return $items
+            ->map(function ($item, $productId) use ($prices) {
                 return new Product_quantity([
                     'quantity' => (int) $item['quantity'],
+                    'unit_price' => $prices[$productId],
                     'product_id' => $productId,
                 ]);
             })->all();
