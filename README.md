@@ -4,7 +4,7 @@
 
 An e-commerce shop for car wheels and rims, built with Laravel. Customers
 browse the catalogue, filter by wheel specs (diameter, width, type, brand,
-price), add rims to a cart and check out with pay-on-delivery or a (mocked)
+price), add rims to a cart and check out with pay-on-delivery or a (simulated)
 card payment. Staff manage brands, products, images, orders, payments and
 users in a Filament admin panel. A small token-authenticated JSON API exposes
 the catalogue and a customer's orders.
@@ -47,8 +47,8 @@ In 2026 I upgraded and refactored the project on my own:
 - **Catalogue**: paginated listing, filters by diameter / width / type / brand /
   price range, sorting by price or brand
 - **Cart**: session based; add, change quantity, remove
-- **Checkout**: delivery details form, pay on delivery or card payment against a
-  mock payment endpoint, order + payment records; each order line keeps the unit
+- **Checkout**: delivery details form, pay on delivery or a simulated card
+  payment, order + payment records; each order line keeps the unit
   price paid, so later price changes don't alter past orders; a declined card
   returns to the card form with an error and can be retried
 - **Shipping**: 10% of the items total below 1000, free from 1000; one
@@ -77,9 +77,9 @@ request ─▶ Form Request ─▶ controller ─▶ policy (OrderPolicy)
 - **Actions** (`app/Actions/Checkout`): `PlaceOrder` turns the session cart into
   delivery details, a payment and order lines in one database transaction,
   storing each line's unit price. It rejects an empty cart or products that are
-  no longer sold before writing anything. `PayOrderByCard` calls the mock
-  payment endpoint through Laravel's HTTP client (faked in tests) and records
-  the result on the payment and the order.
+  no longer sold before writing anything. `PayOrderByCard` simulates the
+  card charge (or sends it to `PAYMENT_ENDPOINT` through Laravel's HTTP client
+  when that is set) and records the result on the payment and the order.
 - **Policies** (`app/Policies/OrderPolicy`): `view` lets customers see only
   their own orders, on the web and in the API; other ids are a 404, so they
   can't be probed. `pay` allows a card payment only for the customer's own
@@ -160,7 +160,9 @@ orders, and two fixed accounts. **These are for local development only.**
 | Admin | `admin@eastsquad.com`   | `admin`   |
 | User  | `default@eastsquad.com` | `default` |
 
-Seeded random customers use the password `password`.
+Seeded random customers use the password `password`. For card payments use any
+future expiry date, any 3-digit CVV and a 16-digit card number such as
+`4242 4242 4242 4242`; `4000 0000 0000 0002` is declined.
 
 ## Tests
 
@@ -204,7 +206,7 @@ pull request.
 | GET    | `/checkout`                    | Delivery details form *(auth)*                |
 | POST   | `/payment`                     | Create the order *(auth)*                     |
 | GET    | `/payment-details`             | Card form for an unpaid order *(auth)*        |
-| POST   | `/process-payment`             | Charge via the mock payment endpoint *(auth)* |
+| POST   | `/process-payment`             | Pay by card (simulated) *(auth)*              |
 | GET    | `/admin`                       | Filament admin panel *(admin role)*           |
 
 ### JSON API (`/api`, Sanctum tokens)
@@ -269,6 +271,9 @@ tests/Unit/                    TotalsCalculator, ShippingCalculator
 
 ## Known limitations
 
-- Card payments go to a mock endpoint; no real payment provider is integrated.
+- No real payment provider is integrated. Card payments are simulated: any
+  valid card is approved except the test card `4000 0000 0000 0002`, which is
+  declined. Setting `PAYMENT_ENDPOINT` sends the card to an HTTP endpoint that
+  answers `{"status": "success"}` to approve.
 - Shipping on saved orders is recalculated from the current shipping config;
   only the unit prices are stored per order.
