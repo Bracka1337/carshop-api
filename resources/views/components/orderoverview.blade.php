@@ -64,10 +64,14 @@
             <div class="bg-white w-full">
                 <!-- First item -->
                 @foreach ($order->lines as $line)
-                    <div class="px-2 md:px-6 flex flex-row items-center py-6 border-b border-gray-200 gap-6 w-full" id="product" product-id="{{ $line->product->id }}"">
+                    <div class="px-2 md:px-6 flex flex-row items-center py-6 border-b border-gray-200 gap-6 w-full" id="product" product-id="{{ $line->product->id }}">
                         <div class="img-box flex-shrink-0">
-                            <img src="{{ asset('/storage/' . $line->product->images[0]->img_uri )  }}" alt="Product Image"
-                                class="w-20 lg:w-30 rounded-lg object-cover shadow-md">
+                            @if ($imageUrl = $line->product->imageUrl())
+                                <img src="{{ $imageUrl }}" alt="Product Image"
+                                    class="w-20 lg:w-30 rounded-lg object-cover shadow-md">
+                            @else
+                                <div class="h-20 w-20 rounded-lg bg-gray-100"></div>
+                            @endif
                         </div>
                         <div class="flex flex-1 items-center justify-between">
                             <div class="flex flex-col">

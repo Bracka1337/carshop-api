@@ -26,7 +26,9 @@
                                                 @if (is_array($details))
                                                     <li class="flex py-6 cart-item" data-id="{{ $id }}">
                                                         <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                                            <img src="{{ asset('/storage/' . $details['image']) }}" class="w-full h-full object-center object-cover">
+                                                            @if (! empty($details['image']))
+                                                                <img src="{{ asset('/storage/' . $details['image']) }}" class="w-full h-full object-center object-cover">
+                                                            @endif
                                                         </div>
                                                         <div class="ml-4 flex flex-1 flex-col">
                                                             <div>

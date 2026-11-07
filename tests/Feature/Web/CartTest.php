@@ -99,4 +99,17 @@ class CartTest extends TestCase
             ->assertSee('action="'.route('cart.add', $product->id).'" method="POST"', false)
             ->assertSee('name="_token"', false);
     }
+
+    public function test_the_cart_drawer_gets_json_when_it_asks_for_it(): void
+    {
+        $product = $this->createProduct(['price' => 50]);
+        $this->post("/cart/add/{$product->id}");
+
+        // The drawer's fetch() parses JSON; it used to get a redirect to an HTML page.
+        $this->postJson("/cart/update/{$product->id}/3")
+            ->assertOk()
+            ->assertJson(['message' => 'Cart updated successfully!', 'total' => 150]);
+
+        $this->postJson('/cart/update/999/1')->assertNotFound()->assertJson(['message' => 'Product not found in cart!']);
+    }
 }

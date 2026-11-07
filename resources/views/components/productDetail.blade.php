@@ -46,7 +46,7 @@
             <div class="px-4 basis-1/2 flex flex-col justify-between overflow-y-auto">
                 <div>
                     <h2 class="font-bold text-gray-800 mb-2 text-5xl">{{ $product->title }}</h2>
-                    <p class="text-gray-600 text-3xl mb-4">{{ $product->brand->title}}</p>
+                    <p class="text-gray-600 text-3xl mb-4">{{ $product->brand?->title }}</p>
                     <div class="mb-4 flex text-4xl">
                         <div class="mr-10">
                             <span class="text-gray-600">${{ $product->price }}</span>
