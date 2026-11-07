@@ -9,6 +9,16 @@ card payment. Staff manage brands, products, images, orders, payments and
 users in a Filament admin panel. A small token-authenticated JSON API exposes
 the catalogue and a customer's orders.
 
+## Screenshots
+
+| Catalogue | Product details |
+| --- | --- |
+| ![Catalogue with filters and product grid](docs/screenshots/catalogue.png) | ![Product modal with specs and add to cart](docs/screenshots/product-modal.png) |
+| **Checkout** | **Order details** |
+| ![Checkout with delivery details and totals](docs/screenshots/checkout.png) | ![Order details with lines, VAT and status](docs/screenshots/order-details.png) |
+| **Admin dashboard** | **Admin orders** |
+| ![Filament admin dashboard with stats](docs/screenshots/admin-dashboard.png) | ![Filament admin orders table with status badges](docs/screenshots/admin-orders.png) |
+
 ## Background
 
 This started as a team project at the **Magebit Summer Bootcamp 2024**: a team
