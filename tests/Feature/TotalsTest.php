@@ -16,7 +16,7 @@ class TotalsTest extends TestCase
         $product = $this->createProduct(['price' => 300]);
         $user = User::factory()->create();
         $this->actingAs($user);
-        $this->get("/products/{$product->id}");
+        $this->post("/cart/add/{$product->id}");
 
         $cart = $this->get('/checkout')->viewData('cart');
 

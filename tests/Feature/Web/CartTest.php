@@ -14,7 +14,7 @@ class CartTest extends TestCase
     {
         $product = $this->createProduct(['price' => 120]);
 
-        $this->from('/')->get("/products/{$product->id}")
+        $this->from('/')->post("/cart/add/{$product->id}")
             ->assertRedirect('/')
             ->assertSessionHas("cart.{$product->id}.quantity", 1)
             ->assertSessionHas('cart.total', 120);
@@ -24,21 +24,21 @@ class CartTest extends TestCase
     {
         $product = $this->createProduct(['price' => 120]);
 
-        $this->get("/products/{$product->id}");
-        $this->get("/products/{$product->id}")
+        $this->post("/cart/add/{$product->id}");
+        $this->post("/cart/add/{$product->id}")
             ->assertSessionHas("cart.{$product->id}.quantity", 2)
             ->assertSessionHas('cart.total', 240);
     }
 
     public function test_adding_an_unknown_product_is_a_404(): void
     {
-        $this->get('/products/999')->assertNotFound();
+        $this->post('/cart/add/999')->assertNotFound();
     }
 
     public function test_cart_quantity_can_be_updated(): void
     {
         $product = $this->createProduct(['price' => 50]);
-        $this->get("/products/{$product->id}");
+        $this->post("/cart/add/{$product->id}");
 
         $this->post("/cart/update/{$product->id}/4")
             ->assertSessionHas("cart.{$product->id}.quantity", 4)
@@ -48,7 +48,7 @@ class CartTest extends TestCase
     public function test_setting_quantity_to_zero_removes_the_item(): void
     {
         $product = $this->createProduct();
-        $this->get("/products/{$product->id}");
+        $this->post("/cart/add/{$product->id}");
 
         $this->post("/cart/update/{$product->id}/0")
             ->assertSessionMissing("cart.{$product->id}");
@@ -57,7 +57,7 @@ class CartTest extends TestCase
     public function test_an_item_can_be_removed_from_the_cart(): void
     {
         $product = $this->createProduct();
-        $this->get("/products/{$product->id}");
+        $this->post("/cart/add/{$product->id}");
 
         $this->post("/cart/remove/{$product->id}")
             ->assertOk()
@@ -74,9 +74,29 @@ class CartTest extends TestCase
     {
         $product = Product::factory()->create(['brand_id' => $this->createBrand()->id]);
 
-        $this->get("/products/{$product->id}")->assertRedirect();
+        $this->post("/cart/add/{$product->id}")->assertRedirect();
 
         $this->assertNull(session("cart.{$product->id}.image"));
         $this->assertSame(1, session("cart.{$product->id}.quantity"));
+    }
+
+    public function test_adding_to_the_cart_over_get_is_rejected(): void
+    {
+        $product = $this->createProduct();
+
+        $this->get("/cart/add/{$product->id}")->assertMethodNotAllowed();
+        $this->get("/products/{$product->id}")->assertNotFound();
+
+        $this->assertNull(session('cart'));
+    }
+
+    public function test_the_catalogue_adds_to_the_cart_with_a_post_form(): void
+    {
+        $product = $this->createProduct();
+
+        $this->get('/')
+            ->assertOk()
+            ->assertSee('action="'.route('cart.add', $product->id).'" method="POST"', false)
+            ->assertSee('name="_token"', false);
     }
 }

@@ -25,7 +25,7 @@ class CardPaymentTest extends TestCase
     {
         $product = $this->createProduct(['price' => 300]);
         $this->actingAs($user);
-        $this->get("/products/{$product->id}");
+        $this->post("/cart/add/{$product->id}");
 
         $this->post('/payment', [
             'f_name' => 'Jane', 'l_name' => 'Doe', 'your_email' => 'jane@example.com',

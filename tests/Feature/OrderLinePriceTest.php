@@ -19,7 +19,7 @@ class OrderLinePriceTest extends TestCase
         $this->actingAs($user);
 
         for ($i = 0; $i < $times; $i++) {
-            $this->get("/products/{$productId}");
+            $this->post("/cart/add/{$productId}");
         }
 
         $this->post('/payment', [

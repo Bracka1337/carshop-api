@@ -74,12 +74,12 @@
                     </div>
                     {{-- Add to Cart button --}}
                     @if (!Request::is('*/orderdetails/*'))
-                     <div class="flex -mx-2 justify-end my-5">
-                            <button class="w-1/2 px-2 bg-indigo-600 text-white py-2 px-4 rounded-full font-bold hover:bg-indigo-500"
-                            id="btn-addToCart" productLink="{{ route('products.addToCart', $product->id) }}" >
-                                Add to Cart
-                            </button>
-                    </div>
+                    <form action="{{ route('cart.add', $product->id) }}" method="POST" class="flex -mx-2 justify-end my-5">
+                        @csrf
+                        <button type="submit" class="w-1/2 px-2 bg-indigo-600 text-white py-2 px-4 rounded-full font-bold hover:bg-indigo-500">
+                            Add to Cart
+                        </button>
+                    </form>
                     @endif
                 </div>
             </div>
