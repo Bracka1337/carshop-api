@@ -63,33 +63,33 @@
 
             <div class="bg-white w-full">
                 <!-- First item -->
-                @foreach ($order->productQuantities as $productQuantity)
-                    <div class="px-2 md:px-6 flex flex-row items-center py-6 border-b border-gray-200 gap-6 w-full" id="product" product-id="{{ $productQuantity->product->id }}"">
+                @foreach ($order->lines as $line)
+                    <div class="px-2 md:px-6 flex flex-row items-center py-6 border-b border-gray-200 gap-6 w-full" id="product" product-id="{{ $line->product->id }}"">
                         <div class="img-box flex-shrink-0">
-                            <img src="{{ asset('/storage/' . $productQuantity->product->images[0]->img_uri )  }}" alt="Product Image"
+                            <img src="{{ asset('/storage/' . $line->product->images[0]->img_uri )  }}" alt="Product Image"
                                 class="w-20 lg:w-30 rounded-lg object-cover shadow-md">
                         </div>
                         <div class="flex flex-1 items-center justify-between">
                             <div class="flex flex-col">
                                 <h2 class="font-semibold text-lg lg:text-lg leading-8 text-black mb-1">
-                                    {{ $productQuantity->product->title }}</h2>
+                                    {{ $line->product->title }}</h2>
                                 <div class="flex items-center">
                                     <p
                                         class="font-medium text-sm leading-7 text-black pr-4 mr-4 border-r border-gray-200">
                                         Size: <span
-                                            class="text-gray-500">{{ $productQuantity->product->diameter }}"</span></p>
+                                            class="text-gray-500">{{ $line->product->diameter }}"</span></p>
                                     <p class="font-medium text-sm leading-7 text-black">Quantity: <span
-                                            class="text-gray-500">{{ $productQuantity->quantity }}</span></p>
+                                            class="text-gray-500">{{ $line->quantity }}</span></p>
                                 </div>
                             </div>
                             <div class="flex items-center justify-end">
                                 <p class="font-medium text-lg leading-7 text-indigo-600">
-                                    ${{ number_format($productQuantity->lineTotalWithoutVat(), 2) }}</p>
+                                    ${{ number_format($line->lineTotalWithoutVat(), 2) }}</p>
                             </div>
                         </div>
                     </div>
                     {{-- add boolean order page... so that it doesnt show add to cart --}}
-                    <x-productDetail :product="$productQuantity->product" :isOrderPage="true"/>
+                    <x-productDetail :product="$line->product" :isOrderPage="true"/>
                 @endforeach
 
 

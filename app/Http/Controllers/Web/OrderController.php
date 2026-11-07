@@ -13,7 +13,7 @@ class OrderController extends Controller
     {
         Gate::authorize('view', $order);
 
-        $order->load(['payment', 'productQuantities.product.images', 'productQuantities.product.brand']);
+        $order->load(['payment', 'lines.product.images', 'lines.product.brand']);
 
         $totals = $order->costBreakdown();
         $cost = [

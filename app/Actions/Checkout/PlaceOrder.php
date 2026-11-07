@@ -4,7 +4,7 @@ namespace App\Actions\Checkout;
 
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
-use App\Models\Delivery_details;
+use App\Models\DeliveryDetail;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Product;
@@ -41,7 +41,7 @@ class PlaceOrder
         }
 
         return DB::transaction(function () use ($user, $details, $items, $prices) {
-            $deliveryDetails = Delivery_details::create([
+            $deliveryDetails = DeliveryDetail::create([
                 'f_name' => $details['f_name'],
                 'm_name' => $details['m_name'] ?? null,
                 'l_name' => $details['l_name'],
@@ -69,7 +69,7 @@ class PlaceOrder
             ]);
 
             foreach ($items as $productId => $item) {
-                $order->productQuantities()->create([
+                $order->lines()->create([
                     'product_id' => $productId,
                     'quantity' => (int) $item['quantity'],
                     'unit_price' => $prices[$productId],

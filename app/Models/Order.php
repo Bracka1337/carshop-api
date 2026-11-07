@@ -47,16 +47,16 @@ class Order extends Model
         return $this->hasOne(Payment::class, 'id', 'payment_id');
     }
 
-    /** @return BelongsTo<Delivery_details, $this> */
-    public function delivery_details(): BelongsTo
+    /** @return BelongsTo<DeliveryDetail, $this> */
+    public function deliveryDetails(): BelongsTo
     {
-        return $this->belongsTo(Delivery_details::class);
+        return $this->belongsTo(DeliveryDetail::class);
     }
 
-    /** @return HasMany<Product_quantity, $this> */
-    public function productQuantities(): HasMany
+    /** @return HasMany<OrderLine, $this> */
+    public function lines(): HasMany
     {
-        return $this->hasMany(Product_quantity::class);
+        return $this->hasMany(OrderLine::class);
     }
 
     /**
@@ -68,8 +68,8 @@ class Order extends Model
      */
     public function costBreakdown(): array
     {
-        $itemsTotal = $this->productQuantities->sum(
-            fn (Product_quantity $item) => $item->lineTotal()
+        $itemsTotal = $this->lines->sum(
+            fn (OrderLine $item) => $item->lineTotal()
         );
 
         return app(TotalsCalculator::class)->forItems($itemsTotal);

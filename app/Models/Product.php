@@ -41,10 +41,10 @@ class Product extends Model
         return $this->hasMany(Image::class);
     }
 
-    /** @return HasMany<Product_quantity, $this> */
-    public function productQuantities(): HasMany
+    /** @return HasMany<OrderLine, $this> */
+    public function orderLines(): HasMany
     {
-        return $this->hasMany(Product_quantity::class);
+        return $this->hasMany(OrderLine::class);
     }
 
     /**

@@ -19,12 +19,12 @@ class OrderResource extends JsonResource
             'status' => $this->status,
             'date' => $this->date,
             'payment_status' => $this->payment?->status,
-            'delivery' => $this->whenLoaded('delivery_details', fn () => [
-                'method' => $this->delivery_details?->delivery_method,
-                'payment_method' => $this->delivery_details?->payment_method,
-                'country' => $this->delivery_details?->country,
+            'delivery' => $this->whenLoaded('deliveryDetails', fn () => [
+                'method' => $this->deliveryDetails?->delivery_method,
+                'payment_method' => $this->deliveryDetails?->payment_method,
+                'country' => $this->deliveryDetails?->country,
             ]),
-            'items' => $this->productQuantities->map(fn ($item) => [
+            'items' => $this->lines->map(fn ($item) => [
                 'product_id' => $item->product_id,
                 'title' => $item->product?->title,
                 'unit_price' => (float) $item->unit_price,

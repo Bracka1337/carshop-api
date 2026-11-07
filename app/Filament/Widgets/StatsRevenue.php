@@ -21,7 +21,7 @@ class StatsRevenue extends BaseWidget
 
         return [
 
-            Stat::make('Oders Fulfilled', Order::where('status', OrderStatus::Delivered)->count())
+            Stat::make('Orders Fulfilled', Order::where('status', OrderStatus::Delivered)->count())
                 ->chart([0, 0, 0, 10, 15, 25, 35])
                 ->color('success'),
             Stat::make('Revenue', '$'.number_format((float) $totalRevenue, 2))

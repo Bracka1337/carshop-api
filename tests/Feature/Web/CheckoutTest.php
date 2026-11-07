@@ -81,7 +81,7 @@ class CheckoutTest extends TestCase
         $order = Order::where('user_id', $user->id)->sole();
         $this->assertSame(OrderStatus::Processing, $order->status);
         $this->assertSame(PaymentStatus::Processing, $order->payment->status);
-        $this->assertSame('Riga', str($order->delivery_details->addr_line_1)->afterLast(', ')->toString());
+        $this->assertSame('Riga', str($order->deliveryDetails->addr_line_1)->afterLast(', ')->toString());
         $this->assertDatabaseHas('product_quantities', [
             'order_id' => $order->id,
             'product_id' => $product->id,
@@ -217,7 +217,7 @@ class CheckoutTest extends TestCase
 
         $this->post('/payment', $details)->assertRedirect(route('main'));
 
-        $this->assertNull(Order::where('user_id', $user->id)->sole()->delivery_details->m_name);
+        $this->assertNull(Order::where('user_id', $user->id)->sole()->deliveryDetails->m_name);
     }
 
     public function test_array_values_in_delivery_details_are_validation_errors(): void

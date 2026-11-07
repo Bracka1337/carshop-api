@@ -16,9 +16,9 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class ProductQuantitiesRelationManager extends RelationManager
+class OrderLinesRelationManager extends RelationManager
 {
-    protected static string $relationship = 'productQuantities';
+    protected static string $relationship = 'lines';
 
     protected static ?string $title = 'Products';
 

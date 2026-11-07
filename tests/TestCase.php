@@ -5,12 +5,12 @@ namespace Tests;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
 use App\Models\Brand;
-use App\Models\Delivery_details;
+use App\Models\DeliveryDetail;
 use App\Models\Image;
 use App\Models\Order;
+use App\Models\OrderLine;
 use App\Models\Payment;
 use App\Models\Product;
-use App\Models\Product_quantity;
 use App\Models\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
@@ -52,12 +52,12 @@ abstract class TestCase extends BaseTestCase
             'status' => OrderStatus::Processing,
             'date' => now(),
             'user_id' => $user->id,
-            'delivery_details_id' => Delivery_details::factory()->create()->id,
+            'delivery_details_id' => DeliveryDetail::factory()->create()->id,
             'payment_id' => Payment::create(['status' => $paymentStatus, 'date' => now()])->id,
         ]);
 
         foreach ($quantities as $productId => $quantity) {
-            Product_quantity::create([
+            OrderLine::create([
                 'order_id' => $order->id,
                 'product_id' => $productId,
                 'quantity' => $quantity,

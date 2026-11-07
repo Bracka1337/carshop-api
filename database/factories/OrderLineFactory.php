@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Product_quantity;
+use App\Models\OrderLine;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Product_quantity>
+ * @extends Factory<OrderLine>
  */
-class Product_quantityFactory extends Factory
+class OrderLineFactory extends Factory
 {
     /**
      * Define the model's default state.
