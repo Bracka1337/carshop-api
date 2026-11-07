@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Web;
 
+use App\Enums\DeliveryMethod;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
 use App\Models\Order;
@@ -257,5 +258,19 @@ class CheckoutTest extends TestCase
             ->assertSessionHasErrors(['payment_method', 'delivery_method']);
 
         $this->assertSame(0, Order::count());
+    }
+
+    public function test_the_checkout_summary_formats_shipping_and_names_the_stored_delivery_options(): void
+    {
+        $product = $this->createProduct(['price' => 582]);
+        $this->actingAs(User::factory()->create());
+        $this->cartWith($product);
+
+        $this->get('/checkout')
+            ->assertOk()
+            ->assertSee('$58.20')
+            ->assertDontSee('$58.2<', false)
+            ->assertSeeInOrder(['value="dhl"', DeliveryMethod::Dhl->getLabel(), 'value="express"', DeliveryMethod::Express->getLabel()], false)
+            ->assertDontSee('require an account');
     }
 }
