@@ -1,5 +1,7 @@
 # Carshop – wheel & rim web shop
 
+[![CI](https://github.com/Bracka1337/carshop-api/actions/workflows/ci.yml/badge.svg)](https://github.com/Bracka1337/carshop-api/actions/workflows/ci.yml)
+
 An e-commerce shop for car wheels and rims, built with Laravel. Customers
 browse the catalogue, filter by wheel specs (diameter, width, type, brand,
 price), add rims to a cart and check out with pay-on-delivery or a (mocked)
