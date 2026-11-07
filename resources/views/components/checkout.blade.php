@@ -1,7 +1,7 @@
 <section class="bg-white py-8 antialiased  md:py-16">
 
     @if (session('cart') && count(session('cart')) > 0)
-        <form action="{{ route('proceedToPayment') }}" method="GET" class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+        <form action="{{ route('proceedToPayment') }}" method="POST" class="mx-auto max-w-screen-xl px-4 2xl:px-0">
             @csrf
             <ol
                 class="items-center flex w-full max-w-2xl text-center text-sm font-medium text-gray-500 sm:text-base">

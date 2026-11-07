@@ -44,7 +44,7 @@ class CheckoutTest extends TestCase
     public function test_checkout_requires_login(): void
     {
         $this->get('/checkout')->assertRedirect(route('login'));
-        $this->get('/payment')->assertRedirect(route('login'));
+        $this->post('/payment')->assertRedirect(route('login'));
     }
 
     public function test_checkout_with_an_empty_cart_redirects_to_the_shop(): void
@@ -72,7 +72,7 @@ class CheckoutTest extends TestCase
         $this->actingAs($user);
         $this->cartWith($product, 2);
 
-        $this->get('/payment?'.http_build_query($this->deliveryDetails()))
+        $this->post('/payment', $this->deliveryDetails())
             ->assertRedirect(route('main'))
             ->assertSessionMissing('cart');
 
@@ -94,7 +94,7 @@ class CheckoutTest extends TestCase
         $this->actingAs($user);
         $this->cartWith($product);
 
-        $this->get('/payment?'.http_build_query($this->deliveryDetails(['payment_method' => 'card'])))
+        $this->post('/payment', $this->deliveryDetails(['payment_method' => 'card']))
             ->assertRedirect(route('payment-details'));
 
         $order = Order::where('user_id', $user->id)->sole();
@@ -111,7 +111,7 @@ class CheckoutTest extends TestCase
         $this->cartWith($product);
 
         $this->from('/checkout')
-            ->get('/payment?'.http_build_query($this->deliveryDetails(['f_name' => 'J4ne', 'phone' => '123'])))
+            ->post('/payment', $this->deliveryDetails(['f_name' => 'J4ne', 'phone' => '123']))
             ->assertRedirect('/checkout')
             ->assertSessionHasErrors(['f_name', 'phone']);
 
@@ -123,13 +123,62 @@ class CheckoutTest extends TestCase
         $this->actingAs(User::factory()->create());
 
         $this->from('/payment-details')
-            ->get('/process-payment?'.http_build_query([
+            ->post('/process-payment', [
                 'full_name' => 'Jane Doe',
                 'card_number' => '1234',
                 'expiry_date' => '01/20',
                 'cvv' => '12',
-            ]))
+            ])
             ->assertRedirect('/payment-details')
             ->assertSessionHasErrors(['card_number', 'expiry_date', 'cvv']);
+    }
+
+    public function test_placing_an_order_over_get_is_rejected(): void
+    {
+        $product = $this->createProduct();
+        $this->actingAs(User::factory()->create());
+        $this->cartWith($product);
+
+        $this->get('/payment?'.http_build_query($this->deliveryDetails()))
+            ->assertMethodNotAllowed();
+
+        $this->assertSame(0, Order::count());
+        $this->assertNotEmpty(session('cart'));
+    }
+
+    public function test_processing_a_payment_over_get_is_rejected(): void
+    {
+        $product = $this->createProduct();
+        $this->actingAs(User::factory()->create());
+        $this->cartWith($product);
+        $this->post('/payment', $this->deliveryDetails(['payment_method' => 'card']));
+
+        $this->get('/process-payment?'.http_build_query([
+            'full_name' => 'Jane Doe',
+            'card_number' => '4242424242424242',
+            'expiry_date' => '12/40',
+            'cvv' => '123',
+        ]))->assertMethodNotAllowed();
+
+        $order = Order::sole();
+        $this->assertSame('Processing', $order->status);
+        $this->assertSame('Processing', $order->payment->status);
+    }
+
+    public function test_checkout_forms_post_with_a_csrf_token(): void
+    {
+        $product = $this->createProduct();
+        $this->actingAs(User::factory()->create());
+        $this->cartWith($product);
+
+        $this->get('/checkout')
+            ->assertSee('action="'.route('proceedToPayment').'" method="POST"', false)
+            ->assertSee('name="_token"', false);
+
+        $this->post('/payment', $this->deliveryDetails(['payment_method' => 'card']));
+
+        $this->get('/payment-details')
+            ->assertSee('action="'.route('processPayment').'" method="POST"', false)
+            ->assertSee('name="_token"', false);
     }
 }

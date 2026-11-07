@@ -47,10 +47,13 @@
                             <div class="space-x-4">
                                 @auth
                                     <div class="space-y-6 border-gray-200 px-4 py-6">
-                                        <a href="{{ route('logout') }}"
-                                            class="text-sm font-medium text-gray-700 hover:text-gray-800">
-                                            Log out
-                                        </a>
+                                        <form action="{{ route('logout') }}" method="POST">
+                                            @csrf
+                                            <button type="submit"
+                                                class="text-sm font-medium text-gray-700 hover:text-gray-800">
+                                                Log out
+                                            </button>
+                                        </form>
                                     </div>
                                 @else
                                     <div class="space-y-6 border-gray-200 px-4 py-6">

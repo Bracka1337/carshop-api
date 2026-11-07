@@ -92,9 +92,25 @@ class AuthTest extends TestCase
     public function test_a_user_can_log_out(): void
     {
         $this->actingAs(User::factory()->create())
-            ->get('/logout')
+            ->post('/logout')
             ->assertRedirect(route('main'));
 
         $this->assertGuest();
+    }
+
+    public function test_logging_out_over_get_is_rejected(): void
+    {
+        $this->actingAs(User::factory()->create())
+            ->get('/logout')
+            ->assertMethodNotAllowed();
+
+        $this->assertAuthenticated();
+    }
+
+    public function test_the_log_out_button_posts_a_form(): void
+    {
+        $this->actingAs(User::factory()->create())
+            ->get('/aboutus')
+            ->assertSee('action="'.route('logout').'" method="POST"', false);
     }
 }

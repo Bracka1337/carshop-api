@@ -42,7 +42,7 @@ Route::group(['middleware' => ['guest']], function () {
 
 Route::group(['middleware' => ['auth']], function () {
 
-    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
 
@@ -50,11 +50,11 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/checkout', [CheckoutController::class, 'getCheckout'])->name('checkout');
 
-    Route::get('/payment', [CheckoutController::class, 'proceedToPayment'])->name('proceedToPayment');
+    Route::post('/payment', [CheckoutController::class, 'proceedToPayment'])->name('proceedToPayment');
 
     Route::get('/payment-details', [CheckoutController::class, 'getPaymentDetails'])->name('payment-details');
 
-    Route::get('/process-payment', [FakePaymentController::class, 'processPayment'])->name('processPayment');
+    Route::post('/process-payment', [FakePaymentController::class, 'processPayment'])->name('processPayment');
 
     Route::get('/paymentSuccess', [CheckoutController::class, 'finalise'])->name('paymentSuccess');
 });

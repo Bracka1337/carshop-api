@@ -138,13 +138,13 @@ test suite on PHP 8.2 for every push to `main` and every pull request.
 | POST   | `/cart/update/{id}/{quantity}` | Change quantity (0 removes the item)          |
 | POST   | `/cart/remove/{id}`            | Remove from cart (JSON response)              |
 | GET    | `/register`, `/login`          | Auth pages (POST to submit)                   |
-| GET    | `/logout`                      | Log out                                       |
+| POST   | `/logout`                      | Log out                                       |
 | GET    | `/profile`                     | Order history *(auth)*                        |
 | GET    | `/profile/orderdetails/{id}`   | One of your orders *(auth)*                   |
 | GET    | `/checkout`                    | Delivery details form *(auth)*                |
-| GET    | `/payment`                     | Create the order *(auth)*                     |
+| POST   | `/payment`                     | Create the order *(auth)*                     |
 | GET    | `/payment-details`             | Card form for an unpaid order *(auth)*        |
-| GET    | `/process-payment`             | Charge via the mock payment endpoint *(auth)* |
+| POST   | `/process-payment`             | Charge via the mock payment endpoint *(auth)* |
 | GET    | `/admin`                       | Filament admin panel *(admin role)*           |
 
 ### JSON API (`/api`, Sanctum tokens)
@@ -207,4 +207,3 @@ tests/Feature/           Web, Admin and Api feature tests
 - Order totals are calculated from the current product price; prices are not
   stored per order line.
 - Checkout shows 10% shipping below 1000, while saved orders use 2%.
-- Checkout and logout use GET requests.
