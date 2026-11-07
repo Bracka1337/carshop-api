@@ -1,0 +1,84 @@
+<?php
+
+namespace Tests\Feature\Web;
+
+use App\Models\Order;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
+use Tests\TestCase;
+
+class CardPaymentTest extends TestCase
+{
+    use RefreshDatabase;
+
+    private const CARD = [
+        'full_name' => 'Jane Doe',
+        'card_number' => '4242 4242 4242 4242',
+        'expiry_date' => '12/40',
+        'cvv' => '123',
+    ];
+
+    private function orderAwaitingCardPayment(User $user): Order
+    {
+        $product = $this->createProduct(['price' => 300]);
+        $this->actingAs($user);
+        $this->get("/products/{$product->id}");
+
+        $this->post('/payment', [
+            'f_name' => 'Jane', 'l_name' => 'Doe', 'your_email' => 'jane@example.com',
+            'country' => 'LV', 'city' => 'Riga', 'addr_line_1' => 'Brivibas iela 1',
+            'phone' => '+37120000000', 'payment_method' => 'card', 'delivery_method' => 'DPD',
+            'm_name' => '', 'addr_line_2' => '', 'company_email' => '', 'company_name' => '', 'vat_number' => '',
+        ])->assertRedirect(route('payment-details'));
+
+        return Order::where('user_id', $user->id)->sole();
+    }
+
+    public function test_a_successful_card_payment_pays_the_order(): void
+    {
+        Http::fake(['run.mocky.io/*' => Http::response(['status' => 'success'])]);
+        $order = $this->orderAwaitingCardPayment(User::factory()->create());
+
+        $this->post('/process-payment', self::CARD)->assertRedirect(route('paymentSuccess'));
+
+        $order->refresh();
+        $this->assertSame('Delivering', $order->status);
+        $this->assertSame('Success', $order->payment->status);
+        Http::assertSent(fn ($request) => $request['card_number'] === self::CARD['card_number']
+            && $request['cvv'] === self::CARD['cvv']);
+
+        $this->get('/paymentSuccess')->assertOk();
+        $this->assertNull(session('cart'));
+        $this->assertNull(session('payment_id'));
+    }
+
+    public function test_a_declined_card_payment_marks_the_payment_failed(): void
+    {
+        Http::fake(['run.mocky.io/*' => Http::response(['status' => 'declined'])]);
+        $order = $this->orderAwaitingCardPayment(User::factory()->create());
+
+        $this->post('/process-payment', self::CARD);
+
+        $order->refresh();
+        $this->assertSame('Pending', $order->status);
+        $this->assertSame('Failed', $order->payment->status);
+    }
+
+    public function test_an_unreachable_gateway_marks_the_payment_failed(): void
+    {
+        Http::fake(['run.mocky.io/*' => Http::response('', 503)]);
+        $order = $this->orderAwaitingCardPayment(User::factory()->create());
+
+        $this->post('/process-payment', self::CARD);
+
+        $this->assertSame('Failed', $order->fresh()->payment->status);
+    }
+
+    public function test_the_success_page_needs_a_confirmed_payment(): void
+    {
+        $this->actingAs(User::factory()->create())
+            ->get('/paymentSuccess')
+            ->assertRedirect(route('main'));
+    }
+}

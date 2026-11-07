@@ -7,10 +7,10 @@ use App\Models\Order;
 use App\Models\Payment;
 use App\Rules\CardNumber;
 use App\Rules\ExpiryDate;
-use GuzzleHttp\Client;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class FakePaymentController extends Controller
 {
@@ -31,20 +31,14 @@ class FakePaymentController extends Controller
         }
 
         $mockyUrl = 'https://run.mocky.io/v3/192c87e3-e951-4c7d-af1c-b70dea4de70b';
-        $client = new Client;
-
         try {
-            $response = $client->post($mockyUrl, [
-                'json' => [
-                    'card_number' => $request->input('card_number'),
-                    'expiry_date' => $request->input('expiry_date'),
-                    'cvv' => $request->input('cvv'),
-                ],
+            $response = Http::post($mockyUrl, [
+                'card_number' => $request->input('card_number'),
+                'expiry_date' => $request->input('expiry_date'),
+                'cvv' => $request->input('cvv'),
             ]);
 
-            $responseBody = json_decode($response->getBody(), true);
-
-            if ($response->getStatusCode() == 200 && $responseBody['status'] === 'success') {
+            if ($response->status() === 200 && $response->json('status') === 'success') {
                 $payment->status = 'Success';
                 $order->status = 'Delivering';
                 $payment->save();
