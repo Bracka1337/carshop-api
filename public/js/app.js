@@ -112,17 +112,6 @@ document.addEventListener("DOMContentLoaded", function () {
     nextButton.addEventListener("click", nextItem);
   });
 
-  // modal Add To Cart
-  document.body.addEventListener("click", (event) => {
-    if (event.target.matches("#btn-addToCart")) {
-      event.preventDefault();
-      const productLink = event.target.getAttribute("productlink");
-      const newLink = document.createElement("a");
-      newLink.setAttribute("href", productLink);
-      document.body.appendChild(newLink);
-      newLink.click();
-    }
-  });
 
   //shopping cart
 

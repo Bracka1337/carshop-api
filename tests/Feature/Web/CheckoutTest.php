@@ -39,7 +39,7 @@ class CheckoutTest extends TestCase
     private function cartWith(Product $product, int $times = 1): void
     {
         for ($i = 0; $i < $times; $i++) {
-            $this->get("/products/{$product->id}");
+            $this->post("/cart/add/{$product->id}");
         }
     }
 

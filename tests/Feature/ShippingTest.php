@@ -18,7 +18,7 @@ class ShippingTest extends TestCase
             $user = User::factory()->create();
             $this->actingAs($user);
             session()->forget('cart');
-            $this->get("/products/{$product->id}");
+            $this->post("/cart/add/{$product->id}");
 
             $this->get('/checkout')->assertViewHas('cart', fn ($cart) => (float) $cart['shipping'] === $shipping);
 

@@ -194,7 +194,7 @@ pull request.
 | ------ | ------------------------------ | --------------------------------------------- |
 | GET    | `/`                            | Catalogue with filters (`diameter`, `width`, `type`, `brand`, `price_from`, `price_to`, `order`) |
 | GET    | `/aboutus`                     | About the team                                |
-| GET    | `/products/{id}`               | Add a product to the cart                     |
+| POST   | `/cart/add/{id}`               | Add a product to the cart                     |
 | POST   | `/cart/update/{id}/{quantity}` | Change quantity (0 removes the item)          |
 | POST   | `/cart/remove/{id}`            | Remove from cart (JSON response)              |
 | GET    | `/register`, `/login`          | Auth pages (POST to submit)                   |
@@ -272,4 +272,3 @@ tests/Unit/                    ShippingCalculator
 - Card payments go to a mock endpoint; no real payment provider is integrated.
 - Shipping on saved orders is recalculated from the current shipping config;
   only the unit prices are stored per order.
-- Adding a product to the cart is still a GET link (`/products/{id}`).
