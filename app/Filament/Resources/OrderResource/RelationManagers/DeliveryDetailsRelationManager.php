@@ -2,20 +2,16 @@
 
 namespace App\Filament\Resources\OrderResource\RelationManagers;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
-use Filament\Forms;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class DeliveryDetailsRelationManager extends RelationManager
 {
@@ -35,14 +31,14 @@ class DeliveryDetailsRelationManager extends RelationManager
                 TextInput::make('company_name')->placeholder('-'),
                 TextInput::make('company_reg_nr')->placeholder('-'),
                 Select::make('payment_method')->placeholder('-')->options(['Credit Card' => 'Credit Card', 'Pay on delivery' => 'Pay on delivery']),
-                Select::make('delivery_method')->placeholder('-')->options(['DPD' => 'DPD', 'Venipak'=> 'Venipak']),
+                Select::make('delivery_method')->placeholder('-')->options(['DPD' => 'DPD', 'Venipak' => 'Venipak']),
             ]);
     }
 
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitle("Delivery Details")
+            ->recordTitle('Delivery Details')
             ->columns([
                 TextColumn::make('id')->label('ID')->searchable(),
                 TextColumn::make('f_name')->placeholder('-')->label('First name'),

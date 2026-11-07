@@ -1,15 +1,13 @@
 <?php
 
-use App\Http\Controllers\Api\CheckoutController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\MainController;
-use App\Http\Controllers\Api\FakePaymentController;
-use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\CartController;
-
-
+use App\Http\Controllers\Api\CheckoutController;
+use App\Http\Controllers\Api\FakePaymentController;
+use App\Http\Controllers\Api\MainController;
+use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\ProfileController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,18 +20,10 @@ use App\Http\Controllers\Api\CartController;
 |
 */
 
-
-
-
 Route::get('/', MainController::class)->name('main');
 Route::get('/products/{id}', [CartController::class, 'addProductsToCart'])->name('products.addToCart');
 Route::post('/cart/update/{id}/{quantity}', [CartController::class, 'updateCart'])->name('cart.update');
 Route::post('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
-
-
-
-
-
 
 Route::get('/aboutus', function () {
     return view('aboutus');
@@ -49,8 +39,6 @@ Route::group(['middleware' => ['guest']], function () {
 
     Route::post('/login', [AuthController::class, 'login'])->name('login.store');
 });
-
-
 
 Route::group(['middleware' => ['auth']], function () {
 

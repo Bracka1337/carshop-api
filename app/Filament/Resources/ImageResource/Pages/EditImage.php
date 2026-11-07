@@ -2,9 +2,8 @@
 
 namespace App\Filament\Resources\ImageResource\Pages;
 
-use Filament\Actions\DeleteAction;
 use App\Filament\Resources\ImageResource;
-use Filament\Actions;
+use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditImage extends EditRecord

@@ -2,10 +2,12 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Brand;
+use App\Models\Product;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
+ * @extends Factory<Product>
  */
 class ProductFactory extends Factory
 {
@@ -17,6 +19,7 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         $brand_id = Brand::inRandomOrder()->first()->id;
+
         return [
 
             'title' => Brand::find($brand_id)->title,
@@ -28,8 +31,8 @@ class ProductFactory extends Factory
             'bolt_diameter' => fake()->randomElement([98.00, 100.00, 105.00, 108.00, 110.00, 112.00, 114.30, 115.00, 118.00, 120.00, 125.00, 127.00, 130.00, 135.00, 139.00, 139.70, 140.00, 150.00, 160.00, 165.00, 170.00, 180.00, 200.00, 205.00]),
             'type' => fake()->randomElement(['Alloy', 'Steel']),
             'cb' => fake()->randomElement([54.00, 54.10, 55.10, 56.00, 56.10, 56.50, 56.60, 57.00, 57.10, 57.60, 58.00, 58.10, 60.00, 60.10, 61.10, 63.00, 63.10, 63.30, 63.40, 64.00, 64.10, 64.20, 65.00, 65.06, 65.10, 66.00, 66.10, 66.40, 66.45, 66.50, 66.505, 66.55, 66.60, 66.70, 67.00, 67.10, 67.20, 68.00, 68.10, 69.10, 70.00, 70.10, 70.20, 70.30, 70.50, 70.60, 70.70, 71.00, 71.10, 71.50, 71.60, 72.00, 72.10, 72.30, 72.50, 72.60, 73.00, 73.10, 74.00, 74.1, 74.10, 75.00, 75.10, 76.00, 76.10, 76.90, 78.10, 79.00, 79.10, 82.00, 82.10, 84.00, 84.10, 89.10, 92.10, 92.40, 93.00, 93.10, 95.50, 100.00, 100.10, 106.00, 106.10, 108.10, 108.30, 110.00, 110.10, 114.00, 130.10, 161.10]),
-            'price' => fake()->numberBetween(50,1500),
-            'brand_id' => $brand_id, 
-        ];  
+            'price' => fake()->numberBetween(50, 1500),
+            'brand_id' => $brand_id,
+        ];
     }
 }

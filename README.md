@@ -1,5 +1,7 @@
 # Carshop – wheel & rim web shop
 
+[![CI](https://github.com/Bracka1337/carshop-api/actions/workflows/ci.yml/badge.svg)](https://github.com/Bracka1337/carshop-api/actions/workflows/ci.yml)
+
 An e-commerce shop for car wheels and rims, built with Laravel. Customers
 browse the catalogue, filter by wheel specs (diameter, width, type, brand,
 price), add rims to a cart and check out with pay-on-delivery or a (mocked)
@@ -120,6 +122,9 @@ php artisan test
 Tests run against an in-memory SQLite database (see `phpunit.xml`) and cover
 auth, catalogue filters, cart, checkout, profile/order access, every Filament
 resource page, product CRUD in the admin, and all API endpoints.
+
+GitHub Actions runs Pint (`vendor/bin/pint --test`), the asset build and the
+test suite on PHP 8.2 for every push to `main` and every pull request.
 
 ## Routes overview
 

@@ -4,23 +4,23 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProcedeToPayment;
-use App\Models\Order;
 use App\Models\Delivery_details;
-use App\Models\Product_quantity;
+use App\Models\Order;
 use App\Models\Payment;
+use App\Models\Product_quantity;
+use App\Services\CartService;
 use Exception;
 use Illuminate\Http\Request;
-use App\Services\CartService;
- 
+
 class CheckoutController extends Controller
 {
-
     protected $cartService;
 
     public function __construct(CartService $cartService)
     {
         $this->cartService = $cartService;
     }
+
     public function proceedToPayment(ProcedeToPayment $request)
     {
         $validated = $request->validated();
@@ -38,6 +38,7 @@ class CheckoutController extends Controller
 
                 if ($validated['payment_method'] === 'pay-on-delivery') {
                     session()->forget(['cart', 'order_id', 'payment_id', 'delivery_details', 'payment_confirmed']);
+
                     return redirect()->route('main')->with('success', 'Order created successfully!');
                 } else {
                     session([
@@ -45,12 +46,13 @@ class CheckoutController extends Controller
                         'payment_id' => $payment->id,
                         'delivery_details' => $deliveryDetails->id,
                     ]);
+
                     return redirect()->route('payment-details')->with('success', 'Order created successfully!');
                 }
             } catch (Exception $e) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Failed to place order: ' . $e->getMessage(),
+                    'message' => 'Failed to place order: '.$e->getMessage(),
                 ], 500);
             }
         } else {
@@ -65,6 +67,7 @@ class CheckoutController extends Controller
     {
         if (session('payment_id') && session('payment_confirmed')) {
             session()->forget(['cart', 'order_id', 'payment_id', 'delivery_details', 'payment_confirmed']);
+
             return view('paymentSuccess');
         }
 
@@ -77,7 +80,7 @@ class CheckoutController extends Controller
             'f_name' => $validated['f_name'],
             'm_name' => $validated['m_name'],
             'l_name' => $validated['l_name'],
-            'addr_line_1' => $validated['addr_line_1'] . ', ' . $validated['city'],
+            'addr_line_1' => $validated['addr_line_1'].', '.$validated['city'],
             'addr_line_2' => $validated['addr_line_2'],
             'country' => $validated['country'],
             'company_email' => $validated['company_email'],
@@ -113,7 +116,7 @@ class CheckoutController extends Controller
             ->except(['total', 'tax'])
             ->map(function ($item, $productId) {
                 return new Product_quantity([
-                    'quantity' => (int)$item['quantity'],
+                    'quantity' => (int) $item['quantity'],
                     'product_id' => $productId,
                 ]);
             })->all();
@@ -128,7 +131,6 @@ class CheckoutController extends Controller
             $productQuantity->save();
         }
     }
-
 
     public function getCart(Request $request)
     {

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
@@ -13,6 +12,7 @@ class ProfileController extends Controller
         $orders = $user->orders->map(function ($order) {
             $cost = $this->calculateOrderCost($order);
             $order->calculatedTotal = $cost['total'];
+
             return $order;
         });
 

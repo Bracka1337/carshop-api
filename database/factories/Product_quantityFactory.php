@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\Product_quantity;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product_quantity>
+ * @extends Factory<Product_quantity>
  */
 class Product_quantityFactory extends Factory
 {
@@ -17,8 +18,8 @@ class Product_quantityFactory extends Factory
     public function definition(): array
     {
         return [
-            'quantity' => fake()->numberBetween(1,10),
-            'product_id' => fake()->numberBetween(1,200),
+            'quantity' => fake()->numberBetween(1, 10),
+            'product_id' => fake()->numberBetween(1, 200),
         ];
     }
 }

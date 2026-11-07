@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Order;
-use App\Models\User;
-use App\Models\ProductQuantity;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -19,6 +17,7 @@ class OrderController extends Controller
         $orders = $user->orders->map(function ($order) {
             $cost = $this->calculateOrderCost($order);
             $order->calculatedTotal = $cost['total'];
+
             return $order;
         });
 
@@ -51,7 +50,7 @@ class OrderController extends Controller
 
         $cost = $this->calculateOrderCost($order);
 
-        return view("orderdetails", compact("order", 'cost'));
+        return view('orderdetails', compact('order', 'cost'));
     }
 
     private function calculateOrderCost($order)
@@ -64,9 +63,6 @@ class OrderController extends Controller
             'shipping' => number_format($cost['shipping'], 2),
         ];
     }
-
-
-
 
     /**
      * Show the form for editing the specified resource.

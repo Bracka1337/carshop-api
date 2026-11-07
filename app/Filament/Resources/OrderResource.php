@@ -2,33 +2,27 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\Resources\OrderResource\Pages\ListOrders;
 use App\Filament\Resources\OrderResource\Pages\CreateOrder;
 use App\Filament\Resources\OrderResource\Pages\EditOrder;
-use App\Filament\Resources\OrderResource\Pages;
-use App\Filament\Resources\OrderResource\RelationManagers;
+use App\Filament\Resources\OrderResource\Pages\ListOrders;
 use App\Filament\Resources\OrderResource\RelationManagers\DeliveryDetailsRelationManager;
 use App\Filament\Resources\OrderResource\RelationManagers\ProductQuantitiesRelationManager;
 use App\Models\Order;
-use Filament\Forms;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
 use App\Models\User;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\Select;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
+
 class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-arrow-path-rounded-square';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-arrow-path-rounded-square';
 
     public static function form(Schema $schema): Schema
     {
@@ -46,7 +40,7 @@ class OrderResource extends Resource
                     'Unpaid' => 'Unpaid',
                     'Refunded' => 'Refunded',
                     'Failed' => 'Failed',
-                    'Success'=> 'Success',
+                    'Success' => 'Success',
                 ]),
             ]);
     }
@@ -71,7 +65,7 @@ class OrderResource extends Resource
                     'Unpaid' => 'warning',
                     'Refunded' => 'warning',
                     'Failed' => 'danger',
-                    'Success'=> 'success',
+                    'Success' => 'success',
                 }),
             ])
             ->filters([

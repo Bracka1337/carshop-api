@@ -2,34 +2,27 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\Resources\ImageResource\Pages\ListImages;
 use App\Filament\Resources\ImageResource\Pages\CreateImage;
 use App\Filament\Resources\ImageResource\Pages\EditImage;
-use App\Filament\Resources\ImageResource\Pages;
-use App\Filament\Resources\ImageResource\RelationManagers;
+use App\Filament\Resources\ImageResource\Pages\ListImages;
 use App\Models\Image;
 use App\Models\Product;
-use Filament\Forms;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Facades\Storage;
 
 class ImageResource extends Resource
 {
     protected static ?string $model = Image::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-photo';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-photo';
 
     public static function form(Schema $schema): Schema
     {
@@ -40,7 +33,7 @@ class ImageResource extends Resource
                 ])->validationMessages([
                     'endsWith' => 'Image should be in .webp format',
                 ]),
-                Select::make('product_id')->label('Product')->options(Product::pluck('id','id'))->searchable(),
+                Select::make('product_id')->label('Product')->options(Product::pluck('id', 'id'))->searchable(),
             ]);
     }
 

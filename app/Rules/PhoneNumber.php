@@ -9,6 +9,7 @@ class PhoneNumber implements Rule
     public function passes($attribute, $value)
     {
         $regex = '/^\+(?:[0-9] ?){6,14}[0-9]$/';
+
         return preg_match($regex, $value);
     }
 

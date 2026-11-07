@@ -11,8 +11,8 @@ class CartService
         $cart = session()->get('cart');
         $total = session()->get('cart.total', 0);
 
-        if (!empty($cart) && $total > 0) {
-            $total = (float)str_replace(',', '', $total);
+        if (! empty($cart) && $total > 0) {
+            $total = (float) str_replace(',', '', $total);
             $tax = $total * 0.21;
             $shipping = $total >= 1000 ? 0 : $total * 0.1;
 
@@ -31,7 +31,7 @@ class CartService
     {
         $cart = $this->getCart($request);
 
-        if (!empty($cart) && $cart['total'] > 0) {
+        if (! empty($cart) && $cart['total'] > 0) {
             return view('checkout', ['cart' => $cart]);
         }
 
@@ -42,7 +42,7 @@ class CartService
     {
         $user = auth()->user();
         $orders = $user->orders;
-        $unPaidOrders = $orders->filter(fn($order) => $order->payment->status == 'Processing');
+        $unPaidOrders = $orders->filter(fn ($order) => $order->payment->status == 'Processing');
         $unPaidOrder = $unPaidOrders->firstWhere('payment.id', session('payment_id'));
 
         if ($unPaidOrder) {
@@ -50,12 +50,10 @@ class CartService
             $total = $cart['total'] ?? 0;
 
             if ($total > 0) {
-                return view("payment", ['cart' => $cart]);
+                return view('payment', ['cart' => $cart]);
             }
         }
 
         return redirect()->route('main');
     }
-
-
 }

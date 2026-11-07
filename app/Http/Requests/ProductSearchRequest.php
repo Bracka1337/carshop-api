@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProductSearchRequest extends FormRequest
@@ -17,7 +18,7 @@ class ProductSearchRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
@@ -30,7 +31,7 @@ class ProductSearchRequest extends FormRequest
             'price_to' => 'sometimes|nullable|numeric|gte:price_from',
             'order' => 'sometimes|nullable|in:price_asc,price_desc,brand_asc,brand_desc',
         ];
-        
+
     }
 
     /**

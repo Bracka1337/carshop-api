@@ -23,4 +23,3 @@ class CreateProductQuantitiesTable extends Migration
         Schema::dropIfExists('product_quantities');
     }
 }
-

@@ -2,36 +2,31 @@
 
 namespace App\Filament\Resources\OrderResource\RelationManagers;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\CreateAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use App\Models\Product;
-use Filament\Forms;
-use Filament\Forms\Components\FileUpload;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use PhpParser\Node\Stmt\Label;
 
 class ProductQuantitiesRelationManager extends RelationManager
 {
     protected static string $relationship = 'productQuantities';
+
     protected static ?string $title = 'Products';
 
     public function form(Schema $schema): Schema
     {
         return $schema
             ->components([
-                
+
                 Select::make('product_id')->options(Product::pluck('id'))->searchable(),
                 TextInput::make('quantity'),
             ]);
