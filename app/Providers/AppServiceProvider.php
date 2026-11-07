@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\User;
 use App\Services\CartService;
+use App\Services\ShippingCalculator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\URL;
@@ -20,9 +21,8 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
-        $this->app->singleton(CartService::class, function ($app) {
-            return new CartService;
-        });
+        $this->app->singleton(ShippingCalculator::class, fn () => ShippingCalculator::fromConfig());
+        $this->app->singleton(CartService::class);
     }
 
     /**
