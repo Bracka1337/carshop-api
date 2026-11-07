@@ -184,7 +184,7 @@ class CheckoutTest extends TestCase
             ->assertSee('name="_token"', false);
     }
 
-    public function test_a_failed_checkout_leaves_no_partial_order(): void
+    public function test_a_cart_with_products_no_longer_sold_is_rejected_without_a_partial_order(): void
     {
         $kept = $this->createProduct();
         $gone = $this->createProduct();
@@ -193,11 +193,54 @@ class CheckoutTest extends TestCase
         $this->cartWith($gone);
         $gone->delete();
 
-        $this->post('/payment', $this->deliveryDetails());
+        // Used to be a 500 ("Undefined array key") after the order rows were written.
+        $this->from('/checkout')
+            ->post('/payment', $this->deliveryDetails())
+            ->assertRedirect('/checkout')
+            ->assertSessionHasErrors('cart');
 
         $this->assertSame(0, Order::count());
         $this->assertDatabaseCount('payments', 0);
         $this->assertDatabaseCount('delivery_details', 0);
         $this->assertDatabaseCount('product_quantities', 0);
+    }
+
+    public function test_optional_delivery_fields_may_be_left_out(): void
+    {
+        $product = $this->createProduct();
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $this->cartWith($product);
+
+        // Used to be a 500 ("Undefined array key m_name") when a client omitted the optional fields.
+        $details = array_diff_key($this->deliveryDetails(), array_flip(['m_name', 'addr_line_2', 'company_email', 'company_name', 'vat_number']));
+
+        $this->post('/payment', $details)->assertRedirect(route('main'));
+
+        $this->assertNull(Order::where('user_id', $user->id)->sole()->delivery_details->m_name);
+    }
+
+    public function test_array_values_in_delivery_details_are_validation_errors(): void
+    {
+        $product = $this->createProduct();
+        $this->actingAs(User::factory()->create());
+        $this->cartWith($product);
+
+        // Used to be a 500 (preg_match() on an array) in the AlphaOnly and PhoneNumber rules.
+        $this->from('/checkout')
+            ->post('/payment', $this->deliveryDetails(['f_name' => ['Jane'], 'l_name' => ['Doe'], 'phone' => ['+37120000000']]))
+            ->assertRedirect('/checkout')
+            ->assertSessionHasErrors(['f_name', 'l_name', 'phone']);
+
+        $this->assertSame(0, Order::count());
+    }
+
+    public function test_an_empty_cart_does_not_create_an_order(): void
+    {
+        $this->actingAs(User::factory()->create());
+
+        $this->post('/payment', $this->deliveryDetails())->assertSessionHasErrors('cart');
+
+        $this->assertSame(0, Order::count());
     }
 }

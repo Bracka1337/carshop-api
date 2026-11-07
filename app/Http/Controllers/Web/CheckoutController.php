@@ -8,10 +8,8 @@ use App\Http\Requests\Checkout\PlaceOrderRequest;
 use App\Models\Order;
 use App\Models\User;
 use App\Services\CartService;
-use Exception;
 use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
 
@@ -28,18 +26,11 @@ class CheckoutController extends Controller
         return view('checkout', ['cart' => $this->cart->getCart()]);
     }
 
-    public function proceedToPayment(PlaceOrderRequest $request, #[CurrentUser] User $user, PlaceOrder $placeOrder): RedirectResponse|JsonResponse
+    public function proceedToPayment(PlaceOrderRequest $request, #[CurrentUser] User $user, PlaceOrder $placeOrder): RedirectResponse
     {
         $details = $request->validated();
 
-        try {
-            $order = $placeOrder->handle($user, $details, session('cart', []));
-        } catch (Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Failed to place order: '.$e->getMessage(),
-            ], 500);
-        }
+        $order = $placeOrder->handle($user, $details, session('cart', []));
 
         if ($details['payment_method'] === 'pay-on-delivery') {
             $this->cart->clear();

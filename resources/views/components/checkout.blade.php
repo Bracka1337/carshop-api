@@ -3,6 +3,9 @@
     @if (session('cart') && count(session('cart')) > 0)
         <form action="{{ route('proceedToPayment') }}" method="POST" class="mx-auto max-w-screen-xl px-4 2xl:px-0">
             @csrf
+            @error('cart')
+                <p class="mb-6 rounded-lg bg-red-50 p-4 text-sm text-red-600">{{ $message }}</p>
+            @enderror
             <ol
                 class="items-center flex w-full max-w-2xl text-center text-sm font-medium text-gray-500 sm:text-base">
                 <li

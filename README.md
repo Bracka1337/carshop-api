@@ -44,7 +44,8 @@ In 2026 I upgraded and refactored the project on my own:
 - **Cart**: session based; add, change quantity, remove
 - **Checkout**: delivery details form, pay on delivery or card payment against a
   mock payment endpoint, order + payment records; each order line keeps the unit
-  price paid, so later price changes don't alter past orders
+  price paid, so later price changes don't alter past orders; a declined card
+  returns to the card form with an error and can be retried
 - **Shipping**: 10% of the subtotal below 1000, free from 1000; one
   `ShippingCalculator` used by checkout and saved orders, configured in
   `config/shop.php` (`SHOP_SHIPPING_RATE`, `SHOP_FREE_SHIPPING_FROM`)
