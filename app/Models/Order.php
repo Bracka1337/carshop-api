@@ -47,7 +47,7 @@ class Order extends Model
     public function costBreakdown(): array
     {
         $subtotal = $this->productQuantities->sum(
-            fn ($item) => floatval($item->quantity) * floatval($item->product->price)
+            fn (Product_quantity $item) => $item->lineTotal()
         );
 
         $shipping = $subtotal <= 1000 ? $subtotal * 0.02 : 0;

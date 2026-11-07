@@ -24,9 +24,9 @@ class OrderResource extends JsonResource
             'items' => $this->productQuantities->map(fn ($item) => [
                 'product_id' => $item->product_id,
                 'title' => $item->product?->title,
-                'unit_price' => (float) $item->product?->price,
+                'unit_price' => (float) $item->unit_price,
                 'quantity' => (int) $item->quantity,
-                'line_total' => round((float) $item->product?->price * (int) $item->quantity, 2),
+                'line_total' => $item->lineTotal(),
             ])->values(),
             'totals' => $this->costBreakdown(),
         ];

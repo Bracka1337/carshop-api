@@ -42,7 +42,8 @@ In 2026 I upgraded and refactored the project on my own:
   price range, sorting by price or brand
 - **Cart**: session based; add, change quantity, remove
 - **Checkout**: delivery details form, pay on delivery or card payment against a
-  mock payment endpoint, order + payment records
+  mock payment endpoint, order + payment records; each order line keeps the unit
+  price paid, so later price changes don't alter past orders
 - **Accounts**: registration, login, profile with order history and order details
 - **Admin panel** (`/admin`, admin role only): CRUD for brands, products,
   images, orders, payments and users, plus dashboard stats (users, orders,
@@ -204,6 +205,4 @@ tests/Feature/           Web, Admin and Api feature tests
 ## Known limitations
 
 - Card payments go to a mock endpoint; no real payment provider is integrated.
-- Order totals are calculated from the current product price; prices are not
-  stored per order line.
 - Checkout shows 10% shipping below 1000, while saved orders use 2%.

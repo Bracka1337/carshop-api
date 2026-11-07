@@ -29,6 +29,10 @@ class ProductQuantitiesRelationManager extends RelationManager
 
                 Select::make('product_id')->options(Product::pluck('id'))->searchable(),
                 TextInput::make('quantity'),
+                TextInput::make('unit_price')
+                    ->numeric()
+                    ->minValue(0)
+                    ->helperText('Leave empty to use the current product price.'),
             ]);
     }
 
@@ -38,6 +42,7 @@ class ProductQuantitiesRelationManager extends RelationManager
             ->columns([
                 TextColumn::make('product_id'),
                 TextColumn::make('quantity'),
+                TextColumn::make('unit_price')->money('USD'),
                 ImageColumn::make('product.images.img_uri')->stacked()->limit(1),
             ])
             ->filters([
