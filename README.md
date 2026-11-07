@@ -11,8 +11,9 @@ the catalogue and a customer's orders.
 
 ## Background
 
-This started as a team project at the **Magebit Summer Bootcamp 2024**, where
-I was the **team lead**. Our team won **first place**.
+This started as a team project at the **Magebit Summer Bootcamp 2024**: a team
+of five built the shop, and I was the **team lead**. Our team won **first
+place**. The commit history includes everyone's work.
 
 In 2026 I upgraded and refactored the project on my own:
 
@@ -20,9 +21,13 @@ In 2026 I upgraded and refactored the project on my own:
 - removed the committed `vendor/` directory and build output from git
 - updated PHP and JS dependencies until `composer audit` and `npm audit` were clean
 - replaced the unused Passport setup with Sanctum and a small read-only JSON API
-- fixed bugs found along the way, including an access-control bug on order
-  details and a production asset build that broke every page
-- added feature tests for the shop, the admin panel and the API
+- reorganised checkout into actions, an order policy, status enums and Form
+  Requests, with thin controllers
+- fixed bugs found along the way: access control on order details and card
+  payments, order totals that followed later price changes, two different
+  shipping rules, state changes over GET, 500s on malformed input, and a
+  production asset build that broke every page
+- added feature tests, Larastan at level 8, Eloquent strict mode and CI
 
 ## Stack
 
@@ -54,6 +59,41 @@ In 2026 I upgraded and refactored the project on my own:
   images, orders, payments and users, plus dashboard stats (users, orders,
   fulfilled orders, revenue)
 - **JSON API**: products (public), current user and own orders (token)
+
+## Architecture
+
+A Blade shop with a Filament admin panel; the JSON API is a small read-only
+extra. Controllers stay thin: they validate with a Form Request, check access
+with a policy and hand the work to an action or service.
+
+```
+request ─▶ Form Request ─▶ controller ─▶ policy (OrderPolicy)
+                                  └────▶ action (PlaceOrder, PayOrderByCard)
+                                              └──▶ Eloquent models ─▶ DB
+```
+
+- **Actions** (`app/Actions/Checkout`): `PlaceOrder` turns the session cart into
+  delivery details, a payment and order lines in one database transaction,
+  storing each line's unit price. It rejects an empty cart or products that are
+  no longer sold before writing anything. `PayOrderByCard` calls the mock
+  payment endpoint through Laravel's HTTP client (faked in tests) and records
+  the result on the payment and the order.
+- **Policies** (`app/Policies/OrderPolicy`): `view` lets customers see only
+  their own orders, on the web and in the API; other ids are a 404, so they
+  can't be probed. `pay` allows a card payment only for the customer's own
+  unpaid (or declined) order.
+- **Enums**: `OrderStatus` and `PaymentStatus` are backed by the stored strings
+  and carry their admin badge colours and shop badge classes.
+- **Shipping**: `ShippingCalculator` is the one shipping rule (rate and
+  threshold in `config/shop.php`), used by the checkout summary in
+  `CartService` and by `Order::costBreakdown()` for saved orders.
+- **Sanctum API** (`routes/api.php`, `app/Http/Controllers/JsonApi`): personal
+  access tokens from `POST /api/login`; products are public, `/api/user` and
+  `/api/orders` need a token. Responses go through API resources, and orders
+  use the same `OrderPolicy` as the shop.
+- **Filament admin** (`app/Filament`, `/admin`): resources for brands, products,
+  images, orders, payments and users, plus dashboard widgets. Only users with
+  the `Admin` role can open the panel (`User::canAccessPanel`).
 
 ## Running locally (SQLite)
 
@@ -126,8 +166,9 @@ php artisan test
 ```
 
 Tests run against an in-memory SQLite database (see `phpunit.xml`) and cover
-auth, catalogue filters, cart, checkout, profile/order access, every Filament
-resource page, product CRUD in the admin, and all API endpoints.
+auth, catalogue filters, cart, checkout, card payments (with the payment
+endpoint faked), malformed input, profile/order access, every Filament resource
+page, product CRUD in the admin, and all API endpoints.
 
 Static analysis runs Larastan (PHPStan) at level 8 with no baseline:
 
@@ -228,3 +269,4 @@ tests/Unit/                    ShippingCalculator
 - Card payments go to a mock endpoint; no real payment provider is integrated.
 - Shipping on saved orders is recalculated from the current shipping config;
   only the unit prices are stored per order.
+- Adding a product to the cart is still a GET link (`/products/{id}`).
