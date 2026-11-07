@@ -55,16 +55,42 @@ class CardPaymentTest extends TestCase
         $this->assertNull(session('payment_id'));
     }
 
-    public function test_a_declined_card_payment_marks_the_payment_failed(): void
+    public function test_a_declined_card_payment_can_be_retried(): void
     {
-        Http::fake(['run.mocky.io/*' => Http::response(['status' => 'declined'])]);
+        Http::fake(['run.mocky.io/*' => Http::sequence()
+            ->push(['status' => 'declined'])
+            ->push(['status' => 'success'])]);
         $order = $this->orderAwaitingCardPayment(User::factory()->create());
 
-        $this->post('/process-payment', self::CARD);
+        // Used to be a JSON 500 that left the customer unable to retry.
+        $this->from('/payment-details')
+            ->post('/process-payment', self::CARD)
+            ->assertRedirect('/payment-details')
+            ->assertSessionHasErrors('card_number');
 
         $order->refresh();
         $this->assertSame(OrderStatus::Pending, $order->status);
         $this->assertSame(PaymentStatus::Failed, $order->payment->status);
+
+        $this->get('/payment-details')->assertOk();
+        $this->post('/process-payment', self::CARD)->assertRedirect(route('paymentSuccess'));
+        $this->assertSame(PaymentStatus::Success, $order->fresh()->payment->status);
+    }
+
+    public function test_malformed_card_details_are_validation_errors(): void
+    {
+        $this->orderAwaitingCardPayment(User::factory()->create());
+
+        // Used to be 500s: preg_match() on an array in CardNumber, and
+        // explode()/list destructuring in ExpiryDate.
+        $this->from('/payment-details')
+            ->post('/process-payment', [...self::CARD, 'card_number' => ['4242'], 'expiry_date' => '1240'])
+            ->assertRedirect('/payment-details')
+            ->assertSessionHasErrors(['card_number', 'expiry_date']);
+
+        $this->from('/payment-details')
+            ->post('/process-payment', [...self::CARD, 'expiry_date' => ['12/40']])
+            ->assertSessionHasErrors('expiry_date');
     }
 
     public function test_an_unreachable_gateway_marks_the_payment_failed(): void
@@ -72,7 +98,7 @@ class CardPaymentTest extends TestCase
         Http::fake(['run.mocky.io/*' => Http::response('', 503)]);
         $order = $this->orderAwaitingCardPayment(User::factory()->create());
 
-        $this->post('/process-payment', self::CARD);
+        $this->post('/process-payment', self::CARD)->assertSessionHasErrors('card_number');
 
         $this->assertSame(PaymentStatus::Failed, $order->fresh()->payment->status);
     }

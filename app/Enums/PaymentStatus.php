@@ -16,6 +16,12 @@ enum PaymentStatus: string implements HasColor, HasLabel
     case Failed = 'Failed';
     case Refunded = 'Refunded';
 
+    /** Whether a card payment may still be made (first try or retry after a decline). */
+    public function isPayable(): bool
+    {
+        return in_array($this, [self::Processing, self::Failed], true);
+    }
+
     public function getLabel(): string
     {
         return $this->value;

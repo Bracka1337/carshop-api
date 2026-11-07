@@ -8,8 +8,11 @@ class ExpiryDate implements Rule
 {
     public function passes($attribute, $value)
     {
-        [$month, $year] = explode('/', $value);
+        if (! is_string($value) || preg_match('/^(\d{2})\/(\d{2})$/', $value, $parts) !== 1) {
+            return false;
+        }
 
+        [, $month, $year] = $parts;
         $year = '20'.$year;
 
         $currentMonth = date('m');
