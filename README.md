@@ -123,6 +123,9 @@ Tests run against an in-memory SQLite database (see `phpunit.xml`) and cover
 auth, catalogue filters, cart, checkout, profile/order access, every Filament
 resource page, product CRUD in the admin, and all API endpoints.
 
+GitHub Actions runs Pint (`vendor/bin/pint --test`), the asset build and the
+test suite on PHP 8.2 for every push to `main` and every pull request.
+
 ## Routes overview
 
 ### Web shop (session auth)
