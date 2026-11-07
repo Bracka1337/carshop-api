@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Web;
 
+use App\Enums\OrderStatus;
+use App\Enums\PaymentStatus;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
@@ -77,8 +79,8 @@ class CheckoutTest extends TestCase
             ->assertSessionMissing('cart');
 
         $order = Order::where('user_id', $user->id)->sole();
-        $this->assertSame('Processing', $order->status);
-        $this->assertSame('Processing', $order->payment->status);
+        $this->assertSame(OrderStatus::Processing, $order->status);
+        $this->assertSame(PaymentStatus::Processing, $order->payment->status);
         $this->assertSame('Riga', str($order->delivery_details->addr_line_1)->afterLast(', ')->toString());
         $this->assertDatabaseHas('product_quantities', [
             'order_id' => $order->id,
@@ -161,8 +163,8 @@ class CheckoutTest extends TestCase
         ]))->assertMethodNotAllowed();
 
         $order = Order::sole();
-        $this->assertSame('Processing', $order->status);
-        $this->assertSame('Processing', $order->payment->status);
+        $this->assertSame(OrderStatus::Processing, $order->status);
+        $this->assertSame(PaymentStatus::Processing, $order->payment->status);
     }
 
     public function test_checkout_forms_post_with_a_csrf_token(): void
@@ -180,5 +182,22 @@ class CheckoutTest extends TestCase
         $this->get('/payment-details')
             ->assertSee('action="'.route('processPayment').'" method="POST"', false)
             ->assertSee('name="_token"', false);
+    }
+
+    public function test_a_failed_checkout_leaves_no_partial_order(): void
+    {
+        $kept = $this->createProduct();
+        $gone = $this->createProduct();
+        $this->actingAs(User::factory()->create());
+        $this->cartWith($kept);
+        $this->cartWith($gone);
+        $gone->delete();
+
+        $this->post('/payment', $this->deliveryDetails());
+
+        $this->assertSame(0, Order::count());
+        $this->assertDatabaseCount('payments', 0);
+        $this->assertDatabaseCount('delivery_details', 0);
+        $this->assertDatabaseCount('product_quantities', 0);
     }
 }

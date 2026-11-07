@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\PaymentStatus;
 use App\Models\Payment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,7 +19,7 @@ class PaymentFactory extends Factory
     public function definition(): array
     {
         return [
-            'status' => fake()->randomElement(['Processing', 'Success', 'Unpaid', 'Failed', 'Refunded']),
+            'status' => fake()->randomElement(PaymentStatus::cases()),
             'date' => fake()->date(now()),
         ];
     }

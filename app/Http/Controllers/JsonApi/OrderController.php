@@ -4,9 +4,11 @@ namespace App\Http\Controllers\JsonApi;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Gate;
 
 class OrderController extends Controller
 {
@@ -28,10 +30,10 @@ class OrderController extends Controller
     /**
      * A single order; other users' orders are reported as not found.
      */
-    public function show(#[CurrentUser] User $user, string $order): OrderResource
+    public function show(Order $order): OrderResource
     {
-        $order = $user->orders()->with(self::RELATIONS)->findOrFail($order);
+        Gate::authorize('view', $order);
 
-        return new OrderResource($order);
+        return new OrderResource($order->load(self::RELATIONS));
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\PaymentStatus;
 use App\Filament\Resources\PaymentResource\Pages\EditPayment;
 use App\Filament\Resources\PaymentResource\Pages\ListPayments;
 use App\Models\Payment;
@@ -24,13 +25,7 @@ class PaymentResource extends Resource
     {
         return $schema
             ->components([
-                Select::make('status')->options([
-                    'Processing' => 'Processing',
-                    'Unpaid' => 'Unpaid',
-                    'Refunded' => 'Refunded',
-                    'Failed' => 'Failed',
-                    'Success' => 'Success',
-                ])->default('Default'),
+                Select::make('status')->options(PaymentStatus::class),
             ]);
     }
 
@@ -41,14 +36,7 @@ class PaymentResource extends Resource
                 TextColumn::make('id')->label('ID')->searchable(),
                 TextColumn::make('date')->label('Paid On'),
                 TextColumn::make('order.id')->label('Order ID'),
-                TextColumn::make('status')->label('Payment Status')->badge()->color(fn (string $state): string => match ($state) {
-                    'Processing' => 'gray',
-                    'Unpaid' => 'warning',
-                    'Refunded' => 'warning',
-                    'Failed' => 'danger',
-                    'Success' => 'success',
-                    default => 'gray',
-                }),
+                TextColumn::make('status')->label('Payment Status')->badge(),
             ])
             ->filters([
                 //

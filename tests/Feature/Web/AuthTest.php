@@ -113,4 +113,18 @@ class AuthTest extends TestCase
             ->get('/aboutus')
             ->assertSee('action="'.route('logout').'" method="POST"', false);
     }
+
+    public function test_registration_errors_are_reported_per_field(): void
+    {
+        User::factory()->create(['email' => 'taken@example.com']);
+
+        $this->from('/register')->post('/register', [
+            'name' => 'Jane',
+            'email' => 'taken@example.com',
+            'phone_nr' => '123',
+            'password' => 'secret123',
+            'password_confirmation' => 'different',
+        ])->assertSessionHasErrors(['email', 'phone_nr', 'password'])
+            ->assertSessionDoesntHaveErrors('default');
+    }
 }

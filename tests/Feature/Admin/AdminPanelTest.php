@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Admin;
 
+use App\Enums\OrderStatus;
+use App\Enums\PaymentStatus;
 use App\Filament\Resources\OrderResource\Pages\ListOrders;
 use App\Filament\Resources\PaymentResource\Pages\ListPayments;
 use App\Filament\Resources\ProductResource\Pages\CreateProduct;
@@ -38,7 +40,7 @@ class AdminPanelTest extends TestCase
     {
         $admin = $this->createAdmin();
         $product = $this->createProduct(['price' => 150]);
-        $this->createOrderFor($admin, [$product->id => 2])->update(['status' => 'Delivered']);
+        $this->createOrderFor($admin, [$product->id => 2])->update(['status' => OrderStatus::Delivered]);
 
         $this->actingAs($admin)->get('/admin')->assertOk();
 
@@ -158,17 +160,16 @@ class AdminPanelTest extends TestCase
         $this->assertSame(0, Product::count());
     }
 
-    public function test_admin_order_and_payment_lists_handle_any_status(): void
+    public function test_admin_order_list_shows_every_status(): void
     {
         $admin = $this->createAdmin();
         $product = $this->createProduct();
         // A failed card payment leaves the order "Pending", which has no badge colour of its own.
-        $this->createOrderFor($admin, [$product->id => 1], 'Failed')->update(['status' => 'Pending']);
-        $this->createOrderFor($admin, [$product->id => 2], 'Unknown');
+        $this->createOrderFor($admin, [$product->id => 1], PaymentStatus::Failed)->update(['status' => OrderStatus::Pending]);
 
         $this->actingAs($admin);
 
         Livewire::test(ListOrders::class)->assertOk()->assertSee('Pending');
-        Livewire::test(ListPayments::class)->assertOk()->assertSee('Unknown');
+        Livewire::test(ListPayments::class)->assertOk()->assertSee('Failed');
     }
 }

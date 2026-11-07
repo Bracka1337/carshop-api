@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductSearchRequest;
@@ -8,7 +8,7 @@ use App\Models\Brand;
 use App\Models\Product;
 use Illuminate\Contracts\View\View;
 
-class MainController extends Controller
+class CatalogueController extends Controller
 {
     public function __invoke(ProductSearchRequest $request): View
     {

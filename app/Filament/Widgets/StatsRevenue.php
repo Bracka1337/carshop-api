@@ -2,6 +2,7 @@
 
 namespace App\Filament\Widgets;
 
+use App\Enums\OrderStatus;
 use App\Models\Order;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
@@ -15,12 +16,12 @@ class StatsRevenue extends BaseWidget
     {
         $totalRevenue = DB::table('orders')
             ->join('product_quantities', 'orders.id', '=', 'product_quantities.order_id')
-            ->where('orders.status', 'Delivered')
+            ->where('orders.status', OrderStatus::Delivered)
             ->sum(DB::raw('product_quantities.unit_price * product_quantities.quantity'));
 
         return [
 
-            Stat::make('Oders Fulfilled', Order::where('status', 'Delivered')->count())
+            Stat::make('Oders Fulfilled', Order::where('status', OrderStatus::Delivered)->count())
                 ->chart([0, 0, 0, 10, 15, 25, 35])
                 ->color('success'),
             Stat::make('Revenue', '$'.number_format((float) $totalRevenue, 2))

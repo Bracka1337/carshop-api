@@ -2,6 +2,8 @@
 
 namespace Tests;
 
+use App\Enums\OrderStatus;
+use App\Enums\PaymentStatus;
 use App\Models\Brand;
 use App\Models\Delivery_details;
 use App\Models\Image;
@@ -44,10 +46,10 @@ abstract class TestCase extends BaseTestCase
     /**
      * @param  array<int, int>  $quantities  product_id => quantity
      */
-    protected function createOrderFor(User $user, array $quantities, string $paymentStatus = 'Processing'): Order
+    protected function createOrderFor(User $user, array $quantities, PaymentStatus $paymentStatus = PaymentStatus::Processing): Order
     {
         $order = Order::create([
-            'status' => 'Processing',
+            'status' => OrderStatus::Processing,
             'date' => now(),
             'user_id' => $user->id,
             'delivery_details_id' => Delivery_details::factory()->create()->id,

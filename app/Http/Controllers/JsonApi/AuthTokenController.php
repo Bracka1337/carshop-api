@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\JsonApi;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\CreateTokenRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Container\Attributes\CurrentUser;
@@ -17,13 +18,9 @@ class AuthTokenController extends Controller
     /**
      * Exchange email + password for a Sanctum personal access token.
      */
-    public function store(Request $request): JsonResponse
+    public function store(CreateTokenRequest $request): JsonResponse
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required', 'string'],
-            'device_name' => ['nullable', 'string', 'max:255'],
-        ]);
+        $credentials = $request->validated();
 
         $user = User::where('email', $credentials['email'])->first();
 
