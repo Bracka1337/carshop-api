@@ -26,7 +26,7 @@ class CartService
 
             $cart['total'] = number_format($totals['total'], 2, '.', '');
             $cart['tax'] = number_format($totals['tax'], 2, '.', '');
-            $cart['shipping'] = $totals['shipping'];
+            $cart['shipping'] = number_format($totals['shipping'], 2, '.', '');
             $cart['subtotal'] = number_format($totals['subtotal'], 2, '.', '');
 
             return $cart;
