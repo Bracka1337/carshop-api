@@ -24,9 +24,9 @@ class ProfileTest extends TestCase
         $this->actingAs($user)
             ->get('/profile')
             ->assertOk()
-            // 300 + 2% shipping (orders up to 1000)
+            // 300 + 10% shipping (below 1000)
             ->assertViewHas('orders', fn ($orders) => $orders->sole()->is($order)
-                && $orders->sole()->calculatedTotal === '306.00');
+                && $orders->sole()->calculatedTotal === '330.00');
     }
 
     public function test_a_user_can_view_their_own_order(): void

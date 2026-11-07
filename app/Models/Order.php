@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\ShippingCalculator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -40,7 +41,8 @@ class Order extends Model
 
     /**
      * Order totals: 21% VAT (included in prices, shown for information) and
-     * a 2% shipping fee for orders up to 1000. "total" includes shipping.
+     * shipping from ShippingCalculator, the same rule checkout uses.
+     * "total" includes shipping.
      *
      * @return array{subtotal: float, tax: float, shipping: float, total: float}
      */
@@ -50,7 +52,7 @@ class Order extends Model
             fn (Product_quantity $item) => $item->lineTotal()
         );
 
-        $shipping = $subtotal <= 1000 ? $subtotal * 0.02 : 0;
+        $shipping = app(ShippingCalculator::class)->cost($subtotal);
 
         return [
             'subtotal' => round($subtotal, 2),

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 class CartService
 {
+    public function __construct(private readonly ShippingCalculator $shipping) {}
+
     public function getCart(Request $request)
     {
         $cart = session()->get('cart');
@@ -14,7 +16,7 @@ class CartService
         if (! empty($cart) && $total > 0) {
             $total = (float) str_replace(',', '', $total);
             $tax = $total * 0.21;
-            $shipping = $total >= 1000 ? 0 : $total * 0.1;
+            $shipping = $this->shipping->cost($total);
 
             $cart['total'] = number_format($total + $shipping, 2, '.', '');
             $cart['tax'] = number_format($tax, 2, '.', '');

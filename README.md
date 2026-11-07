@@ -44,6 +44,9 @@ In 2026 I upgraded and refactored the project on my own:
 - **Checkout**: delivery details form, pay on delivery or card payment against a
   mock payment endpoint, order + payment records; each order line keeps the unit
   price paid, so later price changes don't alter past orders
+- **Shipping**: 10% of the subtotal below 1000, free from 1000; one
+  `ShippingCalculator` used by checkout and saved orders, configured in
+  `config/shop.php` (`SHOP_SHIPPING_RATE`, `SHOP_FREE_SHIPPING_FROM`)
 - **Accounts**: registration, login, profile with order history and order details
 - **Admin panel** (`/admin`, admin role only): CRUD for brands, products,
   images, orders, payments and users, plus dashboard stats (users, orders,
@@ -205,4 +208,5 @@ tests/Feature/           Web, Admin and Api feature tests
 ## Known limitations
 
 - Card payments go to a mock endpoint; no real payment provider is integrated.
-- Checkout shows 10% shipping below 1000, while saved orders use 2%.
+- Shipping on saved orders is recalculated from the current shipping config;
+  only the unit prices are stored per order.
