@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\UserResource\RelationManagers;
 
+use App\Enums\OrderStatus;
 use App\Models\User;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
@@ -23,12 +24,7 @@ class OrdersRelationManager extends RelationManager
         return $schema
             ->components([
                 Select::make('user_id')->relationship('user', 'email')->label('User Email')->searchable()->options(User::pluck('email', 'id')),
-                Select::make('status')->options([
-                    'Processing' => 'Processing',
-                    'Delivering' => 'Delivering',
-                    'Delivered' => 'Delivered',
-                    'Failed' => 'Failed',
-                ]),
+                Select::make('status')->options(OrderStatus::class),
             ]);
     }
 
@@ -40,13 +36,7 @@ class OrdersRelationManager extends RelationManager
                 TextColumn::make('user.email')->searchable(),
                 TextColumn::make('payment_id')->searchable(),
                 TextColumn::make('date')->dateTime(),
-                TextColumn::make('status')->badge()->color(fn (string $state): string => match ($state) {
-                    'Processing' => 'gray',
-                    'Delivering' => 'warning',
-                    'Delivered' => 'success',
-                    'Failed' => 'danger',
-                    default => 'gray',
-                }),
+                TextColumn::make('status')->badge(),
             ])
             ->filters([
                 //

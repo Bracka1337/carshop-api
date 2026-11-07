@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Api;
 
+use App\Enums\PaymentStatus;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
@@ -41,7 +42,7 @@ class OrderApiTest extends TestCase
     {
         $user = User::factory()->create();
         $product = $this->createProduct(['price' => 600]);
-        $order = $this->createOrderFor($user, [$product->id => 2], 'Success');
+        $order = $this->createOrderFor($user, [$product->id => 2], PaymentStatus::Success);
 
         Sanctum::actingAs($user);
 

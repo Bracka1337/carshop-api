@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Web;
 
+use App\Enums\OrderStatus;
+use App\Enums\PaymentStatus;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -43,8 +45,8 @@ class CardPaymentTest extends TestCase
         $this->post('/process-payment', self::CARD)->assertRedirect(route('paymentSuccess'));
 
         $order->refresh();
-        $this->assertSame('Delivering', $order->status);
-        $this->assertSame('Success', $order->payment->status);
+        $this->assertSame(OrderStatus::Delivering, $order->status);
+        $this->assertSame(PaymentStatus::Success, $order->payment->status);
         Http::assertSent(fn ($request) => $request['card_number'] === self::CARD['card_number']
             && $request['cvv'] === self::CARD['cvv']);
 
@@ -61,8 +63,8 @@ class CardPaymentTest extends TestCase
         $this->post('/process-payment', self::CARD);
 
         $order->refresh();
-        $this->assertSame('Pending', $order->status);
-        $this->assertSame('Failed', $order->payment->status);
+        $this->assertSame(OrderStatus::Pending, $order->status);
+        $this->assertSame(PaymentStatus::Failed, $order->payment->status);
     }
 
     public function test_an_unreachable_gateway_marks_the_payment_failed(): void
@@ -72,7 +74,7 @@ class CardPaymentTest extends TestCase
 
         $this->post('/process-payment', self::CARD);
 
-        $this->assertSame('Failed', $order->fresh()->payment->status);
+        $this->assertSame(PaymentStatus::Failed, $order->fresh()->payment->status);
     }
 
     public function test_the_success_page_needs_a_confirmed_payment(): void
@@ -80,5 +82,34 @@ class CardPaymentTest extends TestCase
         $this->actingAs(User::factory()->create())
             ->get('/paymentSuccess')
             ->assertRedirect(route('main'));
+    }
+
+    public function test_a_card_payment_cannot_target_another_users_order(): void
+    {
+        Http::fake(['run.mocky.io/*' => Http::response(['status' => 'success'])]);
+        $victim = $this->createOrderFor(User::factory()->create(), [$this->createProduct()->id => 1]);
+
+        $this->actingAs(User::factory()->create())
+            ->withSession(['order_id' => $victim->id, 'payment_id' => $victim->payment_id])
+            ->post('/process-payment', self::CARD)
+            ->assertNotFound();
+
+        $this->assertSame(OrderStatus::Processing, $victim->fresh()->status);
+        $this->assertSame(PaymentStatus::Processing, $victim->fresh()->payment->status);
+        Http::assertNothingSent();
+    }
+
+    public function test_a_paid_order_cannot_be_charged_again(): void
+    {
+        Http::fake(['run.mocky.io/*' => Http::response(['status' => 'success'])]);
+        $user = User::factory()->create();
+        $order = $this->createOrderFor($user, [$this->createProduct()->id => 1], PaymentStatus::Success);
+
+        $this->actingAs($user)
+            ->withSession(['order_id' => $order->id, 'payment_id' => $order->payment_id])
+            ->post('/process-payment', self::CARD)
+            ->assertForbidden();
+
+        Http::assertNothingSent();
     }
 }

@@ -155,7 +155,7 @@ pull request.
 | GET    | `/register`, `/login`          | Auth pages (POST to submit)                   |
 | POST   | `/logout`                      | Log out                                       |
 | GET    | `/profile`                     | Order history *(auth)*                        |
-| GET    | `/profile/orderdetails/{id}`   | One of your orders *(auth)*                   |
+| GET    | `/profile/orderdetails/{order}`| One of your orders *(auth)*                   |
 | GET    | `/checkout`                    | Delivery details form *(auth)*                |
 | POST   | `/payment`                     | Create the order *(auth)*                     |
 | GET    | `/payment-details`             | Card form for an unpaid order *(auth)*        |
@@ -207,13 +207,19 @@ curl -s -H "Authorization: Bearer $TOKEN" http://127.0.0.1:8000/api/orders
 ## Project layout
 
 ```
-app/Filament/            Admin panel resources, pages and widgets
-app/Http/Controllers/Api Web shop controllers (Blade views, session auth)
-app/Http/Controllers/JsonApi  JSON API controllers (Sanctum)
-app/Http/Resources/      API resources (Product, Order, User)
-app/Models/              Eloquent models (Product::filter, Order::costBreakdown)
-resources/views/         Blade templates
-tests/Feature/           Web, Admin and Api feature tests
+app/Actions/Checkout/          PlaceOrder, PayOrderByCard
+app/Enums/                     OrderStatus, PaymentStatus (badge colours included)
+app/Filament/                  Admin panel resources, pages and widgets
+app/Http/Controllers/Web/      Web shop controllers (Blade views, session auth)
+app/Http/Controllers/JsonApi/  JSON API controllers (Sanctum)
+app/Http/Requests/             Form Requests for every write route
+app/Http/Resources/            API resources (Product, Order, User)
+app/Models/                    Eloquent models (Product::filter, Order::costBreakdown)
+app/Policies/                  OrderPolicy (view, pay)
+app/Services/                  CartService (session cart), ShippingCalculator
+resources/views/               Blade templates
+tests/Feature/                 Web, Admin and Api feature tests
+tests/Unit/                    ShippingCalculator
 ```
 
 ## Known limitations

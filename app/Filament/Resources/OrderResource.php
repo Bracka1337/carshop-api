@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\OrderStatus;
+use App\Enums\PaymentStatus;
 use App\Filament\Resources\OrderResource\Pages\CreateOrder;
 use App\Filament\Resources\OrderResource\Pages\EditOrder;
 use App\Filament\Resources\OrderResource\Pages\ListOrders;
@@ -29,19 +31,8 @@ class OrderResource extends Resource
         return $schema
             ->components([
                 Select::make('user_id')->relationship('user', 'email')->label('User Email')->searchable()->options(User::pluck('email', 'id')),
-                Select::make('status')->options([
-                    'Processing' => 'Processing',
-                    'Delivering' => 'Delivering',
-                    'Delivered' => 'Delivered',
-                    'Failed' => 'Failed',
-                ]),
-                Select::make('payment.status')->label('Payment Status')->options([
-                    'Processing' => 'Processing',
-                    'Unpaid' => 'Unpaid',
-                    'Refunded' => 'Refunded',
-                    'Failed' => 'Failed',
-                    'Success' => 'Success',
-                ]),
+                Select::make('status')->options(OrderStatus::class),
+                Select::make('payment.status')->label('Payment Status')->options(PaymentStatus::class),
             ]);
     }
 
@@ -52,23 +43,10 @@ class OrderResource extends Resource
                 TextColumn::make('id')->label('ID')->searchable(),
                 TextColumn::make('user.email')->searchable(),
                 TextColumn::make('date')->dateTime(),
-                TextColumn::make('status')->badge()->color(fn (string $state): string => match ($state) {
-                    'Processing' => 'gray',
-                    'Delivering' => 'warning',
-                    'Delivered' => 'success',
-                    'Failed' => 'danger',
-                    default => 'gray',
-                }),
+                TextColumn::make('status')->badge(),
                 TextColumn::make('payment_id')->searchable(),
                 TextColumn::make('payment.date')->label('Paid On')->dateTime(),
-                TextColumn::make('payment.status')->label('Payment Status')->badge()->color(fn (string $state): string => match ($state) {
-                    'Processing' => 'gray',
-                    'Unpaid' => 'warning',
-                    'Refunded' => 'warning',
-                    'Failed' => 'danger',
-                    'Success' => 'success',
-                    default => 'gray',
-                }),
+                TextColumn::make('payment.status')->label('Payment Status')->badge(),
             ])
             ->filters([
                 //

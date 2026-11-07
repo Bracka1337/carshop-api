@@ -2,10 +2,11 @@
 
 namespace App\Services;
 
-use App\Models\User;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
+use App\Models\Product;
 
+/**
+ * The session cart: product id => item, plus a running "total" key.
+ */
 class CartService
 {
     public function __construct(private readonly ShippingCalculator $shipping) {}
@@ -36,33 +37,81 @@ class CartService
         return $cart;
     }
 
-    public function getCheckout(): View|RedirectResponse
+    /** Whether the cart has something to pay for. */
+    public function hasItems(): bool
     {
         $cart = $this->getCart();
 
-        if (! empty($cart) && $cart['total'] > 0) {
-            return view('checkout', ['cart' => $cart]);
-        }
-
-        return redirect()->route('main');
+        return ! empty($cart) && $cart['total'] > 0;
     }
 
-    public function getPaymentDetails(User $user): View|RedirectResponse
+    public function isEmpty(): bool
     {
-        $hasUnpaidOrder = $user->orders()
-            ->where('payment_id', session('payment_id'))
-            ->whereHas('payment', fn ($payment) => $payment->where('status', 'Processing'))
-            ->exists();
+        return empty(session()->get('cart', []));
+    }
 
-        if ($hasUnpaidOrder) {
-            $cart = $this->getCart();
-            $total = $cart['total'] ?? 0;
+    public function has(string $productId): bool
+    {
+        return isset(session()->get('cart', [])[$productId]);
+    }
 
-            if ($total > 0) {
-                return view('payment', ['cart' => $cart]);
-            }
+    public function add(Product $product): void
+    {
+        $cart = session()->get('cart', []);
+
+        if (isset($cart[$product->id])) {
+            $cart[$product->id]['quantity'] += 1;
+        } else {
+            $cart[$product->id] = [
+                'title' => $product->title,
+                'brand' => $product->brand?->title,
+                'quantity' => 1,
+                'price' => $product->price,
+                'image' => $product->images->first()?->img_uri,
+            ];
         }
 
-        return redirect()->route('main');
+        $this->save($cart);
+    }
+
+    /** Sets the quantity of an item already in the cart; 0 removes it. */
+    public function setQuantity(string $productId, float $quantity): void
+    {
+        $cart = session()->get('cart', []);
+
+        if ($quantity == 0) {
+            unset($cart[$productId]);
+        } else {
+            $cart[$productId]['quantity'] = $quantity;
+        }
+
+        $this->save($cart);
+    }
+
+    public function remove(string $productId): void
+    {
+        $cart = session()->get('cart', []);
+        unset($cart[$productId]);
+
+        $this->save($cart);
+    }
+
+    public function clear(): void
+    {
+        session()->forget(['cart', 'order_id', 'payment_id', 'delivery_details', 'payment_confirmed']);
+    }
+
+    /**
+     * @param  array<int|string, mixed>  $cart
+     */
+    private function save(array $cart): void
+    {
+        session()->put('cart', $cart);
+
+        $total = array_reduce($cart, function ($carry, $item) {
+            return is_array($item) ? $carry + $item['price'] * $item['quantity'] : $carry;
+        }, 0);
+
+        session()->put('cart.total', $total);
     }
 }
