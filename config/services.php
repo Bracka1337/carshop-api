@@ -31,4 +31,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    // Card payments are simulated unless an HTTP endpoint is configured (see PayOrderByCard).
+    'payment' => [
+        'endpoint' => env('PAYMENT_ENDPOINT'),
+    ],
+
 ];

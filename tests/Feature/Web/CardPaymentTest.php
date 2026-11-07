@@ -39,7 +39,8 @@ class CardPaymentTest extends TestCase
 
     public function test_a_successful_card_payment_pays_the_order(): void
     {
-        Http::fake(['run.mocky.io/*' => Http::response(['status' => 'success'])]);
+        config(['services.payment.endpoint' => 'https://payments.test/charge']);
+        Http::fake(['payments.test/*' => Http::response(['status' => 'success'])]);
         $order = $this->orderAwaitingCardPayment(User::factory()->create());
 
         $this->post('/process-payment', self::CARD)->assertRedirect(route('paymentSuccess'));
@@ -57,7 +58,8 @@ class CardPaymentTest extends TestCase
 
     public function test_a_declined_card_payment_can_be_retried(): void
     {
-        Http::fake(['run.mocky.io/*' => Http::sequence()
+        config(['services.payment.endpoint' => 'https://payments.test/charge']);
+        Http::fake(['payments.test/*' => Http::sequence()
             ->push(['status' => 'declined'])
             ->push(['status' => 'success'])]);
         $order = $this->orderAwaitingCardPayment(User::factory()->create());
@@ -95,7 +97,8 @@ class CardPaymentTest extends TestCase
 
     public function test_an_unreachable_gateway_marks_the_payment_failed(): void
     {
-        Http::fake(['run.mocky.io/*' => Http::response('', 503)]);
+        config(['services.payment.endpoint' => 'https://payments.test/charge']);
+        Http::fake(['payments.test/*' => Http::response('', 503)]);
         $order = $this->orderAwaitingCardPayment(User::factory()->create());
 
         $this->post('/process-payment', self::CARD)->assertSessionHasErrors('card_number');
@@ -112,7 +115,8 @@ class CardPaymentTest extends TestCase
 
     public function test_a_card_payment_cannot_target_another_users_order(): void
     {
-        Http::fake(['run.mocky.io/*' => Http::response(['status' => 'success'])]);
+        config(['services.payment.endpoint' => 'https://payments.test/charge']);
+        Http::fake(['payments.test/*' => Http::response(['status' => 'success'])]);
         $victim = $this->createOrderFor(User::factory()->create(), [$this->createProduct()->id => 1]);
 
         $this->actingAs(User::factory()->create())
@@ -127,7 +131,8 @@ class CardPaymentTest extends TestCase
 
     public function test_a_paid_order_cannot_be_charged_again(): void
     {
-        Http::fake(['run.mocky.io/*' => Http::response(['status' => 'success'])]);
+        config(['services.payment.endpoint' => 'https://payments.test/charge']);
+        Http::fake(['payments.test/*' => Http::response(['status' => 'success'])]);
         $user = User::factory()->create();
         $order = $this->createOrderFor($user, [$this->createProduct()->id => 1], PaymentStatus::Success);
 
@@ -136,6 +141,23 @@ class CardPaymentTest extends TestCase
             ->post('/process-payment', self::CARD)
             ->assertForbidden();
 
+        Http::assertNothingSent();
+    }
+
+    public function test_without_an_endpoint_payments_are_simulated(): void
+    {
+        Http::fake();
+        $order = $this->orderAwaitingCardPayment(User::factory()->create());
+
+        $this->from('/payment-details')
+            ->post('/process-payment', [...self::CARD, 'card_number' => '4000 0000 0000 0002'])
+            ->assertSessionHasErrors('card_number');
+        $this->assertSame(PaymentStatus::Failed, $order->fresh()->payment->status);
+
+        $this->post('/process-payment', self::CARD)->assertRedirect(route('paymentSuccess'));
+        $this->assertSame(PaymentStatus::Success, $order->fresh()->payment->status);
+
+        // The old mock endpoint (run.mocky.io) no longer answers; nothing is called now.
         Http::assertNothingSent();
     }
 }

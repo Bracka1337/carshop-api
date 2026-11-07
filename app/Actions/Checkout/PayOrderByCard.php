@@ -9,12 +9,16 @@ use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 
 /**
- * Charges an order's card against the mock payment endpoint and records the
- * outcome on the payment and the order.
+ * Charges an order's card and records the outcome on the payment and the order.
+ *
+ * No real payment provider is integrated. By default the charge is simulated:
+ * every valid card is approved except the test card 4000 0000 0000 0002,
+ * which is declined. When services.payment.endpoint is set, the card is sent
+ * to that HTTP endpoint instead, which answers {"status": "success"} to approve.
  */
 class PayOrderByCard
 {
-    private const ENDPOINT = 'https://run.mocky.io/v3/192c87e3-e951-4c7d-af1c-b70dea4de70b';
+    public const DECLINED_TEST_CARD = '4000000000000002';
 
     /**
      * @param  array<string, mixed>  $card  validated by CardPaymentRequest
@@ -35,8 +39,14 @@ class PayOrderByCard
      */
     private function charge(array $card): bool
     {
+        $endpoint = config('services.payment.endpoint');
+
+        if (! is_string($endpoint) || $endpoint === '') {
+            return str_replace(' ', '', (string) $card['card_number']) !== self::DECLINED_TEST_CARD;
+        }
+
         try {
-            $response = Http::post(self::ENDPOINT, [
+            $response = Http::timeout(10)->post($endpoint, [
                 'card_number' => $card['card_number'],
                 'expiry_date' => $card['expiry_date'],
                 'cvv' => $card['cvv'],
