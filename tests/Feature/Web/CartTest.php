@@ -112,4 +112,10 @@ class CartTest extends TestCase
 
         $this->postJson('/cart/update/999/1')->assertNotFound()->assertJson(['message' => 'Product not found in cart!']);
     }
+
+    public function test_pages_expose_the_csrf_token_for_the_cart_drawer(): void
+    {
+        // The drawer's fetch() reads this tag; without it every +/-/remove click threw.
+        $this->get('/')->assertSee('<meta name="csrf-token" content="', false);
+    }
 }

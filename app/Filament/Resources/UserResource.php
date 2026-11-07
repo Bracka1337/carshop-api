@@ -28,9 +28,9 @@ class UserResource extends Resource
         return $schema
             ->components([
                 TextInput::make('name')->required(),
-                TextInput::make('email')->required()->email(),
+                TextInput::make('email')->required()->email()->unique(ignoreRecord: true),
                 TextInput::make('password')->required()->password()->visibleOn('create'),
-                TextInput::make('phone_nr'),
+                TextInput::make('phone_nr')->unique(ignoreRecord: true),
                 Select::make('role')->options([
                     'Admin' => 'Admin',
                     'User' => 'User',

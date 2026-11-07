@@ -38,7 +38,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function closeModal(event) {
-    event.preventDefault();
     const productsDetailArr = Array.from(productsDetail);
     const productDetail = productsDetailArr.find((detail) => {
       return !detail.classList.contains("hidden");
@@ -54,6 +53,8 @@ document.addEventListener("DOMContentLoaded", function () {
         event.key === "Escape"
       ) {
         if (modal && productDetail) {
+          // Only cancel clicks that close the modal, so its add-to-cart form can submit.
+          event.preventDefault();
           modal.classList.add("hidden");
           productDetail.classList.add("hidden");
         }
@@ -464,6 +465,9 @@ if (cardNumberInput) {
   // checkout
   const dropdownButton = document.getElementById('dropdown-phone-button-3');
   const dropdownMenu = document.getElementById('dropdown-phone-3');
+
+  // The phone dropdown only exists on the checkout page.
+  if (dropdownButton && dropdownMenu) {
   const dropdownItems = dropdownMenu.querySelectorAll('.dropdown-item');
 
   dropdownButton.addEventListener('click', function() {
@@ -484,6 +488,7 @@ if (cardNumberInput) {
       dropdownMenu.classList.add('hidden');
     }
   });
+  }
 }
 
 const cardExpirationInput = document.getElementById('card-expiration-input');

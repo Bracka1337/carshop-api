@@ -80,7 +80,7 @@ class OrderLinePriceTest extends TestCase
         $product = $this->createProduct(['price' => 75.5]);
         $order = $this->createOrderFor(User::factory()->create(), [$product->id => 2]);
 
-        Artisan::call('migrate:rollback', ['--step' => 1]);
+        Artisan::call('migrate:rollback', ['--path' => 'database/migrations/2026_11_07_000000_add_unit_price_to_product_quantities_table.php']);
         $this->assertFalse(DB::getSchemaBuilder()->hasColumn('product_quantities', 'unit_price'));
 
         Artisan::call('migrate');
