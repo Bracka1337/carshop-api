@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Services\TotalsCalculator;
-use Database\Factories\Product_quantityFactory;
+use Database\Factories\OrderLineFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,10 +12,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * One order line: a product, how many, and the unit price at the time of the order.
  */
-class Product_quantity extends Model
+class OrderLine extends Model
 {
-    /** @use HasFactory<Product_quantityFactory> */
+    /** @use HasFactory<OrderLineFactory> */
     use HasFactory, SoftDeletes;
+
+    protected $table = 'product_quantities';
 
     protected $fillable = [
         'quantity',
@@ -36,7 +38,7 @@ class Product_quantity extends Model
     {
         // Lines created without an explicit price (admin panel, seeder)
         // take the product's current price.
-        static::creating(function (Product_quantity $line) {
+        static::creating(function (OrderLine $line) {
             if (($line->getAttributes()['unit_price'] ?? null) === null) {
                 $line->unit_price = Product::withTrashed()->findOrFail($line->product_id)->price;
             }

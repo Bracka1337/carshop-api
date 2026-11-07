@@ -7,7 +7,7 @@ use App\Filament\Resources\BrandResource\Pages\CreateBrand;
 use App\Filament\Resources\ImageResource\Pages\CreateImage;
 use App\Filament\Resources\OrderResource\Pages\EditOrder;
 use App\Filament\Resources\OrderResource\RelationManagers\DeliveryDetailsRelationManager;
-use App\Filament\Resources\OrderResource\RelationManagers\ProductQuantitiesRelationManager;
+use App\Filament\Resources\OrderResource\RelationManagers\OrderLinesRelationManager;
 use App\Filament\Resources\UserResource\Pages\CreateUser;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -31,7 +31,7 @@ class AdminFormsTest extends TestCase
         $this->createProduct(['title' => 'Filler'], $this->createBrand('Filler'));
         $chosen = $this->createProduct(['price' => 250], $this->createBrand('OZ'));
 
-        Livewire::test(ProductQuantitiesRelationManager::class, ['ownerRecord' => $order, 'pageClass' => EditOrder::class])
+        Livewire::test(OrderLinesRelationManager::class, ['ownerRecord' => $order, 'pageClass' => EditOrder::class])
             ->callTableAction('create', data: ['product_id' => $chosen->id, 'quantity' => 2])
             ->assertHasNoTableActionErrors();
 
@@ -47,8 +47,8 @@ class AdminFormsTest extends TestCase
     {
         $order = $this->createOrderFor(User::factory()->create(), [$this->createProduct()->id => 1]);
 
-        Livewire::test(ProductQuantitiesRelationManager::class, ['ownerRecord' => $order, 'pageClass' => EditOrder::class])
-            ->callTableAction('create', data: ['product_id' => $order->productQuantities()->value('product_id'), 'quantity' => 'abc'])
+        Livewire::test(OrderLinesRelationManager::class, ['ownerRecord' => $order, 'pageClass' => EditOrder::class])
+            ->callTableAction('create', data: ['product_id' => $order->lines()->value('product_id'), 'quantity' => 'abc'])
             ->assertHasTableActionErrors(['quantity']);
     }
 
@@ -67,7 +67,7 @@ class AdminFormsTest extends TestCase
     public function test_delivery_details_accept_the_values_checkout_stores(): void
     {
         $order = $this->createOrderFor(User::factory()->create(), [$this->createProduct()->id => 1]);
-        $details = $order->delivery_details;
+        $details = $order->deliveryDetails;
 
         Livewire::test(DeliveryDetailsRelationManager::class, ['ownerRecord' => $order, 'pageClass' => EditOrder::class])
             ->callTableAction('edit', $details, data: ['payment_method' => 'pay-on-delivery', 'delivery_method' => 'express'])

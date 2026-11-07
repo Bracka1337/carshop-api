@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Gate;
 
 class OrderController extends Controller
 {
-    private const RELATIONS = ['payment', 'delivery_details', 'productQuantities.product'];
+    private const RELATIONS = ['payment', 'deliveryDetails', 'lines.product'];
 
     /**
      * The authenticated user's orders, newest first.

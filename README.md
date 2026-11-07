@@ -259,12 +259,12 @@ app/Http/Controllers/Web/      Web shop controllers (Blade views, session auth)
 app/Http/Controllers/JsonApi/  JSON API controllers (Sanctum)
 app/Http/Requests/             Form Requests for every write route
 app/Http/Resources/            API resources (Product, Order, User)
-app/Models/                    Eloquent models (Product::filter, Order::costBreakdown)
+app/Models/                    Eloquent models (Order, OrderLine, DeliveryDetail, Payment, Product, …)
 app/Policies/                  OrderPolicy (view, pay)
-app/Services/                  CartService (session cart), ShippingCalculator
+app/Services/                  CartService (session cart), TotalsCalculator, ShippingCalculator
 resources/views/               Blade templates
 tests/Feature/                 Web, Admin and Api feature tests
-tests/Unit/                    ShippingCalculator
+tests/Unit/                    TotalsCalculator, ShippingCalculator
 ```
 
 ## Known limitations

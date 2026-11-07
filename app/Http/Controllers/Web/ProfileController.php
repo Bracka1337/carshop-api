@@ -12,7 +12,7 @@ class ProfileController extends Controller
 {
     public function show(#[CurrentUser] User $user): View
     {
-        $orders = $user->orders()->with(['payment', 'productQuantities.product.images'])->get();
+        $orders = $user->orders()->with(['payment', 'lines.product.images'])->get();
 
         $totals = $orders->mapWithKeys(fn (Order $order) => [
             $order->id => number_format($order->costBreakdown()['total'], 2),

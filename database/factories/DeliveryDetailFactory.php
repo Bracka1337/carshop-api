@@ -4,13 +4,13 @@ namespace Database\Factories;
 
 use App\Enums\DeliveryMethod;
 use App\Enums\PaymentMethod;
-use App\Models\Delivery_details;
+use App\Models\DeliveryDetail;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Delivery_details>
+ * @extends Factory<DeliveryDetail>
  */
-class Delivery_detailsFactory extends Factory
+class DeliveryDetailFactory extends Factory
 {
     /**
      * Define the model's default state.

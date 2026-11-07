@@ -23,7 +23,7 @@ class AuthController extends Controller
         // The password is hashed by the model's "hashed" cast.
         User::create([...$request->validated(), 'role' => 'User']);
 
-        return redirect()->route('login')->with('success', 'Registered Sucessfully!');
+        return redirect()->route('login')->with('success', 'Registered successfully!');
     }
 
     public function showLogin(): View

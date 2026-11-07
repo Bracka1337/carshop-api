@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\OrderStatus;
-use App\Models\Delivery_details;
+use App\Models\DeliveryDetail;
 use App\Models\Order;
 use App\Models\Payment;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -23,7 +23,7 @@ class OrderFactory extends Factory
         return [
             'status' => fake()->randomElement(OrderStatus::cases()),
             'date' => fake()->date(now()),
-            'delivery_details_id' => Delivery_details::factory(),
+            'delivery_details_id' => DeliveryDetail::factory(),
             'payment_id' => Payment::factory(),
         ];
     }

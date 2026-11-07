@@ -6,8 +6,8 @@ namespace Database\Seeders;
 use App\Models\Brand;
 use App\Models\Image;
 use App\Models\Order;
+use App\Models\OrderLine;
 use App\Models\Product;
-use App\Models\Product_quantity;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
 
         User::factory() // seed db with random users with orders et.c.
             ->has(Order::factory()->count(rand(1, 20))
-                ->has(Product_quantity::factory()->count(3)))
+                ->has(OrderLine::factory()->count(3), 'lines'))
             ->count(10)->create();
     }
 }

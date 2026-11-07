@@ -8,7 +8,7 @@ use App\Filament\Resources\OrderResource\Pages\CreateOrder;
 use App\Filament\Resources\OrderResource\Pages\EditOrder;
 use App\Filament\Resources\OrderResource\Pages\ListOrders;
 use App\Filament\Resources\OrderResource\RelationManagers\DeliveryDetailsRelationManager;
-use App\Filament\Resources\OrderResource\RelationManagers\ProductQuantitiesRelationManager;
+use App\Filament\Resources\OrderResource\RelationManagers\OrderLinesRelationManager;
 use App\Models\Order;
 use App\Models\User;
 use Filament\Actions\BulkActionGroup;
@@ -68,7 +68,7 @@ class OrderResource extends Resource
     {
         return [
             DeliveryDetailsRelationManager::class,
-            ProductQuantitiesRelationManager::class,
+            OrderLinesRelationManager::class,
         ];
     }
 

@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
-use Database\Factories\Delivery_detailsFactory;
+use Database\Factories\DeliveryDetailFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Delivery_details extends Model
+class DeliveryDetail extends Model
 {
-    /** @use HasFactory<Delivery_detailsFactory> */
+    /** @use HasFactory<DeliveryDetailFactory> */
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
