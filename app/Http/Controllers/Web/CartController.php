@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Services\CartService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
@@ -19,19 +20,26 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Product added successfully!');
     }
 
-    public function updateCart(string $id, string $quantity): RedirectResponse
+    /** Called by the cart drawer with fetch (JSON) or by a plain form post (redirect). */
+    public function updateCart(Request $request, string $id, string $quantity): RedirectResponse|JsonResponse
     {
-        if ($this->cart->isEmpty()) {
-            return redirect()->back()->with('error', 'Cart is empty!');
-        }
+        $error = match (true) {
+            $this->cart->isEmpty() => 'Cart is empty!',
+            ! $this->cart->has($id) => 'Product not found in cart!',
+            default => null,
+        };
 
-        if (! $this->cart->has($id)) {
-            return redirect()->back()->with('error', 'Product not found in cart!');
+        if ($error !== null) {
+            return $request->wantsJson()
+                ? response()->json(['message' => $error], 404)
+                : redirect()->back()->with('error', $error);
         }
 
         $this->cart->setQuantity($id, (float) $quantity);
 
-        return redirect()->back()->with('success', 'Cart updated successfully!');
+        return $request->wantsJson()
+            ? response()->json(['message' => 'Cart updated successfully!', 'total' => session('cart.total')])
+            : redirect()->back()->with('success', 'Cart updated successfully!');
     }
 
     public function removeFromCart(string $id): JsonResponse

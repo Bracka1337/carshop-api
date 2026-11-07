@@ -29,6 +29,14 @@ class Product extends Model
         'brand_id',
     ];
 
+    /** Public URL of the first image, or null when the product has none. */
+    public function imageUrl(): ?string
+    {
+        $image = $this->images->first();
+
+        return $image ? asset('storage/'.$image->img_uri) : null;
+    }
+
     /** @return BelongsTo<Brand, $this> */
     public function brand(): BelongsTo
     {

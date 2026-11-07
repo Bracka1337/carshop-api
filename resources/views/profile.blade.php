@@ -30,7 +30,11 @@
                     @endphp
                         <a href="{{ route('orderdetails', $order) }}"><li class="hover:bg-indigo-200 rounded-lg flex items-center ">
                             <div class=" p-4">
-                                <img class =" w-30 rounded-lg" src="{{ asset('/storage/' . $order->lines[0]->product->images[0]->img_uri ) }} " alt="Product Image" class="object-cover w-full h-full rounded-lg shadow-md">
+                                @if ($imageUrl = $order->lines->first()?->product->imageUrl())
+                                    <img class="w-30 rounded-lg object-cover shadow-md" src="{{ $imageUrl }}" alt="Product Image">
+                                @else
+                                    <div class="h-20 w-20 rounded-lg bg-gray-100"></div>
+                                @endif
                             </div>
                             <div class="flex w-full items-center justify-between">
                                 <div class="d">              

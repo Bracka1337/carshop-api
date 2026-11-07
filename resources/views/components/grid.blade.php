@@ -12,7 +12,11 @@
                         <div class="flex flex-col hover:cursor-pointer" id="product" product-id="{{ $product->id }}">
                             <div class="h-auto overflow-hidden">
                                 <div class="h-44 overflow-hidden relative">
-                                    <img src="{{ asset('/storage/' . $product->images[0]->img_uri ) }}" alt="{{ $product->title }}">
+                                    @if ($imageUrl = $product->imageUrl())
+                                        <img src="{{ $imageUrl }}" alt="{{ $product->title }}">
+                                    @else
+                                        <div class="h-full w-full bg-gray-100"></div>
+                                    @endif
                                 </div>
                             </div>
                             <div class="bg-white flex flex-col justify-between flex-grow py-4 px-3">
