@@ -2,29 +2,23 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\EditAction;
+use App\Filament\Resources\PaymentResource\Pages\EditPayment;
+use App\Filament\Resources\PaymentResource\Pages\ListPayments;
+use App\Models\Payment;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
-use App\Filament\Resources\PaymentResource\Pages\ListPayments;
-use App\Filament\Resources\PaymentResource\Pages\EditPayment;
-use App\Filament\Resources\PaymentResource\Pages;
-use App\Filament\Resources\PaymentResource\RelationManagers;
-use App\Models\Payment;
-use Filament\Forms;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 
 class PaymentResource extends Resource
 {
     protected static ?string $model = Payment::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-credit-card';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-credit-card';
 
     public static function form(Schema $schema): Schema
     {
@@ -35,7 +29,7 @@ class PaymentResource extends Resource
                     'Unpaid' => 'Unpaid',
                     'Refunded' => 'Refunded',
                     'Failed' => 'Failed',
-                    'Success'=> 'Success',
+                    'Success' => 'Success',
                 ])->default('Default'),
             ]);
     }
@@ -52,7 +46,7 @@ class PaymentResource extends Resource
                     'Unpaid' => 'warning',
                     'Refunded' => 'warning',
                     'Failed' => 'danger',
-                    'Success'=> 'success',
+                    'Success' => 'success',
                 }),
             ])
             ->filters([

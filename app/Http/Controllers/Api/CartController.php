@@ -3,20 +3,19 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Services\CartService;
-
+use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-
     protected $cartService;
 
     public function __construct(CartService $cartService)
     {
         $this->cartService = $cartService;
     }
+
     public function addProductsToCart($id)
     {
         $product = Product::findOrFail($id);
@@ -54,7 +53,7 @@ class CartController extends Controller
             if ($quantity == 0) {
                 unset($cart[$id]);
             } else {
-                $cart[$id]['quantity'] = (float)$quantity;
+                $cart[$id]['quantity'] = (float) $quantity;
             }
 
             session()->put('cart', $cart);
@@ -89,7 +88,7 @@ class CartController extends Controller
     {
         $cart = session()->get('cart', []);
 
-        $total = array_reduce($cart, function($carry, $item) {
+        $total = array_reduce($cart, function ($carry, $item) {
             return is_array($item) ? $carry + $item['price'] * $item['quantity'] : $carry;
         }, 0);
 

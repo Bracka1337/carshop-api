@@ -28,6 +28,4 @@ class Delivery_details extends Model
     {
         return $this->hasOne(Order::class, 'id');
     }
-
-
 }

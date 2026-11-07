@@ -21,4 +21,3 @@ class CreateBrandsTable extends Migration
         Schema::dropIfExists('brands');
     }
 }
-

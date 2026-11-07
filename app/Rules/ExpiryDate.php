@@ -8,9 +8,9 @@ class ExpiryDate implements Rule
 {
     public function passes($attribute, $value)
     {
-         list($month, $year) = explode('/', $value);
+        [$month, $year] = explode('/', $value);
 
-        $year = '20' . $year;
+        $year = '20'.$year;
 
         $currentMonth = date('m');
         $currentYear = date('Y');

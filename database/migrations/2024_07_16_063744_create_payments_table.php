@@ -9,7 +9,7 @@ class CreatePaymentsTable extends Migration
     public function up()
     {
         Schema::create('payments', function (Blueprint $table) {
-            $table->id();  
+            $table->id();
             $table->string('status');
             $table->dateTime('date');
             $table->timestamps();
@@ -22,4 +22,3 @@ class CreatePaymentsTable extends Migration
         Schema::dropIfExists('payments');
     }
 }
-

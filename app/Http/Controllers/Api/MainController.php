@@ -4,17 +4,16 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductSearchRequest;
-use Illuminate\Http\Request;
-use App\Models\Product;
 use App\Models\Brand;
-use App\Models\User;
+use App\Models\Product;
+use Illuminate\Http\Request;
 
 class MainController extends Controller
 {
     public function __invoke(ProductSearchRequest $request)
     {
-        $initialProducts = $request->all() ? 
-            Product::filter($request->validated())->with("images")->paginate(12)->withQueryString() :
+        $initialProducts = $request->all() ?
+            Product::filter($request->validated())->with('images')->paginate(12)->withQueryString() :
             Product::with('images')->paginate(12);
 
         $searchParameters = $this->getSearchParameters();
@@ -33,7 +32,7 @@ class MainController extends Controller
             'bolt_diameter' => 'bolt_diameter',
         ];
 
-        $searchParameters = array_map(function($param) {
+        $searchParameters = array_map(function ($param) {
             return Product::select($param)->where($param, '>', 0)->distinct()->get()->sortBy($param);
         }, $parameters);
 
@@ -54,9 +53,4 @@ class MainController extends Controller
 
         return $products;
     }
-
-
-
-   
-
 }

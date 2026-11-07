@@ -15,9 +15,9 @@ class CardNumber implements Rule
      */
     public function passes($attribute, $value)
     {
-         $value = str_replace(' ', '', $value);
-        
-         return preg_match('/^\d{16}$/', $value);
+        $value = str_replace(' ', '', $value);
+
+        return preg_match('/^\d{16}$/', $value);
     }
 
     /**

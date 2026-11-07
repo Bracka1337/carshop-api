@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\Payment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Payment>
+ * @extends Factory<Payment>
  */
 class PaymentFactory extends Factory
 {
@@ -16,7 +17,7 @@ class PaymentFactory extends Factory
      */
     public function definition(): array
     {
-        return [ 
+        return [
             'status' => fake()->randomElement(['Processing', 'Success', 'Unpaid', 'Failed', 'Refunded']),
             'date' => fake()->date(now()),
         ];

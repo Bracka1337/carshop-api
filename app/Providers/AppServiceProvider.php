@@ -2,12 +2,12 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use App\Models\User;
+use App\Services\CartService;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\URL;
-use App\Models\User;
-use App\Services\CartService;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         $this->app->singleton(CartService::class, function ($app) {
-            return new CartService();
+            return new CartService;
         });
     }
 
@@ -31,8 +31,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Blade::component('layouts.app', 'app-layout');
-        Blade::component('admin.layouts.admin','admin-layout');
-        //needs to be included in the blade file
+        Blade::component('admin.layouts.admin', 'admin-layout');
+        // needs to be included in the blade file
 
         Gate::define('admin-access', function (User $user) {
             return $user->role === 'Admin';

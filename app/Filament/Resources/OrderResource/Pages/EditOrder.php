@@ -2,9 +2,8 @@
 
 namespace App\Filament\Resources\OrderResource\Pages;
 
-use Filament\Actions\DeleteAction;
 use App\Filament\Resources\OrderResource;
-use Filament\Actions;
+use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditOrder extends EditRecord

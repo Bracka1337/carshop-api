@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use GuzzleHttp\Client;
+use App\Models\Order;
+use App\Models\Payment;
 use App\Rules\CardNumber;
 use App\Rules\ExpiryDate;
-use App\Models\Payment;
-use App\Models\Order;
+use GuzzleHttp\Client;
+use Illuminate\Http\Request;
 
 class FakePaymentController extends Controller
 {
@@ -22,7 +22,7 @@ class FakePaymentController extends Controller
         ]);
 
         $mockyUrl = 'https://run.mocky.io/v3/192c87e3-e951-4c7d-af1c-b70dea4de70b';
-        $client = new Client();
+        $client = new Client;
 
         try {
             $response = $client->post($mockyUrl, [
@@ -30,7 +30,7 @@ class FakePaymentController extends Controller
                     'card_number' => $request->input('card_number'),
                     'expiry_date' => $request->input('expiry_date'),
                     'cvv' => $request->input('cvv'),
-                ]
+                ],
             ]);
 
             $responseBody = json_decode($response->getBody(), true);

@@ -2,10 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\Delivery_details;
+use App\Models\Order;
+use App\Models\Payment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Order>
+ * @extends Factory<Order>
  */
 class OrderFactory extends Factory
 {
@@ -17,10 +20,10 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'status' => fake()->randomElement(['Processing','Delivered', 'Delivering', 'Failed']),
+            'status' => fake()->randomElement(['Processing', 'Delivered', 'Delivering', 'Failed']),
             'date' => fake()->date(now()),
-            'delivery_details_id' => \App\Models\Delivery_details::factory(),
-            'payment_id' => \App\Models\Payment::factory(),
+            'delivery_details_id' => Delivery_details::factory(),
+            'payment_id' => Payment::factory(),
         ];
     }
 }
