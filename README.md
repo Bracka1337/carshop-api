@@ -51,9 +51,11 @@ In 2026 I upgraded and refactored the project on my own:
   mock payment endpoint, order + payment records; each order line keeps the unit
   price paid, so later price changes don't alter past orders; a declined card
   returns to the card form with an error and can be retried
-- **Shipping**: 10% of the subtotal below 1000, free from 1000; one
+- **Shipping**: 10% of the items total below 1000, free from 1000; one
   `ShippingCalculator` used by checkout and saved orders, configured in
   `config/shop.php` (`SHOP_SHIPPING_RATE`, `SHOP_FREE_SHIPPING_FROM`)
+- **VAT**: prices include 21% VAT (`SHOP_VAT_RATE`). Checkout, order pages and
+  the API show the same breakdown: subtotal without VAT + VAT + shipping = total
 - **Accounts**: registration, login, profile with order history and order details
 - **Admin panel** (`/admin`, admin role only): CRUD for brands, products,
   images, orders, payments and users, plus dashboard stats (users, orders,
@@ -84,9 +86,10 @@ request ─▶ Form Request ─▶ controller ─▶ policy (OrderPolicy)
   unpaid (or declined) order.
 - **Enums**: `OrderStatus` and `PaymentStatus` are backed by the stored strings
   and carry their admin badge colours and shop badge classes.
-- **Shipping**: `ShippingCalculator` is the one shipping rule (rate and
-  threshold in `config/shop.php`), used by the checkout summary in
-  `CartService` and by `Order::costBreakdown()` for saved orders.
+- **Totals**: `TotalsCalculator` works out the VAT included in prices and uses
+  `ShippingCalculator`, the one shipping rule (rates and threshold in
+  `config/shop.php`). The checkout summary in `CartService` and
+  `Order::costBreakdown()` for saved orders both go through it.
 - **Sanctum API** (`routes/api.php`, `app/Http/Controllers/JsonApi`): personal
   access tokens from `POST /api/login`; products are public, `/api/user` and
   `/api/orders` need a token. Responses go through API resources, and orders

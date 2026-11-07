@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\User;
 use App\Services\CartService;
 use App\Services\ShippingCalculator;
+use App\Services\TotalsCalculator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
@@ -19,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(ShippingCalculator::class, fn () => ShippingCalculator::fromConfig());
+        $this->app->singleton(TotalsCalculator::class, fn ($app) => TotalsCalculator::fromConfig($app->make(ShippingCalculator::class)));
         $this->app->singleton(CartService::class);
     }
 

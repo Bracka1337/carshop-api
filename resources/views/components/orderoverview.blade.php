@@ -84,7 +84,7 @@
                             </div>
                             <div class="flex items-center justify-end">
                                 <p class="font-medium text-lg leading-7 text-indigo-600">
-                                    ${{ number_format($productQuantity->lineTotal() * 0.79, 2) }}</p>
+                                    ${{ number_format($productQuantity->lineTotalWithoutVat(), 2) }}</p>
                             </div>
                         </div>
                     </div>
