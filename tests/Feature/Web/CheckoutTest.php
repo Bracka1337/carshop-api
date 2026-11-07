@@ -273,4 +273,25 @@ class CheckoutTest extends TestCase
             ->assertSeeInOrder(['value="dhl"', DeliveryMethod::Dhl->getLabel(), 'value="express"', DeliveryMethod::Express->getLabel()], false)
             ->assertDontSee('require an account');
     }
+
+    public function test_a_local_phone_number_gets_the_chosen_dialling_code(): void
+    {
+        $product = $this->createProduct();
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $this->cartWith($product);
+
+        // The form posts the number as typed plus the picked code. The script that
+        // joined them ran on the navbar's logout form, so checkout failed validation.
+        $this->post('/payment', $this->deliveryDetails(['phone' => '20000000', 'country_code' => '+371']))
+            ->assertRedirect(route('main'))
+            ->assertSessionHasNoErrors();
+
+        $this->assertSame(1, Order::where('user_id', $user->id)->count());
+
+        $this->cartWith($product);
+        $this->from('/checkout')
+            ->post('/payment', $this->deliveryDetails(['phone' => '20000000', 'country_code' => 'abc']))
+            ->assertSessionHasErrors('phone');
+    }
 }

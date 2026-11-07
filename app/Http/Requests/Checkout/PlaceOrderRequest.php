@@ -21,6 +21,22 @@ class PlaceOrderRequest extends FormRequest
     }
 
     /**
+     * The form sends the dialling code picked in the phone field separately
+     * (country_code); a local number gets it prepended before validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        $phone = $this->input('phone');
+        $code = $this->input('country_code');
+
+        if (is_string($phone) && is_string($code)
+            && preg_match('/^\+\d{1,4}$/', $code) === 1
+            && $phone !== '' && ! str_starts_with(ltrim($phone), '+')) {
+            $this->merge(['phone' => $code.ltrim($phone)]);
+        }
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, ValidationRule|array<mixed>|string>
