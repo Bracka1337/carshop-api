@@ -543,10 +543,4 @@
         document.getElementById('selected-country-code').innerHTML = code;
         document.getElementById('country-code').value = code;
     }
-
-    document.querySelector('form').addEventListener('submit', function(event) {
-        const countryCode = document.getElementById('country-code').value;
-        const phoneInput = document.getElementById('phone-input');
-        phoneInput.value = countryCode + phoneInput.value;
-    });
 </script>
