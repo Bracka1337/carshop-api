@@ -17,7 +17,7 @@ place**. The commit history includes everyone's work.
 
 In 2026 I upgraded and refactored the project on my own:
 
-- Laravel 10 → 11 → 12 and Filament 3 → 4, following the official upgrade guides
+- Laravel 10 → 11 → 12 → 13 and Filament 3 → 4, following the official upgrade guides
 - removed the committed `vendor/` directory and build output from git
 - updated PHP and JS dependencies until `composer audit` and `npm audit` were clean
 - replaced the unused Passport setup with Sanctum and a small read-only JSON API
@@ -33,12 +33,12 @@ In 2026 I upgraded and refactored the project on my own:
 
 | Layer      | Tech                                                         |
 | ---------- | ------------------------------------------------------------ |
-| Backend    | PHP 8.2+, Laravel 12, Eloquent, Blade                        |
+| Backend    | PHP 8.3+, Laravel 13, Eloquent, Blade                        |
 | Admin      | Filament 4 (Livewire 3)                                      |
 | API auth   | Laravel Sanctum personal access tokens                       |
 | Frontend   | Vite 8, Tailwind CSS 3, Flowbite                             |
 | Database   | MySQL (Docker) or SQLite (local)                             |
-| Tests      | PHPUnit 11, Laravel HTTP & Livewire testing, ParaTest        |
+| Tests      | PHPUnit 12, Laravel HTTP & Livewire testing, ParaTest        |
 | Quality    | Larastan (PHPStan level 8), Pint, GitHub Actions CI          |
 | Infra      | Docker Compose: PHP-FPM, nginx, MySQL                        |
 
@@ -97,7 +97,7 @@ request ─▶ Form Request ─▶ controller ─▶ policy (OrderPolicy)
 
 ## Running locally (SQLite)
 
-Requirements: PHP 8.2+ (with `pdo_sqlite`, `intl`, `zip`, `mbstring`),
+Requirements: PHP 8.3+ (with `pdo_sqlite`, `intl`, `zip`, `mbstring`),
 Composer 2, Node.js 20.19+ or 22.12+.
 
 ```bash
@@ -180,7 +180,7 @@ Outside production, Eloquent runs in strict mode (`Model::shouldBeStrict()`), so
 lazy loading (N+1 queries) and missing attributes fail the tests.
 
 GitHub Actions runs Pint (`vendor/bin/pint --test`), PHPStan, the asset build
-and the test suite (in parallel) on PHP 8.2 for every push to `main` and every
+and the test suite (in parallel) on PHP 8.3 for every push to `main` and every
 pull request.
 
 ## Routes overview
