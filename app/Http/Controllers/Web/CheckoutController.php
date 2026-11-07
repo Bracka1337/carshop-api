@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Actions\Checkout\PlaceOrder;
+use App\Enums\PaymentMethod;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Checkout\PlaceOrderRequest;
 use App\Models\Order;
@@ -32,7 +33,7 @@ class CheckoutController extends Controller
 
         $order = $placeOrder->handle($user, $details, session('cart', []));
 
-        if ($details['payment_method'] === 'pay-on-delivery') {
+        if ($details['payment_method'] === PaymentMethod::PayOnDelivery->value) {
             $this->cart->clear();
 
             return redirect()->route('main')->with('success', 'Order created successfully!');

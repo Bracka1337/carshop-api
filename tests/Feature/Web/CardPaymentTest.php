@@ -30,7 +30,7 @@ class CardPaymentTest extends TestCase
         $this->post('/payment', [
             'f_name' => 'Jane', 'l_name' => 'Doe', 'your_email' => 'jane@example.com',
             'country' => 'LV', 'city' => 'Riga', 'addr_line_1' => 'Brivibas iela 1',
-            'phone' => '+37120000000', 'payment_method' => 'card', 'delivery_method' => 'DPD',
+            'phone' => '+37120000000', 'payment_method' => 'credit-card', 'delivery_method' => 'dhl',
             'm_name' => '', 'addr_line_2' => '', 'company_email' => '', 'company_name' => '', 'vat_number' => '',
         ])->assertRedirect(route('payment-details'));
 

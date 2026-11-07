@@ -31,7 +31,7 @@ class OrderLinePriceTest extends TestCase
             'addr_line_1' => 'Brivibas iela 1',
             'phone' => '+37120000000',
             'payment_method' => 'pay-on-delivery',
-            'delivery_method' => 'DPD',
+            'delivery_method' => 'dhl',
             'm_name' => '',
             'addr_line_2' => '',
             'company_email' => '',

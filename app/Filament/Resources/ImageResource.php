@@ -33,7 +33,7 @@ class ImageResource extends Resource
                 ])->validationMessages([
                     'endsWith' => 'Image should be in .webp format',
                 ]),
-                Select::make('product_id')->label('Product')->options(Product::pluck('id', 'id'))->searchable(),
+                Select::make('product_id')->label('Product')->options(Product::pluck('id', 'id'))->searchable()->required(),
             ]);
     }
 

@@ -33,8 +33,8 @@ class UserResource extends Resource
                 TextInput::make('phone_nr'),
                 Select::make('role')->options([
                     'Admin' => 'Admin',
-                    'Default' => 'Default',
-                ])->default('Default'),
+                    'User' => 'User',
+                ])->default('User')->required(),
             ])->columns(1);
     }
 

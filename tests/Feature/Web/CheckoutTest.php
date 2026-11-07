@@ -25,7 +25,7 @@ class CheckoutTest extends TestCase
             'addr_line_1' => 'Brivibas iela 1',
             'phone' => '+37120000000',
             'payment_method' => 'pay-on-delivery',
-            'delivery_method' => 'DPD',
+            'delivery_method' => 'dhl',
             // Optional inputs: the checkout form always submits them, empty.
             'm_name' => '',
             'addr_line_2' => '',
@@ -96,7 +96,7 @@ class CheckoutTest extends TestCase
         $this->actingAs($user);
         $this->cartWith($product);
 
-        $this->post('/payment', $this->deliveryDetails(['payment_method' => 'card']))
+        $this->post('/payment', $this->deliveryDetails(['payment_method' => 'credit-card']))
             ->assertRedirect(route('payment-details'));
 
         $order = Order::where('user_id', $user->id)->sole();
@@ -153,7 +153,7 @@ class CheckoutTest extends TestCase
         $product = $this->createProduct();
         $this->actingAs(User::factory()->create());
         $this->cartWith($product);
-        $this->post('/payment', $this->deliveryDetails(['payment_method' => 'card']));
+        $this->post('/payment', $this->deliveryDetails(['payment_method' => 'credit-card']));
 
         $this->get('/process-payment?'.http_build_query([
             'full_name' => 'Jane Doe',
@@ -177,7 +177,7 @@ class CheckoutTest extends TestCase
             ->assertSee('action="'.route('proceedToPayment').'" method="POST"', false)
             ->assertSee('name="_token"', false);
 
-        $this->post('/payment', $this->deliveryDetails(['payment_method' => 'card']));
+        $this->post('/payment', $this->deliveryDetails(['payment_method' => 'credit-card']));
 
         $this->get('/payment-details')
             ->assertSee('action="'.route('processPayment').'" method="POST"', false)
@@ -240,6 +240,21 @@ class CheckoutTest extends TestCase
         $this->actingAs(User::factory()->create());
 
         $this->post('/payment', $this->deliveryDetails())->assertSessionHasErrors('cart');
+
+        $this->assertSame(0, Order::count());
+    }
+
+    public function test_unknown_payment_and_delivery_methods_are_rejected(): void
+    {
+        $product = $this->createProduct();
+        $this->actingAs(User::factory()->create());
+        $this->cartWith($product);
+
+        // Any string used to be accepted, and anything but "pay-on-delivery" went down the card path.
+        $this->from('/checkout')
+            ->post('/payment', $this->deliveryDetails(['payment_method' => 'bitcoin', 'delivery_method' => 'drone']))
+            ->assertRedirect('/checkout')
+            ->assertSessionHasErrors(['payment_method', 'delivery_method']);
 
         $this->assertSame(0, Order::count());
     }

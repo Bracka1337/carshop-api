@@ -26,7 +26,7 @@ class BrandResource extends Resource
     {
         return $schema
             ->components([
-                TextInput::make('title'),
+                TextInput::make('title')->required()->maxLength(255),
             ]);
     }
 

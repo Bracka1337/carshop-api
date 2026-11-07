@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\OrderResource\RelationManagers;
 
+use App\Enums\DeliveryMethod;
+use App\Enums\PaymentMethod;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -30,8 +32,8 @@ class DeliveryDetailsRelationManager extends RelationManager
                 TextInput::make('company_email')->placeholder('-'),
                 TextInput::make('company_name')->placeholder('-'),
                 TextInput::make('company_reg_nr')->placeholder('-'),
-                Select::make('payment_method')->placeholder('-')->options(['Credit Card' => 'Credit Card', 'Pay on delivery' => 'Pay on delivery']),
-                Select::make('delivery_method')->placeholder('-')->options(['DPD' => 'DPD', 'Venipak' => 'Venipak']),
+                Select::make('payment_method')->placeholder('-')->options(PaymentMethod::class),
+                Select::make('delivery_method')->placeholder('-')->options(DeliveryMethod::class),
             ]);
     }
 

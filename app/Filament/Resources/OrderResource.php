@@ -16,6 +16,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Group;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -31,8 +32,10 @@ class OrderResource extends Resource
         return $schema
             ->components([
                 Select::make('user_id')->relationship('user', 'email')->label('User Email')->searchable()->options(User::pluck('email', 'id')),
-                Select::make('status')->options(OrderStatus::class),
-                Select::make('payment.status')->label('Payment Status')->options(PaymentStatus::class),
+                Select::make('status')->options(OrderStatus::class)->required(),
+                Group::make([
+                    Select::make('status')->label('Payment Status')->options(PaymentStatus::class)->required(),
+                ])->relationship('payment'),
             ]);
     }
 
