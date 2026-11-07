@@ -39,7 +39,7 @@ class ProfileTest extends TestCase
             ->get("/profile/orderdetails/{$order->id}")
             ->assertOk()
             // 1200 is above the free-shipping threshold
-            ->assertViewHas('cost', ['total' => '1,200.00', 'tax' => '252.00', 'shipping' => '0.00']);
+            ->assertViewHas('cost', ['subtotal' => '991.74', 'total' => '1,200.00', 'tax' => '208.26', 'shipping' => '0.00']);
     }
 
     public function test_a_user_cannot_view_someone_elses_order(): void

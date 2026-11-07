@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\TotalsCalculator;
 use Database\Factories\Product_quantityFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -42,9 +43,15 @@ class Product_quantity extends Model
         });
     }
 
+    /** Line total as paid, VAT included. */
     public function lineTotal(): float
     {
         return round((float) $this->unit_price * $this->quantity, 2);
+    }
+
+    public function lineTotalWithoutVat(): float
+    {
+        return app(TotalsCalculator::class)->withoutVat($this->lineTotal());
     }
 
     /** @return BelongsTo<Product, $this> */

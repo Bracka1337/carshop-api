@@ -29,10 +29,10 @@ class OrderApiTest extends TestCase
             ->assertJsonPath('data.0.items.0.product_id', $product->id)
             ->assertJsonPath('data.0.items.0.quantity', 3)
             ->assertJsonPath('data.0.items.0.line_total', 300)
-            // 300 + 10% shipping (below 1000)
+            // 300 incl. 21% VAT (52.07) + 10% shipping (below 1000)
             ->assertJsonPath('data.0.totals', [
-                'subtotal' => 300,
-                'tax' => 63,
+                'subtotal' => 247.93,
+                'tax' => 52.07,
                 'shipping' => 30,
                 'total' => 330,
             ]);

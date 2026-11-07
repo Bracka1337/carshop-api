@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Enums\OrderStatus;
-use App\Services\ShippingCalculator;
+use App\Services\TotalsCalculator;
 use Database\Factories\OrderFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -60,26 +60,19 @@ class Order extends Model
     }
 
     /**
-     * Order totals: 21% VAT (included in prices, shown for information) and
-     * shipping from ShippingCalculator, the same rule checkout uses.
-     * "total" includes shipping.
+     * Order totals from the stored line prices, calculated the same way as
+     * at checkout (TotalsCalculator): subtotal without VAT, the VAT included
+     * in the prices, shipping, and the total paid.
      *
      * @return array{subtotal: float, tax: float, shipping: float, total: float}
      */
     public function costBreakdown(): array
     {
-        $subtotal = $this->productQuantities->sum(
+        $itemsTotal = $this->productQuantities->sum(
             fn (Product_quantity $item) => $item->lineTotal()
         );
 
-        $shipping = app(ShippingCalculator::class)->cost($subtotal);
-
-        return [
-            'subtotal' => round($subtotal, 2),
-            'tax' => round($subtotal * 0.21, 2),
-            'shipping' => round($shipping, 2),
-            'total' => round($subtotal + $shipping, 2),
-        ];
+        return app(TotalsCalculator::class)->forItems($itemsTotal);
     }
 
     /**

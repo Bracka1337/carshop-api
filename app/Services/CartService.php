@@ -9,7 +9,7 @@ use App\Models\Product;
  */
 class CartService
 {
-    public function __construct(private readonly ShippingCalculator $shipping) {}
+    public function __construct(private readonly TotalsCalculator $totals) {}
 
     /**
      * The session cart with totals added, or null when it is empty.
@@ -22,14 +22,12 @@ class CartService
         $total = session()->get('cart.total', 0);
 
         if (! empty($cart) && $total > 0) {
-            $total = (float) str_replace(',', '', (string) $total);
-            $tax = $total * 0.21;
-            $shipping = $this->shipping->cost($total);
+            $totals = $this->totals->forItems((float) str_replace(',', '', (string) $total));
 
-            $cart['total'] = number_format($total + $shipping, 2, '.', '');
-            $cart['tax'] = number_format($tax, 2, '.', '');
-            $cart['shipping'] = $shipping;
-            $cart['subtotal'] = number_format($total - $tax, 2, '.', '');
+            $cart['total'] = number_format($totals['total'], 2, '.', '');
+            $cart['tax'] = number_format($totals['tax'], 2, '.', '');
+            $cart['shipping'] = $totals['shipping'];
+            $cart['subtotal'] = number_format($totals['subtotal'], 2, '.', '');
 
             return $cart;
         }

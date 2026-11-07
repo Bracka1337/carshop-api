@@ -64,14 +64,15 @@ class OrderLinePriceTest extends TestCase
 
         $product->update(['price' => 999]);
 
-        $this->assertSame(240.0, $order->fresh()->costBreakdown()['subtotal']);
+        // 240 + 10% shipping
+        $this->assertSame(264.0, $order->fresh()->costBreakdown()['total']);
 
         Sanctum::actingAs($user);
         $this->getJson("/api/orders/{$order->id}")
             ->assertOk()
             ->assertJsonPath('data.items.0.unit_price', 120)
             ->assertJsonPath('data.items.0.line_total', 240)
-            ->assertJsonPath('data.totals.subtotal', 240);
+            ->assertJsonPath('data.totals.total', 264);
     }
 
     public function test_the_migration_backfills_existing_lines_from_current_prices(): void
