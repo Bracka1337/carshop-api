@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateProductQuantitiesTable extends Migration
 {
-    public function up()
+    public function up(): void
     {
         Schema::create('product_quantities', function (Blueprint $table) {
             $table->id();
@@ -18,7 +18,7 @@ class CreateProductQuantitiesTable extends Migration
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('product_quantities');
     }

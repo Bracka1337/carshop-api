@@ -2,8 +2,12 @@
 
 namespace Database\Factories;
 
+use App\Models\Delivery_details;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends Factory<Delivery_details>
+ */
 class Delivery_detailsFactory extends Factory
 {
     /**

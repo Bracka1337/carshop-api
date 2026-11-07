@@ -10,9 +10,12 @@ class PhoneNumber implements Rule
     {
         $regex = '/^\+(?:[0-9] ?){6,14}[0-9]$/';
 
-        return preg_match($regex, $value);
+        return preg_match($regex, $value) === 1;
     }
 
+    /**
+     * @return string
+     */
     public function message()
     {
         return 'The phone number must be a valid international number.';

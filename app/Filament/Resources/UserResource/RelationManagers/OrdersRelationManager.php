@@ -22,7 +22,7 @@ class OrdersRelationManager extends RelationManager
     {
         return $schema
             ->components([
-                Select::make('user_id')->relationship('user', 'email')->label('User Email')->searchable()->options(User::all()->pluck('email', 'id')),
+                Select::make('user_id')->relationship('user', 'email')->label('User Email')->searchable()->options(User::pluck('email', 'id')),
                 Select::make('status')->options([
                     'Processing' => 'Processing',
                     'Delivering' => 'Delivering',
@@ -45,6 +45,7 @@ class OrdersRelationManager extends RelationManager
                     'Delivering' => 'warning',
                     'Delivered' => 'success',
                     'Failed' => 'danger',
+                    default => 'gray',
                 }),
             ])
             ->filters([

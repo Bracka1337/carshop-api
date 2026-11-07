@@ -9,6 +9,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /** @mixin Product */
 class ProductResource extends JsonResource
 {
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(Request $request): array
     {
         return [
@@ -16,8 +19,8 @@ class ProductResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'brand' => $this->whenLoaded('brand', fn () => [
-                'id' => $this->brand->id,
-                'title' => $this->brand->title,
+                'id' => $this->brand?->id,
+                'title' => $this->brand?->title,
             ]),
             'type' => $this->type,
             'price' => (float) $this->price,

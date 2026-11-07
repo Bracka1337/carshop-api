@@ -3,12 +3,17 @@
 namespace App\Models;
 
 use App\Services\ShippingCalculator;
+use Database\Factories\OrderFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
+    /** @use HasFactory<OrderFactory> */
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
@@ -19,22 +24,26 @@ class Order extends Model
         'payment_id',
     ];
 
-    public function user()
+    /** @return BelongsTo<User, $this> */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function payment()
+    /** @return HasOne<Payment, $this> */
+    public function payment(): HasOne
     {
         return $this->hasOne(Payment::class, 'id', 'payment_id');
     }
 
-    public function delivery_details()
+    /** @return BelongsTo<Delivery_details, $this> */
+    public function delivery_details(): BelongsTo
     {
         return $this->belongsTo(Delivery_details::class);
     }
 
-    public function productQuantities()
+    /** @return HasMany<Product_quantity, $this> */
+    public function productQuantities(): HasMany
     {
         return $this->hasMany(Product_quantity::class);
     }
@@ -62,9 +71,10 @@ class Order extends Model
         ];
     }
 
-    public function getPaymentStatusAttributes()
+    /** @return array{string, string, string} */
+    public function getPaymentStatusAttributes(): array
     {
-        $status = $this->payment->status;
+        $status = $this->payment?->status;
         switch ($status) {
             case 'Refunded':
                 return ['bg-red-200', 'text-red-600', 'Refunded'];
@@ -79,7 +89,8 @@ class Order extends Model
         }
     }
 
-    public function getDeliveryStatusAttributes()
+    /** @return array{string, string, string} */
+    public function getDeliveryStatusAttributes(): array
     {
         $status = $this->status;
         switch ($status) {

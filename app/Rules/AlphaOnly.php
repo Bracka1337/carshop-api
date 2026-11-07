@@ -15,7 +15,7 @@ class AlphaOnly implements Rule
      */
     public function passes($attribute, $value)
     {
-        return preg_match('/^[a-zA-Z\s]*$/', $value);
+        return preg_match('/^[a-zA-Z\s]*$/', $value) === 1;
     }
 
     /**

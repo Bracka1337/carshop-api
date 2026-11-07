@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Database\Factories\ImageFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Image extends Model
 {
+    /** @use HasFactory<ImageFactory> */
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
@@ -15,7 +18,8 @@ class Image extends Model
         'product_id',
     ];
 
-    public function product()
+    /** @return BelongsTo<Product, $this> */
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
     }

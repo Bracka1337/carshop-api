@@ -4,7 +4,8 @@ namespace App\Http\Controllers\JsonApi;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
-use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class OrderController extends Controller
@@ -14,9 +15,9 @@ class OrderController extends Controller
     /**
      * The authenticated user's orders, newest first.
      */
-    public function index(Request $request): AnonymousResourceCollection
+    public function index(#[CurrentUser] User $user): AnonymousResourceCollection
     {
-        $orders = $request->user()->orders()
+        $orders = $user->orders()
             ->with(self::RELATIONS)
             ->latest('id')
             ->paginate(20);
@@ -27,9 +28,9 @@ class OrderController extends Controller
     /**
      * A single order; other users' orders are reported as not found.
      */
-    public function show(Request $request, string $order): OrderResource
+    public function show(#[CurrentUser] User $user, string $order): OrderResource
     {
-        $order = $request->user()->orders()->with(self::RELATIONS)->findOrFail($order);
+        $order = $user->orders()->with(self::RELATIONS)->findOrFail($order);
 
         return new OrderResource($order);
     }

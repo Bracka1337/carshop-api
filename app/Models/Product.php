@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
+    /** @use HasFactory<ProductFactory> */
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
@@ -25,17 +29,20 @@ class Product extends Model
         'brand_id',
     ];
 
-    public function brand()
+    /** @return BelongsTo<Brand, $this> */
+    public function brand(): BelongsTo
     {
         return $this->belongsTo(Brand::class);
     }
 
-    public function images()
+    /** @return HasMany<Image, $this> */
+    public function images(): HasMany
     {
         return $this->hasMany(Image::class);
     }
 
-    public function productQuantities()
+    /** @return HasMany<Product_quantity, $this> */
+    public function productQuantities(): HasMany
     {
         return $this->hasMany(Product_quantity::class);
     }
@@ -43,6 +50,10 @@ class Product extends Model
     /**
      * Catalogue filters shared by the shop page and the JSON API.
      * Expects input validated by ProductSearchRequest.
+     *
+     * @param  Builder<Product>  $query
+     * @param  array<string, mixed>  $filters
+     * @return Builder<Product>
      */
     public function scopeFilter(Builder $query, array $filters): Builder
     {

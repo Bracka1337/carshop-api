@@ -5,6 +5,7 @@ namespace App\Http\Controllers\JsonApi;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -41,17 +42,17 @@ class AuthTokenController extends Controller
         ], 201);
     }
 
-    public function show(Request $request): UserResource
+    public function show(#[CurrentUser] User $user): UserResource
     {
-        return new UserResource($request->user());
+        return new UserResource($user);
     }
 
     /**
      * Revoke the token used for this request.
      */
-    public function destroy(Request $request): Response
+    public function destroy(#[CurrentUser] User $user): Response
     {
-        $request->user()->currentAccessToken()->delete();
+        $user->currentAccessToken()->delete();
 
         return response()->noContent();
     }

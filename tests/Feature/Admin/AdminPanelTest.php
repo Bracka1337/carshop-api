@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Admin;
 
+use App\Filament\Resources\OrderResource\Pages\ListOrders;
+use App\Filament\Resources\PaymentResource\Pages\ListPayments;
 use App\Filament\Resources\ProductResource\Pages\CreateProduct;
 use App\Filament\Resources\ProductResource\Pages\EditProduct;
 use App\Filament\Resources\ProductResource\Pages\ListProducts;
@@ -154,5 +156,19 @@ class AdminPanelTest extends TestCase
 
         $this->assertSoftDeleted($product);
         $this->assertSame(0, Product::count());
+    }
+
+    public function test_admin_order_and_payment_lists_handle_any_status(): void
+    {
+        $admin = $this->createAdmin();
+        $product = $this->createProduct();
+        // A failed card payment leaves the order "Pending", which has no badge colour of its own.
+        $this->createOrderFor($admin, [$product->id => 1], 'Failed')->update(['status' => 'Pending']);
+        $this->createOrderFor($admin, [$product->id => 2], 'Unknown');
+
+        $this->actingAs($admin);
+
+        Livewire::test(ListOrders::class)->assertOk()->assertSee('Pending');
+        Livewire::test(ListPayments::class)->assertOk()->assertSee('Unknown');
     }
 }

@@ -6,15 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductSearchRequest;
 use App\Models\Brand;
 use App\Models\Product;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
 
 class MainController extends Controller
 {
-    public function __invoke(ProductSearchRequest $request)
+    public function __invoke(ProductSearchRequest $request): View
     {
         $initialProducts = $request->all() ?
-            Product::filter($request->validated())->with('images')->paginate(12)->withQueryString() :
-            Product::with('images')->paginate(12);
+            Product::filter($request->validated())->with(['images', 'brand'])->paginate(12)->withQueryString() :
+            Product::with(['images', 'brand'])->paginate(12);
 
         $searchParameters = $this->getSearchParameters();
 
@@ -24,7 +24,12 @@ class MainController extends Controller
         ]);
     }
 
-    public function getSearchParameters()
+    /**
+     * Distinct values for the catalogue filter dropdowns.
+     *
+     * @return array<string, mixed>
+     */
+    public function getSearchParameters(): array
     {
         $parameters = [
             'diameter' => 'diameter',
@@ -44,13 +49,5 @@ class MainController extends Controller
         ];
 
         return $searchParameters;
-    }
-
-    public function getInitialProducts(Request $request)
-    {
-        $products = Product::inRandomOrder()->paginate(20)->appends($request->query());
-        $products->load('category', 'brand');
-
-        return $products;
     }
 }

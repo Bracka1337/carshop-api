@@ -17,7 +17,7 @@ class CardNumber implements Rule
     {
         $value = str_replace(' ', '', $value);
 
-        return preg_match('/^\d{16}$/', $value);
+        return preg_match('/^\d{16}$/', $value) === 1;
     }
 
     /**

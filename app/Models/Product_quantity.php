@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Database\Factories\Product_quantityFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -11,6 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Product_quantity extends Model
 {
+    /** @use HasFactory<Product_quantityFactory> */
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
@@ -33,8 +36,8 @@ class Product_quantity extends Model
         // Lines created without an explicit price (admin panel, seeder)
         // take the product's current price.
         static::creating(function (Product_quantity $line) {
-            if ($line->unit_price === null && $line->product_id !== null) {
-                $line->unit_price = Product::withTrashed()->find($line->product_id)?->price;
+            if (($line->getAttributes()['unit_price'] ?? null) === null) {
+                $line->unit_price = Product::withTrashed()->findOrFail($line->product_id)->price;
             }
         });
     }
@@ -44,12 +47,14 @@ class Product_quantity extends Model
         return round((float) $this->unit_price * $this->quantity, 2);
     }
 
-    public function product()
+    /** @return BelongsTo<Product, $this> */
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
     }
 
-    public function orders()
+    /** @return BelongsTo<Order, $this> */
+    public function orders(): BelongsTo
     {
         return $this->belongsTo(Order::class);
     }

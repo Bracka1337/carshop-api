@@ -28,7 +28,7 @@ class OrderResource extends Resource
     {
         return $schema
             ->components([
-                Select::make('user_id')->relationship('user', 'email')->label('User Email')->searchable()->options(User::all()->pluck('email', 'id')),
+                Select::make('user_id')->relationship('user', 'email')->label('User Email')->searchable()->options(User::pluck('email', 'id')),
                 Select::make('status')->options([
                     'Processing' => 'Processing',
                     'Delivering' => 'Delivering',
@@ -57,6 +57,7 @@ class OrderResource extends Resource
                     'Delivering' => 'warning',
                     'Delivered' => 'success',
                     'Failed' => 'danger',
+                    default => 'gray',
                 }),
                 TextColumn::make('payment_id')->searchable(),
                 TextColumn::make('payment.date')->label('Paid On')->dateTime(),
@@ -66,6 +67,7 @@ class OrderResource extends Resource
                     'Refunded' => 'warning',
                     'Failed' => 'danger',
                     'Success' => 'success',
+                    default => 'gray',
                 }),
             ])
             ->filters([

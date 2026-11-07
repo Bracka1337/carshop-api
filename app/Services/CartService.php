@@ -2,19 +2,26 @@
 
 namespace App\Services;
 
-use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class CartService
 {
     public function __construct(private readonly ShippingCalculator $shipping) {}
 
-    public function getCart(Request $request)
+    /**
+     * The session cart with totals added, or null when it is empty.
+     *
+     * @return array<int|string, mixed>|null
+     */
+    public function getCart(): ?array
     {
         $cart = session()->get('cart');
         $total = session()->get('cart.total', 0);
 
         if (! empty($cart) && $total > 0) {
-            $total = (float) str_replace(',', '', $total);
+            $total = (float) str_replace(',', '', (string) $total);
             $tax = $total * 0.21;
             $shipping = $this->shipping->cost($total);
 
@@ -29,9 +36,9 @@ class CartService
         return $cart;
     }
 
-    public function getCheckout(Request $request)
+    public function getCheckout(): View|RedirectResponse
     {
-        $cart = $this->getCart($request);
+        $cart = $this->getCart();
 
         if (! empty($cart) && $cart['total'] > 0) {
             return view('checkout', ['cart' => $cart]);
@@ -40,15 +47,15 @@ class CartService
         return redirect()->route('main');
     }
 
-    public function getPaymentDetails(Request $request)
+    public function getPaymentDetails(User $user): View|RedirectResponse
     {
-        $user = auth()->user();
-        $orders = $user->orders;
-        $unPaidOrders = $orders->filter(fn ($order) => $order->payment->status == 'Processing');
-        $unPaidOrder = $unPaidOrders->firstWhere('payment.id', session('payment_id'));
+        $hasUnpaidOrder = $user->orders()
+            ->where('payment_id', session('payment_id'))
+            ->whereHas('payment', fn ($payment) => $payment->where('status', 'Processing'))
+            ->exists();
 
-        if ($unPaidOrder) {
-            $cart = $this->getCart($request);
+        if ($hasUnpaidOrder) {
+            $cart = $this->getCart();
             $total = $cart['total'] ?? 0;
 
             if ($total > 0) {

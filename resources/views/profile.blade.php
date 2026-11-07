@@ -37,7 +37,7 @@
                                 <p class="text-lg font-medium text-gray-900">Order #{{ $order->id }}</p>
                                 <p class="text-sm text-gray-600">Placed on {{ \Carbon\Carbon::parse($order->date)->format('F j, Y') }}</p>
 
-                                <p class="text-sm text-gray-600">Total: ${{ $order->calculatedTotal  }}</p></div>
+                                <p class="text-sm text-gray-600">Total: ${{ $totals[$order->id] }}</p></div>
                   
                                 
                             </div>

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Web;
 
+use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -67,5 +68,15 @@ class CartTest extends TestCase
     public function test_removing_from_an_empty_cart_is_a_404(): void
     {
         $this->post('/cart/remove/1')->assertNotFound();
+    }
+
+    public function test_a_product_without_images_can_be_added_to_the_cart(): void
+    {
+        $product = Product::factory()->create(['brand_id' => $this->createBrand()->id]);
+
+        $this->get("/products/{$product->id}")->assertRedirect();
+
+        $this->assertNull(session("cart.{$product->id}.image"));
+        $this->assertSame(1, session("cart.{$product->id}.quantity"));
     }
 }
