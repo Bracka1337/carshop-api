@@ -4,7 +4,7 @@
             <h2 class="text-xl font-semibold text-gray-900 sm:text-2xl">Payment</h2>
 
             <div class="mt-6 sm:mt-8 lg:flex lg:items-start lg:gap-12">
-                <form action="{{ route('processPayment') }}" method="GET"
+                <form action="{{ route('processPayment') }}" method="POST"
                     class="w-full rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:p-6 lg:max-w-xl lg:p-8">
                     @csrf
                     <div class="mb-6 grid grid-cols-2 gap-4">
