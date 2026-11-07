@@ -27,8 +27,13 @@ class ProductQuantitiesRelationManager extends RelationManager
         return $schema
             ->components([
 
-                Select::make('product_id')->options(Product::pluck('id'))->searchable(),
-                TextInput::make('quantity'),
+                Select::make('product_id')
+                    ->label('Product')
+                    ->relationship('product', 'title')
+                    ->getOptionLabelFromRecordUsing(fn (Product $product) => "#{$product->id} {$product->title}")
+                    ->searchable(['id', 'title'])
+                    ->required(),
+                TextInput::make('quantity')->integer()->minValue(1)->required(),
                 TextInput::make('unit_price')
                     ->numeric()
                     ->minValue(0)
@@ -40,7 +45,8 @@ class ProductQuantitiesRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                TextColumn::make('product_id'),
+                TextColumn::make('product_id')->label('Product ID'),
+                TextColumn::make('product.title')->label('Product'),
                 TextColumn::make('quantity'),
                 TextColumn::make('unit_price')->money('USD'),
                 ImageColumn::make('product.images.img_uri')->stacked()->limit(1),

@@ -2,10 +2,13 @@
 
 namespace App\Http\Requests\Checkout;
 
+use App\Enums\DeliveryMethod;
+use App\Enums\PaymentMethod;
 use App\Rules\AlphaOnly;
 use App\Rules\PhoneNumber;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PlaceOrderRequest extends FormRequest
 {
@@ -31,8 +34,8 @@ class PlaceOrderRequest extends FormRequest
             'country' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'addr_line_1' => 'required|string|max:255',
-            'payment_method' => 'required|string|max:255',
-            'delivery_method' => 'required|string|max:255',
+            'payment_method' => ['required', Rule::enum(PaymentMethod::class)],
+            'delivery_method' => ['required', Rule::enum(DeliveryMethod::class)],
             'phone' => ['required', 'string', 'max:15', new PhoneNumber],
             'm_name' => 'nullable|string|max:255',
             'addr_line_2' => 'nullable|string|max:255',
@@ -78,11 +81,9 @@ class PlaceOrderRequest extends FormRequest
             'vat_number.string' => 'The VAT number must be a string.',
             'vat_number.max' => 'The VAT number may not be greater than 255 characters.',
             'payment_method.required' => 'The payment method is required.',
-            'payment_method.string' => 'The payment method must be a string.',
-            'payment_method.max' => 'The payment method may not be greater than 255 characters.',
+            'payment_method.enum' => 'Choose a payment method.',
             'delivery_method.required' => 'The delivery method is required.',
-            'delivery_method.string' => 'The delivery method must be a string.',
-            'delivery_method.max' => 'The delivery method may not be greater than 255 characters.',
+            'delivery_method.enum' => 'Choose a delivery method.',
         ];
     }
 }
