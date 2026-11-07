@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateBrandsTable extends Migration
 {
-    public function up()
+    public function up(): void
     {
         Schema::create('brands', function (Blueprint $table) {
             $table->id();
@@ -16,7 +16,7 @@ class CreateBrandsTable extends Migration
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('brands');
     }

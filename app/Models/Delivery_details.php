@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Database\Factories\Delivery_detailsFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Delivery_details extends Model
 {
+    /** @use HasFactory<Delivery_detailsFactory> */
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
@@ -24,8 +27,9 @@ class Delivery_details extends Model
         'delivery_method',
     ];
 
-    public function order()
+    /** @return HasOne<Order, $this> */
+    public function order(): HasOne
     {
-        return $this->hasOne(Order::class, 'id');
+        return $this->hasOne(Order::class, 'delivery_details_id');
     }
 }

@@ -4,31 +4,24 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
-use App\Services\CartService;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 
 class CartController extends Controller
 {
-    protected $cartService;
-
-    public function __construct(CartService $cartService)
-    {
-        $this->cartService = $cartService;
-    }
-
-    public function addProductsToCart($id)
+    public function addProductsToCart(string $id): RedirectResponse
     {
         $product = Product::findOrFail($id);
         $cart = session()->get('cart', []);
         $quantity = 1;
-        $image = $product->images[0]['img_uri'];
+        $image = $product->images->first()?->img_uri;
 
         if (isset($cart[$id])) {
             $cart[$id]['quantity'] += $quantity;
         } else {
             $cart[$id] = [
                 'title' => $product->title,
-                'brand' => $product->brand->title,
+                'brand' => $product->brand?->title,
                 'quantity' => $quantity,
                 'price' => $product->price,
                 'image' => $image,
@@ -41,7 +34,7 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Product added successfully!');
     }
 
-    public function updateCart($id, $quantity)
+    public function updateCart(string $id, string $quantity): RedirectResponse
     {
         $cart = session()->get('cart', []);
 
@@ -65,7 +58,7 @@ class CartController extends Controller
         return redirect()->back()->with('error', 'Product not found in cart!');
     }
 
-    public function removeFromCart($id)
+    public function removeFromCart(string $id): JsonResponse
     {
         $cart = session()->get('cart', []);
 
@@ -84,7 +77,7 @@ class CartController extends Controller
         return response()->json(['message' => 'Product not found in cart!'], 404);
     }
 
-    private function calculateCartTotal()
+    private function calculateCartTotal(): void
     {
         $cart = session()->get('cart', []);
 
@@ -93,20 +86,5 @@ class CartController extends Controller
         }, 0);
 
         session()->put('cart.total', $total);
-    }
-
-    public function getCart(Request $request)
-    {
-        return $this->cartService->getCart($request);
-    }
-
-    public function getCheckout(Request $request)
-    {
-        return $this->cartService->getCheckout($request);
-    }
-
-    public function getPaymentDetails(Request $request)
-    {
-        return $this->cartService->getPaymentDetails($request);
     }
 }

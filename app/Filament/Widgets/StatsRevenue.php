@@ -16,16 +16,14 @@ class StatsRevenue extends BaseWidget
         $totalRevenue = DB::table('orders')
             ->join('product_quantities', 'orders.id', '=', 'product_quantities.order_id')
             ->where('orders.status', 'Delivered')
-            ->select(DB::raw('SUM(product_quantities.unit_price * product_quantities.quantity) as total_revenue'))
-            ->first()
-            ->total_revenue;
+            ->sum(DB::raw('product_quantities.unit_price * product_quantities.quantity'));
 
         return [
 
             Stat::make('Oders Fulfilled', Order::where('status', 'Delivered')->count())
                 ->chart([0, 0, 0, 10, 15, 25, 35])
                 ->color('success'),
-            Stat::make('Revenue', '$'.$totalRevenue)
+            Stat::make('Revenue', '$'.number_format((float) $totalRevenue, 2))
                 ->chart([0, 1, 15, 35, 57, 267, 400])
                 ->color('success'),
         ];

@@ -9,62 +9,52 @@ use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Product_quantity;
+use App\Models\User;
 use App\Services\CartService;
 use Exception;
-use Illuminate\Http\Request;
+use Illuminate\Container\Attributes\CurrentUser;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 
 class CheckoutController extends Controller
 {
-    protected $cartService;
+    public function __construct(private readonly CartService $cartService) {}
 
-    public function __construct(CartService $cartService)
-    {
-        $this->cartService = $cartService;
-    }
-
-    public function proceedToPayment(ProcedeToPayment $request)
+    public function proceedToPayment(ProcedeToPayment $request, #[CurrentUser] User $user): RedirectResponse|JsonResponse
     {
         $validated = $request->validated();
 
-        if ($validated) {
-            $user = auth()->user();
+        try {
+            $deliveryDetails = $this->createDeliveryDetails($validated);
+            $payment = $this->createPayment();
+            $order = $this->createOrder($user->id, $deliveryDetails->id, $payment->id);
+            $productQuantities = $this->getProductQuantities(session('cart', []));
 
-            try {
-                $deliveryDetails = $this->createDeliveryDetails($validated);
-                $payment = $this->createPayment();
-                $order = $this->createOrder($user->id, $deliveryDetails->id, $payment->id);
-                $productQuantities = $this->getProductQuantities(session('cart'));
+            $this->saveOrderDetails($order, $productQuantities);
 
-                $this->saveOrderDetails($order, $productQuantities);
+            if ($validated['payment_method'] === 'pay-on-delivery') {
+                session()->forget(['cart', 'order_id', 'payment_id', 'delivery_details', 'payment_confirmed']);
 
-                if ($validated['payment_method'] === 'pay-on-delivery') {
-                    session()->forget(['cart', 'order_id', 'payment_id', 'delivery_details', 'payment_confirmed']);
-
-                    return redirect()->route('main')->with('success', 'Order created successfully!');
-                } else {
-                    session([
-                        'order_id' => $order->id,
-                        'payment_id' => $payment->id,
-                        'delivery_details' => $deliveryDetails->id,
-                    ]);
-
-                    return redirect()->route('payment-details')->with('success', 'Order created successfully!');
-                }
-            } catch (Exception $e) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Failed to place order: '.$e->getMessage(),
-                ], 500);
+                return redirect()->route('main')->with('success', 'Order created successfully!');
             }
-        } else {
+
+            session([
+                'order_id' => $order->id,
+                'payment_id' => $payment->id,
+                'delivery_details' => $deliveryDetails->id,
+            ]);
+
+            return redirect()->route('payment-details')->with('success', 'Order created successfully!');
+        } catch (Exception $e) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Payment details validation failed',
-            ], 400);
+                'message' => 'Failed to place order: '.$e->getMessage(),
+            ], 500);
         }
     }
 
-    public function finalise()
+    public function finalise(): View|RedirectResponse
     {
         if (session('payment_id') && session('payment_confirmed')) {
             session()->forget(['cart', 'order_id', 'payment_id', 'delivery_details', 'payment_confirmed']);
@@ -75,7 +65,20 @@ class CheckoutController extends Controller
         return redirect()->route('main');
     }
 
-    private function createDeliveryDetails($validated)
+    public function getCheckout(): View|RedirectResponse
+    {
+        return $this->cartService->getCheckout();
+    }
+
+    public function getPaymentDetails(#[CurrentUser] User $user): View|RedirectResponse
+    {
+        return $this->cartService->getPaymentDetails($user);
+    }
+
+    /**
+     * @param  array<string, mixed>  $validated
+     */
+    private function createDeliveryDetails(array $validated): Delivery_details
     {
         return Delivery_details::create([
             'f_name' => $validated['f_name'],
@@ -92,7 +95,7 @@ class CheckoutController extends Controller
         ]);
     }
 
-    private function createPayment()
+    private function createPayment(): Payment
     {
         return Payment::create([
             'status' => 'Processing',
@@ -100,7 +103,7 @@ class CheckoutController extends Controller
         ]);
     }
 
-    private function createOrder($userId, $deliveryDetailsId, $paymentId)
+    private function createOrder(int $userId, int $deliveryDetailsId, int $paymentId): Order
     {
         return Order::create([
             'status' => 'Processing',
@@ -111,7 +114,11 @@ class CheckoutController extends Controller
         ]);
     }
 
-    private function getProductQuantities($cartItems)
+    /**
+     * @param  array<int|string, mixed>  $cartItems
+     * @return array<int|string, Product_quantity>
+     */
+    private function getProductQuantities(array $cartItems): array
     {
         $items = collect($cartItems)->except(['total', 'tax']);
         $prices = Product::whereIn('id', $items->keys())->pluck('price', 'id');
@@ -126,7 +133,10 @@ class CheckoutController extends Controller
             })->all();
     }
 
-    private function saveOrderDetails($order, $productQuantities)
+    /**
+     * @param  array<int|string, Product_quantity>  $productQuantities
+     */
+    private function saveOrderDetails(Order $order, array $productQuantities): void
     {
         $order->save();
 
@@ -134,20 +144,5 @@ class CheckoutController extends Controller
             $productQuantity->order_id = $order->id;
             $productQuantity->save();
         }
-    }
-
-    public function getCart(Request $request)
-    {
-        return $this->cartService->getCart($request);
-    }
-
-    public function getCheckout(Request $request)
-    {
-        return $this->cartService->getCheckout($request);
-    }
-
-    public function getPaymentDetails(Request $request)
-    {
-        return $this->cartService->getPaymentDetails($request);
     }
 }

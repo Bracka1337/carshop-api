@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateProductsTable extends Migration
 {
-    public function up()
+    public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
@@ -19,14 +19,14 @@ class CreateProductsTable extends Migration
             $table->integer('bolt');
             $table->double('bolt_diameter');
             $table->string('type');
-            $table->double('price', 10, 2);
+            $table->double('price');
             $table->foreignId('brand_id')->constrained('brands');
             $table->timestamps();
             $table->softDeletes();
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('products');
     }

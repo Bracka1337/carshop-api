@@ -22,6 +22,9 @@ class ExpiryDate implements Rule
         return false;
     }
 
+    /**
+     * @return string
+     */
     public function message()
     {
         return 'The expiry date must be a valid future date.';

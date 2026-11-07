@@ -25,8 +25,8 @@ class ProfileTest extends TestCase
             ->get('/profile')
             ->assertOk()
             // 300 + 10% shipping (below 1000)
-            ->assertViewHas('orders', fn ($orders) => $orders->sole()->is($order)
-                && $orders->sole()->calculatedTotal === '330.00');
+            ->assertViewHas('orders', fn ($orders) => $orders->sole()->is($order))
+            ->assertViewHas('totals', fn ($totals) => $totals[$order->id] === '330.00');
     }
 
     public function test_a_user_can_view_their_own_order(): void
@@ -57,5 +57,19 @@ class ProfileTest extends TestCase
         $this->actingAs(User::factory()->create())
             ->get('/profile/orderdetails/999')
             ->assertNotFound();
+    }
+
+    public function test_profile_and_order_pages_render_with_several_orders_and_lines(): void
+    {
+        $user = User::factory()->create();
+        $first = $this->createProduct(['price' => 100]);
+        $second = $this->createProduct(['price' => 200], $this->createBrand('OZ'));
+        $order = $this->createOrderFor($user, [$first->id => 1, $second->id => 2]);
+        $this->createOrderFor($user, [$second->id => 1, $first->id => 3]);
+
+        $this->actingAs($user);
+
+        $this->get('/profile')->assertOk()->assertSee('Order #'.$order->id);
+        $this->get("/profile/orderdetails/{$order->id}")->assertOk()->assertSee('OZ');
     }
 }

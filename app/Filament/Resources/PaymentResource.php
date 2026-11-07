@@ -47,6 +47,7 @@ class PaymentResource extends Resource
                     'Refunded' => 'warning',
                     'Failed' => 'danger',
                     'Success' => 'success',
+                    default => 'gray',
                 }),
             ])
             ->filters([

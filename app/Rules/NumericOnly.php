@@ -15,7 +15,7 @@ class NumericOnly implements Rule
      */
     public function passes($attribute, $value)
     {
-        return preg_match('/^[0-9]*$/', $value);
+        return preg_match('/^[0-9]*$/', $value) === 1;
     }
 
     /**

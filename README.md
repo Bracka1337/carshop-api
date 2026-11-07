@@ -33,7 +33,8 @@ In 2026 I upgraded and refactored the project on my own:
 | API auth   | Laravel Sanctum personal access tokens                       |
 | Frontend   | Vite 8, Tailwind CSS 3, Flowbite                             |
 | Database   | MySQL (Docker) or SQLite (local)                             |
-| Tests      | PHPUnit 11, Laravel HTTP & Livewire testing                  |
+| Tests      | PHPUnit 11, Laravel HTTP & Livewire testing, ParaTest        |
+| Quality    | Larastan (PHPStan level 8), Pint, GitHub Actions CI          |
 | Infra      | Docker Compose: PHP-FPM, nginx, MySQL                        |
 
 ## Features
@@ -127,8 +128,18 @@ Tests run against an in-memory SQLite database (see `phpunit.xml`) and cover
 auth, catalogue filters, cart, checkout, profile/order access, every Filament
 resource page, product CRUD in the admin, and all API endpoints.
 
-GitHub Actions runs Pint (`vendor/bin/pint --test`), the asset build and the
-test suite on PHP 8.2 for every push to `main` and every pull request.
+Static analysis runs Larastan (PHPStan) at level 8 with no baseline:
+
+```bash
+vendor/bin/phpstan analyse
+```
+
+Outside production, Eloquent runs in strict mode (`Model::shouldBeStrict()`), so
+lazy loading (N+1 queries) and missing attributes fail the tests.
+
+GitHub Actions runs Pint (`vendor/bin/pint --test`), PHPStan, the asset build
+and the test suite (in parallel) on PHP 8.2 for every push to `main` and every
+pull request.
 
 ## Routes overview
 
