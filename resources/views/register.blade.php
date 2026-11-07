@@ -259,7 +259,7 @@
     class="z-20 block w-full border p-2.5 text-sm border border-gray-300 rounded-r-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
     inputmode="numeric" pattern="[0-9]{7,20}"
     title="Phone number should be numeric and between 7 to 20 digits."
-    oninput="this.value = this.value.replace(/[^0-9]/g, ''); updateFullPhoneNumber();" />
+    oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
     
                     </div>
                     

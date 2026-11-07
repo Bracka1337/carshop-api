@@ -127,4 +127,37 @@ class AuthTest extends TestCase
         ])->assertSessionHasErrors(['email', 'phone_nr', 'password'])
             ->assertSessionDoesntHaveErrors('default');
     }
+
+    public function test_a_phone_number_can_only_be_registered_once(): void
+    {
+        User::factory()->create(['phone_nr' => '+37120000000']);
+
+        // phone_nr has a unique index; this used to be a 500.
+        $this->from('/register')->post('/register', [
+            'name' => 'Jane',
+            'email' => 'jane@example.com',
+            'phone_nr' => '+37120000000',
+            'password' => 'secret123',
+            'password_confirmation' => 'secret123',
+        ])->assertRedirect('/register')
+            ->assertSessionHasErrors('phone_nr');
+
+        $this->assertSame(1, User::count());
+    }
+
+    public function test_two_customers_may_share_a_name(): void
+    {
+        User::factory()->create(['name' => 'Jane']);
+
+        // users.name had a unique index, so this used to be a 500.
+        $this->post('/register', [
+            'name' => 'Jane',
+            'email' => 'another.jane@example.com',
+            'phone_nr' => '+37120000001',
+            'password' => 'secret123',
+            'password_confirmation' => 'secret123',
+        ])->assertRedirect(route('login'));
+
+        $this->assertSame(2, User::where('name', 'Jane')->count());
+    }
 }

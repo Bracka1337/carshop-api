@@ -99,4 +99,14 @@ class AdminFormsTest extends TestCase
             ->call('create')
             ->assertHasFormErrors(['product_id' => 'required']);
     }
+
+    public function test_admin_user_form_reports_a_taken_email_or_phone(): void
+    {
+        User::factory()->create(['email' => 'taken@example.com', 'phone_nr' => '+37120000000']);
+
+        Livewire::test(CreateUser::class)
+            ->fillForm(['name' => 'Jane', 'email' => 'taken@example.com', 'phone_nr' => '+37120000000', 'password' => 'secret123', 'role' => 'User'])
+            ->call('create')
+            ->assertHasFormErrors(['email' => 'unique', 'phone_nr' => 'unique']);
+    }
 }
