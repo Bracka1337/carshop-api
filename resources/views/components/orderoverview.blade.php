@@ -88,7 +88,7 @@
                             </div>
                             <div class="flex items-center justify-end">
                                 <p class="font-medium text-lg leading-7 text-indigo-600">
-                                    ${{ number_format($line->lineTotalWithoutVat(), 2) }}</p>
+                                    @money($line->lineTotalWithoutVat())</p>
                             </div>
                         </div>
                     </div>
@@ -101,20 +101,20 @@
                     <div class="flex items-center">
                         <p class="font-medium text-lg text-gray-900 pl-6 py-3">Sales Tax:</p>
                     </div>
-                    <p class="font-semibold text-lg text-indigo-600 py-3">${{ $cost['tax'] }}</p>
+                    <p class="font-semibold text-lg text-indigo-600 py-3">@money($cost['tax'])</p>
                 </div>
                 <div class="bg-indigo-50 w-full border-t border-gray-200 px-4 flex items-center justify-between">
                     <div class="flex items-center">
                         <p class="font-medium text-lg text-gray-900 pl-6 py-3">Shipping Fee:</p>
                     </div>
-                    <p class="font-semibold text-lg text-indigo-600 py-3">${{ $cost['shipping'] }}</p>
+                    <p class="font-semibold text-lg text-indigo-600 py-3">@money($cost['shipping'])</p>
                 </div>
                 <div
                     class="bg-white w-full rounded-b-xl border-t border-gray-200 px-4 flex items-center justify-between">
                     <div class="flex items-center">
                         <p class="font-medium text-2xl text-gray-900 pl-6 py-3">Total Price:</p>
                     </div>
-                    <p class="font-semibold text-2xl text-indigo-600 py-3">${{ $cost['total'] }}</p>
+                    <p class="font-semibold text-2xl text-indigo-600 py-3">@money($cost['total'])</p>
                 </div>
             </div>
 

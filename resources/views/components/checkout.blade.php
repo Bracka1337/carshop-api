@@ -493,21 +493,21 @@
                             <dl class="flex items-center justify-between gap-4 py-3">
                                 <dt class="text-base font-normal text-gray-500 ">Subtotal</dt>
                                 <dd>
-                                    <span class="text-base font-medium text-gray-900 ">${{ $cart['subtotal'] }}
+                                    <span class="text-base font-medium text-gray-900 ">@money($cart['subtotal'])
                                     </span>
                                 </dd>
                             </dl>
 
                             <dl class="flex items-center justify-between gap-4 py-3">
                                 <dt class="text-base font-normal text-gray-500 ">Tax</dt>
-                                <dd class="text-base font-medium text-gray-900 ">${{ $cart['tax'] }}
+                                <dd class="text-base font-medium text-gray-900 ">@money($cart['tax'])
                                 </dd>
                             </dl>
 
                             @if(isset($cart['shipping']) && $cart['shipping'] > 0)
                              <dl class="flex items-center justify-between gap-4 py-3">
                                 <dt class="text-base font-normal text-gray-500 ">Shipping</dt>
-                                <dd class="text-base font-medium text-gray-900 ">${{ $cart['shipping'] }}
+                                <dd class="text-base font-medium text-gray-900 ">@money($cart['shipping'])
                                 </dd>
                             </dl>
                             @else
@@ -520,7 +520,7 @@
 
                             <dl class="flex items-center justify-between gap-4 py-3">
                                 <dt class="text-base font-bold text-gray-900 ">Total</dt>
-                                <dd class="text-base font-bold text-gray-900 ">${{ $cart['total'] }}
+                                <dd class="text-base font-bold text-gray-900 ">@money($cart['total'])
                                 </dd>
                             </dl>
                         </div>

@@ -4,6 +4,7 @@ namespace App\Filament\Widgets;
 
 use App\Enums\OrderStatus;
 use App\Models\Order;
+use App\Support\Money;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Support\Facades\DB;
@@ -24,7 +25,7 @@ class StatsRevenue extends BaseWidget
             Stat::make('Orders Fulfilled', Order::where('status', OrderStatus::Delivered)->count())
                 ->chart([0, 0, 0, 10, 15, 25, 35])
                 ->color('success'),
-            Stat::make('Revenue', '$'.number_format((float) $totalRevenue, 2))
+            Stat::make('Revenue', Money::format($totalRevenue))
                 ->chart([0, 1, 15, 35, 57, 267, 400])
                 ->color('success'),
         ];

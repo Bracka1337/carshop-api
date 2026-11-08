@@ -21,6 +21,20 @@ return [
     |
     */
 
+    /*
+    |--------------------------------------------------------------------------
+    | Currency
+    |--------------------------------------------------------------------------
+    |
+    | ISO 4217 code (admin tables, API) and the symbol shown on shop pages.
+    |
+    */
+
+    'currency' => [
+        'code' => env('SHOP_CURRENCY', 'EUR'),
+        'symbol' => env('SHOP_CURRENCY_SYMBOL', '€'),
+    ],
+
     'vat_rate' => (float) env('SHOP_VAT_RATE', 0.21),
 
     'shipping' => [

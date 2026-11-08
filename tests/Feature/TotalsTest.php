@@ -42,7 +42,7 @@ class TotalsTest extends TestCase
 
         $this->actingAs($user)
             ->get("/profile/orderdetails/{$order->id}")
-            ->assertSee('$100.00')
-            ->assertSee('$21.00');
+            ->assertSee('€100.00')
+            ->assertSee('€21.00');
     }
 }

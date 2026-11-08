@@ -15,13 +15,7 @@ class OrderController extends Controller
 
         $order->load(['payment', 'lines.product.images', 'lines.product.brand']);
 
-        $totals = $order->costBreakdown();
-        $cost = [
-            'subtotal' => number_format($totals['subtotal'], 2),
-            'total' => number_format($totals['total'], 2),
-            'tax' => number_format($totals['tax'], 2),
-            'shipping' => number_format($totals['shipping'], 2),
-        ];
+        $cost = $order->costBreakdown();
 
         return view('orderdetails', compact('order', 'cost'));
     }

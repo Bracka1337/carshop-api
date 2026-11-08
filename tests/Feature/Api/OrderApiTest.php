@@ -52,6 +52,7 @@ class OrderApiTest extends TestCase
             ->assertJsonPath('data.payment_status', 'Success')
             ->assertJsonPath('data.totals.shipping', 0)
             ->assertJsonPath('data.totals.total', 1200)
+            ->assertJsonPath('data.currency', 'EUR')
             ->assertJsonStructure(['data' => ['delivery' => ['method', 'payment_method', 'country']]]);
     }
 

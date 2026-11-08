@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\OrderLine;
 use App\Models\Product;
 use App\Models\User;
+use Database\Factories\BrandFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -19,7 +20,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Brand::factory()->count(61)->create(); // create brand and products
+        Brand::factory()->count(count(BrandFactory::NAMES))->create();
         Product::factory()->has(Image::factory()->count(3))
             ->count(200)->create();
 

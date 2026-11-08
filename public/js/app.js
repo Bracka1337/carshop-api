@@ -425,14 +425,13 @@ document.addEventListener("DOMContentLoaded", function () {
       );
 
       if (priceElement) {
-        const price = parseFloat(priceElement.innerText.replace("$", ""));
+        const price = parseFloat(priceElement.dataset.price);
         const quantity = parseInt(display.innerText);
         subtotal += price * quantity;
       }
     });
-    document.getElementById("subtotal-amount").innerText = `$${subtotal.toFixed(
-      2
-    )}`;
+    const subtotalElement = document.getElementById("subtotal-amount");
+    subtotalElement.innerText = `${subtotalElement.dataset.currency}${subtotal.toFixed(2)}`;
   }
 
   function updateCartCount() {

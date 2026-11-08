@@ -50,7 +50,7 @@ class AdminPanelTest extends TestCase
             ->assertSee('Orders Created');
         Livewire::test(StatsRevenue::class)
             ->assertSee('Revenue')
-            ->assertSee('$300');
+            ->assertSee('€300');
     }
 
     public static function resourcePages(): array

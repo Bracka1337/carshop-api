@@ -11,6 +11,34 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ProductFactory extends Factory
 {
+    private const MODELS = [
+        'Apex', 'Atlas', 'Blade', 'Corsa', 'Delta', 'Drift', 'Helix', 'Kestrel', 'Matrix', 'Monza',
+        'Nordic', 'Rally', 'Rebel', 'Ridge', 'Strada', 'Summit', 'Titan', 'Torque', 'Vector', 'Vortex',
+    ];
+
+    private const WIDTHS = [4.00, 4.50, 5.00, 5.50, 6.00, 6.50, 7.00, 7.25, 7.50, 8.00, 8.25, 8.50, 9.00, 9.50, 10.00, 10.50, 11.00, 11.50, 12.00];
+
+    private const ALLOY_BUILDS = ['Cast', 'Low-pressure cast', 'Flow-formed', 'Forged'];
+
+    private const ALLOY_FINISHES = [
+        'gloss black', 'matte black', 'hyper silver', 'gunmetal grey', 'satin bronze',
+        'gloss black with a diamond-cut face', 'brushed aluminium under a clear coat', 'satin titanium',
+    ];
+
+    private const ALLOY_DESIGNS = [
+        'Concave five-spoke design', 'Split ten-spoke design', 'Multi-spoke mesh design',
+        'Y-spoke design with a deep lip', 'Twin five-spoke design', 'Six-spoke design for larger brakes',
+    ];
+
+    private const STEEL_FINISHES = ['black powder-coat', 'silver paint', 'black e-coat'];
+
+    private const CLOSINGS = [
+        'Hub-centric rings may be needed for an exact centre-bore fit.',
+        'Check your vehicle\'s bolt pattern and offset before ordering.',
+        'Clear-coated against road salt and brake dust.',
+        'Suitable for summer and winter tyres.',
+    ];
+
     /**
      * Define the model's default state.
      *
@@ -18,21 +46,65 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
-        $brand = Brand::inRandomOrder()->first() ?? Brand::factory()->create();
+        $diameter = fake()->numberBetween(13, 22);
+        // Keep the rim width plausible for the diameter (about 0.3–0.6 of it).
+        $width = fake()->randomElement(array_values(array_filter(
+            self::WIDTHS,
+            fn (float $w) => $w >= $diameter * 0.3 && $w <= $diameter * 0.6
+        )));
+        $type = fake()->randomElement(['Alloy', 'Steel']);
+        $bolt = fake()->randomElement([4, 5, 6]);
+        $boltDiameter = fake()->randomElement([98.00, 100.00, 105.00, 108.00, 110.00, 112.00, 114.30, 115.00, 118.00, 120.00, 125.00, 127.00, 130.00, 139.70, 160.00]);
+        $et = fake()->randomElement([-20, -12, 0, 10, 15, 18, 20, 23.5, 25, 28, 30, 31.5, 33, 35, 35.5, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 52, 53, 55]);
+        $cb = fake()->randomElement([54.10, 56.10, 56.60, 57.10, 58.10, 60.10, 63.40, 64.10, 65.10, 66.10, 66.60, 67.10, 70.10, 71.60, 72.60, 74.10, 78.10, 93.10, 106.10, 108.10]);
 
         return [
-
-            'title' => $brand->title,
-            'description' => fake()->text(),
-            'diameter' => fake()->numberBetween(13, 22),
-            'width' => fake()->randomElement([4.00, 4.50, 5.00, 5.50, 6.00, 6.50, 7.00, 7.25, 7.50, 8.00, 8.25, 8.50, 9.00, 9.50, 10.00, 10.50, 11.00, 11.50, 12.00]),
-            'et' => fake()->randomElement([-44, -35, -32, -30, -20, -15, -13, -12, -10, -1, 0, 5, 8, 10, 11, 12, 13, 14, 15, 16, 18, 19, 20, 21, 22, 23, 23.5, 24, 25, 26, 27, 28, 29, 30, 31, 31.5, 32, 33, 34, 34.5, 35, 35.5, 36, 36.5, 37, 37.5, 38, 38.5, 39, 39.5, 40, 40.5, 41, 41.5, 42, 42.5, 43, 43.5, 44, 44.5, 45, 46, 47, 47.5, 48, 48.5, 49, 49.5, 50, 50.5, 51, 52, 52.5, 53, 53.5, 54, 54.5, 55, 55.5, 56, 56.4, 57, 58, 59, 60, 61, 62, 62.6, 63, 64, 65, 66, 67]),
-            'bolt' => fake()->randomElement([3, 4, 5, 6]),
-            'bolt_diameter' => fake()->randomElement([98.00, 100.00, 105.00, 108.00, 110.00, 112.00, 114.30, 115.00, 118.00, 120.00, 125.00, 127.00, 130.00, 135.00, 139.00, 139.70, 140.00, 150.00, 160.00, 165.00, 170.00, 180.00, 200.00, 205.00]),
-            'type' => fake()->randomElement(['Alloy', 'Steel']),
-            'cb' => fake()->randomElement([54.00, 54.10, 55.10, 56.00, 56.10, 56.50, 56.60, 57.00, 57.10, 57.60, 58.00, 58.10, 60.00, 60.10, 61.10, 63.00, 63.10, 63.30, 63.40, 64.00, 64.10, 64.20, 65.00, 65.06, 65.10, 66.00, 66.10, 66.40, 66.45, 66.50, 66.505, 66.55, 66.60, 66.70, 67.00, 67.10, 67.20, 68.00, 68.10, 69.10, 70.00, 70.10, 70.20, 70.30, 70.50, 70.60, 70.70, 71.00, 71.10, 71.50, 71.60, 72.00, 72.10, 72.30, 72.50, 72.60, 73.00, 73.10, 74.00, 74.1, 74.10, 75.00, 75.10, 76.00, 76.10, 76.90, 78.10, 79.00, 79.10, 82.00, 82.10, 84.00, 84.10, 89.10, 92.10, 92.40, 93.00, 93.10, 95.50, 100.00, 100.10, 106.00, 106.10, 108.10, 108.30, 110.00, 110.10, 114.00, 130.10, 161.10]),
-            'price' => fake()->numberBetween(50, 1500),
-            'brand_id' => $brand->id,
+            'brand_id' => fn () => Brand::inRandomOrder()->value('id') ?? Brand::factory(),
+            'title' => fn (array $attributes) => sprintf(
+                '%s %s %dx%s',
+                Brand::whereKey($attributes['brand_id'])->value('title'),
+                fake()->randomElement(self::MODELS),
+                $diameter,
+                self::number($width),
+            ),
+            'description' => $this->describe($type, $bolt, $boltDiameter, $et, $cb),
+            'diameter' => $diameter,
+            'width' => $width,
+            'et' => $et,
+            'bolt' => $bolt,
+            'bolt_diameter' => $boltDiameter,
+            'type' => $type,
+            'cb' => $cb,
+            'price' => $type === 'Steel' ? fake()->numberBetween(50, 180) : fake()->numberBetween(150, 1500),
         ];
+    }
+
+    private function describe(string $type, int $bolt, float $boltDiameter, float $et, float $cb): string
+    {
+        $intro = $type === 'Steel'
+            ? sprintf('Pressed steel wheel with a %s finish. A tough, easy-to-repair choice for winter tyres.', fake()->randomElement(self::STEEL_FINISHES))
+            : sprintf(
+                '%s aluminium alloy wheel in %s. %s.',
+                fake()->randomElement(self::ALLOY_BUILDS),
+                fake()->randomElement(self::ALLOY_FINISHES),
+                fake()->randomElement(self::ALLOY_DESIGNS),
+            );
+
+        return sprintf(
+            '%s Fitment: %dx%s bolt pattern, ET%s offset, %s mm centre bore. %s',
+            $intro,
+            $bolt,
+            self::number($boltDiameter),
+            self::number($et),
+            self::number($cb),
+            // The clear-coat line only fits alloys.
+            fake()->randomElement($type === 'Steel' ? array_slice(self::CLOSINGS, 0, 2) : self::CLOSINGS),
+        );
+    }
+
+    /** 8.00 → "8", 8.50 → "8.5", 114.30 → "114.3". */
+    private static function number(float $value): string
+    {
+        return rtrim(rtrim(number_format($value, 2, '.', ''), '0'), '.');
     }
 }
