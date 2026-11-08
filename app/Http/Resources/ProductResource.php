@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Product;
+use App\Support\Money;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -24,6 +25,7 @@ class ProductResource extends JsonResource
             ]),
             'type' => $this->type,
             'price' => (float) $this->price,
+            'currency' => Money::code(),
             'specs' => [
                 'diameter' => (int) $this->diameter,
                 'width' => (float) $this->width,

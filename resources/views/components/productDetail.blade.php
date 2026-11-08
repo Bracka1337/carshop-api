@@ -49,7 +49,7 @@
                     <p class="text-gray-600 text-3xl mb-4">{{ $product->brand?->title }}</p>
                     <div class="mb-4 flex text-4xl">
                         <div class="mr-10">
-                            <span class="text-gray-600">${{ $product->price }}</span>
+                            <span class="text-gray-600">@money($product->price)</span>
                         </div>
                     </div>
                     <div class="h-52 mt-10 overflow-auto">

@@ -10,6 +10,15 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class BrandFactory extends Factory
 {
+    public const NAMES = [
+        '885', 'AEZ', 'Alcar HybridRad', 'ALUTEC', 'ATS', 'Autec', 'AVUS', 'Barzetta', 'Borbet', 'BREYTON',
+        'BRIDE', 'Brock', 'Carbonado', 'Carmani', 'Carwel', 'CForged', 'CMS', 'DEZENT', 'Diewe Wheels',
+        'DOTZ', 'Dotz 4x4', 'Fondmetal', 'Forzza', 'IT WHEELS', 'Jack Wheeler', 'JR WHEELS', 'Keskin Tuning',
+        'Magline', 'MAK', 'MAM Leichtmetallräder', 'Melchior', 'MOMO', 'Motec', 'MSW', 'NPK', 'Oxigin',
+        'OZ Racing', 'RC-DESIGN', 'Ronal', 'seventy9', 'SPARCO', 'Speedline', 'SRW', 'Tomason', 'TREBL',
+        'Wrath Wheels', 'CONCAVER', 'BMW', 'Black Rhino', 'Fuel', 'MW', 'Rial', 'Rotiform', 'Venue',
+    ];
+
     /**
      * Define the model's default state.
      *
@@ -19,18 +28,8 @@ class BrandFactory extends Factory
     {
         static $index = 0;
 
-        $brands = [
-            '885', 'AEZ', 'Alcar HybridRad', 'ALUTEC', 'ATS', 'Autec', 'AVUS', 'Barzetta', 'Borbet', 'BREYTON',
-            'BRIDE', 'Brock', 'Carbonado', 'Carmani', 'Carwel', 'CForged', 'CMS', 'DEZENT', 'Diewe Wheels',
-            'DOTZ', 'Dotz 4x4', 'Fondmetal', 'Forzza', 'IT WHEELS', 'Jack Wheeler', 'JR WHEELS', 'Keskin Tuning',
-            'KFZ', 'KiK', 'Magline', 'MAK', 'MAM Leichtmetallräder', 'Melchior', 'MOMO', 'Motec', 'MSW',
-            'Nano', 'NPK', 'OE', 'Oxigin', 'OZ Racing', 'RC-DESIGN', 'Reds', 'Ronal', 'seventy9', 'SONAX',
-            'SPARCO', 'Speedline', 'SRW', 'Tomason', 'TREBL', 'Wrath Wheels', 'CONCAVER', 'BMW', 'Black Rhino',
-            'Fuel', 'GG', 'MW', 'RC Design', 'Rial', 'Rotiform', 'Venue',
-        ];
-
         return [
-            'title' => $brands[$index++],
+            'title' => self::NAMES[$index++ % count(self::NAMES)],
         ];
     }
 }

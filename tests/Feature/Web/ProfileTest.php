@@ -26,7 +26,7 @@ class ProfileTest extends TestCase
             ->assertOk()
             // 300 + 10% shipping (below 1000)
             ->assertViewHas('orders', fn ($orders) => $orders->sole()->is($order))
-            ->assertViewHas('totals', fn ($totals) => $totals[$order->id] === '330.00');
+            ->assertSee('Total: €330.00');
     }
 
     public function test_a_user_can_view_their_own_order(): void
@@ -39,7 +39,8 @@ class ProfileTest extends TestCase
             ->get("/profile/orderdetails/{$order->id}")
             ->assertOk()
             // 1200 is above the free-shipping threshold
-            ->assertViewHas('cost', ['subtotal' => '991.74', 'total' => '1,200.00', 'tax' => '208.26', 'shipping' => '0.00']);
+            ->assertViewHas('cost', ['subtotal' => 991.74, 'total' => 1200.0, 'tax' => 208.26, 'shipping' => 0.0])
+            ->assertSeeInOrder(['€208.26', '€0.00', '€1,200.00']);
     }
 
     public function test_a_user_cannot_view_someone_elses_order(): void

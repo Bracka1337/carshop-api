@@ -36,8 +36,8 @@
                                                                     <h3>
                                                                         <a href="#">{{ $details['title'] ?? 'N/A' }}</a>
                                                                     </h3>
-                                                                    <p class="ml-4 product-price" data-id="{{ $id }}">
-                                                                        ${{ $details['price'] ?? 'N/A' }}
+                                                                    <p class="ml-4 product-price" data-id="{{ $id }}" data-price="{{ $details['price'] ?? 0 }}">
+                                                                        {{ isset($details['price']) ? \App\Support\Money::format($details['price']) : 'N/A' }}
                                                                     </p>
                                                                 </div>
                                                                 <p class="mt-1 text-sm text-gray-500">{{ $details['brand'] ?? 'N/A' }}</p>
@@ -70,7 +70,7 @@
                         <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
                             <div class="flex justify-between text-base font-medium text-gray-900">
                                 <p>Subtotal</p>
-                                <p id="subtotal-amount">$0.00</p>
+                                <p id="subtotal-amount" data-currency="{{ \App\Support\Money::symbol() }}">@money(0)</p>
                             </div>
                             <p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                             @if (session('cart') && array_sum(array_column(session('cart'), 'quantity')) > 0)

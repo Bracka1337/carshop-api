@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\OrderResource\RelationManagers;
 
 use App\Models\Product;
+use App\Support\Money;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
@@ -35,6 +36,7 @@ class OrderLinesRelationManager extends RelationManager
                     ->required(),
                 TextInput::make('quantity')->integer()->minValue(1)->required(),
                 TextInput::make('unit_price')
+                    ->prefix(Money::symbol())
                     ->numeric()
                     ->minValue(0)
                     ->helperText('Leave empty to use the current product price.'),
@@ -48,7 +50,7 @@ class OrderLinesRelationManager extends RelationManager
                 TextColumn::make('product_id')->label('Product ID'),
                 TextColumn::make('product.title')->label('Product'),
                 TextColumn::make('quantity'),
-                TextColumn::make('unit_price')->money('USD'),
+                TextColumn::make('unit_price')->money(Money::code()),
                 ImageColumn::make('product.images.img_uri')->stacked()->limit(1),
             ])
             ->filters([

@@ -15,7 +15,7 @@ class ProfileController extends Controller
         $orders = $user->orders()->with(['payment', 'lines.product.images'])->get();
 
         $totals = $orders->mapWithKeys(fn (Order $order) => [
-            $order->id => number_format($order->costBreakdown()['total'], 2),
+            $order->id => $order->costBreakdown()['total'],
         ]);
 
         return view('profile', compact('user', 'orders', 'totals'));

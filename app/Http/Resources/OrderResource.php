@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Order;
+use App\Support\Money;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -31,6 +32,7 @@ class OrderResource extends JsonResource
                 'quantity' => (int) $item->quantity,
                 'line_total' => $item->lineTotal(),
             ])->values(),
+            'currency' => Money::code(),
             'totals' => $this->costBreakdown(),
         ];
     }

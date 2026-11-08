@@ -74,18 +74,18 @@
                             <dl class="flex items-center justify-between gap-4">
                                 <dt class="text-base font-normal text-gray-500">Original price</dt>
                                 <dd class="text-base font-medium text-gray-900">
-                                    ${{ $cart['subtotal'] }}</dd>
+                                    @money($cart['subtotal'])</dd>
                             </dl>
 
                             <dl class="flex items-center justify-between gap-4">
                                 <dt class="text-base font-normal text-gray-500">Tax</dt>
-                                <dd class="text-base font-medium text-gray-900">${{ $cart['tax'] }}</dd>
+                                <dd class="text-base font-medium text-gray-900">@money($cart['tax'])</dd>
                             </dl>
                         </div>
                         @if (isset($cart['shipping']) && $cart['shipping'] > 0)
                             <dl class="flex items-center justify-between gap-4">
                                 <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Shipping</dt>
-                                <dd class="text-base font-medium text-gray-900">${{ $cart['shipping'] }}
+                                <dd class="text-base font-medium text-gray-900">@money($cart['shipping'])
                                 </dd>
                             </dl>
                         @else
@@ -97,7 +97,7 @@
 
                         <dl class="flex items-center justify-between gap-4 border-t border-gray-200 pt-2">
                             <dt class="text-base font-bold text-gray-900">Total</dt>
-                            <dd class="text-base font-bold text-gray-900">${{ $cart['total'] }}</dd>
+                            <dd class="text-base font-bold text-gray-900">@money($cart['total'])</dd>
                         </dl>
                     </div>
 

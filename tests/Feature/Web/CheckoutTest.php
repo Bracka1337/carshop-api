@@ -268,8 +268,8 @@ class CheckoutTest extends TestCase
 
         $this->get('/checkout')
             ->assertOk()
-            ->assertSee('$58.20')
-            ->assertDontSee('$58.2<', false)
+            ->assertSee('€58.20')
+            ->assertDontSee('€58.2<', false)
             ->assertSeeInOrder(['value="dhl"', DeliveryMethod::Dhl->getLabel(), 'value="express"', DeliveryMethod::Express->getLabel()], false)
             ->assertDontSee('require an account');
     }

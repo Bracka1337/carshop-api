@@ -8,6 +8,7 @@ use App\Filament\Resources\ProductResource\Pages\ListProducts;
 use App\Filament\Resources\ProductResource\RelationManagers\ImagesRelationManager;
 use App\Models\Brand;
 use App\Models\Product;
+use App\Support\Money;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -38,7 +39,7 @@ class ProductResource extends Resource
                 Select::make('bolt')->options(['3' => '3', '4' => '4', '5' => '5', '6' => '6'])->required(),
                 Select::make('bolt_diameter')->options(self::decimalOptions(['98.00' => '98.00', '100.00' => '100.00', '105.00' => '105.00', '108.00' => '108.00', '110.00' => '110.00', '112.00' => '112.00', '114.30' => '114.30', '115.00' => '115.00', '118.00' => '118.00', '120.00' => '120.00', '125.00' => '125.00', '127.00' => '127.00', '130.00' => '130.00', '135.00' => '135.00', '139.00' => '139.00', '139.70' => '139.70', '140.00' => '140.00', '150.00' => '150.00', '160.00' => '160.00', '165.00' => '165.00', '170.00' => '170.00', '180.00' => '180.00', '200.00' => '200.00', '205.00' => '205.00']))->searchable()->required(),
                 Select::make('type')->options(['Alloy' => 'Alloy', 'Steel' => 'Steel'])->required(),
-                TextInput::make('price')->minValue(0)->maxValue(10000)->required(),
+                TextInput::make('price')->prefix(Money::symbol())->minValue(0)->maxValue(10000)->required(),
                 Select::make('brand_id')->relationship('Brand', 'title')->options(Brand::pluck('title', 'id'))->required()->searchable(),
             ])->Columns(3);
     }
@@ -73,7 +74,7 @@ class ProductResource extends Resource
                 TextColumn::make('bolt'),
                 TextColumn::make('bolt_diameter'),
                 TextColumn::make('type'),
-                TextColumn::make('price')->searchable(),
+                TextColumn::make('price')->money(Money::code())->searchable(),
                 TextColumn::make('brand.title')->searchable(),
             ])
             ->filters([

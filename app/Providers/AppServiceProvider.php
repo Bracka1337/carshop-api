@@ -41,6 +41,9 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('admin.layouts.admin', 'admin-layout');
         // needs to be included in the blade file
 
+        // @money($amount) prints the amount in the shop currency.
+        Blade::directive('money', fn (string $expression) => "<?php echo e(\App\Support\Money::format($expression)); ?>");
+
         Gate::define('admin-access', function (User $user) {
             return $user->role === 'Admin';
         });

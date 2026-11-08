@@ -25,6 +25,7 @@ class ProductApiTest extends TestCase
             ->assertJsonPath('data.0.id', $product->id)
             ->assertJsonPath('data.0.brand.title', 'OZ Racing')
             ->assertJsonPath('data.0.price', 420)
+            ->assertJsonPath('data.0.currency', 'EUR')
             ->assertJsonPath('data.0.specs.diameter', 18)
             ->assertJsonPath('data.0.specs.width', 8.5)
             ->assertJsonPath('data.0.specs.bolt_diameter', 114.3)

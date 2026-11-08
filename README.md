@@ -66,6 +66,8 @@ In 2026 I upgraded and refactored the project on my own:
   `config/shop.php` (`SHOP_SHIPPING_RATE`, `SHOP_FREE_SHIPPING_FROM`)
 - **VAT**: prices include 21% VAT (`SHOP_VAT_RATE`). Checkout, order pages and
   the API show the same breakdown: subtotal without VAT + VAT + shipping = total
+- **Currency**: euros by default; code and symbol in `config/shop.php`
+  (`SHOP_CURRENCY`, `SHOP_CURRENCY_SYMBOL`), used by shop pages, admin and API
 - **Accounts**: registration, login, profile with order history and order details
 - **Admin panel** (`/admin`, admin role only): CRUD for brands, products,
   images, orders, payments and users, plus dashboard stats (users, orders,
@@ -162,7 +164,7 @@ Open http://localhost:8080.
 
 ## Demo accounts
 
-The seeder creates 200 products across 61 brands, random customers with
+The seeder creates 200 products across 54 brands, random customers with
 orders, and two fixed accounts. **These are for local development only.**
 
 | Role  | Email                   | Password  |
