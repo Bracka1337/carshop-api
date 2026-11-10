@@ -86,7 +86,6 @@
                 <div class="mt-6 grid grid-cols-1 gap-4 min-[480px]:grid-cols-2 sm:gap-6 xl:grid-cols-3">
                     @foreach ($products as $product)
                         <x-product-card :product="$product" :eager="$loop->index < 3" />
-                        <x-productDetail :product="$product" />
                     @endforeach
                 </div>
 

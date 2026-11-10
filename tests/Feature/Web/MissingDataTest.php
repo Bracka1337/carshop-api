@@ -23,7 +23,7 @@ class MissingDataTest extends TestCase
     {
         $this->productWithoutImages();
 
-        $this->get('/')->assertOk()->assertSee('Bare wheel');
+        $this->get('/')->assertOk()->assertSeeText('Bare wheel');
     }
 
     public function test_the_catalogue_renders_a_product_whose_brand_was_deleted(): void

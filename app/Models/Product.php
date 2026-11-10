@@ -18,6 +18,7 @@ class Product extends Model
 
     protected $fillable = [
         'title',
+        'slug',
         'description',
         'diameter',
         'width',
@@ -29,6 +30,27 @@ class Product extends Model
         'price',
         'brand_id',
     ];
+
+    /** Products get a slug from their title when created without one; it doesn't follow later title edits. */
+    protected static function booted(): void
+    {
+        static::creating(function (Product $product) {
+            $product->slug = $product->slug ?: self::uniqueSlug($product->title);
+        });
+    }
+
+    /** "OZ Racing Apex 18x8.5" → "oz-racing-apex-18x8-5", then "-2", "-3"… if taken (deleted products included). */
+    public static function uniqueSlug(string $title): string
+    {
+        $base = Str::slug(str_replace('.', '-', $title)) ?: 'wheel';
+        $slug = $base;
+
+        for ($n = 2; static::withTrashed()->where('slug', $slug)->exists(); $n++) {
+            $slug = "{$base}-{$n}";
+        }
+
+        return $slug;
+    }
 
     /**
      * The title without its leading brand name, so pages that show the brand

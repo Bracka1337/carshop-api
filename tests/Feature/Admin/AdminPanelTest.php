@@ -107,14 +107,30 @@ class AdminPanelTest extends TestCase
                 'price' => 420,
                 'brand_id' => $brand->id,
             ])
+            ->assertFormSet(['slug' => 'oz-racing-ultraleggera'])
             ->call('create')
             ->assertHasNoFormErrors();
 
         $this->assertDatabaseHas('products', [
             'title' => 'OZ Racing Ultraleggera',
+            'slug' => 'oz-racing-ultraleggera',
             'diameter' => 18,
             'brand_id' => $brand->id,
         ]);
+    }
+
+    public function test_editing_a_product_title_keeps_its_slug(): void
+    {
+        $this->actingAs($this->createAdmin());
+        $product = $this->createProduct(['title' => 'Borbet LV5']);
+
+        Livewire::test(EditProduct::class, ['record' => $product->getRouteKey()])
+            ->fillForm(['title' => 'Borbet LV5 Black'])
+            ->assertFormSet(['slug' => 'borbet-lv5'])
+            ->call('save')
+            ->assertHasNoFormErrors();
+
+        $this->assertSame('borbet-lv5', $product->fresh()->slug);
     }
 
     public function test_product_form_validates_required_fields(): void

@@ -53,8 +53,8 @@ class ProductFactory extends Factory
             fn (float $w) => $w >= $diameter * 0.3 && $w <= $diameter * 0.6
         )));
         $type = fake()->randomElement(['Alloy', 'Steel']);
-        $bolt = fake()->randomElement([4, 5, 6]);
-        $boltDiameter = fake()->randomElement([98.00, 100.00, 105.00, 108.00, 110.00, 112.00, 114.30, 115.00, 118.00, 120.00, 125.00, 127.00, 130.00, 139.70, 160.00]);
+        // Common EU bolt patterns, so wheels share fitments ("Similar wheels" on the product page).
+        [$bolt, $boltDiameter] = fake()->randomElement([[4, 100.00], [4, 108.00], [5, 100.00], [5, 108.00], [5, 112.00], [5, 114.30], [5, 120.00], [6, 139.70]]);
         $et = fake()->randomElement([-20, -12, 0, 10, 15, 18, 20, 23.5, 25, 28, 30, 31.5, 33, 35, 35.5, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 52, 53, 55]);
         $cb = fake()->randomElement([54.10, 56.10, 56.60, 57.10, 58.10, 60.10, 63.40, 64.10, 65.10, 66.10, 66.60, 67.10, 70.10, 71.60, 72.60, 74.10, 78.10, 93.10, 106.10, 108.10]);
 

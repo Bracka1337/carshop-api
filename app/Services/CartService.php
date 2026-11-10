@@ -61,17 +61,17 @@ class CartService
         return isset(session()->get('cart', [])[$productId]);
     }
 
-    public function add(Product $product): void
+    public function add(Product $product, int $quantity = 1): void
     {
         $cart = session()->get('cart', []);
 
         if (isset($cart[$product->id])) {
-            $cart[$product->id]['quantity'] += 1;
+            $cart[$product->id]['quantity'] += $quantity;
         } else {
             $cart[$product->id] = [
                 'title' => $product->title,
                 'brand' => $product->brand?->title,
-                'quantity' => 1,
+                'quantity' => $quantity,
                 'price' => $product->price,
                 'image' => $product->images->first()?->img_uri,
             ];

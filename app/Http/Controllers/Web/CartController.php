@@ -16,7 +16,9 @@ class CartController extends Controller
     /** Catalogue buttons use fetch (JSON with the re-rendered drawer); without JS it's a form post. */
     public function addProductsToCart(Request $request, string $id): RedirectResponse|JsonResponse
     {
-        $this->cart->add(Product::with(['brand', 'images'])->findOrFail($id));
+        $quantity = (int) ($request->validate(['quantity' => 'sometimes|integer|min:1|max:99'])['quantity'] ?? 1);
+
+        $this->cart->add(Product::with(['brand', 'images'])->findOrFail($id), $quantity);
 
         if ($request->wantsJson()) {
             return response()->json([
