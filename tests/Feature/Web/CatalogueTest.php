@@ -38,6 +38,18 @@ class CatalogueTest extends TestCase
             ->assertViewHas('initialProducts', fn ($page) => $page->pluck('id')->all() === [$large->id, $small->id]);
     }
 
+    public function test_a_maximum_price_works_without_a_minimum(): void
+    {
+        $cheap = $this->createProduct(['price' => 80]);
+        $this->createProduct(['price' => 900]);
+
+        $this->get('/?price_to=100')
+            ->assertOk()
+            ->assertViewHas('initialProducts', fn ($page) => $page->pluck('id')->all() === [$cheap->id]);
+
+        $this->from('/')->get('/?price_from=500&price_to=100')->assertSessionHasErrors('price_to');
+    }
+
     public function test_products_can_be_filtered_by_brand(): void
     {
         $oz = $this->createProduct([], $this->createBrand('OZ Racing'));
@@ -45,6 +57,29 @@ class CatalogueTest extends TestCase
 
         $this->get('/?brand='.$oz->brand_id)
             ->assertViewHas('initialProducts', fn ($page) => $page->pluck('id')->all() === [$oz->id]);
+    }
+
+    public function test_sorting_by_brand_uses_the_brand_name(): void
+    {
+        // Created in this order so brand ids run opposite to the names.
+        $zender = $this->createProduct([], $this->createBrand('Zender'));
+        $alcar = $this->createProduct([], $this->createBrand('Alcar'));
+
+        $this->get('/?order=brand_asc')
+            ->assertViewHas('initialProducts', fn ($page) => $page->pluck('id')->all() === [$alcar->id, $zender->id]);
+    }
+
+    public function test_filters_that_match_nothing_show_an_empty_state(): void
+    {
+        $this->createProduct(['diameter' => 17]);
+
+        $this->get('/?diameter=22&order=price_asc')
+            ->assertOk()
+            ->assertViewHas('initialProducts', fn ($page) => $page->total() === 0)
+            ->assertSee('No wheels match these filters')
+            ->assertSee('22″')
+            // "Clear all" drops the filters but keeps the sort.
+            ->assertSee('href="'.route('main', ['order' => 'price_asc']).'"', false);
     }
 
     public function test_invalid_filters_are_rejected(): void

@@ -1,88 +1,70 @@
-{{-- product details --}}
-@props(['product' => []])
+{{-- Quick view, opened from a catalogue card. --}}
+@props(['product'])
 
-<div id="modal" class="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 z-30 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-    <div class="mt-10 max-w-screen-2xl mx-auto px-4 sm:px-4 lg:px-5 bg-white 
-        shadow-lg rounded-xl hidden h-5/6 flex flex-col"
-        id="productDetail"
-        product-data-id="{{ $product->id }}">
-    {{-- close modal --}}
-        <div class="relative flex justify-end md:h-5 z-50">
-            <span id="closeModal"
-                class="cursor-pointer text-gray-500 hover:text-gray-800 text-3xl" aria-label="Close modal">&times;</span>
+<div data-quick-view-modal="{{ $product->id }}" class="fixed inset-0 z-30 hidden overflow-y-auto bg-ink-950/60 p-4 sm:p-8"
+    role="dialog" aria-modal="true" aria-labelledby="quick-view-title-{{ $product->id }}">
+    <div data-quick-view-panel class="relative mx-auto grid max-w-5xl overflow-hidden rounded-card bg-white shadow-panel md:grid-cols-2">
+        <button type="button" data-quick-view-close
+            class="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-ink-600 ring-1 ring-ink-200 hover:text-ink-950 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500">
+            <span class="sr-only">Close</span>
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
+        </button>
+
+        {{-- Gallery --}}
+        <div class="relative aspect-square overflow-hidden bg-ink-100 md:aspect-auto md:min-h-[28rem]">
+            <div class="flex h-full transition-transform duration-500 ease-out" data-carousel-inner>
+                @foreach ($product->images as $key => $image)
+                    <div class="flex-100" data-carousel-item="{{ $key }}">
+                        <img src="{{ asset('/storage/'.$image->img_uri) }}" alt="{{ $product->title }}, photo {{ $key + 1 }}" loading="lazy"
+                            class="h-full w-full object-contain p-8 mix-blend-multiply">
+                    </div>
+                @endforeach
+            </div>
+            <div class="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2" data-carousel-indicators>
+                @foreach ($product->images as $key => $image)
+                    <button type="button" data-carousel-slide-to aria-label="Show photo {{ $key + 1 }}"
+                        class="h-2 w-2 rounded-full transition {{ $key === 0 ? 'bg-ink-900' : 'bg-ink-300' }}"></button>
+                @endforeach
+            </div>
+            @if ($product->images->count() > 1)
+                <button type="button" data-carousel-prev aria-label="Previous photo"
+                    class="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-ink-700 shadow-card hover:text-ink-950">
+                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg>
+                </button>
+                <button type="button" data-carousel-next aria-label="Next photo"
+                    class="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-ink-700 shadow-card hover:text-ink-950">
+                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
+                </button>
+            @endif
         </div>
-        {{-- product description --}}
-        <div class="md:flex md:flex-grow relative h-full sm:flex-column overflow-y-auto ">
-            <div class="md:h-10/12 h-11/12 basis-1/2 w-full flex items-center justify-center rounded-lg mb-5 relative overflow-hidden">
-                <!-- product image -->
-                <div class="relative w-full h-full flex transition-transform duration-500 ease" data-carousel-inner>
-                    <!-- Item loop -->
-                    @foreach ($product->images as $key => $image)
-                        <div class=" flex-100"
-                            data-carousel-item= "{{$key}}">
-                            <img src="{{ asset('/storage/' . $image->img_uri) }}"
-                                class="object-cover w-full h-full rounded-lg" alt="Slide {{ $key }}">
-                        </div>
-                    @endforeach
-                </div>
-                <!-- Slider indicators -->
-                <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 w-max" data-carousel-indicators>
-                    @foreach ($product->images as $key => $image)
-                        <button type="button" class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 
-                            focus:outline-none focus:bg-gray-400 transition {{$key === 0 ? 'bg-gray-400' : 'bg-gray-300'}}"
-                            data-carousel-slide-to>
-                        </button>
-                    @endforeach
-                </div>
-                <!-- Slider controls -->
-                <button type="button" class="absolute top-1/2 left-3 z-40 flex items-center justify-center w-10 h-10 bg-gray-200/50 rounded-full hover:bg-gray-300 focus:outline-none transition" data-carousel-prev>
-                    <img src="{{asset('images/arrowLeft.svg')}}" alt="" class="w-5 h-5 text-gray-600">
-                </button>
-                <button type="button" class="absolute top-1/2 right-3 z-40 flex items-center justify-center w-10 h-10 bg-gray-200/50 rounded-full hover:bg-gray-300 focus:outline-none transition" data-carousel-next>
-                    <img src="{{asset('images/arrowRight.svg')}}" alt="" class="w-5 h-5 text-gray-600">
-                </button>
-            </div>
-            {{-- Product description --}}
-            <div class="px-4 basis-1/2 flex flex-col justify-between overflow-y-auto">
-                <div>
-                    <h2 class="font-bold text-gray-800 mb-2 text-5xl">{{ $product->title }}</h2>
-                    <p class="text-gray-600 text-3xl mb-4">{{ $product->brand?->title }}</p>
-                    <div class="mb-4 flex text-4xl">
-                        <div class="mr-10">
-                            <span class="text-gray-600">@money($product->price)</span>
-                        </div>
+
+        {{-- Details --}}
+        <div class="flex flex-col p-6 sm:p-8">
+            <p class="text-xs font-semibold uppercase tracking-wider text-ink-500">{{ $product->brand?->title }}</p>
+            <h2 id="quick-view-title-{{ $product->id }}" class="mt-1 font-display text-3xl font-bold leading-tight text-ink-950">{{ $product->modelName() }}</h2>
+            <p class="mt-3 text-2xl font-bold text-ink-950">@money($product->price) <span class="text-xs font-normal text-ink-500">incl. VAT</span></p>
+            <p class="mt-4 text-sm leading-6 text-ink-600">{{ $product->description }}</p>
+
+            <dl class="mt-6 divide-y divide-ink-200 border-y border-ink-200 text-sm">
+                @foreach (['Type' => 'type', 'Diameter' => 'diameter', 'Width' => 'width', 'Offset (ET)' => 'et', 'Centre bore' => 'cb', 'Bolts' => 'bolt', 'Bolt circle' => 'bolt_diameter'] as $label => $field)
+                    <div class="flex justify-between py-2">
+                        <dt class="text-ink-500">{{ $label }}</dt>
+                        <dd class="font-semibold text-ink-900">{{ $product->$field }}</dd>
                     </div>
-                    <div class="h-52 mt-10 overflow-auto">
-                        <span class="font-bold text-gray-700 text-xl">Product Description:</span>
-                        <p class="text-gray-600 text-sm mt-2 text-lg">{{ $product->description }}</p>
-                    </div>
-                    <div class="mt-3">
-                        <p class="font-bold text-gray-700 text-xl">Product Specification:</p>
-                    </div>
-                    {{-- Product data table --}}
-                    <div>
-                        <table class="w-full text-base text-left rtl:text-right text-gray-500">
-                            <thead class="text-base text-gray-700">
-                                @foreach (['Type' => 'type', 'Size' => 'diameter', 'Width' => 'width', 'Et' => 'et', 'Cb' => 'cb', 'Bolt' => 'bolt', 'Bolt Diameter' => 'bolt_diameter'] as $label => $field)
-                                    <tr>
-                                        <th scope="col" class="px-6 py-2 border-b border-gray-200">{{ $label }}</th>
-                                        <td class="px-6 py-2 border-b border-gray-200 font-bold text-right">{{ $product->$field }}</td>
-                                    </tr>
-                                @endforeach
-                            </thead>
-                        </table>
-                    </div>
-                    {{-- Add to Cart button --}}
-                    @if (!Request::is('*/orderdetails/*'))
-                    <form action="{{ route('cart.add', $product->id) }}" method="POST" class="flex -mx-2 justify-end my-5">
-                        @csrf
-                        <button type="submit" class="w-1/2 px-2 bg-indigo-600 text-white py-2 px-4 rounded-full font-bold hover:bg-indigo-500">
-                            Add to Cart
-                        </button>
-                    </form>
-                    @endif
-                </div>
-            </div>
+                @endforeach
+            </dl>
+
+            @if (! Request::is('*/orderdetails/*'))
+                <form action="{{ route('cart.add', $product->id) }}" method="POST" data-add-to-cart class="mt-6">
+                    @csrf
+                    <button type="submit" data-state="idle"
+                        class="flex h-12 w-full items-center justify-center rounded-control bg-accent-500 px-6 text-base font-semibold text-ink-950 shadow-card hover:bg-accent-400 data-[state=loading]:cursor-wait">
+                        <span data-when="idle">Add to cart</span>
+                        <span data-when="loading">Adding…</span>
+                        <span data-when="added">Added to cart</span>
+                    </button>
+                </form>
+            @endif
         </div>
     </div>
 </div>

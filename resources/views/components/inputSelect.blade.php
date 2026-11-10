@@ -1,32 +1,16 @@
-@props(['name', 'options', 'selected'])
-{{-- {{dd($options)}} --}}
-@php
-    if (!is_array($options)) {
-        if ($name !== 'brand') {
-            $options = $options->pluck($name)->toArray();
-        }
-        else {
-            $options = $options->pluck('title', 'id')->toArray();
-        }
-    }
-@endphp
-</select>
-<div class="p-4">
-    <label for="{{ $name }}" class="block mt-2 text-sm font-medium text-gray-900">{{ ucfirst($name)}}</label>
+{{-- Labelled select for the catalogue filters. $options is value => label. --}}
+@props(['name', 'label', 'options' => [], 'placeholder' => ''])
+
+<div>
+    <label for="{{ $name }}" class="block text-sm font-semibold text-ink-900">{{ $label }}</label>
     <select id="{{ $name }}" name="{{ $name }}"
-            class="block mt-2 w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 hover:shadow-md">
-        <option value="">Choose {{ strtolower($name) }}</option>
-        @foreach ($options as $key => $option)
-            @php
-                $value = $name === 'brand' || $name === 'order' ? $key : $option;
-                $isSelected = request($name) == $value ? 'selected' : '';
-            @endphp
-            <option value="{{ $value }}" {{ $isSelected }}>
-                {{$option}}
-            </option>
+        class="mt-2 block w-full rounded-control border-ink-300 bg-white py-2 text-sm text-ink-900 focus:border-accent-500 focus:ring-accent-500">
+        <option value="">{{ $placeholder }}</option>
+        @foreach ($options as $value => $optionLabel)
+            <option value="{{ $value }}" @selected((string) request($name) === (string) $value)>{{ $optionLabel }}</option>
         @endforeach
     </select>
-    @if ($errors->has($name))
-        <p class="text-red-500 text-xs mt-1">{{ $errors->first($name) }}</p>
-    @endif
+    @error($name)
+        <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+    @enderror
 </div>

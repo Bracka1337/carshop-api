@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -28,6 +29,27 @@ class Product extends Model
         'price',
         'brand_id',
     ];
+
+    /**
+     * The title without its leading brand name, so pages that show the brand
+     * separately don't repeat it: "OZ Racing Apex 18x8" → "Apex 18x8".
+     */
+    public function modelName(): string
+    {
+        return self::withoutBrand($this->title, $this->brand?->title);
+    }
+
+    /** Also used for cart items, which keep the title and brand as strings. */
+    public static function withoutBrand(string $title, ?string $brand): string
+    {
+        $brand = (string) $brand;
+
+        if ($brand !== '' && Str::startsWith(Str::lower($title), Str::lower($brand).' ')) {
+            return trim(Str::substr($title, Str::length($brand)));
+        }
+
+        return $title;
+    }
 
     /** Public URL of the first image, or null when the product has none. */
     public function imageUrl(): ?string
@@ -83,16 +105,15 @@ class Product extends Model
             $query->where('price', '<=', $filters['price_to']);
         }
 
-        $orderOptions = [
-            'price_asc' => ['price', 'asc'],
-            'price_desc' => ['price', 'desc'],
-            'brand_asc' => ['brand_id', 'asc'],
-            'brand_desc' => ['brand_id', 'desc'],
-        ];
+        $brandTitle = Brand::select('title')->whereColumn('brands.id', 'products.brand_id');
 
-        if (! empty($filters['order']) && isset($orderOptions[$filters['order']])) {
-            $query->orderBy(...$orderOptions[$filters['order']]);
-        }
+        match ($filters['order'] ?? null) {
+            'price_asc' => $query->orderBy('price'),
+            'price_desc' => $query->orderByDesc('price'),
+            'brand_asc' => $query->orderBy($brandTitle),
+            'brand_desc' => $query->orderByDesc($brandTitle),
+            default => null,
+        };
 
         return $query;
     }

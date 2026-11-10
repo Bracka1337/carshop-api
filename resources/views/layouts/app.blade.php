@@ -5,41 +5,28 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
+
+    <title>{{ isset($title) ? $title.' · '.config('shop.name') : config('shop.name').' · Wheels & rims' }}</title>
+    {{ $meta ?? '' }}
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon/faviconn.ico') }}" sizes="32x32">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     @vite('resources/css/app.css')
-    
-    <title>Carshop</title>
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon/faviconn.ico') }}" size="32x32">
-
-    <!-- Styles & Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-
 </head>
 
-<body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100">
-        <!-- Page Heading -->
-        
-        <!-- Page Content -->
-        <main>
-            @include('components.NavBar')
-            @include('components.cookie')
+<body class="flex min-h-screen flex-col bg-ink-50 font-sans text-ink-900 antialiased">
+    @include('components.NavBar')
+    @include('components.cookie')
+    @include('components.cart')
 
-            @if (Route::currentRouteName() == 'main')
-                
-                @include('components.banner')
-            @endif
-            
-            @include('components.cart')
-            {{ $slot }}
+    <main class="flex-1">
+        {{ $slot }}
+    </main>
 
-
-        </main>
-
-        <!-- Footer -->
-           
-    </div>
     @include('components.footer')
 </body>
 </html>

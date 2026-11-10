@@ -113,6 +113,19 @@ class CartTest extends TestCase
         $this->postJson('/cart/update/999/1')->assertNotFound()->assertJson(['message' => 'Product not found in cart!']);
     }
 
+    public function test_adding_with_fetch_returns_the_count_and_the_drawer(): void
+    {
+        $product = $this->createProduct(['title' => 'Borbet Apex 18x8']);
+        $this->post("/cart/add/{$product->id}");
+
+        $response = $this->postJson("/cart/add/{$product->id}")
+            ->assertOk()
+            ->assertJson(['count' => 2]);
+
+        $this->assertStringContainsString('Apex 18x8', $response->json('drawer'));
+        $this->assertStringContainsString('id="quantity-'.$product->id.'"', $response->json('drawer'));
+    }
+
     public function test_pages_expose_the_csrf_token_for_the_cart_drawer(): void
     {
         // The drawer's fetch() reads this tag; without it every +/-/remove click threw.

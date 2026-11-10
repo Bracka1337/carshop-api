@@ -1,43 +1,36 @@
+{{-- Mobile menu: a button in the header and a slide-over from the left. --}}
 @if (Route::currentRouteName() !== 'checkout')
-<div class="relative z-20 md:ml-0 lg:hidden " role="dialog" aria-modal="true">
+    <div class="lg:hidden">
+        <button type="button" id="menu-button" aria-expanded="false" aria-controls="sidebar-modal"
+            class="-ml-2 flex h-10 w-10 items-center justify-center rounded-control text-ink-200 hover:bg-white/5 hover:text-white">
+            <span class="sr-only">Open menu</span>
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" />
+            </svg>
+        </button>
 
-    <button type="button"
-        class="justify-center w-full rounded-md px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
-        id="menu-button" aria-expanded="false" aria-haspopup="true">
-        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-            fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd"
-                d="M4 5h12a1 1 0 010 2H4a1 1 0 010-2zM4 9h12a1 1 0 010 2H4a1 1 0 010-2zM4 13h12a1 1 0 010 2H4a1 1 0 010-2z"
-                clip-rule="evenodd" />
-        </svg>
-    </button>
-    <div class="fixed inset-0 overflow-hidden overflow-hidden bg-gray-500 bg-opacity-75 transition-opacity hidden"
-        id="sidebar-modal">
-        <div class="pointer-events-auto w-screen max-w-md fixed inset-0 overflow-hidden bg-white transition-opacity flex flex-col"
-            id="sidebar-menu">
-            <button type="button" class="relative m-2 p-2 text-gray-400 hover:text-gray-500"
-                id="close-button">
-                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-            <a href="/"
-                class="block px-8 py-4 text-sm text-lg text-gray-700 hover:text-gray-800 w-[fit-content]"
-                role="menuitem" id="homeButton">Home</a>
-            <a href="/aboutus"
-                class="block px-8 py-4 text-sm text-lg text-gray-700 hover:text-gray-800 w-[fit-content]"
-                role="menuitem">About us</a>
-            @auth <a href="/profile"
-                    class="block px-8 py-4 text-sm text-lg text-gray-700 hover:text-gray-800 w-[fit-content]"
-                role="menuitem" id="myOrdersButton">My orders</a> @endauth
-
-            <div class="mt-auto flex justify-center border-t py-10 px-4 sm:px-6">
-                <img class="transform scale-50" src="{{ asset('images/logo2.svg') }}"
-                    alt="EastSquad logo">
+        <div id="sidebar-modal" class="fixed inset-0 z-40 hidden bg-ink-950/60" role="dialog" aria-modal="true" aria-label="Menu">
+            <div id="sidebar-menu" class="flex h-full w-full max-w-xs flex-col bg-ink-950 shadow-panel">
+                <div class="flex h-16 items-center justify-between px-4">
+                    <x-logo />
+                    <button type="button" id="close-button" class="flex h-10 w-10 items-center justify-center rounded-control text-ink-300 hover:bg-white/5 hover:text-white">
+                        <span class="sr-only">Close menu</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <nav class="flex flex-col gap-1 px-2 py-4 text-base font-medium">
+                    <a href="{{ route('main') }}" class="rounded-control px-3 py-3 text-ink-100 hover:bg-white/5">Wheels</a>
+                    <a href="{{ route('aboutus') }}" class="rounded-control px-3 py-3 text-ink-100 hover:bg-white/5">About us</a>
+                    @auth
+                        <a href="{{ route('profile.show') }}" class="rounded-control px-3 py-3 text-ink-100 hover:bg-white/5">My orders</a>
+                    @endauth
+                </nav>
+                <p class="mt-auto border-t border-white/10 px-5 py-6 text-sm text-ink-400">
+                    Free EU delivery over @money(config('shop.shipping.free_from'), 0)
+                </p>
             </div>
         </div>
     </div>
-</div>
 @endif
