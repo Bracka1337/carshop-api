@@ -1,40 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@yield('title') · {{ config('shop.name') }}</title>
 
-    <title>@yield('title')</title>
-
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    @vite('resources/css/app.css')
 </head>
-<div
-    class=" h-screen flex items-center lg:px-24 lg:py-24 md:py-20 md:px-44 px-4 py-24 items-center flex justify-center flex-col-reverse lg:flex-row md:gap-28 gap-16">
-    <div class="xl:pt-24 w-full xl:w-1/2 relative pb-12 lg:pb-0">
-        <div class="relative">
-            <div class="absolute">
-                <div class="">
-                    <h1 class="my-2 text-ink-800 font-bold text-2xl">
-                        Looks like you've found the
-                        doorway to the great nothing
-                    </h1>
-                    <p class="my-2 text-ink-800">Sorry about that! Please visit our hompage to get where you need to
-                        go.</p>
-                    <a href="/"
-                        class="block w-36 rounded-md bg-ink-900 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-ink-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-500 hover:shadow-md">Take
-                        me there!</a>
-                </div>
-            </div>
-            <div>
-                <img src="https://i.ibb.co/G9DC8S0/404-2.png" />
-            </div>
-        </div>
-    </div>
-    <div>
-        <img src="https://i.ibb.co/ck1SGFJ/Group.png" />
-    </div>
-</div>
+
+<body class="flex min-h-screen flex-col items-center justify-center bg-ink-950 px-4 py-16 text-center font-sans text-white antialiased">
+    <x-logo />
+
+    <p class="mt-14 font-display text-8xl font-bold leading-none text-accent-500 sm:text-9xl">@yield('code')</p>
+    <h1 class="mt-4 font-display text-3xl font-bold sm:text-4xl">@yield('message')</h1>
+    <p class="mt-3 max-w-md text-ink-300">Sorry about that. The catalogue is a good place to start again.</p>
+
+    <a href="{{ route('main') }}"
+        class="mt-8 rounded-control bg-accent-500 px-5 py-2.5 text-sm font-semibold text-ink-950 shadow-card hover:bg-accent-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950">
+        Back to the catalogue
+    </a>
 </body>
 
 </html>
