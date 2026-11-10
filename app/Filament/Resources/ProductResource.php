@@ -16,6 +16,7 @@ use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -30,7 +31,19 @@ class ProductResource extends Resource
     {
         return $schema
             ->components([
-                TextInput::make('title')->required(),
+                TextInput::make('title')->required()
+                    // Suggest a URL slug while creating; editing never changes a live URL.
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(function (?string $state, Set $set, string $operation) {
+                        if ($operation === 'create' && filled($state)) {
+                            $set('slug', Product::uniqueSlug($state));
+                        }
+                    }),
+                TextInput::make('slug')
+                    ->helperText('Product page URL: /products/{slug}. Left empty, it is made from the title.')
+                    ->alphaDash()
+                    ->maxLength(255)
+                    ->unique(ignoreRecord: true),
                 MarkdownEditor::make('description')->columnSpanFull()->required(),
                 Select::make('diameter')->options(['13' => '13', '14' => '14', '15' => '15', '16' => '16', '17' => '17', '18' => '18', '19' => '19', '20' => '20', '21' => '21', '22' => '22'])->searchable()->required(),
                 Select::make('width')->options(self::decimalOptions(['4.00' => '4.00', '4.50' => '4.50', '5.00' => '5.00', '5.50' => '5.50', '6.00' => '6.00', '6.50' => '6.50', '7.00' => '7.00', '7.25' => '7.25', '7.50' => '7.50', '8.00' => '8.00', '8.25' => '8.25', '8.50' => '8.50', '9.00' => '9.00', '9.50' => '9.50', '10.00' => '10.00', '10.50' => '10.50', '11.00' => '11.00', '11.50' => '11.50', '12.00' => '12.00']))->searchable()->required(),

@@ -64,7 +64,7 @@
             <div class="bg-white w-full">
                 <!-- First item -->
                 @foreach ($order->lines as $line)
-                    <div class="px-2 md:px-6 flex flex-row items-center py-6 border-b border-ink-200 gap-6 w-full" data-quick-view="{{ $line->product->id }}" role="button" tabindex="0">
+                    <div class="px-2 md:px-6 flex flex-row items-center py-6 border-b border-ink-200 gap-6 w-full">
                         <div class="img-box flex-shrink-0">
                             @if ($imageUrl = $line->product->imageUrl())
                                 <img src="{{ $imageUrl }}" alt="Product Image"
@@ -76,7 +76,12 @@
                         <div class="flex flex-1 items-center justify-between">
                             <div class="flex flex-col">
                                 <h2 class="font-semibold text-lg lg:text-lg leading-8 text-black mb-1">
-                                    {{ $line->product->title }}</h2>
+                                    @if ($line->product->trashed())
+                                        {{ $line->product->title }}
+                                    @else
+                                        <a href="{{ route('products.show', $line->product) }}" class="hover:underline">{{ $line->product->title }}</a>
+                                    @endif
+                                </h2>
                                 <div class="flex items-center">
                                     <p
                                         class="font-medium text-sm leading-7 text-black pr-4 mr-4 border-r border-ink-200">
@@ -92,8 +97,6 @@
                             </div>
                         </div>
                     </div>
-                    {{-- add boolean order page... so that it doesnt show add to cart --}}
-                    <x-productDetail :product="$line->product" :isOrderPage="true"/>
                 @endforeach
 
 

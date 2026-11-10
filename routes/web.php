@@ -6,6 +6,7 @@ use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\CatalogueController;
 use App\Http\Controllers\Web\CheckoutController;
 use App\Http\Controllers\Web\OrderController;
+use App\Http\Controllers\Web\ProductController;
 use App\Http\Controllers\Web\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', CatalogueController::class)->name('main');
+Route::get('/products/{product:slug}', ProductController::class)->name('products.show');
 Route::post('/cart/add/{id}', [CartController::class, 'addProductsToCart'])->name('cart.add');
 Route::post('/cart/update/{id}/{quantity}', [CartController::class, 'updateCart'])->name('cart.update');
 Route::post('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');

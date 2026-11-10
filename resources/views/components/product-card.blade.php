@@ -1,10 +1,8 @@
 {{-- Catalogue card. Needs the product's brand and images loaded. --}}
 @props(['product', 'eager' => false])
 
-<article class="group relative flex flex-col overflow-hidden rounded-card bg-white shadow-card ring-1 ring-ink-200/60 transition duration-200 hover:-translate-y-0.5 hover:shadow-card-hover">
-    <button type="button" data-quick-view="{{ $product->id }}" class="block text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent-500">
-        <span class="sr-only">Quick view: {{ $product->title }}</span>
-        <div class="relative aspect-[4/3] bg-ink-100 {{ $product->imageUrl() ? 'animate-pulse' : '' }}">
+<article class="group relative flex flex-col overflow-hidden rounded-card bg-white shadow-card ring-1 ring-ink-200/60 transition duration-200 focus-within:ring-2 focus-within:ring-accent-500 hover:-translate-y-0.5 hover:shadow-card-hover">
+    <div class="relative aspect-[4/3] bg-ink-100 {{ $product->imageUrl() ? 'animate-pulse' : '' }}">
             @if ($imageUrl = $product->imageUrl())
                 <img src="{{ $imageUrl }}" alt="" width="480" height="360"
                     loading="{{ $eager ? 'eager' : 'lazy' }}" decoding="async"
@@ -14,11 +12,15 @@
             @endif
             <span class="absolute left-3 top-3 rounded-full bg-white/90 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-ink-600 ring-1 ring-ink-200">{{ $product->type }}</span>
         </div>
-    </button>
 
     <div class="flex flex-1 flex-col p-4">
         <p class="text-xs font-semibold uppercase tracking-wider text-ink-500">{{ $product->brand?->title }}</p>
-        <h3 class="mt-0.5 font-display text-xl font-semibold leading-tight text-ink-950">{{ $product->modelName() }}</h3>
+        <h3 class="mt-0.5 font-display text-xl font-semibold leading-tight text-ink-950">
+            {{-- The link covers the whole card; the add-to-cart form sits above it. --}}
+            <a href="{{ route('products.show', $product) }}" class="after:absolute after:inset-0 focus:outline-none">
+                <span class="sr-only">{{ $product->brand?->title }} </span>{{ $product->modelName() }}
+            </a>
+        </h3>
 
         <ul class="mt-3 flex flex-wrap gap-1.5">
             @foreach (\App\Enums\WheelSpec::KEY as $spec)
@@ -33,7 +35,7 @@
                 <span class="block text-xl font-bold leading-none text-ink-950">@money($product->price)</span>
                 <span class="mt-1 block text-[11px] text-ink-500">incl. VAT</span>
             </p>
-            <form action="{{ route('cart.add', $product->id) }}" method="POST" data-add-to-cart>
+            <form action="{{ route('cart.add', $product->id) }}" method="POST" data-add-to-cart class="relative z-10">
                 @csrf
                 <button type="submit" data-state="idle"
                     class="inline-flex h-10 min-w-[7.5rem] items-center justify-center gap-1.5 rounded-control bg-ink-900 px-4 text-sm font-semibold text-white transition hover:bg-ink-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:ring-offset-2 data-[state=added]:bg-accent-500 data-[state=added]:text-ink-950 data-[state=loading]:cursor-wait">

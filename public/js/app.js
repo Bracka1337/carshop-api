@@ -5,81 +5,34 @@ document.addEventListener("DOMContentLoaded", function () {
   const lockScroll = (locked) =>
     document.body.classList.toggle("overflow-hidden", locked);
 
-  // --- Quick view (catalogue cards and order lines) -------------------------
+  // --- Product page: gallery thumbnails and quantity stepper ----------------
 
-  const quickViewModal = (id) =>
-    document.querySelector(`[data-quick-view-modal="${id}"]`);
+  document.querySelectorAll("[data-gallery]").forEach((gallery) => {
+    const main = gallery.querySelector("[data-gallery-main]");
+    const thumbs = gallery.querySelectorAll("[data-gallery-thumb]");
+    thumbs.forEach((thumb) =>
+      thumb.addEventListener("click", () => {
+        main.src = thumb.dataset.galleryThumb;
+        thumbs.forEach((t) => t.setAttribute("aria-pressed", String(t === thumb)));
+      })
+    );
+  });
 
-  function openQuickView(id) {
-    const modal = quickViewModal(id);
-    if (!modal) return;
-    modal.classList.remove("hidden");
-    lockScroll(true);
-    modal.querySelector("[data-quick-view-close]")?.focus();
-  }
-
-  function closeQuickViews() {
-    document
-      .querySelectorAll("[data-quick-view-modal]:not(.hidden)")
-      .forEach((modal) => modal.classList.add("hidden"));
-    lockScroll(false);
-  }
-
-  document.addEventListener("click", (event) => {
-    const trigger = event.target.closest("[data-quick-view]");
-    if (trigger) {
-      event.preventDefault();
-      openQuickView(trigger.dataset.quickView);
-      return;
-    }
-
-    const modal = event.target.closest("[data-quick-view-modal]");
-    if (
-      modal &&
-      (event.target.closest("[data-quick-view-close]") ||
-        !event.target.closest("[data-quick-view-panel]"))
-    ) {
-      closeQuickViews();
-    }
+  document.querySelectorAll("[data-quantity]").forEach((stepper) => {
+    const input = stepper.querySelector('input[name="quantity"]');
+    stepper.querySelectorAll("[data-quantity-step]").forEach((button) =>
+      button.addEventListener("click", () => {
+        const next = (parseInt(input.value, 10) || 1) + parseInt(button.dataset.quantityStep, 10);
+        input.value = Math.min(Math.max(next, parseInt(input.min, 10)), parseInt(input.max, 10));
+      })
+    );
   });
 
   document.addEventListener("keydown", (event) => {
-    const trigger = event.target.closest?.('[data-quick-view][role="button"]');
-    if (trigger && (event.key === "Enter" || event.key === " ")) {
-      event.preventDefault();
-      openQuickView(trigger.dataset.quickView);
-    }
     if (event.key === "Escape") {
-      closeQuickViews();
       closeFilters();
       closeCart();
     }
-  });
-
-  // Quick view photo slideshow.
-  document.querySelectorAll("[data-carousel-inner]").forEach((carousel) => {
-    const items = carousel.querySelectorAll("[data-carousel-item]");
-    const indicators = carousel.parentElement.querySelectorAll(
-      "[data-carousel-slide-to]"
-    );
-    let active = 0;
-
-    const show = (index) => {
-      active = (index + items.length) % items.length;
-      carousel.style.transform = `translateX(${-active * 100}%)`;
-      indicators.forEach((dot, i) => {
-        dot.classList.toggle("bg-ink-900", i === active);
-        dot.classList.toggle("bg-ink-300", i !== active);
-      });
-    };
-
-    indicators.forEach((dot, i) => dot.addEventListener("click", () => show(i)));
-    carousel.parentElement
-      .querySelector("[data-carousel-prev]")
-      ?.addEventListener("click", () => show(active - 1));
-    carousel.parentElement
-      .querySelector("[data-carousel-next]")
-      ?.addEventListener("click", () => show(active + 1));
   });
 
   // --- Catalogue filters ----------------------------------------------------

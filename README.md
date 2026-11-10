@@ -13,7 +13,7 @@ the catalogue and a customer's orders.
 
 | Catalogue | Product details |
 | --- | --- |
-| ![Catalogue with filters and product grid](docs/screenshots/catalogue.png) | ![Product modal with specs and add to cart](docs/screenshots/product-modal.png) |
+| ![Catalogue with filters and product grid](docs/screenshots/catalogue.png) | ![Product page with gallery, specs and add to cart](docs/screenshots/product-page.png) |
 | **Checkout** | **Order details** |
 | ![Checkout with delivery details and totals](docs/screenshots/checkout.png) | ![Order details with lines, VAT and status](docs/screenshots/order-details.png) |
 | **Admin dashboard** | **Admin orders** |
@@ -56,6 +56,10 @@ In 2026 I upgraded and refactored the project on my own:
 
 - **Catalogue**: paginated listing, filters by diameter / width / type / brand /
   price range, sorting by price or brand
+- **Product pages**: `/products/{slug}` with a photo gallery, spec table,
+  quantity, four similar wheels (same diameter and bolt pattern), and title,
+  meta description and Open Graph tags; slugs are made from the title and
+  stay fixed when it is edited
 - **Cart**: session based; add, change quantity, remove
 - **Checkout**: delivery details form, pay on delivery or a simulated card
   payment, order + payment records; each order line keeps the unit
@@ -207,6 +211,7 @@ pull request.
 | Method | Path                           | Description                                   |
 | ------ | ------------------------------ | --------------------------------------------- |
 | GET    | `/`                            | Catalogue with filters (`diameter`, `width`, `type`, `brand`, `price_from`, `price_to`, `order`) |
+| GET    | `/products/{slug}`             | Product page with specs and similar wheels    |
 | GET    | `/aboutus`                     | About the team                                |
 | POST   | `/cart/add/{id}`               | Add a product to the cart                     |
 | POST   | `/cart/update/{id}/{quantity}` | Change quantity (0 removes the item)          |
@@ -289,3 +294,4 @@ tests/Unit/                    TotalsCalculator, ShippingCalculator
   answers `{"status": "success"}` to approve.
 - Shipping on saved orders is recalculated from the current shipping config;
   only the unit prices are stored per order.
+- There is no stock tracking: every product page says "Available to order".
