@@ -4,50 +4,32 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         @vite('resources/css/app.css')
-         <title>Login</title>
-
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+         <title>Sign in · {{ config('shop.name') }}</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     </head>
     
-    <body class="antialiased bg-gray-100 flex items-center justify-center  flex-col min-h-screen">
-        <div class="area">
-			<ul class="circles">
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-			</ul>
-		</div>
+    <body class="flex min-h-screen flex-col items-center justify-center bg-ink-950 px-4 py-10 font-sans text-ink-900 antialiased">
     
-    <div class="login-container bg-white p-8 shadow-md w-96">
-        <div class="mb-4 flex justify-center ">
-            <a href="/">
-                <span class="sr-only">East Squad</span>
-                <img class="h-10 w-auto" src="{{ asset('images/logo2.svg') }}" alt="EastSquad logo">
-            </a>
+    <div class="login-container w-full max-w-sm rounded-card bg-white p-8 shadow-panel">
+        <div class="-mx-8 -mt-8 mb-6 flex justify-center rounded-t-card bg-ink-900 py-5">
+            <x-logo />
         </div>
-        <h1 class="text-2xl font-bold  text-indigo-600 mb-4 ">Login</h1>
+        <h1 class="mb-5 font-display text-3xl font-bold text-ink-950">Login</h1>
         <form action="{{ route('login.store') }}" method="post">
             @csrf
             
             <div class="mb-4">
-                <label for="email" class="block text-sm font-medium text-gray-700">E-mail</label>
+                <label for="email" class="block text-sm font-medium text-ink-700">E-mail</label>
                 <input type="text" id="email" name="email" required
-                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                       class="mt-1 block w-full px-3 py-2 border border-ink-300 rounded-control shadow-sm focus:outline-none focus:ring-accent-500 focus:border-accent-500 sm:text-sm">
             </div>
     
             <div class="mb-6">
-                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <label for="password" class="block text-sm font-medium text-ink-700">Password</label>
                 <input type="password" id="password" name="password" required
-                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                       class="mt-1 block w-full px-3 py-2 border border-ink-300 rounded-control shadow-sm focus:outline-none focus:ring-accent-500 focus:border-accent-500 sm:text-sm">
             </div>         
 
             @if ($errors->any())
@@ -58,13 +40,13 @@
                 </div>
             @endif
 
-            <button type="submit" class="w-full bg-indigo-100 text-indigo-600 font-bold py-2 px-4 rounded hover:bg-indigo-200 focus:outline-none focus:bg-indigo-100">
+            <button type="submit" class="w-full rounded-control bg-accent-500 px-4 py-2.5 font-semibold text-ink-950 shadow-card hover:bg-accent-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
                 Login
             </button>
         </form>
         <div class="mt-4 text-center">
-            <p class="text-sm text-gray-600">Don't have an account?
-                <a class="text-indigo-600 hover:underline" href="/register" >
+            <p class="text-sm text-ink-600">Don't have an account?
+                <a class="font-semibold text-accent-700 hover:underline" href="/register" >
                 Register
             </a>
         </p>

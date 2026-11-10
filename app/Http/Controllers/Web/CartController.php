@@ -13,9 +13,18 @@ class CartController extends Controller
 {
     public function __construct(private readonly CartService $cart) {}
 
-    public function addProductsToCart(string $id): RedirectResponse
+    /** Catalogue buttons use fetch (JSON with the re-rendered drawer); without JS it's a form post. */
+    public function addProductsToCart(Request $request, string $id): RedirectResponse|JsonResponse
     {
         $this->cart->add(Product::with(['brand', 'images'])->findOrFail($id));
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'message' => 'Product added successfully!',
+                'count' => $this->cart->count(),
+                'drawer' => view('components.cart-panel')->render(),
+            ]);
+        }
 
         return redirect()->back()->with('success', 'Product added successfully!');
     }

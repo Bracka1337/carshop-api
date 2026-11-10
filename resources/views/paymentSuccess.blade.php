@@ -9,9 +9,9 @@
         </div>
         <div class="text-center mt-4">
             <p class="font-bold text-3xl">Payment successful</p>
-            <p class="text-gray-500 text-xl mt-2">Your payment has been completed</p>
+            <p class="text-ink-500 text-xl mt-2">Your payment has been completed</p>
             <button id="order-details" href="/profile"
-                class="mt-6 w-full rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300">
+                class="mt-6 w-full rounded-lg bg-ink-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-ink-700 focus:outline-none focus:ring-4  focus:ring-accent-500">
                 Order Details</button>
         </div>
     </div>

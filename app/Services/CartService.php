@@ -48,6 +48,14 @@ class CartService
         return empty(session()->get('cart', []));
     }
 
+    /** Number of items in the cart, counting quantities. */
+    public function count(): int
+    {
+        $items = array_filter(session()->get('cart', []), 'is_array');
+
+        return (int) array_sum(array_column($items, 'quantity'));
+    }
+
     public function has(string $productId): bool
     {
         return isset(session()->get('cart', [])[$productId]);

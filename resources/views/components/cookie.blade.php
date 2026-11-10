@@ -1,16 +1,11 @@
-
-<div id="cookie-banner" class="mb-10 ml-10 fixed inset-x-0 bottom-0 z-10 flex items-center justify-start bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg overflow-hidden shadow-xl max-w-sm opacity-0 transition-opacity duration-500 ease-in-out">    <div class="p-4">
-      <h2 class="text-lg font-semibold mb-2 text-white">Hello Traveler 🍪</h2>
-      <p class="text-sm mb-4 text-white">
-        This website uses cookies to enhance user experience and to analyze performance and traffic on our website.
-      </p>
-      <div class="flex justify-end space-x-4">
-        <button id="acceptButton" class="duration-300 bg-black/0 hover:bg-black/25 text-white font-bold py-2 px-4 rounded">
-          Accept
-        </button>
-        <button id="declineButton" class="duration-300 bg-black/0 hover:bg-black/25 text-white font-bold py-2 px-4 rounded">
-          Decline
-        </button>
-      </div>
+<div id="cookie-banner"
+    class="fixed inset-x-4 bottom-4 z-30 invisible max-w-sm rounded-card bg-ink-900 p-5 text-white opacity-0 shadow-panel ring-1 ring-white/10 transition-opacity duration-500 sm:left-6 sm:right-auto">
+    <h2 class="font-display text-lg font-semibold">Cookies</h2>
+    <p class="mt-1 text-sm text-ink-300">
+        We use cookies to keep your cart and to understand how the shop is used.
+    </p>
+    <div class="mt-4 flex justify-end gap-2">
+        <button id="declineButton" class="rounded-control px-4 py-2 text-sm font-semibold text-ink-200 hover:bg-white/10">Decline</button>
+        <button id="acceptButton" class="rounded-control bg-accent-500 px-4 py-2 text-sm font-semibold text-ink-950 hover:bg-accent-400">Accept</button>
     </div>
-  </div>
+</div>

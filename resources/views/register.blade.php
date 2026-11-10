@@ -4,75 +4,58 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         @vite('resources/css/app.css')
-        <title>Register</title>
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+        <title>Create an account · {{ config('shop.name') }}</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     </head>
-    <body class="antialiased bg-gray-100 flex items-center justify-center flex-col min-h-screen">
-        <div class="area">
-			<ul class="circles">
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-			</ul>
-		</div>
+    <body class="flex min-h-screen flex-col items-center justify-center bg-ink-950 px-4 py-10 font-sans text-ink-900 antialiased">
     
-    <div class="register-container bg-white p-8  shadow-md  mt-10 mb-10 w-96">
-        <div class="mb-4 flex justify-center ">
-            <a href="/">
-                <span class="sr-only ">East Squad</span>
-                <img class="h-10 w-auto" src="{{ asset('images/logo2.svg') }}" alt="EastSquad logo">
-            </a>
+    <div class="register-container w-full max-w-sm rounded-card bg-white p-8 shadow-panel">
+        <div class="-mx-8 -mt-8 mb-6 flex justify-center rounded-t-card bg-ink-900 py-5">
+            <x-logo />
         </div>
-        <h1 class="text-2xl font-bold  text-indigo-600 mb-4 ">Register</h1>
+        <h1 class="mb-5 font-display text-3xl font-bold text-ink-950">Register</h1>
         <form action="{{ route('register.store') }}" method="post">
             @csrf
             <div class="mb-4">
-                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                <label for="email" class="block text-sm font-medium text-ink-700">Email</label>
                 <input type="text" id="email" name="email" required
-                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                       <div id="email-hint" class="hidden text-xs text-gray-500 mt-1">
+                       class="mt-1 block w-full px-3 py-2 border border-ink-300 rounded-control shadow-sm focus:outline-none focus:ring-accent-500 focus:border-accent-500 sm:text-sm">
+                       <div id="email-hint" class="hidden text-xs text-ink-500 mt-1">
                         Check your email address
                     </div>
             </div>
             <div class="mb-4">
-                <label for="name" class="block text-sm font-medium text-gray-700">Username</label>
+                <label for="name" class="block text-sm font-medium text-ink-700">Username</label>
                 <input type="text" id="name" name="name" required
-                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                       class="mt-1 block w-full px-3 py-2 border border-ink-300 rounded-control shadow-sm focus:outline-none focus:ring-accent-500 focus:border-accent-500 sm:text-sm">
             </div>
             
             
 
             <div class="mb-4">
-                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <label for="password" class="block text-sm font-medium text-ink-700">Password</label>
                 <input type="password" id="password" name="password" required
-                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                       <div id="password-hint" class="hidden text-xs text-gray-500 mt-1">
+                       class="mt-1 block w-full px-3 py-2 border border-ink-300 rounded-control shadow-sm focus:outline-none focus:ring-accent-500 focus:border-accent-500 sm:text-sm">
+                       <div id="password-hint" class="hidden text-xs text-ink-500 mt-1">
                         Your password should be 8-16 characters long and include atleast one upper case letter, a number and special character.
                     </div>
             </div>
             <div class="mb-4">
-                <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                <label for="password_confirmation" class="block text-sm font-medium text-ink-700">Confirm Password</label>
                 <input type="password" id="password_confirmation" name="password_confirmation" required
-                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                       <div id="password-match" class="hidden text-xs text-gray-500 mt-1">
+                       class="mt-1 block w-full px-3 py-2 border border-ink-300 rounded-control shadow-sm focus:outline-none focus:ring-accent-500 focus:border-accent-500 sm:text-sm">
+                       <div id="password-match" class="hidden text-xs text-ink-500 mt-1">
                         Your passwords do not match.
                     </div>
             </div>
             <div class="mb-4">
-                <label for="phone_nr" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                <label for="phone_nr" class="block text-sm font-medium text-ink-700">Phone Number</label>
                 
                 <div class="mt-1 flex items-center">
                     <button id="dropdown-phone-button-3" data-dropdown-toggle="dropdownDivider"
-                        class="az-10 inline-flex items-center rounded-s-lg border border-gray-300 bg-gray-100 px-4 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-200 focus:outline-none focus:ring-4 focus:ring-gray-100"
+                        class="az-10 inline-flex items-center rounded-s-lg border border-ink-300 bg-ink-100 px-4 py-2.5 text-sm font-medium text-ink-900 hover:bg-ink-200 focus:outline-none focus:ring-4 focus:ring-ink-100"
                         type="button">
                         <span class="inline-flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="me-2 h-4 w-4"
@@ -91,12 +74,12 @@
                         </svg>
                     </button>
                     <div id="dropdown-phone-3"
-                        class="bg-gray-100 mt-40 absolute z-10 hidden w-56 divide-y divide-gray-100 rounded-lg bg-white shadow">
-                        <ul class="p-2 text-sm font-medium text-gray-700"
+                        class="bg-ink-100 mt-40 absolute z-10 hidden w-56 divide-y divide-ink-100 rounded-lg bg-white shadow">
+                        <ul class="p-2 text-sm font-medium text-ink-700"
                             aria-labelledby="dropdown-phone-button-3">
                             <li>
                                 <button type="button"
-                                    class="dropdown-item inline-flex w-full rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-indigo-100 hover:text-gray-900"
+                                    class="dropdown-item inline-flex w-full rounded-md px-3 py-2 text-sm text-ink-500 hover:bg-ink-100 hover:text-ink-900"
                                     role="menuitem">
                                     <span class="inline-flex items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="me-2 h-4 w-4"
@@ -113,7 +96,7 @@
                             </li>
                             <li>
                                 <button type="button"
-                                    class="dropdown-item inline-flex w-full rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-indigo-100 hover:text-gray-900 "
+                                    class="dropdown-item inline-flex w-full rounded-md px-3 py-2 text-sm text-ink-500 hover:bg-ink-100 hover:text-ink-900 "
                                     role="menuitem">
                                     <span class="inline-flex items-center">
                                         <svg class="w-4 h-4 me-2" fill="none" viewBox="0 0 20 15">
@@ -183,7 +166,7 @@
                             </li>
                             <li>
                                 <button type="button"
-                                    class="dropdown-item inline-flex w-full rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-indigo-100 hover:text-gray-900"
+                                    class="dropdown-item inline-flex w-full rounded-md px-3 py-2 text-sm text-ink-500 hover:bg-ink-100 hover:text-ink-900"
                                     role="menuitem">
                                     <span class="inline-flex items-center">
                                         <svg class="w-4 h-4 me-2" fill="none" viewBox="0 0 20 15">
@@ -256,7 +239,7 @@
                     <div class="relative w-full">
                         <input type="hidden" id="full-phone-number" name="phone_nr" value="+371">
         <input type="tel" id="phone-input"
-    class="z-20 block w-full border p-2.5 text-sm border border-gray-300 rounded-r-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+    class="z-20 block w-full border p-2.5 text-sm border border-ink-300 rounded-r-md shadow-sm focus:outline-none focus:ring-accent-500 focus:border-accent-500 sm:text-sm"
     inputmode="numeric" pattern="[0-9]{7,20}"
     title="Phone number should be numeric and between 7 to 20 digits."
     oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
@@ -264,7 +247,7 @@
                     </div>
                     
                 </div>
-                <div id="phone-length" class="hidden text-xs text-gray-500 mt-1">
+                <div id="phone-length" class="hidden text-xs text-ink-500 mt-1">
                     Phone number too short.
                 </div>
             </div>
@@ -277,13 +260,13 @@
                 </div>
             @endif
 
-            <button type="submit" class="w-full bg-indigo-100 text-indigo-600 font-bold py-2 px-4 rounded hover:bg-indigo-200 focus:outline-none focus:bg-indigo-100">
+            <button type="submit" class="w-full rounded-control bg-accent-500 px-4 py-2.5 font-semibold text-ink-950 shadow-card hover:bg-accent-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
                 Register
             </button>
         </form>
         <div class="mt-4 text-center">
-            <p class="text-sm text-gray-600">Already have an account?
-                <a class="text-indigo-600 hover:underline" href="/login">
+            <p class="text-sm text-ink-600">Already have an account?
+                <a class="font-semibold text-accent-700 hover:underline" href="/login">
                 Login
             </a>
         </p>

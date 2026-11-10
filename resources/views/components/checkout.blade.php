@@ -7,11 +7,11 @@
                 <p class="mb-6 rounded-lg bg-red-50 p-4 text-sm text-red-600">{{ $message }}</p>
             @enderror
             <ol
-                class="items-center flex w-full max-w-2xl text-center text-sm font-medium text-gray-500 sm:text-base">
+                class="items-center flex w-full max-w-2xl text-center text-sm font-medium text-ink-500 sm:text-base">
                 <li
-                    class="after:border-1 flex items-center text-primary-700 after:mx-6 after:hidden after:h-1 after:w-full after:border-b after:border-gray-200  sm:after:inline-block sm:after:content-[''] md:w-full xl:after:mx-10">
+                    class="after:border-1 flex items-center text-accent-700 after:mx-6 after:hidden after:h-1 after:w-full after:border-b after:border-ink-200  sm:after:inline-block sm:after:content-[''] md:w-full xl:after:mx-10">
                     <span
-                        class="flex items-center after:mx-2 after:text-gray-200 after:content-['/']  sm:after:hidden">
+                        class="flex items-center after:mx-2 after:text-ink-200 after:content-['/']  sm:after:hidden">
                         <svg class="me-2 h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                             width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -21,9 +21,9 @@
                     </span>
                 </li>
                 <li
-                    class="after:border-1 flex items-center text-primary-700 after:mx-6 after:hidden after:h-1 after:w-full after:border-b after:border-gray-200  sm:after:inline-block sm:after:content-[''] md:w-full xl:after:mx-10">
+                    class="after:border-1 flex items-center text-accent-700 after:mx-6 after:hidden after:h-1 after:w-full after:border-b after:border-ink-200  sm:after:inline-block sm:after:content-[''] md:w-full xl:after:mx-10">
                     <span
-                        class="flex items-center after:mx-2 after:text-gray-200 after:content-['/']  sm:after:hidden">
+                        class="flex items-center after:mx-2 after:text-ink-200 after:content-['/']  sm:after:hidden">
                         <svg class="me-2 h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                             width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -46,15 +46,15 @@
                 <div class="min-w-0 flex-1 space-y-8">
                     {{-- Order Summary --}}
                     <div class="space-y-4">
-                        <h2 class="text-xl font-semibold text-gray-900 ">Delivery Details</h2>
+                        <h2 class="text-xl font-semibold text-ink-900 ">Delivery Details</h2>
 
                         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                             <div>
                                 <label for="f_name"
-                                    class="mb-2 block text-sm font-medium text-gray-900 ">First
+                                    class="mb-2 block text-sm font-medium text-ink-900 ">First
                                     name*</label>
                                 <input type="text" id="f_name" name="f_name"
-                                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 "
+                                    class="block w-full rounded-lg border border-ink-300 bg-ink-50 p-2.5 text-sm text-ink-900 focus:border-accent-500 focus:ring-accent-500 "
                                     placeholder="Bonnie" pattern="[A-Za-z\s]+"
                                     title="First name should only contain letters." required
                                     oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');" />
@@ -65,10 +65,10 @@
 
                             <div>
                                 <label for="m_name"
-                                    class="mb-2 block text-sm font-medium text-gray-900 ">Middle
+                                    class="mb-2 block text-sm font-medium text-ink-900 ">Middle
                                     name</label>
                                 <input type="text" id="m_name" name="m_name"
-                                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 "
+                                    class="block w-full rounded-lg border border-ink-300 bg-ink-50 p-2.5 text-sm text-ink-900 focus:border-accent-500 focus:ring-accent-500 "
                                     pattern="[A-Za-z\s]+" title="Middle name should only contain letters."
                                     placeholder="" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');" />
                                 @error('m_name')
@@ -78,10 +78,10 @@
 
                             <div>
                                 <label for="l_name"
-                                    class="mb-2 block text-sm font-medium text-gray-900 ">Last
+                                    class="mb-2 block text-sm font-medium text-ink-900 ">Last
                                     name*</label>
                                 <input type="text" id="l_name" name="l_name"
-                                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 "
+                                    class="block w-full rounded-lg border border-ink-300 bg-ink-50 p-2.5 text-sm text-ink-900 focus:border-accent-500 focus:ring-accent-500 "
                                     placeholder="Green" pattern="[A-Za-z\s]+"
                                     title="Last name should only contain letters." required
                                     oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');" />
@@ -92,10 +92,10 @@
 
                             <div>
                                 <label for="your_email"
-                                    class="mb-2 block text-sm font-medium text-gray-900 ">Your
+                                    class="mb-2 block text-sm font-medium text-ink-900 ">Your
                                     email*</label>
                                 <input type="email" id="your_email" name="your_email"
-                                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-500 "
+                                    class="block w-full rounded-lg border border-ink-300 bg-ink-50 p-2.5 text-sm text-ink-500 "
                                     value="{{ Auth::user()->email }}" readonly />
                                 @error('your_email')
                                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
@@ -104,9 +104,9 @@
 
                             <div>
                                 <label for="city"
-                                    class="mb-2 block text-sm font-medium text-gray-900 ">City*</label>
+                                    class="mb-2 block text-sm font-medium text-ink-900 ">City*</label>
                                 <input type="text" id="city" name="city"
-                                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 "
+                                    class="block w-full rounded-lg border border-ink-300 bg-ink-50 p-2.5 text-sm text-ink-900 focus:border-accent-500 focus:ring-accent-500 "
                                     placeholder="Riga" pattern="[A-Za-z\s]+" title="City should only contain letters."
                                     required />
                                 @error('city')
@@ -117,10 +117,10 @@
                             <div>
                                 <div class="mb-2 flex items-center gap-2">
                                     <label for="select-country-input-3"
-                                        class="block text-sm font-medium text-gray-900 ">Country*</label>
+                                        class="block text-sm font-medium text-ink-900 ">Country*</label>
                                 </div>
                                 <select id="select-country-input-3" name="country"
-                                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 "
+                                    class="block w-full rounded-lg border border-ink-300 bg-ink-50 p-2.5 text-sm text-ink-900 focus:border-accent-500 focus:ring-accent-500 "
                                     required>
                                     <option value="Latvia" selected>Latvia</option>
                                     <option value="LT">Lithuania</option>
@@ -133,10 +133,10 @@
 
                             <div>
                                 <label for="addr_line_1"
-                                    class="mb-2 block text-sm font-medium text-gray-900 ">Address Line
+                                    class="mb-2 block text-sm font-medium text-ink-900 ">Address Line
                                     1*</label>
                                 <input type="text" id="addr_line_1" name="addr_line_1"
-                                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 "
+                                    class="block w-full rounded-lg border border-ink-300 bg-ink-50 p-2.5 text-sm text-ink-900 focus:border-accent-500 focus:ring-accent-500 "
                                     placeholder="Green Street 12" required />
                                 @error('addr_line_1')
                                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
@@ -145,10 +145,10 @@
 
                             <div>
                                 <label for="addr_line_2"
-                                    class="mb-2 block text-sm font-medium text-gray-900 ">Address Line
+                                    class="mb-2 block text-sm font-medium text-ink-900 ">Address Line
                                     2</label>
                                 <input type="text" id="addr_line_2" name="addr_line_2"
-                                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 "
+                                    class="block w-full rounded-lg border border-ink-300 bg-ink-50 p-2.5 text-sm text-ink-900 focus:border-accent-500 focus:ring-accent-500 "
                                     placeholder="Green Street 12" />
                                 @error('addr_line_2')
                                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
@@ -156,10 +156,10 @@
                             </div>
 
                             <div>
-                                <label for="phone-input-3" class="mb-2 block text-sm font-medium text-gray-900 ">Phone Number*</label>
+                                <label for="phone-input-3" class="mb-2 block text-sm font-medium text-ink-900 ">Phone Number*</label>
                                 <div class="flex items-center">
                                     <button id="dropdown-phone-button-3" data-dropdown-toggle="dropdownDivider"
-                                        class="az-10 inline-flex items-center rounded-s-lg border border-gray-300 bg-gray-100 px-4 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-200 focus:outline-none focus:ring-4 focus:ring-gray-100 "
+                                        class="az-10 inline-flex items-center rounded-s-lg border border-ink-300 bg-ink-100 px-4 py-2.5 text-sm font-medium text-ink-900 hover:bg-ink-200 focus:outline-none focus:ring-4 focus:ring-ink-100 "
                                         type="button">
                                         <span class="inline-flex items-center" id="selected-country-code">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="me-2 h-4 w-4"
@@ -178,11 +178,11 @@
                                         </svg>
                                     </button>
                                     <div id="dropdown-phone-3"
-                                        class="bg-gray-100 mt-40 absolute z-10 hidden w-56 divide-y divide-gray-100 rounded-lg bg-white shadow ">
-                                        <ul class="p-2 text-sm font-medium text-gray-700 " aria-labelledby="dropdown-phone-button-3">
+                                        class="bg-ink-100 mt-40 absolute z-10 hidden w-56 divide-y divide-ink-100 rounded-lg bg-white shadow ">
+                                        <ul class="p-2 text-sm font-medium text-ink-700 " aria-labelledby="dropdown-phone-button-3">
                                             <li>
                                                 <button type="button"
-                                                    class="dropdown-item inline-flex w-full rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-indigo-100 hover:text-gray-900 "
+                                                    class="dropdown-item inline-flex w-full rounded-md px-3 py-2 text-sm text-ink-500 hover:bg-ink-100 hover:text-ink-900 "
                                                     role="menuitem" onclick="selectCountryCode('+371')">
                                                     <span class="inline-flex items-center">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="me-2 h-4 w-4"
@@ -199,7 +199,7 @@
                                             </li>
                                             <li>
                                                 <button type="button"
-                                                    class="dropdown-item inline-flex w-full rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-indigo-100 hover:text-gray-900 "
+                                                    class="dropdown-item inline-flex w-full rounded-md px-3 py-2 text-sm text-ink-500 hover:bg-ink-100 hover:text-ink-900 "
                                                     role="menuitem" onclick="selectCountryCode('+370')">
                                                     <span class="inline-flex items-center">
                                                         <svg class="w-4 h-4 me-2" fill="none" viewBox="0 0 20 15">
@@ -269,7 +269,7 @@
                                             </li>
                                             <li>
                                                 <button type="button"
-                                                    class="dropdown-item inline-flex w-full rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-indigo-100 hover:text-gray-900 "
+                                                    class="dropdown-item inline-flex w-full rounded-md px-3 py-2 text-sm text-ink-500 hover:bg-ink-100 hover:text-ink-900 "
                                                     role="menuitem" onclick="selectCountryCode('+372')">
                                                     <span class="inline-flex items-center">
                                                         <svg class="w-4 h-4 me-2" fill="none" viewBox="0 0 20 15">
@@ -341,7 +341,7 @@
                                     </div>
                                     <div class="relative w-full">
                                         <input type="hidden" id="country-code" name="country_code" value="+371">
-                                        <input type="tel" id="phone-input" name="phone" class="z-20 block w-full rounded-e-lg border border-s-0 border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 " inputmode="numeric" pattern="[0-9]{7,16}" title="Phone number should be numeric and between 7 to 16 digits." placeholder="29227648" maxlength="11" required oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                                        <input type="tel" id="phone-input" name="phone" class="z-20 block w-full rounded-e-lg border border-s-0 border-ink-300 bg-ink-50 p-2.5 text-sm text-ink-900 focus:border-accent-500 focus:ring-accent-500 " inputmode="numeric" pattern="[0-9]{7,16}" title="Phone number should be numeric and between 7 to 16 digits." placeholder="29227648" maxlength="11" required oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                         @error('phone')
                                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                         @enderror
@@ -351,11 +351,11 @@
 
                             <div>
                                 <label for="company_email"
-                                    class="mb-2 block text-sm font-medium text-gray-900 ">Company
+                                    class="mb-2 block text-sm font-medium text-ink-900 ">Company
                                     email</label>
                                 <input type="email" id="company_email" name="company_email"
-                                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 "
-                                    placeholder="company@eastsquad.com" />
+                                    class="block w-full rounded-lg border border-ink-300 bg-ink-50 p-2.5 text-sm text-ink-900 focus:border-accent-500 focus:ring-accent-500 "
+                                    placeholder="accounts@company.com" />
                                 @error('company_email')
                                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                 @enderror
@@ -363,11 +363,11 @@
 
                             <div>
                                 <label for="company_name"
-                                    class="mb-2 block text-sm font-medium text-gray-900 ">Company
+                                    class="mb-2 block text-sm font-medium text-ink-900 ">Company
                                     name</label>
                                 <input type="text" id="company_name" name="company_name"
-                                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 "
-                                    placeholder="East Squad LLC" />
+                                    class="block w-full rounded-lg border border-ink-300 bg-ink-50 p-2.5 text-sm text-ink-900 focus:border-accent-500 focus:ring-accent-500 "
+                                    placeholder="Company Ltd" />
                                 @error('company_name')
                                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                 @enderror
@@ -375,10 +375,10 @@
 
                             <div>
                                 <label for="vat_number"
-                                    class="mb-2 block text-sm font-medium text-gray-900 ">VAT
+                                    class="mb-2 block text-sm font-medium text-ink-900 ">VAT
                                     number</label>
                                 <input type="text" id="vat_number" name="vat_number"
-                                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 "
+                                    class="block w-full rounded-lg border border-ink-300 bg-ink-50 p-2.5 text-sm text-ink-900 focus:border-accent-500 focus:ring-accent-500 "
                                     placeholder="DE42313253" />
                                 @error('vat_number')
                                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
@@ -389,45 +389,45 @@
                     </div>
                     {{-- Delivery Details --}}
                     <div class="space-y-4">
-                        <h3 class="text-xl font-semibold text-gray-900 ">Payment</h3>
+                        <h3 class="text-xl font-semibold text-ink-900 ">Payment</h3>
 
                         <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
                             <div
-                                class="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 ">
+                                class="rounded-lg border border-ink-200 bg-ink-50 p-4 ps-4 ">
                                 <div class="flex items-start">
                                     <div class="flex h-5 items-center">
                                         <input id="credit-card" aria-describedby="credit-card-text" type="radio"
                                             name="payment_method" value="credit-card"
-                                            class="h-4 w-4 border-gray-300 bg-white text-primary-600 focus:ring-2 focus:ring-primary-600 "
+                                            class="h-4 w-4 border-ink-300 bg-white text-accent-700 focus:ring-2 focus:ring-accent-500 "
                                             checked />
                                     </div>
 
                                     <div class="ms-4 text-sm">
                                         <label for="credit-card"
-                                            class="font-medium leading-none text-gray-900 "> Credit
+                                            class="font-medium leading-none text-ink-900 "> Credit
                                             Card</label>
                                         <p id="credit-card-text"
-                                            class="mt-1 text-xs font-normal text-gray-500 ">Pay with
+                                            class="mt-1 text-xs font-normal text-ink-500 ">Pay with
                                             your credit card</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div
-                                class="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 ">
+                                class="rounded-lg border border-ink-200 bg-ink-50 p-4 ps-4 ">
                                 <div class="flex items-start">
                                     <div class="flex h-5 items-center">
                                         <input id="pay-on-delivery" aria-describedby="pay-on-delivery-text"
                                             type="radio" name="payment_method" value="pay-on-delivery"
-                                            class="h-4 w-4 border-gray-300 bg-white text-primary-600 focus:ring-2 focus:ring-primary-600 " />
+                                            class="h-4 w-4 border-ink-300 bg-white text-accent-700 focus:ring-2 focus:ring-accent-500 " />
                                     </div>
 
                                     <div class="ms-4 text-sm">
                                         <label for="pay-on-delivery"
-                                            class="font-medium leading-none text-gray-900 "> Payment on
+                                            class="font-medium leading-none text-ink-900 "> Payment on
                                             delivery </label>
                                         <p id="pay-on-delivery-text"
-                                            class="mt-1 text-xs font-normal text-gray-500 ">Pay on
+                                            class="mt-1 text-xs font-normal text-ink-500 ">Pay on
                                             delivery</p>
                                     </div>
                                 </div>
@@ -439,44 +439,44 @@
                     </div>
                     {{-- Payment Methods --}}
                     <div class="space-y-4">
-                        <h3 class="text-xl font-semibold text-gray-900 ">Delivery Methods</h3>
+                        <h3 class="text-xl font-semibold text-ink-900 ">Delivery Methods</h3>
 
                         <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
                             <div
-                                class="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 ">
+                                class="rounded-lg border border-ink-200 bg-ink-50 p-4 ps-4 ">
                                 <div class="flex items-start">
                                     <div class="flex h-5 items-center">
                                         <input id="dhl" aria-describedby="dhl-text" type="radio"
                                             name="delivery_method" value="dhl"
-                                            class="h-4 w-4 border-gray-300 bg-white text-primary-600 focus:ring-2 focus:ring-primary-600 "
+                                            class="h-4 w-4 border-ink-300 bg-white text-accent-700 focus:ring-2 focus:ring-accent-500 "
                                             checked />
                                     </div>
 
                                     <div class="ms-4 text-sm">
                                         <label for="dhl"
-                                            class="font-medium leading-none text-gray-900 "> DHL
+                                            class="font-medium leading-none text-ink-900 "> DHL
                                         </label>
                                         <p id="dhl-text"
-                                            class="mt-1 text-xs font-normal text-gray-500 ">Standard delivery</p>
+                                            class="mt-1 text-xs font-normal text-ink-500 ">Standard delivery</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div
-                                class="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 ">
+                                class="rounded-lg border border-ink-200 bg-ink-50 p-4 ps-4 ">
                                 <div class="flex items-start">
                                     <div class="flex h-5 items-center">
                                         <input id="express" aria-describedby="express-text" type="radio"
                                             name="delivery_method" value="express"
-                                            class="h-4 w-4 border-gray-300 bg-white text-primary-600 focus:ring-2 focus:ring-primary-600 " />
+                                            class="h-4 w-4 border-ink-300 bg-white text-accent-700 focus:ring-2 focus:ring-accent-500 " />
                                     </div>
 
                                     <div class="ms-4 text-sm">
                                         <label for="express"
-                                            class="font-medium leading-none text-gray-900 "> Express
+                                            class="font-medium leading-none text-ink-900 "> Express
                                         </label>
                                         <p id="express-text"
-                                            class="mt-1 text-xs font-normal text-gray-500 ">Fastest delivery</p>
+                                            class="mt-1 text-xs font-normal text-ink-500 ">Fastest delivery</p>
                                     </div>
                                 </div>
                             </div>
@@ -489,38 +489,38 @@
                 {{-- Cart sums Items --}}
                 <div class="mt-6 w-full space-y-6 sm:mt-8 lg:mt-0 lg:max-w-xs xl:max-w-md">
                     <div class="flow-root">
-                        <div class="-my-3 divide-y divide-gray-200 ">
+                        <div class="-my-3 divide-y divide-ink-200 ">
                             <dl class="flex items-center justify-between gap-4 py-3">
-                                <dt class="text-base font-normal text-gray-500 ">Subtotal</dt>
+                                <dt class="text-base font-normal text-ink-500 ">Subtotal</dt>
                                 <dd>
-                                    <span class="text-base font-medium text-gray-900 ">@money($cart['subtotal'])
+                                    <span class="text-base font-medium text-ink-900 ">@money($cart['subtotal'])
                                     </span>
                                 </dd>
                             </dl>
 
                             <dl class="flex items-center justify-between gap-4 py-3">
-                                <dt class="text-base font-normal text-gray-500 ">Tax</dt>
-                                <dd class="text-base font-medium text-gray-900 ">@money($cart['tax'])
+                                <dt class="text-base font-normal text-ink-500 ">Tax</dt>
+                                <dd class="text-base font-medium text-ink-900 ">@money($cart['tax'])
                                 </dd>
                             </dl>
 
                             @if(isset($cart['shipping']) && $cart['shipping'] > 0)
                              <dl class="flex items-center justify-between gap-4 py-3">
-                                <dt class="text-base font-normal text-gray-500 ">Shipping</dt>
-                                <dd class="text-base font-medium text-gray-900 ">@money($cart['shipping'])
+                                <dt class="text-base font-normal text-ink-500 ">Shipping</dt>
+                                <dd class="text-base font-medium text-ink-900 ">@money($cart['shipping'])
                                 </dd>
                             </dl>
                             @else
                                 <dl class="flex items
                             -center justify-between gap-4 py-3">
-                                <dt class="text-base font-normal text-gray-500 ">Shipping</dt>
+                                <dt class="text-base font-normal text-ink-500 ">Shipping</dt>
                                 <dd class="text-base font-medium text-emerald-500 ">Free</dd>
                             </dl>
                             @endif
 
                             <dl class="flex items-center justify-between gap-4 py-3">
-                                <dt class="text-base font-bold text-gray-900 ">Total</dt>
-                                <dd class="text-base font-bold text-gray-900 ">@money($cart['total'])
+                                <dt class="text-base font-bold text-ink-900 ">Total</dt>
+                                <dd class="text-base font-bold text-ink-900 ">@money($cart['total'])
                                 </dd>
                             </dl>
                         </div>
@@ -528,7 +528,7 @@
 
                     <div class="space-y-3">
                         <button type="submit"
-                            class="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 ">Proceed
+                            class="flex w-full items-center justify-center rounded-lg bg-ink-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-ink-700 focus:outline-none focus:ring-4 focus:ring-accent-500 ">Proceed
                             to Payment</button>
                     </div>
                 </div>
