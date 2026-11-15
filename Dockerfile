@@ -5,6 +5,7 @@ COPY package.json package-lock.json ./
 RUN npm ci
 COPY vite.config.js tailwind.config.js postcss.config.js ./
 COPY resources ./resources
+COPY public/js ./public/js
 RUN npm run build
 
 # PHP-FPM with the code, Composer dependencies and built assets baked in.
