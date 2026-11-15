@@ -148,23 +148,25 @@ Open http://127.0.0.1:8000.
 
 ## Running with Docker
 
-`docker-compose.yml` starts three containers: `app` (PHP 8.3-FPM + Node 22),
-`nginx` on port **8080** and `mysql-db` (MySQL 5.7). The project directory is
-mounted into the containers, so dependencies are installed into your working
-copy:
+One command builds and starts the shop with MySQL and Nginx. No `.env` or local
+PHP and Node are needed:
 
 ```bash
-cp .env.example .env           # already points at DB_HOST=mysql-db
 docker compose up -d --build
-
-docker compose exec app composer install
-docker compose exec app sh -c "npm ci && npm run build"
-docker compose exec app php artisan key:generate
-docker compose exec app php artisan migrate --seed
-docker compose exec app php artisan storage:link
 ```
 
-Open http://localhost:8080.
+Open http://localhost:8080 (set `APP_PORT` to use another port). The first start
+takes a minute: it migrates and seeds the database, then serves the app.
+
+- `app`: PHP 8.3-FPM. The code, Composer dependencies and built assets are
+  baked into the image, so rebuild after code changes (`docker compose up -d --build`).
+- `nginx`: serves `public/` and passes PHP requests to `app`.
+- `mysql-db`: MySQL 8.4.
+
+The database and `storage/` (uploads, logs, the generated app key) live in
+named volumes, so restarts keep your data and the demo data is seeded only into
+an empty database. `docker compose down -v` deletes both volumes for a fresh
+start. Mail is written to `storage/logs/laravel.log`.
 
 ## Demo accounts
 
