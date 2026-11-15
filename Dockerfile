@@ -1,50 +1,45 @@
-# Use the official PHP 8.3 FPM image as the base
-FROM php:8.3-fpm
+# Builds the Vite assets.
+FROM node:22-alpine AS assets
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY vite.config.js tailwind.config.js postcss.config.js ./
+COPY resources ./resources
+RUN npm run build
 
-# Install system dependencies and required PHP extensions
-# Install system dependencies and required PHP extensions
-RUN apt-get update && apt-get install -y \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
-    libzip-dev \
-    libicu-dev \        
-    libonig-dev \      
-    default-mysql-client \  
-    git \
-    unzip \
-    zip \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd \
-    && docker-php-ext-install bcmath exif pcntl zip intl pdo pdo_mysql  # Install PDO and PDO MySQL
+# PHP-FPM with the code, Composer dependencies and built assets baked in.
+FROM php:8.3-fpm AS app
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libfreetype6-dev libjpeg62-turbo-dev libpng-dev libwebp-dev \
+        libicu-dev libzip-dev unzip \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
+    && docker-php-ext-install bcmath exif gd intl opcache pcntl pdo_mysql zip \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+COPY docker/php/php.ini /usr/local/etc/php/conf.d/zz-app.ini
 
-# Set working directory
 WORKDIR /var/www/html
 
-# Copy application files
+# Dev dependencies are kept: the seeder uses Faker.
+COPY composer.json composer.lock ./
+RUN composer install --no-interaction --no-progress --prefer-dist --no-scripts --no-autoloader
+
 COPY . .
+COPY --from=assets /app/public/build ./public/build
+RUN composer dump-autoload --optimize \
+    && php artisan storage:link \
+    && chown -R www-data:www-data storage bootstrap/cache
 
+COPY docker/php/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
-# Set ownership for files
-RUN chown -R www-data:www-data /var/www/html
-
-# Install PHP dependencies
-RUN composer install --optimize-autoloader --no-dev
-
-# Ensure the .env file exists (copy from .env.example if needed)
-RUN cp .env.example .env || true 
-# Generate Laravel APP_KEY
-RUN php artisan key:generate --no-interaction
-
-# Install Node.js (Vite 8 needs Node 20.19+ / 22.12+) and build assets
-RUN curl -sL https://deb.nodesource.com/setup_22.x | bash - && \
-    apt-get install -y nodejs && \
-    npm ci && \
-    npm run build
-
-# Expose the port
 EXPOSE 9000
+ENTRYPOINT ["entrypoint.sh"]
+CMD ["php-fpm"]
+
+# Nginx serving public/ from the same build.
+FROM nginx:1.27-alpine AS web
+COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=app /var/www/html/public /var/www/html/public
