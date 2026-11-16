@@ -159,4 +159,38 @@ class CartTest extends TestCase
         // The drawer's fetch() reads this tag; without it every +/-/remove click threw.
         $this->get('/')->assertSee('<meta name="csrf-token" content="', false);
     }
+
+    public function test_an_out_of_stock_product_cannot_be_added(): void
+    {
+        $product = $this->createProduct(['stock' => 0]);
+
+        $this->postJson("/cart/add/{$product->id}")->assertUnprocessable()->assertJsonPath('message', fn ($m) => str_contains($m, 'out of stock'));
+        $this->from('/')->post("/cart/add/{$product->id}")->assertRedirect('/')->assertSessionHas('error');
+
+        $this->assertNull(session("cart.{$product->id}"));
+    }
+
+    public function test_the_cart_cannot_hold_more_than_is_in_stock(): void
+    {
+        $product = $this->createProduct(['stock' => 3]);
+        $this->post("/cart/add/{$product->id}", ['quantity' => 2]);
+
+        $this->postJson("/cart/add/{$product->id}", ['quantity' => 2])->assertUnprocessable();
+        $this->postJson("/cart/update/{$product->id}/4")->assertUnprocessable()->assertJsonPath('quantity', 2);
+        $this->assertSame(2, session("cart.{$product->id}.quantity"));
+
+        $this->postJson("/cart/update/{$product->id}/3")->assertOk();
+        $this->assertSame(3, (int) session("cart.{$product->id}.quantity"));
+    }
+
+    public function test_a_cart_over_the_current_stock_can_still_be_lowered(): void
+    {
+        $product = $this->createProduct(['stock' => 5]);
+        $this->post("/cart/add/{$product->id}", ['quantity' => 5]);
+        $product->update(['stock' => 2]);
+
+        $this->get('/')->assertSee('Only 2 left. Lower the quantity to check out.');
+        $this->postJson("/cart/update/{$product->id}/4")->assertOk();
+        $this->assertSame(4, (int) session("cart.{$product->id}.quantity"));
+    }
 }

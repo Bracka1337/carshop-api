@@ -5,6 +5,21 @@ document.addEventListener("DOMContentLoaded", function () {
   const lockScroll = (locked) =>
     document.body.classList.toggle("overflow-hidden", locked);
 
+  // Short-lived error message, e.g. when a wheel has less stock than asked for.
+  let toastTimer;
+  function showError(message) {
+    document.getElementById("error-flash")?.remove();
+    const toast = document.createElement("div");
+    toast.id = "error-flash";
+    toast.setAttribute("role", "alert");
+    toast.className =
+      "fixed right-4 top-20 z-50 flex items-center gap-2 rounded-control bg-red-600 px-4 py-3 text-sm font-medium text-white shadow-panel";
+    toast.textContent = message;
+    document.body.append(toast);
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.remove(), 5000);
+  }
+
   // --- Product page: gallery thumbnails and quantity stepper ----------------
 
   document.querySelectorAll("[data-gallery]").forEach((gallery) => {
@@ -87,6 +102,14 @@ document.addEventListener("DOMContentLoaded", function () {
         headers: { Accept: "application/json", "X-CSRF-TOKEN": csrfToken() },
         body: new FormData(form),
       });
+      if (response.status === 422) {
+        // Out of stock, or the cart already holds what is left.
+        const data = await response.json();
+        button.dataset.state = "idle";
+        button.removeAttribute("aria-busy");
+        showError(data.message);
+        return;
+      }
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const data = await response.json();
 
@@ -153,8 +176,9 @@ document.addEventListener("DOMContentLoaded", function () {
         if (quantity >= 99) return;
         quantity += 1;
       }
+      const previous = parseInt(display.innerText, 10);
       display.innerText = quantity;
-      updateCart(id, quantity);
+      updateCart(id, quantity, previous);
       refreshCart();
     }
   });
@@ -167,8 +191,13 @@ document.addEventListener("DOMContentLoaded", function () {
         Accept: "application/json",
         "X-CSRF-TOKEN": csrfToken(),
       },
-    }).then((response) => {
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    }).then(async (response) => {
+      if (!response.ok) {
+        const error = new Error(`HTTP ${response.status}`);
+        error.status = response.status;
+        error.data = await response.json().catch(() => ({}));
+        throw error;
+      }
       return response.json();
     });
 
@@ -184,10 +213,20 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch((error) => console.error("Error:", error));
   }
 
-  function updateCart(id, quantity) {
-    postJson(`/cart/update/${id}/${quantity}`).catch((error) =>
-      console.error("Error:", error)
-    );
+  async function updateCart(id, quantity, previous) {
+    try {
+      await postJson(`/cart/update/${id}/${quantity}`);
+    } catch (error) {
+      if (error.status !== 422) {
+        console.error("Error:", error);
+        return;
+      }
+      // Not enough stock: put back the quantity the server kept.
+      const display = document.getElementById(`quantity-${id}`);
+      if (display) display.innerText = error.data.quantity ?? previous;
+      refreshCart();
+      showError(error.data.message ?? "Not enough stock.");
+    }
   }
 
   // Recomputes the subtotal, the header count and the empty message from the drawer.
@@ -200,6 +239,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const price = parseFloat(item.querySelector(".product-price").dataset.price);
       subtotal += price * quantity;
       count += quantity;
+      item.querySelector(".stock-warning")?.classList.toggle("hidden", quantity <= parseInt(item.dataset.stock, 10));
     });
 
     const subtotalElement = document.getElementById("subtotal-amount");
@@ -244,6 +284,9 @@ document.addEventListener("DOMContentLoaded", function () {
     setTimeout(() => (successMessage.style.opacity = "0"), 2500);
     setTimeout(() => successMessage.remove(), 3000);
   }
+
+  const errorFlash = document.getElementById("error-flash");
+  if (errorFlash) toastTimer = setTimeout(() => errorFlash.remove(), 5000);
 });
 
 const cardNumberInput = document.getElementById("card-number-input");

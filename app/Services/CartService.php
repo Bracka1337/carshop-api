@@ -64,6 +64,46 @@ class CartService
         return isset(session()->get('cart', [])[$productId]);
     }
 
+    /** Units of the product already in the cart. */
+    public function quantityOf(int|string $productId): int
+    {
+        return (int) (session()->get('cart', [])[$productId]['quantity'] ?? 0);
+    }
+
+    /**
+     * Why the cart can't hold $quantity more of the product, or null when it can.
+     * Checkout checks again under a lock; this keeps the cart honest meanwhile.
+     */
+    public function stockError(Product $product, int $quantity): ?string
+    {
+        if (! $product->inStock()) {
+            return "Sorry, {$product->title} is out of stock.";
+        }
+
+        $inCart = $this->quantityOf($product->id);
+
+        if ($inCart + $quantity <= $product->stock) {
+            return null;
+        }
+
+        return $inCart > 0
+            ? "Only {$product->stock} of {$product->title} in stock, and {$inCart} already in your cart."
+            : "Only {$product->stock} of {$product->title} in stock.";
+    }
+
+    /**
+     * Current stock of each product in the cart (product id => units).
+     * Products no longer sold are missing.
+     *
+     * @return array<int|string, int>
+     */
+    public function stockLevels(): array
+    {
+        $ids = array_keys(array_filter(session()->get('cart', []), 'is_array'));
+
+        return $ids === [] ? [] : Product::whereIn('id', $ids)->pluck('stock', 'id')->map(fn ($stock) => (int) $stock)->all();
+    }
+
     public function add(Product $product, int $quantity = 1): void
     {
         $cart = session()->get('cart', []);

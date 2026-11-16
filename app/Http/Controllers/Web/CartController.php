@@ -19,7 +19,15 @@ class CartController extends Controller
     {
         $quantity = (int) ($request->validate(['quantity' => 'sometimes|integer|min:1|max:'.CartService::MAX_QUANTITY])['quantity'] ?? 1);
 
-        $this->cart->add(Product::with(['brand', 'images'])->findOrFail($id), $quantity);
+        $product = Product::with(['brand', 'images'])->findOrFail($id);
+
+        if (($error = $this->cart->stockError($product, $quantity)) !== null) {
+            return $request->wantsJson()
+                ? response()->json(['message' => $error], 422)
+                : redirect()->back()->with('error', $error);
+        }
+
+        $this->cart->add($product, $quantity);
 
         if ($request->wantsJson()) {
             return response()->json([
@@ -50,6 +58,18 @@ class CartController extends Controller
         if ($error !== null) {
             return $request->wantsJson()
                 ? response()->json(['message' => $error], 404)
+                : redirect()->back()->with('error', $error);
+        }
+
+        // Lowering is always allowed, so a cart holding more than is left can be fixed.
+        $stock = (int) Product::whereKey($id)->value('stock');
+        $current = $this->cart->quantityOf($id);
+
+        if ($quantity > $current && $quantity > $stock) {
+            $error = $stock > 0 ? "Only {$stock} in stock." : 'This product is out of stock.';
+
+            return $request->wantsJson()
+                ? response()->json(['message' => $error, 'quantity' => $current], 422)
                 : redirect()->back()->with('error', $error);
         }
 
