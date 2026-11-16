@@ -1,6 +1,8 @@
 @php
     $items = array_filter(session('cart', []), 'is_array');
     $hasItems = array_sum(array_column($items, 'quantity')) > 0;
+    // Stock may have changed since the items were added; checkout re-checks it.
+    $stock = $hasItems ? app(\App\Services\CartService::class)->stockLevels() : [];
 @endphp
 
 <div class="flex items-center justify-between border-b border-ink-200 px-5 py-4">
@@ -17,7 +19,7 @@
     @if ($hasItems)
         <ul role="list" class="divide-y divide-ink-200" id="cart-items">
             @foreach ($items as $id => $details)
-                <li class="cart-item flex gap-4 py-5" data-id="{{ $id }}">
+                <li class="cart-item flex gap-4 py-5" data-id="{{ $id }}" data-stock="{{ $stock[$id] ?? 0 }}">
                     <div class="h-20 w-20 flex-shrink-0 overflow-hidden rounded-control bg-ink-100">
                         @if (! empty($details['image']))
                             <img src="{{ asset('/storage/'.$details['image']) }}" alt="" class="h-full w-full object-contain p-1.5 mix-blend-multiply">
@@ -41,6 +43,13 @@
                             </div>
                             <a href="{{ route('cart.remove', ['id' => $id]) }}" data-id="{{ $id }}" class="remove-item font-medium text-ink-500 hover:text-ink-900">Remove</a>
                         </div>
+                        @php($left = $stock[$id] ?? 0)
+                        {{-- Toggled by app.js as the quantity changes. --}}
+                        @if (($details['quantity'] ?? 0) > $left)
+                            <p class="stock-warning mt-2 text-xs font-medium text-red-600">
+                                {{ $left > 0 ? "Only {$left} left. Lower the quantity to check out." : 'Out of stock. Remove it to check out.' }}
+                            </p>
+                        @endif
                     </div>
                 </li>
             @endforeach

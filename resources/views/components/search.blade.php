@@ -52,6 +52,12 @@
                         @enderror
                     @endforeach
                 </fieldset>
+
+                <label class="flex cursor-pointer items-center gap-2.5 text-sm font-semibold text-ink-900">
+                    <input type="checkbox" name="in_stock" value="1" @checked(request()->boolean('in_stock'))
+                        class="h-4 w-4 rounded border-ink-300 text-accent-500 focus:ring-accent-500">
+                    In stock only
+                </label>
             </div>
 
             <div class="flex items-center gap-3 border-t border-ink-200 px-5 py-4">

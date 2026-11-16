@@ -74,10 +74,10 @@ class CatalogueController extends Controller
     {
         $chips = [];
 
-        foreach (['brand', 'diameter', 'width', 'type', 'price_from', 'price_to'] as $key) {
+        foreach (['brand', 'diameter', 'width', 'type', 'price_from', 'price_to', 'in_stock'] as $key) {
             $value = $filters[$key] ?? null;
 
-            if ($value === null || $value === '') {
+            if ($value === null || $value === '' || ($key === 'in_stock' && ! filter_var($value, FILTER_VALIDATE_BOOLEAN))) {
                 continue;
             }
 
@@ -87,6 +87,7 @@ class CatalogueController extends Controller
                 'width' => WheelSpec::width($value),
                 'price_from' => 'From '.Money::format($value, 0),
                 'price_to' => 'Up to '.Money::format($value, 0),
+                'in_stock' => 'In stock',
             };
 
             $chips[] = ['label' => $label, 'url' => route('main', Arr::except($query, [$key, 'page']))];

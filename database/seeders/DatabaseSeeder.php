@@ -24,6 +24,11 @@ class DatabaseSeeder extends Seeder
         Product::factory()->has(Image::factory()->count(3))
             ->count(200)->create();
 
+        // Some sold-out and nearly sold-out wheels, so every stock state shows up in the demo.
+        $ids = Product::inRandomOrder()->limit(30)->pluck('id');
+        Product::whereIn('id', $ids->take(10))->update(['stock' => 0]);
+        Product::whereIn('id', $ids->slice(10))->each(fn (Product $product) => $product->update(['stock' => rand(1, Product::LOW_STOCK)]));
+
         User::create([ // create admin
             'name' => 'admin',
             'email' => 'admin@eastsquad.com',

@@ -23,6 +23,7 @@
         @endif
         <meta property="product:price:amount" content="{{ number_format((float) $product->price, 2, '.', '') }}">
         <meta property="product:price:currency" content="{{ \App\Support\Money::code() }}">
+        <meta property="product:availability" content="{{ $product->inStock() ? 'in stock' : 'out of stock' }}">
         <meta name="twitter:card" content="summary_large_image">
     </x-slot:meta>
 
@@ -84,17 +85,19 @@
                     <span class="text-sm text-ink-500">incl. {{ config('shop.vat_rate') * 100 }}% VAT</span>
                 </p>
 
-                <p class="mt-3 flex items-center gap-2 text-sm font-medium text-ink-700">
-                    <span class="h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true"></span>
-                    Available to order
-                </p>
+                <x-stock-status :product="$product" class="mt-3 text-sm" />
 
+                @if (! $product->inStock())
+                    <p class="mt-6 rounded-control bg-ink-100 px-4 py-3 text-sm text-ink-700">
+                        This wheel is out of stock right now. Check back soon.
+                    </p>
+                @else
                 <form action="{{ route('cart.add', $product->id) }}" method="POST" data-add-to-cart class="mt-6 flex gap-3">
                     @csrf
                     <div class="inline-flex items-center rounded-control border border-ink-300 bg-white" data-quantity>
                         <button type="button" data-quantity-step="-1" class="h-12 w-11 text-lg text-ink-700 hover:bg-ink-100" aria-label="Decrease quantity">−</button>
                         <label for="quantity" class="sr-only">Quantity</label>
-                        <input id="quantity" name="quantity" type="number" min="1" max="99" value="1" inputmode="numeric"
+                        <input id="quantity" name="quantity" type="number" min="1" max="{{ min(99, $product->stock) }}" value="1" inputmode="numeric"
                             class="h-12 w-12 border-0 p-0 text-center font-semibold text-ink-900 [appearance:textfield] focus:ring-0 [&::-webkit-inner-spin-button]:appearance-none">
                         <button type="button" data-quantity-step="1" class="h-12 w-11 text-lg text-ink-700 hover:bg-ink-100" aria-label="Increase quantity">+</button>
                     </div>
@@ -108,6 +111,7 @@
                         </span>
                     </button>
                 </form>
+                @endif
                 @error('quantity')
                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                 @enderror

@@ -188,4 +188,26 @@ class AdminPanelTest extends TestCase
         Livewire::test(ListOrders::class)->assertOk()->assertSee('Pending');
         Livewire::test(ListPayments::class)->assertOk()->assertSee('Failed');
     }
+
+    public function test_admin_can_set_stock_and_filter_sold_out_products(): void
+    {
+        $soldOut = $this->createProduct(['stock' => 0]);
+        $inStock = $this->createProduct(['stock' => 12]);
+        $this->actingAs($this->createAdmin());
+
+        Livewire::test(EditProduct::class, ['record' => $inStock->getRouteKey()])
+            ->fillForm(['stock' => -1])
+            ->call('save')
+            ->assertHasFormErrors(['stock' => 'min'])
+            ->fillForm(['stock' => 7])
+            ->call('save')
+            ->assertHasNoFormErrors();
+
+        $this->assertSame(7, $inStock->fresh()->stock);
+
+        Livewire::test(ListProducts::class)
+            ->filterTable('out_of_stock')
+            ->assertCanSeeTableRecords([$soldOut])
+            ->assertCanNotSeeTableRecords([$inStock]);
+    }
 }

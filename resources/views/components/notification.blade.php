@@ -7,3 +7,10 @@
         {{ session('success') }}
     </div>
 @endif
+
+@if (session('error'))
+    <div id="error-flash" role="alert"
+        class="fixed right-4 top-20 z-50 flex items-center gap-2 rounded-control bg-red-600 px-4 py-3 text-sm font-medium text-white shadow-panel">
+        {{ session('error') }}
+    </div>
+@endif

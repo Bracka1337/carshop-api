@@ -14,7 +14,9 @@ use Illuminate\Validation\ValidationException;
 
 /**
  * Turns the cart into an order: delivery details, an open payment and one
- * line per product at its current price, all in one transaction.
+ * line per product at its current price, all in one transaction. The stock
+ * is taken when the order is placed, so a declined card keeps it reserved
+ * for the retry.
  */
 class PlaceOrder
 {
@@ -22,7 +24,7 @@ class PlaceOrder
      * @param  array<string, mixed>  $details  validated by PlaceOrderRequest
      * @param  array<int|string, mixed>  $cart  the session cart (product id => item)
      *
-     * @throws ValidationException when the cart is empty or holds products that are no longer sold
+     * @throws ValidationException when the cart is empty, holds products that are no longer sold, or asks for more than is in stock
      */
     public function handle(User $user, array $details, array $cart): Order
     {
@@ -32,15 +34,30 @@ class PlaceOrder
             throw ValidationException::withMessages(['cart' => 'Your cart is empty.']);
         }
 
-        $prices = Product::whereIn('id', $items->keys())->pluck('price', 'id');
+        return DB::transaction(function () use ($user, $details, $items) {
+            // Lock the rows so two checkouts can't both take the last units.
+            $products = Product::whereIn('id', $items->keys())->lockForUpdate()->get()->keyBy('id');
 
-        if ($prices->count() !== $items->count()) {
-            throw ValidationException::withMessages([
-                'cart' => 'Some products in your cart are no longer available. Please remove them and try again.',
-            ]);
-        }
+            if ($products->count() !== $items->count()) {
+                throw ValidationException::withMessages([
+                    'cart' => 'Some products in your cart are no longer available. Please remove them and try again.',
+                ]);
+            }
 
-        return DB::transaction(function () use ($user, $details, $items, $prices) {
+            $quantities = $items->map(fn (array $item) => (int) $item['quantity']);
+
+            $short = $products
+                ->filter(fn (Product $product) => $quantities->get($product->id, 0) > $product->stock)
+                ->map(fn (Product $product) => $product->stock > 0
+                    ? "{$product->title} (only {$product->stock} left)"
+                    : "{$product->title} (out of stock)");
+
+            if ($short->isNotEmpty()) {
+                throw ValidationException::withMessages([
+                    'cart' => 'Not enough stock for '.$short->join(', ', ' and ').'. Please update your cart and try again.',
+                ]);
+            }
+
             $deliveryDetails = DeliveryDetail::create([
                 'f_name' => $details['f_name'],
                 'm_name' => $details['m_name'] ?? null,
@@ -68,12 +85,23 @@ class PlaceOrder
                 'payment_id' => $payment->id,
             ]);
 
-            foreach ($items as $productId => $item) {
+            foreach ($products as $product) {
+                $quantity = $quantities->get($product->id, 0);
+
                 $order->lines()->create([
-                    'product_id' => $productId,
-                    'quantity' => (int) $item['quantity'],
-                    'unit_price' => $prices[$productId],
+                    'product_id' => $product->id,
+                    'quantity' => $quantity,
+                    'unit_price' => $product->price,
                 ]);
+
+                // Conditional update as well as the lock: SQLite ignores FOR UPDATE.
+                $taken = Product::whereKey($product->id)->where('stock', '>=', $quantity)->decrement('stock', $quantity);
+
+                if ($taken !== 1) {
+                    throw ValidationException::withMessages([
+                        'cart' => "{$product->title} just sold out. Please update your cart and try again.",
+                    ]);
+                }
             }
 
             return $order;

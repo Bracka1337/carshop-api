@@ -73,4 +73,19 @@ class ProductApiTest extends TestCase
         $this->getJson("/api/products/{$product->id}")->assertNotFound();
         $this->get('/api/products/999')->assertNotFound()->assertJsonStructure(['message']);
     }
+
+    public function test_products_show_their_stock_and_can_be_filtered_by_it(): void
+    {
+        $brand = $this->createBrand();
+        $available = $this->createProduct(['stock' => 4], $brand);
+        $this->createProduct(['stock' => 0], $brand);
+
+        $this->getJson("/api/products/{$available->id}")
+            ->assertJsonPath('data.stock', 4)
+            ->assertJsonPath('data.in_stock', true);
+
+        $this->getJson('/api/products?in_stock=1')
+            ->assertJsonCount(1, 'data')
+            ->assertJsonPath('data.0.id', $available->id);
+    }
 }

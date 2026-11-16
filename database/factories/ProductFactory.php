@@ -76,7 +76,13 @@ class ProductFactory extends Factory
             'type' => $type,
             'cb' => $cb,
             'price' => $type === 'Steel' ? fake()->numberBetween(50, 180) : fake()->numberBetween(150, 1500),
+            'stock' => fake()->numberBetween(8, 40),
         ];
+    }
+
+    public function outOfStock(): static
+    {
+        return $this->state(['stock' => 0]);
     }
 
     private function describe(string $type, int $bolt, float $boltDiameter, float $et, float $cb): string

@@ -34,7 +34,11 @@
             <p>
                 <span class="block text-xl font-bold leading-none text-ink-950">@money($product->price)</span>
                 <span class="mt-1 block text-[11px] text-ink-500">incl. VAT</span>
+                <x-stock-status :product="$product" class="mt-2 text-xs" />
             </p>
+            @if (! $product->inStock())
+                <span class="relative z-10 inline-flex h-10 min-w-[7.5rem] cursor-not-allowed items-center justify-center rounded-control bg-ink-100 px-4 text-sm font-semibold text-ink-500">Sold out</span>
+            @else
             <form action="{{ route('cart.add', $product->id) }}" method="POST" data-add-to-cart class="relative z-10">
                 @csrf
                 <button type="submit" data-state="idle"
@@ -50,6 +54,7 @@
                     </span>
                 </button>
             </form>
+            @endif
         </div>
     </div>
 </article>

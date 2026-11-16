@@ -12,7 +12,7 @@ class ProductController extends Controller
 {
     /**
      * Paginated catalogue with the same filters as the shop page
-     * (diameter, width, type, brand, price_from, price_to, order).
+     * (diameter, width, type, brand, price_from, price_to, in_stock, order).
      */
     public function index(ProductSearchRequest $request): AnonymousResourceCollection
     {

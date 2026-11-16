@@ -294,4 +294,36 @@ class CheckoutTest extends TestCase
             ->post('/payment', $this->deliveryDetails(['phone' => '20000000', 'country_code' => 'abc']))
             ->assertSessionHasErrors('phone');
     }
+
+    public function test_placing_an_order_takes_the_units_off_the_stock(): void
+    {
+        $product = $this->createProduct(['stock' => 5]);
+        $this->actingAs(User::factory()->create());
+        $this->cartWith($product, 2);
+
+        $this->post('/payment', $this->deliveryDetails())->assertRedirect(route('main'));
+
+        $this->assertSame(3, $product->fresh()->stock);
+    }
+
+    public function test_an_order_for_more_than_is_in_stock_is_rejected_without_a_partial_order(): void
+    {
+        $plenty = $this->createProduct(['stock' => 10]);
+        $scarce = $this->createProduct(['stock' => 3, 'title' => 'Borbet Apex 18x8']);
+        $this->actingAs(User::factory()->create());
+        $this->cartWith($plenty);
+        $this->cartWith($scarce, 3);
+        // Someone else bought two in the meantime.
+        $scarce->update(['stock' => 1]);
+
+        $this->from('/checkout')
+            ->post('/payment', $this->deliveryDetails())
+            ->assertRedirect('/checkout')
+            ->assertSessionHasErrors(['cart' => 'Not enough stock for Borbet Apex 18x8 (only 1 left). Please update your cart and try again.']);
+
+        $this->assertSame(0, Order::count());
+        $this->assertDatabaseCount('product_quantities', 0);
+        $this->assertSame(10, $plenty->fresh()->stock);
+        $this->assertSame(1, $scarce->fresh()->stock);
+    }
 }

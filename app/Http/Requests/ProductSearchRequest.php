@@ -30,6 +30,7 @@ class ProductSearchRequest extends FormRequest
             'price_from' => 'sometimes|nullable|numeric|min:0',
             // gte fails when price_from is missing, so only compare when both are given.
             'price_to' => array_filter(['sometimes', 'nullable', 'numeric', 'min:0', $this->filled('price_from') ? 'gte:price_from' : null]),
+            'in_stock' => 'sometimes|nullable|boolean',
             'order' => 'sometimes|nullable|in:price_asc,price_desc,brand_asc,brand_desc',
         ];
 

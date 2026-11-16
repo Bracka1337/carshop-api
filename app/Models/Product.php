@@ -28,8 +28,28 @@ class Product extends Model
         'bolt_diameter',
         'type',
         'price',
+        'stock',
         'brand_id',
     ];
+
+    /** At or below this many units the shop shows "Only N left". */
+    public const LOW_STOCK = 5;
+
+    /** @return array<string, string> */
+    protected function casts(): array
+    {
+        return ['stock' => 'integer'];
+    }
+
+    public function inStock(): bool
+    {
+        return $this->stock > 0;
+    }
+
+    public function lowStock(): bool
+    {
+        return $this->inStock() && $this->stock <= self::LOW_STOCK;
+    }
 
     /** Products get a slug from their title when created without one; it doesn't follow later title edits. */
     protected static function booted(): void
@@ -117,6 +137,10 @@ class Product extends Model
 
         if (! empty($filters['brand'])) {
             $query->where('brand_id', $filters['brand']);
+        }
+
+        if (! empty($filters['in_stock'])) {
+            $query->where('stock', '>', 0);
         }
 
         if (! empty($filters['price_from'])) {
