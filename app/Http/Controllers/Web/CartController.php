@@ -8,6 +8,7 @@ use App\Services\CartService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CartController extends Controller
 {
@@ -16,7 +17,7 @@ class CartController extends Controller
     /** Catalogue buttons use fetch (JSON with the re-rendered drawer); without JS it's a form post. */
     public function addProductsToCart(Request $request, string $id): RedirectResponse|JsonResponse
     {
-        $quantity = (int) ($request->validate(['quantity' => 'sometimes|integer|min:1|max:99'])['quantity'] ?? 1);
+        $quantity = (int) ($request->validate(['quantity' => 'sometimes|integer|min:1|max:'.CartService::MAX_QUANTITY])['quantity'] ?? 1);
 
         $this->cart->add(Product::with(['brand', 'images'])->findOrFail($id), $quantity);
 
@@ -34,6 +35,12 @@ class CartController extends Controller
     /** Called by the cart drawer with fetch (JSON) or by a plain form post (redirect). */
     public function updateCart(Request $request, string $id, string $quantity): RedirectResponse|JsonResponse
     {
+        // Same rules as adding to the cart, except that 0 is allowed: it removes the item.
+        $quantity = (int) Validator::make(
+            ['quantity' => $quantity],
+            ['quantity' => 'required|integer|min:0|max:'.CartService::MAX_QUANTITY],
+        )->validate()['quantity'];
+
         $error = match (true) {
             $this->cart->isEmpty() => 'Cart is empty!',
             ! $this->cart->has($id) => 'Product not found in cart!',
@@ -46,7 +53,7 @@ class CartController extends Controller
                 : redirect()->back()->with('error', $error);
         }
 
-        $this->cart->setQuantity($id, (float) $quantity);
+        $this->cart->setQuantity($id, $quantity);
 
         return $request->wantsJson()
             ? response()->json(['message' => 'Cart updated successfully!', 'total' => session('cart.total')])

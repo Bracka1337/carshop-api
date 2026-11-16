@@ -149,6 +149,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (quantity <= 1) return;
         quantity -= 1;
       } else {
+        // The server caps a cart line at 99 (CartService::MAX_QUANTITY).
+        if (quantity >= 99) return;
         quantity += 1;
       }
       display.innerText = quantity;

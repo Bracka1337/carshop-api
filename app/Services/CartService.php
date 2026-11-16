@@ -9,6 +9,9 @@ use App\Models\Product;
  */
 class CartService
 {
+    /** Most of one product a single cart line can hold. */
+    public const MAX_QUANTITY = 99;
+
     public function __construct(private readonly TotalsCalculator $totals) {}
 
     /**
@@ -81,11 +84,11 @@ class CartService
     }
 
     /** Sets the quantity of an item already in the cart; 0 removes it. */
-    public function setQuantity(string $productId, float $quantity): void
+    public function setQuantity(string $productId, int $quantity): void
     {
         $cart = session()->get('cart', []);
 
-        if ($quantity == 0) {
+        if ($quantity === 0) {
             unset($cart[$productId]);
         } else {
             $cart[$productId]['quantity'] = $quantity;
