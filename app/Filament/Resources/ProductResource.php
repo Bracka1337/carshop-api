@@ -19,7 +19,9 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class ProductResource extends Resource
 {
@@ -53,6 +55,14 @@ class ProductResource extends Resource
                 Select::make('bolt_diameter')->options(self::decimalOptions(['98.00' => '98.00', '100.00' => '100.00', '105.00' => '105.00', '108.00' => '108.00', '110.00' => '110.00', '112.00' => '112.00', '114.30' => '114.30', '115.00' => '115.00', '118.00' => '118.00', '120.00' => '120.00', '125.00' => '125.00', '127.00' => '127.00', '130.00' => '130.00', '135.00' => '135.00', '139.00' => '139.00', '139.70' => '139.70', '140.00' => '140.00', '150.00' => '150.00', '160.00' => '160.00', '165.00' => '165.00', '170.00' => '170.00', '180.00' => '180.00', '200.00' => '200.00', '205.00' => '205.00']))->searchable()->required(),
                 Select::make('type')->options(['Alloy' => 'Alloy', 'Steel' => 'Steel'])->required(),
                 TextInput::make('price')->prefix(Money::symbol())->minValue(0)->maxValue(10000)->required(),
+                TextInput::make('stock')
+                    ->label('Stock (units)')
+                    ->integer()
+                    ->minValue(0)
+                    ->maxValue(100000)
+                    ->default(0)
+                    ->required()
+                    ->helperText('At 0 the shop shows the wheel as out of stock. Checkout takes ordered units off.'),
                 Select::make('brand_id')->relationship('Brand', 'title')->options(Brand::pluck('title', 'id'))->required()->searchable(),
             ])->Columns(3);
     }
@@ -88,10 +98,23 @@ class ProductResource extends Resource
                 TextColumn::make('bolt_diameter'),
                 TextColumn::make('type'),
                 TextColumn::make('price')->money(Money::code())->searchable(),
+                TextColumn::make('stock')
+                    ->sortable()
+                    ->badge()
+                    ->color(fn (int $state) => match (true) {
+                        $state === 0 => 'danger',
+                        $state <= Product::LOW_STOCK => 'warning',
+                        default => 'success',
+                    }),
                 TextColumn::make('brand.title')->searchable(),
             ])
             ->filters([
-                //
+                Filter::make('out_of_stock')
+                    ->label('Out of stock')
+                    ->query(fn (Builder $query) => $query->where('stock', 0)),
+                Filter::make('low_stock')
+                    ->label('Low stock (1–'.Product::LOW_STOCK.')')
+                    ->query(fn (Builder $query) => $query->whereBetween('stock', [1, Product::LOW_STOCK])),
             ])
             ->recordActions([
                 EditAction::make(),
