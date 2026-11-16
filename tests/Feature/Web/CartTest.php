@@ -4,6 +4,7 @@ namespace Tests\Feature\Web;
 
 use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class CartTest extends TestCase
@@ -52,6 +53,33 @@ class CartTest extends TestCase
 
         $this->post("/cart/update/{$product->id}/0")
             ->assertSessionMissing("cart.{$product->id}");
+    }
+
+    #[DataProvider('invalidQuantities')]
+    public function test_an_invalid_quantity_is_rejected_and_the_cart_is_unchanged(string $quantity): void
+    {
+        $product = $this->createProduct(['price' => 50]);
+        $this->post("/cart/add/{$product->id}");
+
+        $this->postJson("/cart/update/{$product->id}/{$quantity}")
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors('quantity');
+
+        $this->post("/cart/update/{$product->id}/{$quantity}")->assertSessionHasErrors('quantity');
+
+        $this->assertSame(1, session("cart.{$product->id}.quantity"));
+        $this->assertEquals(50, session('cart.total'));
+    }
+
+    /** @return array<string, array{string}> */
+    public static function invalidQuantities(): array
+    {
+        return [
+            'negative' => ['-5'],
+            'fraction' => ['1.5'],
+            'over the limit' => ['100'],
+            'not a number' => ['abc'],
+        ];
     }
 
     public function test_an_item_can_be_removed_from_the_cart(): void
