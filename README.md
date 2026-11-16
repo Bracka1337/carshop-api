@@ -13,7 +13,7 @@ the catalogue and a customer's orders.
 
 | Catalogue | Product details |
 | --- | --- |
-| ![Catalogue with filters and product grid](docs/screenshots/catalogue.png) | ![Product page with gallery, specs and add to cart](docs/screenshots/product-page.png) |
+| ![Catalogue with filters and product grid](docs/screenshots/catalogue.png) | ![Product page with gallery, stock status, specs and add to cart](docs/screenshots/product-page.png) |
 | **Checkout** | **Order details** |
 | ![Checkout with delivery details and totals](docs/screenshots/checkout.png) | ![Order details with lines, VAT and status](docs/screenshots/order-details.png) |
 | **Admin dashboard** | **Admin orders** |
@@ -60,7 +60,12 @@ In 2026 I upgraded and refactored the project on my own:
   quantity, four similar wheels (same diameter and bolt pattern), and title,
   meta description and Open Graph tags; slugs are made from the title and
   stay fixed when it is edited
-- **Cart**: session based; add, change quantity, remove
+- **Cart**: session based; add, change quantity, remove; quantities are whole
+  numbers from 1 to 99 per line, and setting 0 removes the item
+- **Stock**: each product has a stock count, edited in the admin panel;
+  product cards and pages show "In stock", "Only N left" or "Out of stock",
+  the catalogue can filter to in-stock wheels, the cart won't hold more than
+  is left, and checkout re-checks stock under a lock before taking it off
 - **Checkout**: delivery details form, pay on delivery or a simulated card
   payment, order + payment records; each order line keeps the unit
   price paid, so later price changes don't alter past orders; a declined card
