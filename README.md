@@ -212,7 +212,7 @@ pull request.
 
 | Method | Path                           | Description                                   |
 | ------ | ------------------------------ | --------------------------------------------- |
-| GET    | `/`                            | Catalogue with filters (`diameter`, `width`, `type`, `brand`, `price_from`, `price_to`, `order`) |
+| GET    | `/`                            | Catalogue with filters (`diameter`, `width`, `type`, `brand`, `price_from`, `price_to`, `in_stock`, `order`) |
 | GET    | `/products/{slug}`             | Product page with specs and similar wheels    |
 | GET    | `/aboutus`                     | About the team                                |
 | POST   | `/cart/add/{id}`               | Add a product to the cart                     |
@@ -264,6 +264,8 @@ curl -s -H "Authorization: Bearer $TOKEN" http://127.0.0.1:8000/api/orders
     "brand": { "id": 44, "title": "Ronal" },
     "type": "Alloy",
     "price": 980,
+    "stock": 12,
+    "in_stock": true,
     "specs": { "diameter": 19, "width": 10.5, "et": 5, "cb": 56, "bolt": 5, "bolt_diameter": 108 },
     "images": ["http://127.0.0.1:8000/storage/images/Borbet.webp", "…"]
   }
@@ -296,4 +298,6 @@ tests/Unit/                    TotalsCalculator, ShippingCalculator
   answers `{"status": "success"}` to approve.
 - Shipping on saved orders is recalculated from the current shipping config;
   only the unit prices are stored per order.
-- There is no stock tracking: every product page says "Available to order".
+- Stock is taken off when an order is placed, so an unpaid card order keeps
+  its units reserved. Units aren't returned automatically when an order fails
+  or is edited in the admin panel; adjust the product's stock there by hand.

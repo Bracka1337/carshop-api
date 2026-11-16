@@ -26,6 +26,8 @@ class ProductResource extends JsonResource
             'type' => $this->type,
             'price' => (float) $this->price,
             'currency' => Money::code(),
+            'stock' => $this->stock,
+            'in_stock' => $this->inStock(),
             'specs' => [
                 'diameter' => (int) $this->diameter,
                 'width' => (float) $this->width,
